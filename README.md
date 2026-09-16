@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NRG Platform
 
-## Getting Started
+Nursing exam preparation for the RENR (Trinidad & Tobago) — practice questions, flashcards,
+case studies and teacher-gated mock exams. Client: Jade Nicome · Developer: Dr. Ian A. Forde II.
 
-First, run the development server:
+Stack: Next.js 14 (App Router) · TypeScript · Supabase (Postgres + Auth) · Vercel.
 
+## Environments
+| | Supabase project | Vercel |
+|---|---|---|
+| Production | `nrg-platform-prod` (`cdvubijjepwmhhkgppbl`) | https://nrg-platform.vercel.app (branch `main`) |
+| Staging | `nrg-platform-staging` (`kwhaqhhwqykckarjbdod`) | Vercel Preview deployments (any non-main branch) |
+
+Rule: every schema change and the content migration go to **staging first**, then prod.
+See `docs/environments.md`. Secrets live in `.env.local` (git-ignored) and Vercel env vars — never in the repo.
+
+## Local development
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.local.example .env.local   # then fill in keys from the Supabase dashboards
+npm run dev                        # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Database
+Migrations are plain SQL in `supabase/migrations/` and are the source of truth.
+```bash
+npx supabase link --project-ref kwhaqhhwqykckarjbdod   # staging
+npx supabase db push
+npx supabase link --project-ref cdvubijjepwmhhkgppbl   # prod (after staging is clean)
+npx supabase db push
+```
+Migrations up to `20260916050000` were applied through the Supabase MCP connector and
+recorded in `supabase_migrations.schema_migrations`, so `db push` is a no-op for them.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Key points:
+- Roles live in `public.profiles.role` (`student|teacher|admin|super_admin`), created by the
+  `handle_new_user` trigger on signup. Promote users with SQL — there is no self-service path.
+- RLS helper is `public.user_role()` (not `auth.` — hosted Supabase forbids CREATE in `auth`).
+- Mock-exam rationale is gated at the **app layer** on `mock_exam_sets.rationale_released_at`;
+  the DB only controls who may set it (teacher/admin).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Auth flow
+`middleware.ts` refreshes the session and gates `/study /teacher /admin /super-admin`.
+Each page calls `requireRole()` (`src/lib/auth/session.ts`) for the role check.
+Email confirmation → `/auth/callback` → dashboard for the user's role (`ROLE_HOME` in `src/lib/auth/roles.ts`).
 
-## Learn More
+## Content migration (Week 3)
+```bash
+npx tsx scripts/migrate-questions.ts --file data/questions.csv --offline            # audit (T25)
+npx tsx scripts/migrate-questions.ts --file data/questions.csv --env staging --dry-run
+npx tsx scripts/migrate-questions.ts --file data/questions.csv --env staging
+CONFIRM_PROD=yes npx tsx scripts/migrate-questions.ts --file data/questions.csv --env prod
+```
+Working docs: `docs/phase-1/` (audit, field mapping, edge cases, validation report).
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Tracker
+Phase 1 task tracker with per-task AI handover prompts: Claude artifact "NRG Phase 1 Tracker".

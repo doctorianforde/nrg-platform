@@ -42,3 +42,8 @@ next-env.d.ts
 
 # local-only credential notes (never commit)
 docs/*credentials*.md
+
+# local recordings / scratch
+transcription/
+data/
+!.env.local.example

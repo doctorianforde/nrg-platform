@@ -1,0 +1,5 @@
+ID,Domain,Topic,Question,Option A,Option B,Option C,Option D,Answer,Explanation,Cognitive Level,Difficulty
+1,Med-Surg,Cardiovascular Disorders,"A client with heart failure is prescribed digoxin. Which finding indicates toxicity?",Bradycardia,Hypertension,"Weight gain, ""rapid""",Polyuria,A,"Digoxin toxicity presents with bradycardia, nausea and visual changes.",Analysis,Medium
+2,Pharmacology,Analgesics,"Select all that apply: adverse effects of opioids include",Constipation,Respiratory depression,Diarrhoea,Sedation,"A, B, D",,Comprehension,Easy
+3,Unknown Domain,,Body with bad domain,X,Y,Z,W,B,,,
+4,MCH,,,X,Y,Z,W,A,,,
