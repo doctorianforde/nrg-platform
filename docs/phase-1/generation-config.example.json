@@ -1,0 +1,18 @@
+{
+  "title": "RENR Practice Set A",
+  "total": 50,
+  "audience": "RENR candidates (final-year nursing students, Trinidad & Tobago)",
+  "topic_emphasis": "",
+  "source_material": "",
+  "question_format": "single-best-answer; mix of stand-alone and short clinical-scenario stems",
+  "difficulty_target": "exam-level mixed difficulty",
+  "item_writing_rules": "docs/phase-1/nrg-item-writing-rules.md",
+  "exclusions": "no select-all-that-apply, no image-dependent items, no lab-value-only recall",
+  "answer_key_style": "answer, rationale for correct, rationale for each distractor, topic, domain, taxonomy",
+  "allow_sata": false,
+  "options_per_item": 4,
+  "provider": "anthropic",
+  "model": "claude-sonnet-4-5",
+  "batch": 5,
+  "temperature": 0.7
+}

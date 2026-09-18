@@ -34,6 +34,7 @@ const FIELD_MAP = {
   source_id:       ["id", "question_id", "qid", "number", "no", "#"],
   domain:          ["domain", "category", "subject", "area"],
   topic:           ["topic", "subtopic", "sub_topic", "unit"],
+  cluster:         ["cluster", "study_cluster", "clinical_area", "subject_area", "system", "specialty"],
   body:            ["question", "question_text", "stem", "body", "prompt"],
   explanation:     ["explanation", "rationale", "answer_explanation", "feedback"],
   cognitive_level: ["cognitive_level", "cognitive", "bloom", "blooms_level", "level"],
@@ -52,6 +53,9 @@ type Field = keyof typeof FIELD_MAP;
 
 // Values as they appear in the source → DB enum values (T26 finalises)
 const COGNITIVE_MAP: Record<string, string> = {
+  // RENR taxonomy codes (client template): KC / AP / ASE
+  kc: "knowledge", "knowledge / comprehension": "knowledge", "knowledge/comprehension": "knowledge",
+  ap: "application", ase: "analysis", "analysis / synthesis / evaluation": "analysis", "analysis/synthesis/evaluation": "analysis",
   knowledge: "knowledge", remember: "knowledge", recall: "knowledge",
   comprehension: "comprehension", understand: "comprehension", understanding: "comprehension",
   application: "application", apply: "application", applying: "application",
@@ -62,15 +66,28 @@ const DIFFICULTY_MAP: Record<string, string> = {
   medium: "medium", moderate: "medium", average: "medium", "2": "medium",
   hard: "hard", difficult: "hard", high: "hard", "3": "hard",
 };
-// Domain aliases the client may use → domains.code (T13 seeded codes)
+// Official RENR domains (client template, Sep 2026) → domains.code
 const DOMAIN_ALIASES: Record<string, string> = {
-  mch: "MCH", "maternal & child health": "MCH", "maternal and child health": "MCH", maternal: "MCH", obstetrics: "MCH", paediatrics: "MCH", pediatrics: "MCH",
-  med: "MED", "medical-surgical nursing": "MED", "medical surgical": "MED", "med-surg": "MED", medsurg: "MED",
-  psych: "PSYCH", "psychiatric nursing": "PSYCH", psychiatric: "PSYCH", "mental health": "PSYCH",
-  comm: "COMM", "community health nursing": "COMM", "community health": "COMM", community: "COMM", "public health": "COMM",
-  crit: "CRIT", "critical care & emergency": "CRIT", "critical care": "CRIT", emergency: "CRIT", icu: "CRIT",
-  fund: "FUND", "fundamentals of nursing": "FUND", fundamentals: "FUND", basics: "FUND",
-  pharm: "PHARM", "pharmacology & drug therapy": "PHARM", pharmacology: "PHARM", drugs: "PHARM",
+  np: "NP", "nursing practice": "NP",
+  cdm: "CDM", "clinical decision making": "CDM", "clinical decision making and intervention": "CDM", "clinical decision-making": "CDM",
+  nlm: "NLM", "nursing leadership and management": "NLM", "leadership and management": "NLM", "leadership & management": "NLM", management: "NLM", leadership: "NLM",
+  pc: "PC", "professional conduct": "PC",
+  hpmw: "HPMW", "health promotion and maintenance of wellness": "HPMW", "health promotion": "HPMW", wellness: "HPMW",
+  com: "COM", communication: "COM",
+  pd: "PD", "professional development": "PD",
+};
+// Clinical study clusters (the OTHER axis) → topic_clusters.code
+const CLUSTER_ALIASES: Record<string, string> = {
+  medsurg: "MEDSURG", "med-surg": "MEDSURG", "medical-surgical": "MEDSURG", "medical surgical": "MEDSURG", "medical-surgical nursing": "MEDSURG",
+  "community health": "MEDSURG", community: "MEDSURG", "medical-surgical and community health priorities": "MEDSURG",
+  cardiac: "MEDSURG", endocrine: "MEDSURG", renal: "MEDSURG", respiratory: "MEDSURG", "infectious disease": "MEDSURG", trauma: "MEDSURG", cancer: "MEDSURG", oncology: "MEDSURG",
+  safety: "SAFETY", "infection control": "SAFETY", procedures: "SAFETY", fundamentals: "SAFETY", "fundamentals of nursing": "SAFETY", pharmacology: "SAFETY",
+  "medication safety": "SAFETY", "dosage calculation": "SAFETY", "iv therapy": "SAFETY", "safety, infection control, and core procedures": "SAFETY",
+  matchild: "MATCHILD", "maternal-child": "MATCHILD", "maternal child": "MATCHILD", maternal: "MATCHILD", obstetrics: "MATCHILD", midwifery: "MATCHILD",
+  pediatrics: "MATCHILD", paediatrics: "MATCHILD", newborn: "MATCHILD", "maternal & child health": "MATCHILD", "maternal-child and family nursing": "MATCHILD",
+  mgmt: "MGMT", legal: "MGMT", ethics: "MGMT", professionalism: "MGMT", "management, legal, and professionalism": "MGMT", "nursing process": "MGMT", delegation: "MGMT",
+  psychsoc: "PSYCHSOC", psych: "PSYCHSOC", psychiatric: "PSYCHSOC", "mental health": "PSYCHSOC", psychosocial: "PSYCHSOC",
+  "therapeutic communication": "PSYCHSOC", "psychosocial and therapeutic communication": "PSYCHSOC",
 };
 
 // ─── CLI ─────────────────────────────────────────────────────────────────────
@@ -177,7 +194,7 @@ function buildColumnIndex(header: string[]) {
 }
 
 type Parsed = {
-  source_id: string; domain_key: string; topic: string | null; body: string; explanation: string | null;
+  source_id: string; domain_key: string; cluster_key: string | null; topic: string | null; body: string; explanation: string | null;
   cognitive_level: string | null; difficulty: string | null; question_type: "mcq" | "sata";
   options: { body: string; is_correct: boolean; display_order: number }[]; tags: string[]; body_hash: string;
 };
@@ -190,6 +207,8 @@ function parseRow(row: Row, col: Partial<Record<Field, string>>, rowNo: number):
   const domainRaw = get("domain");
   if (!domainRaw) return { ok: false, error: "blank domain" };
   const domain_key = DOMAIN_ALIASES[domainRaw.toLowerCase()] ?? domainRaw.toUpperCase();
+  const clusterRaw = get("cluster") || get("topic");
+  const cluster_key = clusterRaw ? CLUSTER_ALIASES[clusterRaw.toLowerCase()] ?? null : null;
 
   const letters = ["a", "b", "c", "d", "e", "f"] as const;
   const optionBodies = letters.map(l => get(`option_${l}` as Field)).filter(Boolean);
@@ -224,7 +243,7 @@ function parseRow(row: Row, col: Partial<Record<Field, string>>, rowNo: number):
   const source_id = get("source_id") || `hash:${body_hash.slice(0, 24)}`;
 
   return { ok: true, q: {
-    source_id, domain_key, topic: get("topic") || null, body,
+    source_id, domain_key, cluster_key, topic: get("topic") || null, body,
     explanation: get("explanation") || null, cognitive_level, difficulty,
     question_type: isSata ? "sata" : "mcq",
     options: optionBodies.map((b, i) => ({ body: b, is_correct: correctSet.has(i), display_order: i + 1 })),
@@ -246,7 +265,7 @@ async function main() {
   const missing = (["body", "domain", "correct", "option_a", "option_b"] as Field[]).filter(f => !col[f]);
   if (missing.length) throw new Error(`Required columns not found: ${missing.join(", ")} — update FIELD_MAP (T26)`);
 
-  const topicKey = (domainId: number, name: string) => `${domainId}::${name.toLowerCase()}`;
+  const topicKey = (_domainId: number, name: string) => name.toLowerCase();
   const KNOWN_CODES = new Set(Object.values(DOMAIN_ALIASES));
 
   const log: { run_id: string; source_id: string | null; status: "success" | "error" | "skipped"; message: string | null }[] = [];
@@ -284,8 +303,10 @@ async function main() {
   if (dErr) throw dErr;
   const domainByCode = new Map(domains!.map(d => [d.code.toUpperCase(), d.id as number]));
   const { data: topics, error: tErr } = await db.from("topics").select("id, domain_id, name, slug");
+  const { data: clusters } = await db.from("topic_clusters").select("id, code");
+  const clusterByCode = new Map((clusters ?? []).map(c => [c.code as string, c.id as number]));
   if (tErr) throw tErr;
-  const topicByKey = new Map(topics!.map(t => [topicKey(t.domain_id, t.name), t.id as number]));
+  const topicByKey = new Map(topics!.map(t => [topicKey(t.domain_id ?? 0, t.name), t.id as number]));
   const missingInDb = [...byDomain.keys()].filter(k => !domainByCode.has(k));
   if (missingInDb.length) throw new Error(`domains not seeded in ${ENV}: ${missingInDb.join(", ")} (run T13 migration)`);
   const newTopics = new Set(parsed.filter(q => q.topic && !topicByKey.has(topicKey(domainByCode.get(q.domain_key)!, q.topic!))).map(q => `${q.domain_key}:${q.topic}`)).size;
@@ -300,8 +321,9 @@ async function main() {
     const domainId = domainByCode.get(q.domain_key)!;
     const k = topicKey(domainId, q.topic);
     if (topicByKey.has(k)) continue;
-    const slug = `${q.domain_key.toLowerCase()}-${slugify(q.topic)}`;
-    const { data, error } = await db.from("topics").upsert({ domain_id: domainId, name: q.topic, slug, is_active: true }, { onConflict: "slug" }).select("id").single();
+    const slug = `${(q.cluster_key ?? "topic").toLowerCase()}-${slugify(q.topic)}`;
+    const cluster_id = q.cluster_key ? clusterByCode.get(q.cluster_key) ?? null : null;
+    const { data, error } = await db.from("topics").upsert({ cluster_id, name: q.topic, slug, is_active: true }, { onConflict: "slug" }).select("id").single();
     if (error) throw new Error(`topic insert failed for "${q.topic}": ${error.message}`);
     topicByKey.set(k, data!.id);
   }

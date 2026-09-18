@@ -1,4 +1,4 @@
-// Generated from nrg-platform-prod via the Supabase MCP connector (2026-09-16).
+// Generated from nrg-platform-prod via the Supabase MCP connector (2026-09-18).
 // Regenerate after every migration: npx supabase gen types typescript --project-id cdvubijjepwmhhkgppbl > src/lib/supabase/types.ts
 export type Json =
   | string
@@ -113,11 +113,20 @@ export type Database = {
         Update: { id?: number; name?: string }
         Relationships: []
       }
+      topic_clusters: {
+        Row: { code: string; display_order: number | null; id: number; name: string; share_pct: number | null }
+        Insert: { code: string; display_order?: number | null; id?: number; name: string; share_pct?: number | null }
+        Update: { code?: string; display_order?: number | null; id?: number; name?: string; share_pct?: number | null }
+        Relationships: []
+      }
       topics: {
-        Row: { domain_id: number; id: number; is_active: boolean; name: string; slug: string | null }
-        Insert: { domain_id: number; id?: number; is_active?: boolean; name: string; slug?: string | null }
-        Update: { domain_id?: number; id?: number; is_active?: boolean; name?: string; slug?: string | null }
-        Relationships: [{ foreignKeyName: "topics_domain_id_fkey"; columns: ["domain_id"]; isOneToOne: false; referencedRelation: "domains"; referencedColumns: ["id"] }]
+        Row: { cluster_id: number | null; domain_id: number | null; id: number; is_active: boolean; name: string; slug: string | null }
+        Insert: { cluster_id?: number | null; domain_id?: number | null; id?: number; is_active?: boolean; name: string; slug?: string | null }
+        Update: { cluster_id?: number | null; domain_id?: number | null; id?: number; is_active?: boolean; name?: string; slug?: string | null }
+        Relationships: [
+          { foreignKeyName: "topics_cluster_id_fkey"; columns: ["cluster_id"]; isOneToOne: false; referencedRelation: "topic_clusters"; referencedColumns: ["id"] },
+          { foreignKeyName: "topics_domain_id_fkey"; columns: ["domain_id"]; isOneToOne: false; referencedRelation: "domains"; referencedColumns: ["id"] },
+        ]
       }
     }
     Views: { [_ in never]: never }
