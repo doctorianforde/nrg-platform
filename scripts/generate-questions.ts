@@ -133,7 +133,7 @@ function apportion(total: number, weights: { code: string; pct: number }[]): Rec
   for (let i = 0; used < total; i++, used++) out[raw[i % raw.length].code]++;
   return out;
 }
-function applyOverride(base: { code: string; pct: number }[], override?: Record<string, number>) {
+function applyOverride<T extends { code: string; pct: number }>(base: T[], override?: Record<string, number>): T[] {
   if (!override) return base;
   const s = Object.values(override).reduce((a, b) => a + b, 0);
   if (Math.abs(s - 100) > 0.01) throw new Error(`override weights must sum to 100 (got ${s})`);
