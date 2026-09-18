@@ -94,6 +94,21 @@ const CLUSTER_ALIASES: Record<string, string> = {
   mgmt: "MGMT", legal: "MGMT", ethics: "MGMT", professionalism: "MGMT", "management, legal, and professionalism": "MGMT", "nursing process": "MGMT", delegation: "MGMT",
   psychsoc: "PSYCHSOC", psych: "PSYCHSOC", psychiatric: "PSYCHSOC", "mental health": "PSYCHSOC", psychosocial: "PSYCHSOC",
   "therapeutic communication": "PSYCHSOC", "psychosocial and therapeutic communication": "PSYCHSOC",
+
+  // Additional first-segment categories seen in Jade's "Topic / Domain / Taxonomy" answer-key
+  // format (T25 real-file audit, Sep 2026) — extends the buckets above rather than replacing them.
+  "cardiac pharmacology": "MEDSURG", "chronic illness": "MEDSURG", gastrointestinal: "MEDSURG",
+  genitourinary: "MEDSURG", hematology: "MEDSURG", hepatic: "MEDSURG", immunology: "MEDSURG",
+  integumentary: "MEDSURG", musculoskeletal: "MEDSURG", neurological: "MEDSURG", neuromuscular: "MEDSURG",
+  surgical: "MEDSURG", "preoperative care": "MEDSURG",
+  "blood transfusion": "SAFETY", "burn care": "SAFETY", "disaster management": "SAFETY",
+  "maternal and newborn": "MATCHILD", "adolescent health": "MATCHILD", "family support": "MATCHILD",
+  "admission interview": "MGMT", assessment: "MGMT", "change management": "MGMT", "client rights": "MGMT",
+  competence: "MGMT", confidentiality: "MGMT", "conflict resolution": "MGMT", "continuing education": "MGMT",
+  documentation: "MGMT", "evidence-based practice": "MGMT", "human resource management": "MGMT",
+  "management functions": "MGMT", privacy: "MGMT", "professional behaviour": "MGMT", "professional growth": "MGMT",
+  "quality improvement": "MGMT", research: "MGMT", staffing: "MGMT", "time management": "MGMT",
+  "end-of-life care": "MGMT", leadership: "MGMT", prioritization: "MGMT",
 };
 
 // ─── CLI ─────────────────────────────────────────────────────────────────────
