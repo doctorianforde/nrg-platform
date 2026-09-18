@@ -13,6 +13,12 @@
  *   --limit <n>          only process the first n rows (smoke tests)
  *   --sheet <name>       XLSX sheet name (default: first sheet)
  *   --offline            parse + validate only, no Supabase connection (T25 audit helper)
+ *   --author <name>      tags every migrated question with an "Author: <name>" tag
+ *                         (default: "Jade Nicome" — the client). This is how
+ *                         client-authored content stays distinguishable from the
+ *                         AI-generated batch (source="ai_generated") after both
+ *                         land in the same questions table. Pass a different
+ *                         --author for a future contributor's file.
  *
  * Keys are read from the environment / .env.local — never hardcode them here.
  * Uses the service_role key (bypasses RLS). Never run against prod until the
@@ -101,6 +107,8 @@ const DRY     = has("dry-run");
 const LIMIT   = flag("limit") ? Number(flag("limit")) : Infinity;
 const SHEET   = flag("sheet");
 const OFFLINE = has("offline");
+const AUTHOR  = flag("author") ?? "Jade Nicome";
+const AUTHOR_TAG = `Author: ${AUTHOR}`;
 const BATCH   = 100;
 const RUN_ID  = new Date().toISOString().replace(/[:.]/g, "-");
 
@@ -261,6 +269,7 @@ async function main() {
   const header = Object.keys(rows[0]);
   const col = buildColumnIndex(header);
   console.log(`Loaded ${rows.length} rows from ${file}`);
+  console.log(`Tagging every row "${AUTHOR_TAG}" (--author to change)`);
   console.log("Column mapping:", Object.entries(col).map(([f, h]) => `${f}←"${h}"`).join("  "));
   const missing = (["body", "domain", "correct", "option_a", "option_b"] as Field[]).filter(f => !col[f]);
   if (missing.length) throw new Error(`Required columns not found: ${missing.join(", ")} — update FIELD_MAP (T26)`);
@@ -284,6 +293,7 @@ async function main() {
     if (seenHash.has(r.q.body_hash)) { counts.skipped++; log.push({ run_id: RUN_ID, source_id: sid, status: "skipped", message: `row ${i + 2}: duplicate of ${seenHash.get(r.q.body_hash)}` }); continue; }
     seenId.add(r.q.source_id); seenHash.set(r.q.body_hash, r.q.source_id);
     byDomain.set(r.q.domain_key, (byDomain.get(r.q.domain_key) ?? 0) + 1);
+    if (!r.q.tags.includes(AUTHOR_TAG)) r.q.tags.push(AUTHOR_TAG);
     parsed.push(r.q);
   }
 
