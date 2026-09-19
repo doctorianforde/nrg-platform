@@ -15,9 +15,25 @@ type CaseStudyRow = {
   domains: { name: string; code: string } | { name: string; code: string }[] | null;
 };
 
-function preview(text: string, max = 200): string {
-  const trimmed = text.trim();
-  return trimmed.length > max ? `${trimmed.slice(0, max).trimEnd()}…` : trimmed;
+function firstLine(text: string): string {
+  return text.trim().split("\n")[0].trim();
+}
+
+function MetaIcon({ children }: { children: React.ReactNode }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="h-4 w-4 shrink-0"
+      aria-hidden="true"
+    >
+      {children}
+    </svg>
+  );
 }
 
 export default async function CaseStudiesPage() {
@@ -43,7 +59,13 @@ export default async function CaseStudiesPage() {
   );
 
   return (
-    <DashboardShell profile={profile} email={user.email} title="Case studies">
+    <DashboardShell
+      profile={profile}
+      email={user.email}
+      title="Case Study Simulations"
+      eyebrow="Clinical simulations"
+      subtitle="Interactive clinical scenarios designed for professional development. Progress through real patient cases with decision points and detailed feedback."
+    >
       {caseStudies.length === 0 ? (
         <EmptyState
           title="No case studies yet"
@@ -53,27 +75,46 @@ export default async function CaseStudiesPage() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {caseStudies.map((cs, i) => {
             const domain = Array.isArray(cs.domains) ? cs.domains[0] : cs.domains;
+            const count = linkCounts[i];
             return (
               <Link key={cs.id} href={`/study/case-studies/${cs.id}`} className="group">
-                <Card className="flex h-full flex-col transition-shadow hover:shadow-md">
-                  <div className="flex items-center justify-between gap-2">
+                <Card className="flex h-full flex-col rounded-xl border-purple-100 transition-shadow hover:shadow-md">
+                  <div className="flex flex-wrap items-center gap-2">
                     {domain ? (
-                      <Badge tone="purple">
-                        {domain.code} · {domain.name}
-                      </Badge>
+                      <Badge tone="purple">{domain.name}</Badge>
                     ) : (
                       <Badge tone="gray">General</Badge>
                     )}
-                    <span className="text-xs text-muted-foreground">
-                      {linkCounts[i] === 1 ? "1 question" : `${linkCounts[i]} questions`}
-                    </span>
+                    <Badge tone="gray" className="bg-purple-50 text-brand-700">
+                      {count === 1 ? "1 decision point" : `${count} decision points`}
+                    </Badge>
                   </div>
-                  <p className="mt-3 whitespace-pre-line text-sm text-card-foreground">
-                    {preview(cs.clinical_scenario)}
+                  <h3 className="mt-3 font-heading font-semibold text-card-foreground group-hover:text-primary">
+                    {firstLine(cs.clinical_scenario)}
+                  </h3>
+                  <p className="mt-2 line-clamp-3 whitespace-pre-line text-sm text-muted-foreground">
+                    {cs.clinical_scenario}
                   </p>
-                  <span className="mt-auto pt-4 text-sm font-medium text-primary group-hover:underline">
-                    Start case study →
-                  </span>
+                  <div className="mt-auto flex items-center gap-4 pt-4 text-xs text-muted-foreground">
+                    <span className="inline-flex items-center gap-1.5">
+                      <MetaIcon>
+                        <rect x="8" y="2" width="8" height="4" rx="1" />
+                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+                        <path d="M9 12h6M9 16h4" />
+                      </MetaIcon>
+                      {count} {count === 1 ? "question" : "questions"}
+                    </span>
+                    {domain ? (
+                      <span className="inline-flex items-center gap-1.5">
+                        <MetaIcon>
+                          <path d="M12 2 2 7l10 5 10-5-10-5Z" />
+                          <path d="M2 17l10 5 10-5" />
+                          <path d="M2 12l10 5 10-5" />
+                        </MetaIcon>
+                        {domain.code}
+                      </span>
+                    ) : null}
+                  </div>
                 </Card>
               </Link>
             );

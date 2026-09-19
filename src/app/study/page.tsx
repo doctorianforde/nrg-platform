@@ -57,7 +57,13 @@ export default async function StudyLobby() {
   const totalQuestions = counts.reduce((a, b) => a + b, 0);
 
   return (
-    <DashboardShell profile={profile} email={user.email} title="Study dashboard">
+    <DashboardShell
+      profile={profile}
+      email={user.email}
+      title="Study dashboard"
+      eyebrow="Student portal"
+      subtitle="Practice questions, flashcards, case studies and mock exams — built around the 7 RENR domains."
+    >
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard label="Active questions" value={totalQuestions.toLocaleString()} />
         <StatCard label="RENR domains" value={domains?.length ?? 0} />

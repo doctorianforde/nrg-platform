@@ -50,7 +50,13 @@ export default async function FlashcardsPage() {
     .map((t) => ({ id: t.id, name: t.name, count: counts.get(t.id) ?? 0 }));
 
   return (
-    <DashboardShell profile={profile} email={user.email} title="Flashcards">
+    <DashboardShell
+      profile={profile}
+      email={user.email}
+      title="Flashcards"
+      eyebrow="Study aids"
+      subtitle="Rapid-fire recall by topic — flip, shuffle, and drill weak areas."
+    >
       <FlashcardDeck topics={topics} cards={cards} />
     </DashboardShell>
   );

@@ -1,4 +1,5 @@
 import { Badge, type BadgeTone } from "@/components/ui/Badge";
+import { capitalize } from "@/lib/format";
 
 export type QuestionMeta = {
   cognitive_level?: string | null;
@@ -27,7 +28,7 @@ export function QuestionMetaBadges({ meta }: { meta: QuestionMeta }) {
       {meta.topicName ? <Badge tone="gray">{meta.topicName}</Badge> : null}
       {meta.cognitive_level ? (
         <Badge tone={LEVEL_TONE[meta.cognitive_level] ?? "gray"}>
-          {meta.cognitive_level}
+          {capitalize(meta.cognitive_level)}
         </Badge>
       ) : null}
       {meta.difficulty ? (

@@ -133,10 +133,10 @@ Lets Jade evaluate the 2,000 AI-generated questions in the app instead of raw SQ
   (3) promote Jade's prod account to `teacher` (or `admin`) with SQL, (4) he opens
   `/teacher/review`. Committed as `6927c9e` (local, not pushed).
 
-## Frontend build-out (Kimi, 2026-09-19): /study, dashboards, mock exam UI — skeletons built, design-restyle pending
+## Frontend build-out (Kimi, 2026-09-19): /study, dashboards, mock exam UI — built AND restyled to the reference design
 
-Built against the real schema (no migrations needed). Verified: `tsc --noEmit`, `next lint`,
-`next build` all clean (20 routes). Not committed to git as of this entry.
+Built against the real schema (no migrations needed). Verified after both passes: `tsc --noEmit`,
+`next lint`, `next build` all clean (20 routes). Not committed to git as of this entry.
 
 - **Design foundation** — real tokens/assets extracted from the OKComputer_NRG_Website_v62
   reference (per Ian: reference only, no code port): images + logo + correct/wrong MP3s
@@ -165,9 +165,37 @@ table; deliberately no student names — RLS blocks cross-profile reads for teac
 - **Open questions flagged for Ian** — (1) analytics/rank pages from the reference have
   no backing tables in our schema; not built, needs a data-model decision; (2) role-
   promotion UI; (3) practice sessions are not persisted (no table) — add later if history
-  matters; (4) everything is styled on the extracted tokens, but a page-by-page restyle
-  against the reference's exact layouts is pending the design-spec pass (subagent was
-  still screenshotting the prototype when this entry was written).
+  matters; (4) landing-page pricing cards use the prototype's prices ($29/mo, $69
+  one-time) — confirm with Jade before enabling payments.
+
+## Design restyle pass (Kimi, 2026-09-19) — done
+
+The design spec was extracted from the running prototype (live screenshots of all 11
+routes + interaction flows; serve needed `-s` for SPA deep links and had to move off
+4173, which was occupied by an unrelated dev server) and saved durably as
+**`docs/design-spec-okcomputer.md`** — page-by-page layouts, tokens, and the 11 reusable
+patterns. Restyle applied across the app on top of it:
+
+- **Shared chrome** — `DashboardShell` now has the reference's sticky blurred navbar +
+  purple gradient page banner (new optional `eyebrow`/`subtitle` props used on all
+  dashboards); `StatCard` gained the tinted-icon-square pattern (`icon`/`iconTone`).
+- **Landing page rebuilt** — hero with `hero-students.jpg` + floating pass-rate/improvement
+  cards, real stats band (live topic/question/domain counts), feature grid on the
+  reference images, RENR domain weights with progress bars (real `exam_weight_pct`),
+  journey stepper, why-active-learning section, testimonials, pricing, final CTA, dark
+  purple footer, and the floating "Nursing Knowledge" flip-widget.
+- **/study** — practice setup restructured to the reference's two-column filter +
+  sticky session-summary pattern; flashcards/case-studies restyled (scenario card with
+  purple accent border; list cards with pill badges).
+- **Mock exams** — exam-card grid with play/lock badges, slim sticky in-exam top bar with
+  progress line, score-hero results; teacher pages got stat tiles + clean tables.
+  Restyle was markup-only: the sanitized-payload rationale gate is untouched.
+- **Dashboards** — review-queue tiles with semantic icon tones, admin recent-signups as an
+  avatar + pills table, super-admin environment info card.
+- Reference features with **no backing schema** were NOT approximated with fake data:
+  study lobby (group rooms), analytics charts, rank/Elo system, question-generation
+  authoring flow, case-study vitals/phases — all documented in the spec, all need Ian's
+  data-model/product decisions first.
 
 ## Not yet done / not yet verified
 

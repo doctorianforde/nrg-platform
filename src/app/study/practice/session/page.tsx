@@ -37,7 +37,13 @@ export default async function PracticeSessionPage({
   ].filter(Boolean).length;
 
   return (
-    <DashboardShell profile={profile} email={user.email} title="Practice session">
+    <DashboardShell
+      profile={profile}
+      email={user.email}
+      title="Practice session"
+      eyebrow="Tutor mode"
+      subtitle="Instant feedback with explanations and option rationales after every answer."
+    >
       <TutorSession
         questions={questions}
         title={scope > 0 ? "Filtered practice" : "Mixed practice"}

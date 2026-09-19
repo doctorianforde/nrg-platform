@@ -46,7 +46,17 @@ export default async function MockExamSessionPage({
 
   if (session.completed_at) {
     return (
-      <DashboardShell profile={profile} email={user.email} title={`Results — ${set.title}`}>
+      <DashboardShell
+        profile={profile}
+        email={user.email}
+        title={`Results — ${set.title}`}
+        eyebrow="Exam format"
+        subtitle={
+          set.rationale_released_at != null
+            ? "Your teacher has released the rationales for this exam — review each question below."
+            : "Real exam conditions — no feedback while answering. Rationales unlock after your teacher's class review."
+        }
+      >
         <ResultsView
           setTitle={set.title}
           session={session}
@@ -83,11 +93,13 @@ export default async function MockExamSessionPage({
   );
 
   return (
-    <DashboardShell profile={profile} email={user.email} title={set.title}>
-      <p className="mb-5 text-sm text-muted-foreground">
-        Mock exam — real exam format. No feedback is shown while you answer, and
-        answers save automatically.
-      </p>
+    <DashboardShell
+      profile={profile}
+      email={user.email}
+      title={set.title}
+      eyebrow="Exam format"
+      subtitle="Real exam conditions — no feedback while you answer. Answers save automatically."
+    >
       <ExamRunner
         sessionId={session.id}
         setTitle={set.title}

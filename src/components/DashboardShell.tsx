@@ -14,53 +14,74 @@ export function DashboardShell({
   profile,
   email,
   title,
+  eyebrow,
+  subtitle,
   children,
 }: {
   profile: Profile;
   email: string | undefined;
   title: string;
+  /** Small uppercase label above the title, per the reference banner pattern. */
+  eyebrow?: string;
+  /** One-sentence gray subtitle below the title. */
+  subtitle?: string;
   children: React.ReactNode;
 }) {
   return (
     <div className="min-h-screen bg-muted">
-      <header className="bg-brand-700 text-white shadow-sm">
-        <div className="mx-auto max-w-6xl px-4 h-14 flex items-center gap-6">
-          <Link href="/" className="flex items-center gap-2 font-brand font-bold tracking-tight">
+      <header className="sticky top-0 z-20 bg-white/95 backdrop-blur border-b border-brand-100 shadow-sm">
+        <div className="mx-auto max-w-6xl px-4 h-16 flex items-center gap-6">
+          <Link href="/" className="flex items-center gap-2 font-brand font-bold tracking-tight text-brand-800">
             <Image
               src="/images/nrg-logo.png"
               alt="NRG"
-              width={28}
-              height={28}
+              width={32}
+              height={32}
               className="rounded"
             />
             <span>
               NRG <span className="font-normal opacity-70">Platform</span>
             </span>
           </Link>
-          <nav className="flex gap-4 text-sm">
+          <nav className="hidden md:flex gap-1 text-sm">
             {NAV.filter((n) => hasAtLeast(profile.role, n.min)).map((n) => (
-              <Link key={n.href} href={n.href} className="opacity-90 hover:opacity-100">
+              <Link
+                key={n.href}
+                href={n.href}
+                className="rounded-lg px-3 py-2 text-gray-600 hover:bg-brand-50/50 hover:text-brand-700"
+              >
                 {n.label}
               </Link>
             ))}
           </nav>
           <div className="ml-auto flex items-center gap-3 text-xs">
-            <span className="rounded bg-white/15 px-2 py-0.5 uppercase tracking-wide">
+            <span className="rounded bg-brand-100 px-2 py-0.5 uppercase tracking-wide text-brand-800">
               {profile.role.replace("_", " ")}
             </span>
             <span className="opacity-80 hidden sm:inline">{email}</span>
             <form action="/auth/signout" method="post">
-              <button className="rounded border border-white/40 px-2 py-0.5 hover:bg-white/10">
+              <button className="rounded border border-border px-2 py-0.5 hover:bg-muted">
                 Sign out
               </button>
             </form>
           </div>
         </div>
       </header>
-      <main className="mx-auto max-w-6xl px-4 py-8">
-        <h1 className="text-xl font-semibold mb-4">{title}</h1>
-        {children}
-      </main>
+
+      {/* Purple banner page-header pattern from the reference design */}
+      <div className="bg-gradient-to-r from-brand-900 via-brand-700 to-brand-900 text-white">
+        <div className="mx-auto max-w-6xl px-4 py-8">
+          {eyebrow ? (
+            <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-brand-200">
+              {eyebrow}
+            </p>
+          ) : null}
+          <h1 className="font-heading text-2xl font-bold">{title}</h1>
+          {subtitle ? <p className="mt-1 text-sm text-purple-100">{subtitle}</p> : null}
+        </div>
+      </div>
+
+      <main className="mx-auto max-w-6xl px-4 py-8">{children}</main>
     </div>
   );
 }

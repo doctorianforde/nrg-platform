@@ -14,7 +14,13 @@ export default async function PracticePage() {
     .order("display_order");
 
   return (
-    <DashboardShell profile={profile} email={user.email} title="Practice questions">
+    <DashboardShell
+      profile={profile}
+      email={user.email}
+      title="Question Bank"
+      eyebrow="Practice"
+      subtitle="Select your focus, set your preferences, and start practicing."
+    >
       <Suspense>
         <PracticeSetup domains={(domains ?? []) as Array<{ id: number; name: string; code: string }>} />
       </Suspense>

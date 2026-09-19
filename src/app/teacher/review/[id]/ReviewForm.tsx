@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { submitReview, type ReviewState } from "../actions";
 import { COGNITIVE_LEVELS, DIFFICULTIES } from "@/lib/review/filters";
+import { capitalize } from "@/lib/format";
 
 type Question = {
   id: string;
@@ -123,9 +124,9 @@ export function ReviewForm({ question: q, qs }: { question: Question; qs: string
             <dd>
               {editing ? (
                 <select name="cognitive_level" defaultValue={q.cognitive_level} className={input}>
-                  {COGNITIVE_LEVELS.map((c) => <option key={c}>{c}</option>)}
+                  {COGNITIVE_LEVELS.map((c) => <option key={c} value={c}>{capitalize(c)}</option>)}
                 </select>
-              ) : q.cognitive_level}
+              ) : capitalize(q.cognitive_level)}
             </dd>
             <dt className="text-gray-500">Difficulty</dt>
             <dd>

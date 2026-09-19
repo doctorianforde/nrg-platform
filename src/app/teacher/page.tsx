@@ -8,11 +8,65 @@ import { STATUS_LABEL, type ReviewStatus } from "@/lib/review/filters";
 
 export const dynamic = "force-dynamic";
 
-const STATUS_TONE: Record<ReviewStatus, string> = {
-  pending: "text-gray-700",
-  approved: "text-green-700",
-  needs_changes: "text-amber-700",
-  rejected: "text-red-700",
+const STATUS_TONE: Record<ReviewStatus, "blue" | "green" | "amber" | "red"> = {
+  pending: "blue",
+  approved: "green",
+  needs_changes: "amber",
+  rejected: "red",
+};
+
+function Icon({ children }: { children: React.ReactNode }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="h-5 w-5"
+      aria-hidden="true"
+    >
+      {children}
+    </svg>
+  );
+}
+
+const ClockIcon = () => (
+  <Icon>
+    <circle cx="12" cy="12" r="10" />
+    <polyline points="12 6 12 12 16 14" />
+  </Icon>
+);
+
+const CheckCircleIcon = () => (
+  <Icon>
+    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+    <polyline points="22 4 12 14.01 9 11.01" />
+  </Icon>
+);
+
+const AlertIcon = () => (
+  <Icon>
+    <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+    <line x1="12" y1="9" x2="12" y2="13" />
+    <line x1="12" y1="17" x2="12.01" y2="17" />
+  </Icon>
+);
+
+const XCircleIcon = () => (
+  <Icon>
+    <circle cx="12" cy="12" r="10" />
+    <line x1="15" y1="9" x2="9" y2="15" />
+    <line x1="9" y1="9" x2="15" y2="15" />
+  </Icon>
+);
+
+const STATUS_ICON: Record<ReviewStatus, () => React.ReactElement> = {
+  pending: ClockIcon,
+  approved: CheckCircleIcon,
+  needs_changes: AlertIcon,
+  rejected: XCircleIcon,
 };
 
 export default async function Page() {
@@ -62,7 +116,13 @@ export default async function Page() {
   ];
 
   return (
-    <DashboardShell profile={profile} email={user.email} title="Teacher dashboard">
+    <DashboardShell
+      profile={profile}
+      email={user.email}
+      title="Teacher dashboard"
+      eyebrow="Instructor Portal"
+      subtitle="Review AI-generated questions and manage mock exams for your cohort."
+    >
       <Link
         href="/teacher/review"
         className="mb-4 block rounded-lg border border-[hsl(270,15%,88%)] bg-white p-5 hover:border-[hsl(270,60%,35%)]"
@@ -90,13 +150,18 @@ export default async function Page() {
 
       <h2 className="mb-3 font-heading text-lg font-semibold">AI review queue</h2>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {stats.map(({ status, count }) => (
-          <StatCard
-            key={status}
-            label={STATUS_LABEL[status]}
-            value={<span className={STATUS_TONE[status]}>{count.toLocaleString()}</span>}
-          />
-        ))}
+        {stats.map(({ status, count }) => {
+          const StatusIcon = STATUS_ICON[status];
+          return (
+            <StatCard
+              key={status}
+              label={STATUS_LABEL[status]}
+              value={count.toLocaleString()}
+              icon={<StatusIcon />}
+              iconTone={STATUS_TONE[status]}
+            />
+          );
+        })}
       </div>
 
       <h2 className="mt-8 mb-3 font-heading text-lg font-semibold">Quick links</h2>

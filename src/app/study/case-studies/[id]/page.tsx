@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { requireRole } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 import { DashboardShell } from "@/components/DashboardShell";
+import { Badge } from "@/components/ui/Badge";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { TutorSession } from "@/components/questions/TutorSession";
 import { fetchQuizQuestions } from "@/lib/quiz/fetch";
@@ -15,6 +16,24 @@ type CaseStudyRow = {
   is_active: boolean;
   domains: { name: string } | { name: string }[] | null;
 };
+
+function PersonIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="h-5 w-5 text-brand-700"
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="8" r="4" />
+      <path d="M4 21c0-4 3.6-6 8-6s8 2 8 6" />
+    </svg>
+  );
+}
 
 export default async function CaseStudyPage({ params }: { params: { id: string } }) {
   const { user, profile } = await requireRole("student", `/study/case-studies/${params.id}`);
@@ -38,12 +57,23 @@ export default async function CaseStudyPage({ params }: { params: { id: string }
   const ids = (links ?? []).map((l) => l.question_id);
   const questions = ids.length > 0 ? await fetchQuizQuestions({ ids, preserveOrder: true }) : [];
 
-  const domain = Array.isArray(caseStudy.domains)
-    ? caseStudy.domains[0]
-    : caseStudy.domains;
+  const domain = Array.isArray(caseStudy.domains) ? caseStudy.domains[0] : caseStudy.domains;
 
   return (
-    <DashboardShell profile={profile} email={user.email} title="Case study">
+    <DashboardShell
+      profile={profile}
+      email={user.email}
+      title="Case Study Simulation"
+      eyebrow={domain?.name ?? "Clinical simulation"}
+      subtitle="Work through the scenario, then answer each decision point with detailed feedback."
+    >
+      <Link
+        href="/study/case-studies"
+        className="mb-4 inline-block rounded-lg px-3 py-1.5 text-sm font-medium text-brand-700 hover:bg-brand-50"
+      >
+        ← All case studies
+      </Link>
+
       {questions.length === 0 ? (
         <EmptyState
           title="This case study has no active questions yet"
@@ -51,20 +81,38 @@ export default async function CaseStudyPage({ params }: { params: { id: string }
           action={
             <Link
               href="/study/case-studies"
-              className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-brand-800"
+              className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-brand-800"
             >
               All case studies
             </Link>
           }
         />
       ) : (
-        <TutorSession
-          questions={questions}
-          intro={caseStudy.clinical_scenario}
-          title={domain?.name ? `Case study · ${domain.name}` : "Case study"}
-          backHref="/study/case-studies"
-          backLabel="All case studies"
-        />
+        <div className="space-y-6">
+          {/* Reference detail view: white card with 4px left purple accent */}
+          <div className="rounded-xl border border-purple-100 border-l-4 border-l-brand-700 bg-card p-6 shadow-sm">
+            <div className="flex items-center gap-2">
+              <PersonIcon />
+              <h2 className="font-heading font-semibold text-card-foreground">Case Scenario</h2>
+              {domain ? <Badge tone="purple">{domain.name}</Badge> : null}
+            </div>
+            <p className="mt-4 whitespace-pre-line text-base leading-relaxed text-card-foreground">
+              {caseStudy.clinical_scenario}
+            </p>
+          </div>
+
+          {/*
+            The scenario is rendered above as the accent-bordered card, so intro
+            is intentionally not passed — TutorSession renders its own intro box
+            at question 1, which would duplicate it.
+          */}
+          <TutorSession
+            questions={questions}
+            title={domain?.name ? `Case study · ${domain.name}` : "Case study"}
+            backHref="/study/case-studies"
+            backLabel="All case studies"
+          />
+        </div>
       )}
     </DashboardShell>
   );

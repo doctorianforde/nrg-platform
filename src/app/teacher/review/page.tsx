@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { requireRole } from "@/lib/auth/session";
+import { capitalize } from "@/lib/format";
 import { createClient } from "@/lib/supabase/server";
 import { DashboardShell } from "@/components/DashboardShell";
 import {
@@ -117,7 +118,7 @@ export default async function ReviewListPage({ searchParams }: { searchParams: R
             <select name="cognitive" defaultValue={f.cognitive ?? ""} className={selectCls}>
               <option value="">All</option>
               {COGNITIVE_LEVELS.map((c) => (
-                <option key={c} value={c}>{c}</option>
+                <option key={c} value={c}>{capitalize(c)}</option>
               ))}
             </select>
           </label>
@@ -166,7 +167,7 @@ export default async function ReviewListPage({ searchParams }: { searchParams: R
                       <span>·</span>
                       <span>{r.topics?.name}</span>
                       <span>·</span>
-                      <span>{r.cognitive_level}</span>
+                      <span>{capitalize(r.cognitive_level)}</span>
                       <span>·</span>
                       <span>{r.difficulty}</span>
                       <span className="ml-auto font-mono text-gray-400">{r.source_id?.split(":").pop()}</span>

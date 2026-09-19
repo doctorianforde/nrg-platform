@@ -6,6 +6,7 @@ import { DashboardShell } from "@/components/DashboardShell";
 import { Card, CardTitle } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { StatCard } from "@/components/ui/StatCard";
 import { fmtPct } from "@/lib/mock-exam/utils";
 import { CreateSetForm } from "./CreateSetForm";
 
@@ -29,74 +30,118 @@ export default async function TeacherMockExamsPage({
   if (!showAll) query = query.eq("created_by", user.id);
   const { data: sets } = await query;
 
+  const rows = (sets ?? []).map((set) => {
+    const sessions = set.mock_exam_sessions ?? [];
+    const completed = sessions.filter((s) => s.completed_at != null);
+    const avg =
+      completed.length > 0
+        ? completed.reduce((n, s) => n + (s.score_pct ?? 0), 0) / completed.length
+        : null;
+    return {
+      set,
+      questionCount: set.mock_exam_set_questions?.length ?? 0,
+      sessionCount: sessions.length,
+      completedCount: completed.length,
+      avg,
+    };
+  });
+
+  const totalSessions = rows.reduce((n, r) => n + r.sessionCount, 0);
+  const totalCompleted = rows.reduce((n, r) => n + r.completedCount, 0);
+  const overallAvg =
+    totalCompleted > 0
+      ? rows.reduce((n, r) => n + (r.avg ?? 0) * r.completedCount, 0) / totalCompleted
+      : null;
+
   return (
-    <DashboardShell profile={profile} email={user.email} title="Mock exams">
-      <div className="grid gap-5 lg:grid-cols-[1fr_20rem]">
+    <DashboardShell
+      profile={profile}
+      email={user.email}
+      title="Mock Exams"
+      eyebrow="Instructor Portal"
+      subtitle="Build RENR mock exam sets from the active question bank. Rationales stay locked until you deliberately release them — never automatically."
+    >
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <StatCard label="Exam sets" value={rows.length} />
+        <StatCard label="Sessions started" value={totalSessions} />
+        <StatCard label="Completed attempts" value={totalCompleted} />
+        <StatCard label="Average score" value={fmtPct(overallAvg)} hint="Completed attempts only" />
+      </div>
+
+      <div className="mt-6 grid gap-5 lg:grid-cols-[1fr_20rem]">
         <div className="space-y-4">
           {hasAtLeast(profile.role, "admin") && !showAll ? (
-            <p className="text-sm">
-              <Link href="/teacher/mock-exams?all=1" className="text-primary underline">
-                View all teachers&apos; exam sets
-              </Link>
-            </p>
+            <Link
+              href="/teacher/mock-exams?all=1"
+              className="inline-block rounded-full border border-brand-300 bg-card px-4 py-1.5 text-xs font-medium text-brand-700 transition-colors hover:bg-brand-50"
+            >
+              View all teachers&apos; exam sets
+            </Link>
           ) : null}
-          {(!sets || sets.length === 0) ? (
+          {rows.length === 0 ? (
             <EmptyState
               title="No exam sets yet"
               body="Create your first mock exam set with the form on the right."
             />
           ) : (
-            sets.map((set) => {
-              const questionCount = set.mock_exam_set_questions?.length ?? 0;
-              const sessions = set.mock_exam_sessions ?? [];
-              const completed = sessions.filter((s) => s.completed_at != null);
-              const avg =
-                completed.length > 0
-                  ? completed.reduce((n, s) => n + (s.score_pct ?? 0), 0) / completed.length
-                  : null;
-              return (
-                <Card key={set.id}>
-                  <div className="flex flex-wrap items-start justify-between gap-3">
-                    <div className="min-w-0">
-                      <CardTitle>{set.title}</CardTitle>
-                      {set.description ? (
-                        <p className="mt-1 text-sm text-muted-foreground">{set.description}</p>
-                      ) : null}
-                      <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
-                        <span className="text-muted-foreground">
-                          {questionCount} question{questionCount === 1 ? "" : "s"} ·{" "}
-                          {sessions.length} session{sessions.length === 1 ? "" : "s"} ·{" "}
-                          {completed.length > 0
-                            ? `avg score ${fmtPct(avg)}`
-                            : "no completed attempts"}
-                        </span>
-                        {set.is_active ? (
-                          <Badge tone="green">Active</Badge>
-                        ) : (
-                          <Badge tone="gray">Inactive</Badge>
-                        )}
-                        {set.rationale_released_at ? (
-                          <Badge tone="green">Rationales released</Badge>
-                        ) : (
-                          <Badge tone="amber">Rationales locked</Badge>
-                        )}
-                      </div>
-                    </div>
-                    <Link
-                      href={`/teacher/mock-exams/${set.id}`}
-                      className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-brand-800"
-                    >
-                      Manage
-                    </Link>
-                  </div>
-                </Card>
-              );
-            })
+            <div className="overflow-hidden rounded-xl border border-brand-100 bg-card shadow-sm">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="bg-muted text-xs uppercase tracking-wide text-muted-foreground">
+                    <th className="px-4 py-3 font-medium">Exam set</th>
+                    <th className="px-4 py-3 font-medium">Questions</th>
+                    <th className="px-4 py-3 font-medium">Sessions</th>
+                    <th className="px-4 py-3 font-medium">Avg score</th>
+                    <th className="px-4 py-3 font-medium">Status</th>
+                    <th className="px-4 py-3" />
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {rows.map(({ set, questionCount, sessionCount, avg }) => (
+                    <tr key={set.id} className="transition-colors hover:bg-brand-50/40">
+                      <td className="px-4 py-3">
+                        <p className="font-medium text-card-foreground">{set.title}</p>
+                        {set.description ? (
+                          <p className="mt-0.5 line-clamp-1 text-xs text-muted-foreground">
+                            {set.description}
+                          </p>
+                        ) : null}
+                      </td>
+                      <td className="px-4 py-3 text-muted-foreground">{questionCount}</td>
+                      <td className="px-4 py-3 text-muted-foreground">{sessionCount}</td>
+                      <td className="px-4 py-3 text-card-foreground">{fmtPct(avg)}</td>
+                      <td className="px-4 py-3">
+                        <div className="flex flex-wrap gap-1.5">
+                          {set.is_active ? (
+                            <Badge tone="green">Active</Badge>
+                          ) : (
+                            <Badge tone="gray">Inactive</Badge>
+                          )}
+                          {set.rationale_released_at ? (
+                            <Badge tone="green">Rationales released</Badge>
+                          ) : (
+                            <Badge tone="amber">Rationales locked</Badge>
+                          )}
+                        </div>
+                      </td>
+                      <td className="px-4 py-3 text-right">
+                        <Link
+                          href={`/teacher/mock-exams/${set.id}`}
+                          className="rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground transition-colors hover:bg-brand-800"
+                        >
+                          Manage
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
 
         <aside className="space-y-4 lg:sticky lg:top-4 lg:self-start">
-          <Card>
+          <Card className="rounded-xl border-brand-100">
             <CardTitle className="mb-3">New exam set</CardTitle>
             <CreateSetForm />
           </Card>

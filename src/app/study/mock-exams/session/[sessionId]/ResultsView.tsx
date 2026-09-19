@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
-import { StatCard } from "@/components/ui/StatCard";
 import { OptionRow, type OptionState } from "@/components/questions/OptionRow";
 import { QuestionMetaBadges } from "@/components/questions/QuestionMetaBadges";
 import { RationalePanel } from "@/components/questions/RationalePanel";
@@ -13,6 +12,23 @@ type ResponseRow = {
   selected_option_ids: string[];
   is_correct: boolean | null;
 };
+
+function LockIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className={className} aria-hidden>
+      <rect x="5" y="11" width="14" height="9" rx="2" />
+      <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+    </svg>
+  );
+}
+
+function CheckIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} className={className} aria-hidden>
+      <path d="M5 13l4 4L19 7" />
+    </svg>
+  );
+}
 
 /**
  * Post-exam results. Correctness is only shown AFTER submission — never during
@@ -44,42 +60,60 @@ export function ResultsView({
 
   return (
     <div className="space-y-5">
-      <div className="grid gap-4 sm:grid-cols-3">
-        <StatCard label="Score" value={fmtPct(session.score_pct)} />
-        <StatCard
-          label="Correct"
-          value={`${session.correct_count ?? 0} / ${total}`}
-        />
-        <StatCard label="Completed" value={fmtDateTime(session.completed_at)} />
+      {/* Score hero */}
+      <div className="rounded-2xl border border-brand-100 bg-card p-8 text-center shadow-sm">
+        <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+          Your score — {setTitle}
+        </p>
+        <p className="mt-2 font-heading text-6xl font-bold text-brand-700">
+          {fmtPct(session.score_pct)}
+        </p>
+        <p className="mt-2 text-sm text-muted-foreground">
+          {session.correct_count ?? 0} of {total} correct · completed{" "}
+          {fmtDateTime(session.completed_at)}
+        </p>
       </div>
 
       {!rationaleReleased ? (
-        <p className="rounded-md border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
-          Rationales are locked. Your teacher will release them after class review.
-        </p>
+        <div className="flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3">
+          <LockIcon className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" />
+          <div>
+            <p className="text-sm font-semibold text-amber-900">Rationales are locked</p>
+            <p className="text-sm text-amber-800">
+              Your teacher will release explanations and option rationales after class review.
+            </p>
+          </div>
+        </div>
       ) : (
-        <p className="rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
-          Your teacher has released the rationales for this exam.
-        </p>
+        <div className="flex items-start gap-3 rounded-xl border border-green-200 bg-green-50 px-4 py-3">
+          <CheckIcon className="mt-0.5 h-5 w-5 shrink-0 text-green-600" />
+          <div>
+            <p className="text-sm font-semibold text-green-900">Rationales released</p>
+            <p className="text-sm text-green-800">
+              Your teacher has released the explanations and option rationales for this exam.
+            </p>
+          </div>
+        </div>
       )}
 
-      <Card>
-        <h2 className="font-heading font-semibold text-card-foreground">
-          Review — {setTitle}
-        </h2>
+      <Card className="rounded-xl border-brand-100">
+        <h2 className="font-heading font-semibold text-card-foreground">Question review</h2>
         <p className="mt-1 text-xs text-muted-foreground">
           Questions with no recorded answer are shown as unanswered.
         </p>
-        <ul className="mt-4 space-y-6">
+        <ul className="mt-4 space-y-4">
           {questions.map((q, qi) => {
             const response = byQuestion.get(q.id);
             const selected = new Set(response?.selected_option_ids ?? []);
             const unanswered = !response || response.selected_option_ids.length === 0;
             return (
-              <li key={q.id} className="border-t border-border pt-4 first:border-t-0 first:pt-0">
+              <li
+                key={q.id}
+                className="rounded-xl border border-border bg-card p-4 first:border-t sm:p-5"
+              >
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-sm font-semibold text-card-foreground">
-                    Question {qi + 1}
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-100 text-xs font-semibold text-brand-700">
+                    {qi + 1}
                   </span>
                   {unanswered ? (
                     <Badge tone="amber">Unanswered</Badge>
@@ -88,11 +122,11 @@ export function ResultsView({
                   ) : (
                     <Badge tone="red">Incorrect</Badge>
                   )}
+                  <span className="ml-auto">
+                    <QuestionMetaBadges meta={q} />
+                  </span>
                 </div>
-                <div className="mt-2">
-                  <QuestionMetaBadges meta={q} />
-                </div>
-                <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-card-foreground">
+                <p className="mt-3 whitespace-pre-line text-sm leading-relaxed text-card-foreground">
                   {q.body}
                 </p>
                 <div className="mt-3 space-y-2">
@@ -134,9 +168,9 @@ export function ResultsView({
 
       <Link
         href="/study/mock-exams"
-        className="inline-block rounded-md border border-border bg-card px-5 py-2 text-sm font-medium text-card-foreground hover:bg-muted"
+        className="inline-block rounded-lg border-2 border-brand-700 px-5 py-2 text-sm font-medium text-brand-700 transition-colors hover:bg-brand-50"
       >
-        ← Back to mock exams
+        ‹ Back to mock exams
       </Link>
     </div>
   );

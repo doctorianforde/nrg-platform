@@ -18,6 +18,23 @@ type SessionRow = {
   score_pct: number | null;
 };
 
+function PlayIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
+      <path d="M8 5.5v13l11-6.5z" />
+    </svg>
+  );
+}
+
+function LockIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className={className} aria-hidden>
+      <rect x="5" y="11" width="14" height="9" rx="2" />
+      <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+    </svg>
+  );
+}
+
 export default async function MockExamsPage() {
   const { user, profile } = await requireRole("student", "/study/mock-exams");
   const supabase = createClient();
@@ -43,36 +60,49 @@ export default async function MockExamsPage() {
   }
 
   return (
-    <DashboardShell profile={profile} email={user.email} title="Mock exams">
-      <p className="mb-5 text-sm text-muted-foreground">
-        Mock exams run in real exam format: no feedback while you answer, and no
-        explanations until your teacher releases them after class review.
-      </p>
+    <DashboardShell
+      profile={profile}
+      email={user.email}
+      title="Mock Exams"
+      eyebrow="Exam format"
+      subtitle="RENR-style mock exams in real exam conditions — no feedback while you answer, and explanations stay locked until your teacher releases them after class review."
+    >
       {(!sets || sets.length === 0) ? (
-        <EmptyState title="No mock exams available yet" body="Your teacher hasn't published any exam sets." />
+        <EmptyState
+          title="No mock exams available yet"
+          body="Your teacher hasn't published any exam sets."
+        />
       ) : (
-        <div className="space-y-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
           {sets.map((set) => {
             const past = sessionsBySet.get(set.id) ?? [];
             const released = set.rationale_released_at != null;
             const count = set.mock_exam_set_questions?.length ?? 0;
             return (
-              <Card key={set.id}>
-                <div className="flex flex-wrap items-start justify-between gap-3">
-                  <div className="min-w-0">
-                    <CardTitle>{set.title}</CardTitle>
-                    {set.description ? (
-                      <p className="mt-1 text-sm text-muted-foreground">{set.description}</p>
-                    ) : null}
-                    <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-                      <span>{count} question{count === 1 ? "" : "s"}</span>
-                      {released ? (
-                        <Badge tone="green">Rationales released</Badge>
-                      ) : (
-                        <Badge tone="amber">Rationales locked</Badge>
-                      )}
-                    </div>
-                  </div>
+              <Card
+                key={set.id}
+                className="flex flex-col rounded-xl border-brand-100 transition-shadow hover:shadow-md"
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-100 text-brand-700">
+                    <PlayIcon className="h-4 w-4" />
+                  </span>
+                  {released ? (
+                    <Badge tone="green">Rationales released</Badge>
+                  ) : (
+                    <span className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600">
+                      <LockIcon className="h-3 w-3" /> Rationales locked
+                    </span>
+                  )}
+                </div>
+                <CardTitle className="mt-3 leading-snug">{set.title}</CardTitle>
+                {set.description ? (
+                  <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{set.description}</p>
+                ) : null}
+                <p className="mt-2 text-xs text-muted-foreground">
+                  {count} question{count === 1 ? "" : "s"}
+                </p>
+                <div className="mt-4">
                   <StartExamForm setId={set.id} />
                 </div>
                 {past.length > 0 && (
@@ -80,20 +110,18 @@ export default async function MockExamsPage() {
                     <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Your attempts
                     </div>
-                    <ul className="mt-2 space-y-1 text-sm">
+                    <ul className="mt-2 space-y-1.5 text-sm">
                       {past.map((s) => (
-                        <li key={s.id} className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                        <li key={s.id} className="flex flex-wrap items-center gap-x-2 gap-y-1">
                           {s.completed_at ? (
                             <>
-                              <span className="font-medium text-card-foreground">
-                                Score: {fmtPct(s.score_pct)}
-                              </span>
-                              <span className="text-muted-foreground">
-                                Completed {fmtDateTime(s.completed_at)}
+                              <span className="font-semibold text-brand-700">{fmtPct(s.score_pct)}</span>
+                              <span className="text-xs text-muted-foreground">
+                                {fmtDateTime(s.completed_at)}
                               </span>
                               <Link
                                 href={`/study/mock-exams/session/${s.id}`}
-                                className="text-primary underline"
+                                className="ml-auto text-xs font-medium text-brand-700 underline"
                               >
                                 Review
                               </Link>
@@ -101,12 +129,9 @@ export default async function MockExamsPage() {
                           ) : (
                             <>
                               <Badge tone="blue">In progress</Badge>
-                              <span className="text-muted-foreground">
-                                Started {fmtDateTime(s.started_at)}
-                              </span>
                               <Link
                                 href={`/study/mock-exams/session/${s.id}`}
-                                className="text-primary underline"
+                                className="ml-auto text-xs font-medium text-brand-700 underline"
                               >
                                 Resume
                               </Link>
