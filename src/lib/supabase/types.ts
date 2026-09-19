@@ -1,5 +1,5 @@
 // Generated from nrg-platform-prod via the Supabase MCP connector (2026-09-18).
-// Regenerate after every migration: npx supabase gen types typescript --project-id cdvubijjepwmhhkgppbl > src/lib/supabase/types.ts
+// Regenerate after every migration (questions review_* columns added by hand for 20260919010000): npx supabase gen types typescript --project-id cdvubijjepwmhhkgppbl > src/lib/supabase/types.ts
 export type Json =
   | string
   | number
@@ -99,9 +99,9 @@ export type Database = {
         ]
       }
       questions: {
-        Row: { body: string; cognitive_level: string | null; created_at: string; created_by: string | null; difficulty: string | null; domain_id: number; explanation: string | null; fts: unknown; id: string; is_active: boolean; is_ai_generated: boolean; question_type: string; source: string | null; source_id: string | null; topic_id: number | null; updated_at: string }
-        Insert: { body: string; cognitive_level?: string | null; created_at?: string; created_by?: string | null; difficulty?: string | null; domain_id: number; explanation?: string | null; fts?: unknown; id?: string; is_active?: boolean; is_ai_generated?: boolean; question_type?: string; source?: string | null; source_id?: string | null; topic_id?: number | null; updated_at?: string }
-        Update: { body?: string; cognitive_level?: string | null; created_at?: string; created_by?: string | null; difficulty?: string | null; domain_id?: number; explanation?: string | null; fts?: unknown; id?: string; is_active?: boolean; is_ai_generated?: boolean; question_type?: string; source?: string | null; source_id?: string | null; topic_id?: number | null; updated_at?: string }
+        Row: { body: string; cognitive_level: string | null; created_at: string; created_by: string | null; difficulty: string | null; domain_id: number; explanation: string | null; fts: unknown; id: string; is_active: boolean; is_ai_generated: boolean; question_type: string; review_notes: string | null; review_status: string; reviewed_at: string | null; reviewed_by: string | null; source: string | null; source_id: string | null; topic_id: number | null; updated_at: string }
+        Insert: { body: string; cognitive_level?: string | null; created_at?: string; created_by?: string | null; difficulty?: string | null; domain_id: number; explanation?: string | null; fts?: unknown; id?: string; is_active?: boolean; is_ai_generated?: boolean; question_type?: string; review_notes?: string | null; review_status?: string; reviewed_at?: string | null; reviewed_by?: string | null; source?: string | null; source_id?: string | null; topic_id?: number | null; updated_at?: string }
+        Update: { body?: string; cognitive_level?: string | null; created_at?: string; created_by?: string | null; difficulty?: string | null; domain_id?: number; explanation?: string | null; fts?: unknown; id?: string; is_active?: boolean; is_ai_generated?: boolean; question_type?: string; review_notes?: string | null; review_status?: string; reviewed_at?: string | null; reviewed_by?: string | null; source?: string | null; source_id?: string | null; topic_id?: number | null; updated_at?: string }
         Relationships: [
           { foreignKeyName: "questions_domain_id_fkey"; columns: ["domain_id"]; isOneToOne: false; referencedRelation: "domains"; referencedColumns: ["id"] },
           { foreignKeyName: "questions_topic_id_fkey"; columns: ["topic_id"]; isOneToOne: false; referencedRelation: "topics"; referencedColumns: ["id"] },

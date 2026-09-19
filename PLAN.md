@@ -18,13 +18,13 @@ actually needs to do it.
 
 | Item | Owner | Why |
 |---|---|---|
-| T33 — Sample QA, 20 of Jade's real questions | **You** (script from AI) | The *judgment call* — is this an accurate transcription of what Jade wrote — has to be a human who knows the content. AI/Kimi can write the script that pulls the 20 rows side-by-side with source; can't do the actual read-and-verify. |
+| T33 — Sample QA, 20 of Jade's real questions | **You** (script done, 2026-09-19: `node scripts/qa-sample.mjs --out qa.md`) | The *judgment call* — is this an accurate transcription of what Jade wrote — has to be a human who knows the content. AI/Kimi can write the script that pulls the 20 rows side-by-side with source; can't do the actual read-and-verify. |
 | T34 — RLS end-to-end test | Done (Kimi) | — |
 | T34 finding: should students see inactive questions? | **You** (decision only) | Product/policy call. Once decided, the policy fix itself is a one-line AI task. |
 | T35 — Notify Jade that M2 is delivered | **You** | Client communication. Not an AI task under any circumstance here. |
 | RLS hardening (revoke unneeded grants) | **AI** (Kimi) | Mechanical, well-specified, no judgment needed — optional hardening, do whenever. |
 | Review the 2,000 AI-generated questions (currently `is_active=false`) | **You / Jade** (content judgment), **AI** (tooling) | AI generated them and can build the review UI/export, but a nursing-exam SME (you or Jade) has to actually judge clinical accuracy before anything goes live to students. This is the single biggest remaining content-risk item in Phase 1. |
-| Teacher review UI for the above | **AI** (Kimi) | Well-scoped once you say what the review screen needs (approve/reject/edit, filters, bulk actions). |
+| Teacher review UI for the above | **Done on staging** (Claude, 2026-09-19) — **you**: OK the prod migration + deploy | Built `/teacher/review`; tested 22/22 on staging. Waiting on your go-ahead to apply `20260919010000_question_review_workflow.sql` to prod, deploy, and give Jade a teacher account. See `PROGRESS.md`. |
 | Frontend build-out: `/study`, `/teacher`, `/admin`, `/super-admin` | **AI** (Kimi) | Route guards and auth already exist; this is UI grinding work once you hand over a page-by-page spec. |
 | Mock exam student/teacher UI | **AI** (Kimi) | Schema + RLS gate already done (T36–T38); needs the same spec-first treatment. |
 | T16 — verify email templates | **AI** (Kimi) | Low-stakes dashboard check. |
@@ -69,7 +69,7 @@ tables) · T13 Seed RENR domains · T14 Seed topic scaffolding.
 | T30 Fix errors and re-run | done | partial-unique-index `ON CONFLICT` fix |
 | T31 Run migration on production | done | 100 q / 400 options, `CONFIRM_PROD` path replicated as verified SQL |
 | T32 Count validation | done | 0 errors across all integrity checks, see `PROGRESS.md` |
-| T33 Sample QA — 20 questions | **pending** | spot-check migrated rows vs. source docx |
+| T33 Sample QA — 20 questions | **pending** (script done) | `scripts/qa-sample.mjs` built + tested on staging 2026-09-19 (0 flags DB-vs-CSV). Remaining: Ian reads the sample against the source docx |
 | T34 RLS end-to-end test | **done** (Kimi, staging, 2026-09-19) | 15/15 assertions pass, no policy fixes needed — see `VALIDATION_REPORT.md` and findings below |
 | T35 Notify client — M2 delivered | **pending** | Ian's task, not AI |
 
@@ -101,9 +101,8 @@ T38 Full-text search for mock exam review.
 ## Not yet tracked (post-T38, no task IDs assigned)
 
 - **AI-generated question review workflow.** 2,000 AI-generated questions exist in
-  prod as `is_ai_generated=true`; per the generation script's intent they should sit
-  `is_active=false` until a teacher reviews and flips them active. Confirm current
-  `is_active` state in prod, and whether a review UI exists yet.
+  prod as `is_ai_generated=true`, all `is_active=false` (confirmed). Review UI + schema
+  are built and tested on staging (2026-09-19); prod migration/deploy pending Ian's OK.
 - **Frontend build-out**: `/study` (practice question flow, flashcards, case
   studies), `/teacher` (review queue, class management), `/admin` /
   `/super-admin` dashboards. Route guards exist; the actual page contents need to
@@ -123,7 +122,7 @@ Kimi runs locally on your Mac, so it's well-suited to anything that's mechanical
 self-contained, and doesn't need production Supabase judgment calls or client
 communication. Good candidates, roughly in priority order:
 
-1. **T33 — Sample QA script.** Write a script that pulls 20 random questions tagged
+1. **T33 — Sample QA script.** *(Done 2026-09-19 by Claude: `scripts/qa-sample.mjs`; only the human read-and-verify remains.)* Write a script that pulls 20 random questions tagged
    `Author: Jade Nicome` from prod, prints them alongside the matching rows in
    `data/questions.csv` (or the original docx text), for manual side-by-side review.
    The *scripting* is a good Kimi task; the actual judgment call on "is this an
@@ -134,7 +133,7 @@ communication. Good candidates, roughly in priority order:
    which role guards apply) — good fit for a local coding agent grinding through UI
    work without needing production credentials.
 
-3. **AI-generated question review UI** — a teacher-facing page listing
+3. **AI-generated question review UI** *(done on staging 2026-09-19 — see `PROGRESS.md`)* — a teacher-facing page listing
    `is_active=false` questions with approve/reject/edit actions. Same reasoning as
    above: well-specified once scoped, mechanical to build.
 
