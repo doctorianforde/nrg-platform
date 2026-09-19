@@ -1,0 +1,77 @@
+[
+  {
+    "name": "student reads questions (limit 10)",
+    "pass": true,
+    "detail": "status=200 rows=10 (total bank=1000, active=100)"
+  },
+  {
+    "name": "student INSERT question blocked",
+    "pass": true,
+    "detail": "status=403 code=42501"
+  },
+  {
+    "name": "student cannot read other profiles",
+    "pass": true,
+    "detail": "status=200 rows=0"
+  },
+  {
+    "name": "student CAN read own profile",
+    "pass": true,
+    "detail": "status=200 rows=1"
+  },
+  {
+    "name": "teacher INSERT question succeeds",
+    "pass": true,
+    "detail": "status=201 id=c2400c13-027f-4969-943d-d54dac0ca3b2"
+  },
+  {
+    "name": "other teacher UPDATE blocked",
+    "pass": true,
+    "detail": "status=200 affected_rows=0 (PostgREST: 200 + empty = RLS denied)"
+  },
+  {
+    "name": "question unchanged after blocked UPDATE",
+    "pass": true,
+    "detail": "body=\"RLS E2E teacher insert\""
+  },
+  {
+    "name": "own-teacher UPDATE succeeds",
+    "pass": true,
+    "detail": "status=200"
+  },
+  {
+    "name": "teacher cannot read all profiles",
+    "pass": true,
+    "detail": "status=200 rows=1"
+  },
+  {
+    "name": "admin reads all questions",
+    "pass": true,
+    "detail": "status=200 rows=1000 (bank=1000)"
+  },
+  {
+    "name": "admin UPDATE question succeeds",
+    "pass": true,
+    "detail": "status=200 is_active=false"
+  },
+  {
+    "name": "admin reads all profiles",
+    "pass": true,
+    "detail": "status=200 rows=4 (test users=4)"
+  },
+  {
+    "name": "anon read blocked (0 rows)",
+    "pass": true,
+    "detail": "status=200 rows=0"
+  },
+  {
+    "name": "anon profile read blocked (0 rows)",
+    "pass": true,
+    "detail": "status=200 rows=0"
+  },
+  {
+    "name": "cleanup: profiles empty again",
+    "pass": true,
+    "detail": "profiles=0"
+  }
+]
