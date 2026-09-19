@@ -25,8 +25,9 @@ actually needs to do it.
 | RLS hardening (revoke unneeded grants) | **AI** (Kimi) | Mechanical, well-specified, no judgment needed — optional hardening, do whenever. |
 | Review the 2,000 AI-generated questions (currently `is_active=false`) | **You / Jade** (content judgment), **AI** (tooling) | AI generated them and can build the review UI/export, but a nursing-exam SME (you or Jade) has to actually judge clinical accuracy before anything goes live to students. This is the single biggest remaining content-risk item in Phase 1. |
 | Teacher review UI for the above | **Done on staging** (Claude, 2026-09-19) — **you**: OK the prod migration + deploy | Built `/teacher/review`; tested 22/22 on staging. Waiting on your go-ahead to apply `20260919010000_question_review_workflow.sql` to prod, deploy, and give Jade a teacher account. See `PROGRESS.md`. |
-| Frontend build-out: `/study`, `/teacher`, `/admin`, `/super-admin` | **AI** (Kimi) | Route guards and auth already exist; this is UI grinding work once you hand over a page-by-page spec. |
-| Mock exam student/teacher UI | **AI** (Kimi) | Schema + RLS gate already done (T36–T38); needs the same spec-first treatment. |
+| Frontend build-out: `/study`, `/teacher`, `/admin`, `/super-admin` | **Built** (Kimi, 2026-09-19) — **you**: review + deploy when ready | All four areas built against the real schema (no migrations): study lobby, practice/tutor mode, flashcards, case studies, teacher dashboard, admin/super-admin dashboards. Styled on tokens extracted from the OKComputer reference; page-by-page restyle against the reference layouts pending. See `PROGRESS.md`. |
+| Mock exam student/teacher UI | **Built** (Kimi, 2026-09-19) — **you**: review the rationale-gate behavior before deploy | Student exam runner (zero feedback while answering), results with rationales gated on `rationale_released_at`; teacher set builder + deliberate one-way release button. Business rules enforced at app layer; see `PROGRESS.md`. |
+| Analytics / rank system (reference: AnalyticsPage, RankSystemPage) | **You** (decision), then **AI** (build) | The reference prototype has these pages but our schema has no analytics/performance/rank tables — no data model exists to build against. Needs your call on what to track before anyone builds it. |
 | T16 — verify email templates | **AI** (Kimi) | Low-stakes dashboard check. |
 | Three unreviewed docx files in Jade's RENR folder | **You** (decision), then **AI** (processing) | Need your read on what Jade actually wants before any script touches them — could be new content, could be duplicate drafts. |
 
@@ -103,12 +104,15 @@ T38 Full-text search for mock exam review.
 - **AI-generated question review workflow.** 2,000 AI-generated questions exist in
   prod as `is_ai_generated=true`, all `is_active=false` (confirmed). Review UI + schema
   are built and tested on staging (2026-09-19); prod migration/deploy pending Ian's OK.
-- **Frontend build-out**: `/study` (practice question flow, flashcards, case
-  studies), `/teacher` (review queue, class management), `/admin` /
-  `/super-admin` dashboards. Route guards exist; the actual page contents need to
-  be checked against `src/app/` — likely still scaffolds.
-- **Mock exam UI**: schema and RLS gate exist (T36–T38); the student-facing exam
-  flow and teacher rationale-release UI are unbuilt as of this log.
+- **Frontend build-out**: DONE 2026-09-19 (Kimi) — `/study` lobby + practice/tutor
+  mode + flashcards + case studies, `/teacher` dashboard, `/admin` + `/super-admin`
+  read-only dashboards. Restyle against the reference's exact page layouts pending.
+  See `PROGRESS.md` (2026-09-19 entry).
+- **Mock exam UI**: DONE 2026-09-19 (Kimi) — student exam runner + results, teacher
+  set builder + rationale release. App-layer rationale gate implemented per T36–T38
+  rules. See `PROGRESS.md`.
+- **Analytics / rank pages**: not built — no backing tables in our schema; needs Ian's
+  data-model decision first (see Phase 1 table above).
 - **Three unreviewed docx files** in Jade's RENR folder — see `PROGRESS.md`.
 - **Local AI provider wiring**: `scripts/generate-questions.ts` already supports
   `--provider ollama` for locally-run models — this is existing capability, not new

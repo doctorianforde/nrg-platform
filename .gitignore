@@ -47,3 +47,6 @@ docs/*credentials*.md
 transcription/
 data/
 !.env.local.example
+
+# design reference only — built Vite bundle, not source, not for version control
+OKComputer_NRG_Website_v62/

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Profile } from "@/lib/auth/session";
 import { hasAtLeast } from "@/lib/auth/roles";
 
@@ -21,11 +22,20 @@ export function DashboardShell({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-[hsl(270,25%,98%)]">
-      <header className="bg-[hsl(270,60%,35%)] text-white">
-        <div className="mx-auto max-w-5xl px-4 h-14 flex items-center gap-6">
-          <Link href="/" className="font-bold tracking-tight">
-            NRG <span className="font-normal opacity-70">Platform</span>
+    <div className="min-h-screen bg-muted">
+      <header className="bg-brand-700 text-white shadow-sm">
+        <div className="mx-auto max-w-6xl px-4 h-14 flex items-center gap-6">
+          <Link href="/" className="flex items-center gap-2 font-brand font-bold tracking-tight">
+            <Image
+              src="/images/nrg-logo.png"
+              alt="NRG"
+              width={28}
+              height={28}
+              className="rounded"
+            />
+            <span>
+              NRG <span className="font-normal opacity-70">Platform</span>
+            </span>
           </Link>
           <nav className="flex gap-4 text-sm">
             {NAV.filter((n) => hasAtLeast(profile.role, n.min)).map((n) => (
@@ -47,7 +57,7 @@ export function DashboardShell({
           </div>
         </div>
       </header>
-      <main className="mx-auto max-w-5xl px-4 py-8">
+      <main className="mx-auto max-w-6xl px-4 py-8">
         <h1 className="text-xl font-semibold mb-4">{title}</h1>
         {children}
       </main>

@@ -1,0 +1,64 @@
+{
+  "background_color": "#ffffff",
+  "description": "\"RENR review sessions for regional nursing students with performance tracking and weekly live sessions\"",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "Nursing Review Examination Guide",
+  "orientation": "portrait",
+  "scope": "/",
+  "short_name": "NRG Beta",
+  "start_url": "https://nrg.onhercules.app",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'&gt;&lt;text y='.9em' font-size='90'&gt;⚡&lt;/text&gt;&lt;/svg&gt;",
+      "type": "image/svg+xml",
+      "isSquare": false,
+      "isPng": false,
+      "isWebp": false,
+      "isJpg": false,
+      "width": 0,
+      "is512x512": false,
+      "is256x256": false,
+      "is192x192": false
+    },
+    {
+      "src": "https://hercules.app/og/app/01KKS5ZTD361ZCH1E5STKDVFD5.png",
+      "type": "image/png",
+      "sizes": "1200x630",
+      "isSquare": false,
+      "isPng": true,
+      "isWebp": false,
+      "isJpg": false,
+      "width": 1200,
+      "is512x512": false,
+      "is256x256": false,
+      "is192x192": false
+    },
+    {
+      "src": "https://nrg.onhercules.app/favicon.ico",
+      "type": "image/x-icon",
+      "isSquare": false,
+      "isPng": false,
+      "isWebp": false,
+      "isJpg": false,
+      "width": 0,
+      "is512x512": false,
+      "is256x256": false,
+      "is192x192": false
+    }
+  ],
+  "id": "NRG",
+  "lang": "en",
+  "display_override": [
+    "standalone",
+    "window-controls-overlay"
+  ],
+  "categories": [
+    "education",
+    "entertainment",
+    "health",
+    "medical",
+    "productivity"
+  ]
+}

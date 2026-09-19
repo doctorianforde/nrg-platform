@@ -130,8 +130,44 @@ Lets Jade evaluate the 2,000 AI-generated questions in the app instead of raw SQ
   inactive questions via the API, so pending/rejected AI questions are readable by
   students until the read policy is tightened. Now more relevant than before.
 - **To go live for Jade:** (1) Ian OKs the migration on prod, (2) deploy the app,
-  (3) promote Jade's prod account to `teacher` (or `admin`) with SQL, (4) she opens
+  (3) promote Jade's prod account to `teacher` (or `admin`) with SQL, (4) he opens
   `/teacher/review`. Committed as `6927c9e` (local, not pushed).
+
+## Frontend build-out (Kimi, 2026-09-19): /study, dashboards, mock exam UI — skeletons built, design-restyle pending
+
+Built against the real schema (no migrations needed). Verified: `tsc --noEmit`, `next lint`,
+`next build` all clean (20 routes). Not committed to git as of this entry.
+
+- **Design foundation** — real tokens/assets extracted from the OKComputer_NRG_Website_v62
+  reference (per Ian: reference only, no code port): images + logo + correct/wrong MP3s
+  copied to `public/`, font stack (Inter/Poppins/Nunito Sans) via `next/font`, Tailwind theme
+  rebuilt on the reference's actual CSS variables (primary `#6b2d8b`, brand-50…950, gold,
+  radius .625rem). Shared primitives: `src/components/ui/` (Card, Badge, StatCard,
+  EmptyState), `src/lib/cn.ts`, question components in `src/components/questions/`
+  (OptionRow, QuestionMetaBadges, RationalePanel, TutorSession), `src/lib/quiz/`.
+- **/study** — lobby (mode cards, per-domain active-question counts), practice setup +
+  tutor-mode session (instant feedback, explanation + per-option rationales, correct/wrong
+  sounds), flashcards (topic picker, CSS flip deck, shuffle), case studies (scenario +
+  linked questions in tutor mode). Student queries always filter `is_active=true` at the
+  app layer (T34 finding #1 not yet decided, so we filter in code).
+- **/teacher** — dashboard (review-queue StatCards, needs-changes banner, quick links);
+mock exam set management (create set, add/remove active questions via search, sessions
+table; deliberately no student names — RLS blocks cross-profile reads for teachers).
+- **/admin, /super-admin** — read-only dashboards: user/role counts, recent signups
+  (admin only), questions per domain, content totals, environment refs. Deliberately NO
+  role-promotion UI (README says SQL-only; Ian's call).
+- **Mock exam UI (student + teacher)** — business rules enforced at the app layer: exam
+  runner gets a sanitized payload (no is_correct/explanation/rationale in the browser
+  bundle during an open exam), zero feedback while answering, grading stays in the DB
+  (trigger + `complete_mock_exam_session` RPC), rationales shown post-exam ONLY when
+  `mock_exam_sets.rationale_released_at` is set, release is a deliberate teacher button
+  (one-way; re-lock is admin-only per DB trigger, no UI for it).
+- **Open questions flagged for Ian** — (1) analytics/rank pages from the reference have
+  no backing tables in our schema; not built, needs a data-model decision; (2) role-
+  promotion UI; (3) practice sessions are not persisted (no table) — add later if history
+  matters; (4) everything is styled on the extracted tokens, but a page-by-page restyle
+  against the reference's exact layouts is pending the design-spec pass (subagent was
+  still screenshotting the prototype when this entry was written).
 
 ## Not yet done / not yet verified
 

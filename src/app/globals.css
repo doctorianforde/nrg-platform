@@ -2,22 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Design tokens from the OKComputer reference build (light theme only) */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: 0 0% 100%;
+  --foreground: 270 30% 15%;
+  --card: 0 0% 100%;
+  --card-foreground: 270 30% 15%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 270 30% 15%;
+  --primary: 270 60% 35%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 270 25% 95%;
+  --secondary-foreground: 270 60% 35%;
+  --muted: 270 15% 96%;
+  --muted-foreground: 270 10% 45%;
+  --accent: 270 25% 95%;
+  --accent-foreground: 270 60% 35%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 270 20% 90%;
+  --input: 270 20% 90%;
+  --ring: 270 60% 35%;
+  --radius: 0.625rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    @apply bg-background text-foreground font-sans;
   }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  h1, h2, h3, h4 {
+    @apply font-heading;
+  }
 }
 
 @layer utilities {
