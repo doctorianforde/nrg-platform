@@ -89,7 +89,7 @@ checks all 100 rows for only-in-CSV / only-in-DB mismatches.
   *migration* was faithful, not the *docx→CSV transcription*. Ian (or Jade) still has
   to read each block against `NRG RENR Sample Questions #1.docx` and `Sample Answers
   #1.docx`. That human check is what closes T33.
-- Not committed yet.
+- Committed as `f1d4d95` (local, not pushed).
 
 ## Question review section (Claude, 2026-09-19): built + tested on staging, NOT yet on prod
 
@@ -131,7 +131,7 @@ Lets Jade evaluate the 2,000 AI-generated questions in the app instead of raw SQ
   students until the read policy is tightened. Now more relevant than before.
 - **To go live for Jade:** (1) Ian OKs the migration on prod, (2) deploy the app,
   (3) promote Jade's prod account to `teacher` (or `admin`) with SQL, (4) she opens
-  `/teacher/review`. Not committed yet.
+  `/teacher/review`. Committed as `6927c9e` (local, not pushed).
 
 ## Not yet done / not yet verified
 
@@ -207,5 +207,5 @@ Jade for content sign-off) — say the word and I'll pull a batch into an .xlsx.
 
 ## Git
 
-- `HEAD` at start of the 2026-09-19 session: `ba6d4eb` on `main` (the earlier `a93d7b5`
-  is an ancestor). `scripts/qa-sample.mjs` is new and uncommitted.
+- `HEAD` at start of the 2026-09-19 session: `ba6d4eb`. Since then, local commits on `main` (not pushed to
+  `origin/main`): `f1d4d95` (T33 QA script), `6927c9e` (review queue + migration + docs).
