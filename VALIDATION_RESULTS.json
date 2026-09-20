@@ -22,7 +22,7 @@
   {
     "name": "teacher INSERT question succeeds",
     "pass": true,
-    "detail": "status=201 id=c2400c13-027f-4969-943d-d54dac0ca3b2"
+    "detail": "status=201 id=60165d49-12a2-4952-847a-e3a19dc83b5e"
   },
   {
     "name": "other teacher UPDATE blocked",
@@ -40,9 +40,9 @@
     "detail": "status=200"
   },
   {
-    "name": "teacher cannot read all profiles",
+    "name": "teacher reads students + own row, but not other staff",
     "pass": true,
-    "detail": "status=200 rows=1"
+    "detail": "status=200 rows=2 own=true student=true otherTeacher=false admin=false"
   },
   {
     "name": "admin reads all questions",

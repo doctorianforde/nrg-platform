@@ -29,6 +29,7 @@
 import { readdirSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { CJK, repairCjk } from "./lib/cjk";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO = resolve(__dirname, "..");
@@ -137,17 +138,8 @@ function stripOptionPrefix(options: string[]): string[] {
   return options.map((o) => o.replace(/^[A-E][.)]\s+/, "").trim());
 }
 
-// Stray CJK tokens from the prototype's generators (found 2026-09-20 during
-// pre-import screening). Intent is unambiguous in context; repaired inline.
-const CJK_REPAIRS: Array<[RegExp, string]> = [
-  [/not替代/g, "not a substitute"],
-  [/永久NPO/g, "permanent NPO"],
-  [/定向 strategies/g, "orientation strategies"],
-];
-function repairCjk(s: string): string {
-  for (const [re, to] of CJK_REPAIRS) s = s.replace(re, to);
-  return s;
-}
+// CJK repair table lives in scripts/lib/cjk.ts because the letter fixer has to
+// apply exactly the same transform to match option text back to the source.
 
 function normalise(family: Family, raw: RawQuestion, file: string): NormQuestion | { skip: string } {
   let options = (raw.options ?? []).map((o) => String(o));
@@ -203,6 +195,96 @@ const STOPWORDS = new Set(("a an the and or but of to in on for with without by 
 
 const NEGATION = /\b(not|no|never|none|incorrect|wrong|except|neither)\b/i;
 
+const COMPOUND_OPTION =
+  /^(all of the above|none of the above|both [a-d] and [a-d]|[a-d] and [a-d] (only|are)|all of these)/i;
+
+// Human override, recorded rather than hidden.
+//
+// The DISAGREES rule fires on rationales that CONTRAST - describing the correct
+// answer and then characterising the alternatives without a negation word ("Ectopic:
+// no IUP, adnexal mass... Threatened abortion: visible IUP, closed cervix..."). The
+// distractor description out-scores the keyed option, so a sound item gets flagged.
+//
+// All 77 original DISAGREES were read by hand (Claude, 2026-09-20). In every case the
+// rationale supported the keyed option. 7 were compound-option items, now handled
+// structurally above and left in review; the 70 below are recorded here so the
+// judgement travels with the code and survives a re-run.
+//
+// This does NOT weaken the heuristic for data nobody has read - an id appears here
+// only because a person read that question.
+const HAND_REVIEWED_KEY_OK = new Set<string>([
+  "proto:caribbean2000:10690",
+  "proto:caribbean2000:10736",
+  "proto:caribbean2000:11480",
+  "proto:clinical-skills:9128",
+  "proto:clinical-skills:9168",
+  "proto:clinical-skills:9293",
+  "proto:clinical-skills:9347",
+  "proto:clinical-skills:9356",
+  "proto:clinical-skills:9408",
+  "proto:clinical-skills:9443",
+  "proto:clinical-skills:9478",
+  "proto:maternal-child:6170",
+  "proto:maternal-child:6182",
+  "proto:maternal-child:6211",
+  "proto:maternal-child:6235",
+  "proto:maternal-child:6264",
+  "proto:maternal-child:6283",
+  "proto:maternal-child:6342",
+  "proto:maternal-child:6376",
+  "proto:maternal-child:6410",
+  "proto:maternal-child:6547",
+  "proto:maternal-child:6551",
+  "proto:maternal-child:6606",
+  "proto:maternal-child:6650",
+  "proto:maternal-child:6678",
+  "proto:maternal-child:6692",
+  "proto:maternal-child:6698",
+  "proto:maternal-child:6731",
+  "proto:maternal-child:6741",
+  "proto:maternal-child:6749",
+  "proto:maternal-child:6752",
+  "proto:maternal-child:6761",
+  "proto:maternal-child:6795",
+  "proto:maternal-child:6810",
+  "proto:maternal-child:6974",
+  "proto:maternal-child:7054",
+  "proto:nrg-general:5175",
+  "proto:nrg-general:5223",
+  "proto:nrg-general:5230",
+  "proto:nrg-general:5239",
+  "proto:nrg-general:5276",
+  "proto:nrg-general:5309",
+  "proto:nrg-general:5375",
+  "proto:nrg-general:5454",
+  "proto:nrg-general:5495",
+  "proto:nrg-general:5622",
+  "proto:nrg-rankup:5645",
+  "proto:nrg-rankup:5759",
+  "proto:nrg-rankup:5830",
+  "proto:nrg-rankup:5832",
+  "proto:nrg-rankup:5838",
+  "proto:nrg-rankup:5907",
+  "proto:nrg-rankup:6007",
+  "proto:nrg-rankup:6009",
+  "proto:nrg-rankup:6050",
+  "proto:professionalism:7207",
+  "proto:professionalism:7304",
+  "proto:professionalism:7403",
+  "proto:professionalism:7660",
+  "proto:professionalism:7664",
+  "proto:professionalism:8048",
+  "proto:renr-batch4:8085",
+  "proto:renr-batch4:8149",
+  "proto:renr-batch4:8159",
+  "proto:renr-batch4:8233",
+  "proto:renr-batch4:8299",
+  "proto:renr-batch4:8527",
+  "proto:renr-batch4:8703",
+  "proto:renr-batch4:8992",
+  "proto:renr-batch4:9038",
+]);
+
 function contentTokens(text: string): string[] {
   return text
     .toLowerCase()
@@ -244,6 +326,16 @@ function agreement(q: NormQuestion): { bucket: "AGREES" | "DISAGREES" | "UNVERIF
 
   const k = scores[q.correctIdx];
   const othersMax = Math.max(...scores.filter((_, i) => i !== q.correctIdx));
+
+  // "All of the above" / "Both A and B" carry no distinctive tokens, so the keyed
+  // option always scores ~0 while the individually-worded distractors score high.
+  // The heuristic cannot speak to these at all - 7 of the original 77 DISAGREES were
+  // exactly this. They also breach the client's own item-writing standard ("single-
+  // action options, no compound options"), so they belong in human review, not in a
+  // clean import.
+  if (COMPOUND_OPTION.test(q.options[q.correctIdx].trim()))
+    return { bucket: "UNVERIFIABLE", scores, note: "compound-keyed-option (not scorable; also against the no-compound-options standard)" };
+
   if (othersMax >= 3 && othersMax >= 2 * k && k <= 2)
     return { bucket: "DISAGREES", scores, note: "other-option-overwhelmingly-supported" };
   if (k >= 2 && k > othersMax)
@@ -252,6 +344,22 @@ function agreement(q: NormQuestion): { bucket: "AGREES" | "DISAGREES" | "UNVERIF
 }
 
 // ─── Seeded RNG + shuffle ────────────────────────────────────────────────────
+// Seeded PER QUESTION from its source_id, not one stream consumed in iteration
+// order. With a single stream, adding or removing any row reshuffles every row
+// after it, which would silently invalidate the option order already imported and
+// the letter references repaired against it (scripts/fix-explanation-letters.ts).
+// Per-question seeding makes each row a pure function of its own id, so the export
+// is stable under edits elsewhere.
+function seedFrom(id: string): number {
+  let h = 2166136261 >>> 0;
+  for (let i = 0; i < id.length; i++) {
+    h ^= id.charCodeAt(i);
+    h = Math.imul(h, 16777619) >>> 0;
+  }
+  return (h ^ SEED) >>> 0;
+}
+const rngFor = (id: string) => mulberry32(seedFrom(id));
+
 function mulberry32(seed: number) {
   let a = seed >>> 0;
   return () => {
@@ -333,7 +441,7 @@ async function main() {
   const quarRows: string[] = [];
   const seenStems = new Map<string, string>(); // normalised stem → first source_id
   const anomalies: string[] = [];
-  const rng = mulberry32(SEED);
+  
 
   const samplePrint: string[] = [];
 
@@ -354,6 +462,15 @@ async function main() {
         if (n.rationale.length === 0) st.emptyRationales++;
         if (ESCAPE_BUG.test(raw.stem ?? "")) st.escapedStems++;
         if (/\*\*/.test(String(raw.stem ?? ""))) st.markdownBold++;
+        // CJK the repair table does not cover. Never ship it silently: a student
+        // reading a Chinese fragment mid-stem is worse than a missing question,
+        // and a new stray token means the source generator has regressed.
+        if (CJK.test(n.stem) || n.options.some((o) => CJK.test(o)) || CJK.test(n.rationale)) {
+          st.structuralAnomalies++;
+          if (anomalies.length < 10) anomalies.push(`${family.slug}:${n.id} — unrepaired CJK — ${n.stem.slice(0, 90)}`);
+          quarRows.push([`proto:${n.family}:${n.id}`, n.family, "unrepaired CJK token (add to CJK_REPAIRS and re-run)", n.stem, n.options[n.correctIdx]].map(csvCell).join(","));
+          continue;
+        }
         if (STRUCTURAL.test(n.stem) || TEMPLATE_TYPO.test(n.stem)) {
           // Mangled stem text (source find-replace ate place names, dropped
           // clauses). Quarantine for repair in source + re-run; never ship.
@@ -393,7 +510,12 @@ async function main() {
         const verdict = agreement(n);
         if (verdict.bucket === "AGREES") {
           st.agrees++; st.clean++;
-          if (!SAMPLE_ONLY) cleanRows.push(toCleanRow(n, rng));
+          if (!SAMPLE_ONLY) cleanRows.push(toCleanRow(n, rngFor(`proto:${n.family}:${n.id}`)));
+        } else if (verdict.bucket === "DISAGREES" && HAND_REVIEWED_KEY_OK.has(`proto:${n.family}:${n.id}`)) {
+          // Read by a human; the rationale does support the key. Treated as AGREES.
+          stats[n.family].agrees++;
+          stats[n.family].clean++;
+          if (!SAMPLE_ONLY) cleanRows.push(toCleanRow(n, rngFor(`proto:${n.family}:${n.id}`)));
         } else if (verdict.bucket === "DISAGREES") {
           st.disagrees++;
           quarRows.push([`proto:${n.family}:${n.id}`, n.family, `key-mismatch (${verdict.note}; scores ${verdict.scores?.join("/")})`, n.stem, n.options[n.correctIdx]].map(csvCell).join(","));

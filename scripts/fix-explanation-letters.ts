@@ -35,6 +35,7 @@ import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { repairCjk } from "./lib/cjk";
 
 const args = process.argv.slice(2);
 const flag = (n: string) => { const i = args.indexOf(`--${n}`); return i >= 0 ? args[i + 1] : undefined; };
@@ -76,7 +77,12 @@ const db: SupabaseClient = createClient(URL, KEY, { auth: { persistSession: fals
 const decode = (s: string) =>
   s.replace(/\\u([0-9a-fA-F]{4})/g, (_, h) => String.fromCharCode(parseInt(h, 16)))
    .replace(/\\n/g, " ").replace(/\\t/g, " ").replace(/\\"/g, '"').replace(/\\'/g, "'");
-const flat = (s: string) => decode(s).replace(/\s+/g, " ").trim();
+/** Decode, then apply the SAME CJK repair the import applied, then flatten space.
+ *  The repair has to happen here and not only in `norm`, because `flat` also
+ *  derives the rationale text written back to the database — without it the fixer
+ *  would match on repaired text but write raw CJK, and would read every repaired
+ *  row as "drifted" on the next run. */
+const flat = (s: string) => repairCjk(decode(s)).replace(/\s+/g, " ").trim();
 const norm = (s: string) =>
   flat(s).replace(/[""]/g, '"').replace(/['']/g, "'").toLowerCase();
 const stripLabel = (s: string) => s.replace(/^\s*[A-Fa-f][.)]\s+/, "").trim();
