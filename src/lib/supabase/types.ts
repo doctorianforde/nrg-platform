@@ -1,4 +1,6 @@
 // Generated from nrg-platform-prod via the Supabase MCP connector (2026-09-18).
+// Hand-maintained since: questions.review_* (20260919010000) and the messaging tables
+// (20260919020000). `supabase gen types` needs Docker, which isn't set up on this machine.
 // Regenerate after every migration (questions review_* columns added by hand for 20260919010000): npx supabase gen types typescript --project-id cdvubijjepwmhhkgppbl > src/lib/supabase/types.ts
 export type Json =
   | string
@@ -40,6 +42,18 @@ export type Database = {
         Insert: { back: string; created_at?: string; front: string; id?: string; is_active?: boolean; topic_id?: number | null }
         Update: { back?: string; created_at?: string; front?: string; id?: string; is_active?: boolean; topic_id?: number | null }
         Relationships: [{ foreignKeyName: "flashcards_topic_id_fkey"; columns: ["topic_id"]; isOneToOne: false; referencedRelation: "topics"; referencedColumns: ["id"] }]
+      }
+      message_threads: {
+        Row: { created_at: string; id: string; last_message_at: string; session_id: string | null; staff_last_read_at: string | null; status: string; student_id: string; student_last_read_at: string | null; subject: string }
+        Insert: { created_at?: string; id?: string; last_message_at?: string; session_id?: string | null; staff_last_read_at?: string | null; status?: string; student_id: string; student_last_read_at?: string | null; subject: string }
+        Update: { created_at?: string; id?: string; last_message_at?: string; session_id?: string | null; staff_last_read_at?: string | null; status?: string; student_id?: string; student_last_read_at?: string | null; subject?: string }
+        Relationships: [{ foreignKeyName: "message_threads_session_id_fkey"; columns: ["session_id"]; isOneToOne: false; referencedRelation: "mock_exam_sessions"; referencedColumns: ["id"] }]
+      }
+      messages: {
+        Row: { author_id: string; body: string; created_at: string; id: string; thread_id: string }
+        Insert: { author_id: string; body: string; created_at?: string; id?: string; thread_id: string }
+        Update: { author_id?: string; body?: string; created_at?: string; id?: string; thread_id?: string }
+        Relationships: [{ foreignKeyName: "messages_thread_id_fkey"; columns: ["thread_id"]; isOneToOne: false; referencedRelation: "message_threads"; referencedColumns: ["id"] }]
       }
       migration_log: {
         Row: { created_at: string; id: number; message: string | null; run_id: string; source_id: string | null; status: string }
@@ -141,6 +155,7 @@ export type Database = {
         Args: { p_query: string; p_student_id: string }
         Returns: { body: string; completed_at: string; is_correct: boolean; question_id: string; rank: number; session_id: string; set_title: string }[]
       }
+      mark_thread_read: { Args: { p_thread_id: string }; Returns: undefined }
       user_role: { Args: never; Returns: string }
     }
     Enums: { [_ in never]: never }

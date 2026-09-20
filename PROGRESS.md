@@ -279,6 +279,75 @@ recommendation categories.
 - Nothing tracks fatigue across attempts over time; each report is one sitting.
 - Exams under 16 questions get no analysis at all — quarters would be meaningless.
 
+## Student profile + messaging (Claude, 2026-09-19) — built, tested on staging, NOT yet on prod
+
+A student profile section with a direct line to teaching staff, so students can ask
+Jade questions and get feedback in the app.
+
+**Where it appears**
+- Student: `/study/profile` — their details, an editable display name, mock exam
+  stats, a "Ask your teacher" form, and their conversations.
+  `/study/profile/threads/[id]` is the conversation itself.
+- Student: the mock exam results page gained an "Ask your teacher about this
+  attempt" button, which opens the profile with that attempt already attached.
+- Teacher: `/teacher/messages` inbox and `/teacher/messages/[id]`; the teacher
+  dashboard shows an unread banner and a quick link.
+- Code: `supabase/migrations/20260919020000_student_messaging.sql`,
+  `src/lib/messages/`, `src/components/messages/`, the two route folders above.
+
+**Shape (Ian's two calls, 2026-09-19)**
+1. *Threads that can cite an attempt.* A student opens a thread with a subject and
+   an optional `mock_exam_sessions` reference, so Jade can see the result being
+   asked about. A DB trigger rejects citing an attempt belonging to anyone else.
+2. *Teachers see only students who have written to them.* The guiding rule is
+   **you can see someone's name if you share a conversation** — which is symmetric,
+   so a student can also see the name of the teacher who replied, and nothing wider.
+
+**Schema**
+- `message_threads` — student_id, subject, optional session_id, status
+  (`open|answered|closed`), `last_message_at`, and a read marker per side.
+- `messages` — thread_id, author_id, body. Append-only: no UPDATE grant or policy
+  on either table, so a feedback record can't be edited after the fact.
+- Posting is handled by `trg_touch_message_thread`, which bumps the thread, flips
+  status (student posts → `open`, staff posts → `answered`) and marks the author
+  caught up. Read state is stamped by the `mark_thread_read()` RPC rather than an
+  UPDATE policy, so neither side needs write access to the threads table.
+- **`profiles` SELECT policy replaced.** Was own-row-or-admin, which meant a teacher
+  could not see who was writing to them — messaging is impossible without changing
+  it. Now own row, or admin, or `shares_thread_with(id)`. Threads are
+  student-initiated only, precisely because staff still cannot browse the roster.
+
+**Testing (staging)**
+- 30 checks, browser + API (Playwright + Chrome, real JWTs): the whole round trip
+  (student asks with an attached attempt → teacher inbox shows their name → reply →
+  student sees it, unread clears), plus every boundary:
+  another student gets 404 on the thread and 0 rows from the API; cannot post into
+  it; cannot post under someone else's name; cannot cite another student's attempt;
+  cannot open a thread on another student's behalf; threads reject student UPDATE.
+  Profile visibility verified in all four directions — teacher CAN read a student who
+  wrote in, CANNOT read one who did not; student CAN read the teacher who replied, an
+  uninvolved student CANNOT.
+- T34 RLS suite re-run after the profiles policy change: still 15/15. It passes
+  because nobody shares a thread in that test, which is exactly the intended
+  behaviour.
+- `next build`, `next lint`, `tsc` clean. Fatigue unit checks still pass. All seeded
+  users, threads and exam data deleted — staging is back to 0 rows on every table.
+- One real bug caught and fixed: the reply box kept its text after sending, because
+  a successful action returned `null` — the same value the form started with, so the
+  reset effect never re-fired. Success is now its own state.
+
+**Limits worth knowing**
+- Staff cannot start a conversation, only reply. That follows directly from decision
+  2: they cannot see students who have not written in. If Jade should be able to
+  reach out first, that needs a roster and a wider profiles policy — Ian's call.
+- No notifications outside the app (no email/push); unread is shown on the dashboard.
+- No attachments or images, and no typing/delivery indicators. Threads are not
+  closable from the UI yet, though the DB and UI both honour `closed`.
+- `src/lib/supabase/types.ts` was hand-edited again for the two new tables:
+  `supabase gen types` needs Docker, which isn't set up on this machine.
+- If prod deploys before the migration is applied, the pages degrade to empty rather
+  than erroring (the queries return no rows), but nothing can be sent.
+
 ## Not yet done / not yet verified
 
 - **T33 — human read-and-verify** of the 20 sampled questions against the docx

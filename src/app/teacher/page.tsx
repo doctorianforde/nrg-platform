@@ -5,6 +5,7 @@ import { DashboardShell } from "@/components/DashboardShell";
 import { Card, CardTitle } from "@/components/ui/Card";
 import { StatCard } from "@/components/ui/StatCard";
 import { STATUS_LABEL, type ReviewStatus } from "@/lib/review/filters";
+import { hasUnread } from "@/lib/messages/types";
 
 export const dynamic = "force-dynamic";
 
@@ -79,6 +80,13 @@ export default async function Page() {
     .eq("is_ai_generated", true)
     .eq("review_status", "pending");
 
+  const { data: threadRows } = await supabase
+    .from("message_threads")
+    .select("last_message_at, staff_last_read_at, student_last_read_at")
+    .order("last_message_at", { ascending: false })
+    .limit(200);
+  const unreadMessages = (threadRows ?? []).filter((t) => hasUnread(t, true)).length;
+
   const [approved, needsChanges, rejected] = await Promise.all(
     (["approved", "needs_changes", "rejected"] as const).map((status) =>
       supabase
@@ -102,6 +110,11 @@ export default async function Page() {
       href: "/teacher/review",
       title: "Review queue",
       body: "Work through the AI-generated questions waiting for clinical review.",
+    },
+    {
+      href: "/teacher/messages",
+      title: "Student messages",
+      body: "Questions students have sent you, with the exam results they refer to.",
     },
     {
       href: "/teacher/mock-exams",
@@ -132,6 +145,21 @@ export default async function Page() {
           {(pending ?? 0).toLocaleString()} question{pending === 1 ? "" : "s"} waiting for review
         </span>
       </Link>
+
+      {unreadMessages > 0 ? (
+        <Link
+          href="/teacher/messages"
+          className="mb-4 block rounded-lg border border-brand-200 bg-brand-50 p-5 hover:border-brand-500"
+        >
+          <span className="font-medium text-brand-800">
+            {unreadMessages.toLocaleString()} unread student{" "}
+            {unreadMessages === 1 ? "message" : "messages"} →
+          </span>
+          <span className="mt-1 block text-sm text-brand-700">
+            Students are waiting on your feedback.
+          </span>
+        </Link>
+      ) : null}
 
       {needsChanges > 0 ? (
         <Link

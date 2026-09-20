@@ -48,6 +48,7 @@ export function ResultsView({
 }: {
   setTitle: string;
   session: {
+    id: string;
     score_pct: number | null;
     total_questions: number | null;
     correct_count: number | null;
@@ -177,12 +178,20 @@ export function ResultsView({
         </ul>
       </Card>
 
-      <Link
-        href="/study/mock-exams"
-        className="inline-block rounded-lg border-2 border-brand-700 px-5 py-2 text-sm font-medium text-brand-700 transition-colors hover:bg-brand-50"
-      >
-        ‹ Back to mock exams
-      </Link>
+      <div className="flex flex-wrap gap-3">
+        <Link
+          href="/study/mock-exams"
+          className="inline-block rounded-lg border-2 border-brand-700 px-5 py-2 text-sm font-medium text-brand-700 transition-colors hover:bg-brand-50"
+        >
+          ‹ Back to mock exams
+        </Link>
+        <Link
+          href={`/study/profile?attach=${session.id}`}
+          className="inline-block rounded-lg bg-primary px-5 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-brand-800"
+        >
+          Ask your teacher about this attempt
+        </Link>
+      </div>
     </div>
   );
 }

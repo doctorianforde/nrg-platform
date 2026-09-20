@@ -5,7 +5,9 @@ import { hasAtLeast } from "@/lib/auth/roles";
 
 const NAV: Array<{ href: string; label: string; min: Profile["role"] }> = [
   { href: "/study", label: "Study", min: "student" },
+  { href: "/study/profile", label: "Profile", min: "student" },
   { href: "/teacher", label: "Teacher", min: "teacher" },
+  { href: "/teacher/messages", label: "Messages", min: "teacher" },
   { href: "/admin", label: "Admin", min: "admin" },
   { href: "/super-admin", label: "Super admin", min: "super_admin" },
 ];
