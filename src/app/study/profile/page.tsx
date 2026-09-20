@@ -6,6 +6,7 @@ import { StatCard } from "@/components/ui/StatCard";
 import { ThreadList } from "@/components/messages/ThreadList";
 import { NewThreadForm } from "@/components/messages/NewThreadForm";
 import { DisplayNameForm } from "./DisplayNameForm";
+import { AvatarUpload } from "./AvatarUpload";
 import { loadCitableAttempts, loadThreads } from "@/lib/messages/queries";
 import { fmtDateTime, fmtPct } from "@/lib/mock-exam/utils";
 
@@ -88,7 +89,14 @@ export default async function StudentProfilePage({
           <div className="space-y-5">
             <Card className="rounded-xl border-brand-100">
               <CardTitle className="mb-3">Your details</CardTitle>
-              <DisplayNameForm currentName={profile.full_name ?? ""} />
+              <AvatarUpload
+                userId={user.id}
+                name={profile.full_name}
+                currentUrl={profile.avatar_url}
+              />
+              <div className="mt-4 border-t border-border pt-3">
+                <DisplayNameForm currentName={profile.full_name ?? ""} />
+              </div>
               <dl className="mt-4 space-y-2 border-t border-border pt-3 text-sm">
                 <div className="flex justify-between gap-3">
                   <dt className="text-muted-foreground">Email</dt>

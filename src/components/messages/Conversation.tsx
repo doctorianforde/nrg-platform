@@ -3,10 +3,20 @@ import { Card } from "@/components/ui/Card";
 import { fmtDateTime, fmtPct } from "@/lib/mock-exam/utils";
 import { STATUS_LABEL, STATUS_TONE, type ThreadMessage, type ThreadSummary } from "@/lib/messages/types";
 import { Composer } from "./Composer";
+import { Avatar } from "@/components/ui/Avatar";
 
 function Bubble({ message }: { message: ThreadMessage }) {
   return (
-    <li className={message.mine ? "flex justify-end" : "flex justify-start"}>
+    <li className={message.mine ? "flex justify-end gap-2" : "flex justify-start gap-2"}>
+      {!message.mine ? (
+        <Avatar
+          name={message.authorName}
+          url={message.authorAvatar}
+          seed={message.authorId}
+          size={32}
+          className="mt-1"
+        />
+      ) : null}
       <div className={`max-w-[42rem] rounded-2xl px-4 py-3 ${
         message.mine
           ? "bg-brand-700 text-white"

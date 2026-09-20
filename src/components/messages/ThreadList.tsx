@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/Badge";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { fmtDateTime } from "@/lib/mock-exam/utils";
 import { STATUS_LABEL, STATUS_TONE, type ThreadSummary } from "@/lib/messages/types";
+import { Avatar } from "@/components/ui/Avatar";
 
 export function ThreadList({
   threads,
@@ -38,7 +39,13 @@ export function ThreadList({
               <span className="ml-auto text-xs text-muted-foreground">{fmtDateTime(t.lastMessageAt)}</span>
             </div>
             {showWho ? (
-              <p className="mt-1 text-xs text-muted-foreground">
+              <p className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
+                <Avatar
+                  name={t.counterpartName}
+                  url={t.counterpartAvatar}
+                  seed={t.studentId}
+                  size={20}
+                />
                 {t.counterpartName ?? "Student"}
               </p>
             ) : null}

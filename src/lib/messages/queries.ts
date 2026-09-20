@@ -31,14 +31,19 @@ type ThreadRow = {
  * RLS only returns the rows the caller shares a conversation with, so anyone
  * missing is simply rendered under a role label rather than a name.
  */
-async function namesFor(supabase: Db, ids: string[]): Promise<Map<string, { name: string | null; staff: boolean }>> {
+type Who = { name: string | null; avatar: string | null; staff: boolean };
+
+async function namesFor(supabase: Db, ids: string[]): Promise<Map<string, Who>> {
   const unique = Array.from(new Set(ids)).filter(Boolean);
   if (unique.length === 0) return new Map();
-  const { data } = await supabase.from("profiles").select("id, full_name, role").in("id", unique);
+  const { data } = await supabase
+    .from("profiles")
+    .select("id, full_name, avatar_url, role")
+    .in("id", unique);
   return new Map(
     (data ?? []).map((p) => [
       p.id,
-      { name: p.full_name, staff: p.role !== "student" },
+      { name: p.full_name, avatar: p.avatar_url, staff: p.role !== "student" },
     ])
   );
 }
@@ -70,10 +75,10 @@ async function decorate(
   viewerId: string
 ): Promise<ThreadSummary[]> {
   // Staff see who opened the thread; a student sees whoever last replied to them.
-  let counterpart = new Map<string, string | null>();
+  let counterpart = new Map<string, Who | undefined>();
   if (viewingAsStaff) {
     const names = await namesFor(supabase, rows.map((r) => r.student_id));
-    counterpart = new Map(rows.map((r) => [r.id, names.get(r.student_id)?.name ?? null]));
+    counterpart = new Map(rows.map((r) => [r.id, names.get(r.student_id)]));
   } else if (rows.length > 0) {
     const { data: replies } = await supabase
       .from("messages")
@@ -84,7 +89,7 @@ async function decorate(
     const latest = new Map<string, string>();
     for (const m of replies ?? []) if (!latest.has(m.thread_id)) latest.set(m.thread_id, m.author_id);
     const names = await namesFor(supabase, Array.from(latest.values()));
-    counterpart = new Map(rows.map((r) => [r.id, names.get(latest.get(r.id) ?? "")?.name ?? null]));
+    counterpart = new Map(rows.map((r) => [r.id, names.get(latest.get(r.id) ?? "")]));
   }
 
   const attempts = await attemptsFor(
@@ -100,7 +105,8 @@ async function decorate(
     createdAt: r.created_at,
     lastMessageAt: r.last_message_at,
     unread: hasUnread(r, viewingAsStaff),
-    counterpartName: counterpart.get(r.id) ?? null,
+    counterpartName: counterpart.get(r.id)?.name ?? null,
+    counterpartAvatar: counterpart.get(r.id)?.avatar ?? null,
     attempt: r.session_id ? attempts.get(r.session_id) ?? null : null,
   }));
 }
@@ -162,6 +168,7 @@ export async function loadThread(
       createdAt: m.created_at,
       authorId: m.author_id,
       authorName: who?.name ?? (fromStaff ? "Teaching staff" : "Student"),
+      authorAvatar: who?.avatar ?? null,
       fromStaff,
       mine: m.author_id === viewerId,
     };

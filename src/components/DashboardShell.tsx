@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Profile } from "@/lib/auth/session";
 import { hasAtLeast } from "@/lib/auth/roles";
+import { Avatar } from "@/components/ui/Avatar";
 
 const NAV: Array<{ href: string; label: string; min: Profile["role"] }> = [
   { href: "/study", label: "Study", min: "student" },
@@ -57,6 +58,12 @@ export function DashboardShell({
             ))}
           </nav>
           <div className="ml-auto flex items-center gap-3 text-xs">
+            <Avatar
+              name={profile.full_name}
+              url={profile.avatar_url}
+              seed={profile.id}
+              size={32}
+            />
             <span className="rounded bg-brand-100 px-2 py-0.5 uppercase tracking-wide text-brand-800">
               {profile.role.replace("_", " ")}
             </span>

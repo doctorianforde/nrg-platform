@@ -145,3 +145,47 @@ export async function updateDisplayName(_prev: MessageState, fd: FormData): Prom
   revalidatePath("/study/profile");
   return { ok: true };
 }
+
+/**
+ * Record a newly uploaded avatar.
+ *
+ * The client uploads to storage under its own folder (enforced by the storage
+ * policy) and then calls this. It deliberately takes no path: the server derives
+ * the location from the session, so a caller cannot point their avatar at someone
+ * else's file. The `?v=` stamp busts the browser cache, since the path is stable.
+ */
+export async function saveAvatar(): Promise<MessageState> {
+  const { user } = await requireSession();
+  const supabase = createClient();
+
+  const path = `${user.id}/avatar.jpg`;
+  const { data: file } = await supabase.storage.from("avatars").list(user.id, {
+    search: "avatar.jpg",
+  });
+  if (!file || file.length === 0) return { error: "The upload didn't arrive. Try again." };
+
+  const { data } = supabase.storage.from("avatars").getPublicUrl(path);
+  const { error } = await supabase
+    .from("profiles")
+    .update({ avatar_url: `${data.publicUrl}?v=${Date.now()}` })
+    .eq("id", user.id);
+  if (error) return { error: `Could not save your picture: ${error.message}` };
+
+  revalidatePath("/study/profile");
+  return { ok: true };
+}
+
+export async function removeAvatar(): Promise<MessageState> {
+  const { user } = await requireSession();
+  const supabase = createClient();
+
+  await supabase.storage.from("avatars").remove([`${user.id}/avatar.jpg`]);
+  const { error } = await supabase
+    .from("profiles")
+    .update({ avatar_url: null })
+    .eq("id", user.id);
+  if (error) return { error: `Could not remove your picture: ${error.message}` };
+
+  revalidatePath("/study/profile");
+  return { ok: true };
+}

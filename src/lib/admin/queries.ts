@@ -20,6 +20,7 @@ export type PendingRequest = {
 export type Account = {
   id: string;
   name: string | null;
+  avatarUrl: string | null;
   email: string;
   role: string;
   tier: string;
@@ -62,7 +63,7 @@ export async function loadAccounts(): Promise<Account[]> {
   const [{ data }, emails] = await Promise.all([
     adminClient
       .from("profiles")
-      .select("id, full_name, role, subscription_tier, suspended_at, created_at")
+      .select("id, full_name, avatar_url, role, subscription_tier, suspended_at, created_at")
       .order("created_at", { ascending: false })
       .limit(500),
     emailsById(),
@@ -70,6 +71,7 @@ export async function loadAccounts(): Promise<Account[]> {
   return (data ?? []).map((p) => ({
     id: p.id,
     name: p.full_name,
+    avatarUrl: p.avatar_url,
     email: emails.get(p.id) ?? "(unknown address)",
     role: p.role,
     tier: p.subscription_tier,

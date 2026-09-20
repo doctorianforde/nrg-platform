@@ -11,6 +11,7 @@ import { loadAccounts, loadPendingRequests } from "@/lib/admin/queries";
 import { RequestActions } from "@/components/admin/RequestActions";
 import { AccountActions } from "@/components/admin/AccountActions";
 import { fmtDateTime } from "@/lib/mock-exam/utils";
+import { Avatar } from "@/components/ui/Avatar";
 
 export const dynamic = "force-dynamic";
 
@@ -265,13 +266,18 @@ export default async function Page() {
             {accounts.map((a) => (
               <tr key={a.id} className="align-top">
                 <td className="py-3 pr-3">
-                  <span className="block font-medium text-card-foreground">
-                    {a.name ?? "(no name)"}
-                    {a.id === user.id ? (
-                      <span className="ml-1 text-xs font-normal text-muted-foreground">(you)</span>
-                    ) : null}
-                  </span>
-                  <span className="block text-xs text-muted-foreground">{a.email}</span>
+                  <div className="flex items-center gap-2.5">
+                    <Avatar name={a.name} url={a.avatarUrl} seed={a.id} size={36} />
+                    <span className="min-w-0">
+                      <span className="block font-medium text-card-foreground">
+                        {a.name ?? "(no name)"}
+                        {a.id === user.id ? (
+                          <span className="ml-1 text-xs font-normal text-muted-foreground">(you)</span>
+                        ) : null}
+                      </span>
+                      <span className="block text-xs text-muted-foreground">{a.email}</span>
+                    </span>
+                  </div>
                 </td>
                 <td className="py-3 pr-3">
                   <Badge tone={ROLE_TONE[a.role] ?? "gray"}>{a.role.replace("_", " ")}</Badge>

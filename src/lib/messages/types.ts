@@ -29,6 +29,7 @@ export type ThreadSummary = {
   unread: boolean;
   /** Display name of the other party, or null when they have no name set. */
   counterpartName: string | null;
+  counterpartAvatar: string | null;
   attempt: CitedAttempt | null;
 };
 
@@ -38,6 +39,7 @@ export type ThreadMessage = {
   createdAt: string;
   authorId: string;
   authorName: string;
+  authorAvatar: string | null;
   fromStaff: boolean;
   mine: boolean;
 };

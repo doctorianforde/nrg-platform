@@ -501,6 +501,59 @@ in `admin_contacts` — no SQL needed, and the choice on the form is irrelevant 
 2. Optional: set `RESEND_API_KEY` in Vercel to turn on the "a teacher is waiting"
    email. The in-app list at `/admin` works regardless.
 
+## Profile pictures (Claude, 2026-09-19) — built, tested on staging, NOT yet on prod
+
+`profiles.avatar_url` has existed since T09 but nothing ever wrote to it. This adds
+the storage behind it and shows the picture wherever a person appears.
+
+**Where it appears**
+- Upload/change/remove on `/study/profile` under "Your details".
+- Shown in the header on every page, the teacher message inbox, conversation
+  bubbles, and the admin People table. Falls back to initials on a per-person
+  colour, so an unpictured account still looks deliberate.
+- Code: `supabase/migrations/20260919050000_avatar_storage.sql`,
+  `src/components/ui/Avatar.tsx`, `src/app/study/profile/AvatarUpload.tsx`,
+  `saveAvatar`/`removeAvatar` in `src/lib/messages/actions.ts`.
+
+**How it works**
+- Bucket `avatars`, public-read, **2 MB and images-only enforced by the bucket
+  itself** (`file_size_limit` / `allowed_mime_types`), not merely by the form.
+- Files live at `<user_id>/avatar.jpg`, so the first path segment is the owner and
+  the storage policy (`(storage.foldername(name))[1] = auth.uid()::text`) means a
+  person can only write inside their own folder. Verified: another signed-in user
+  uploading to someone else's path gets a 400.
+- Public-read rather than signed URLs: an avatar is shown next to its owner's name
+  wherever they appear, so there is nothing to protect, and a signed URL would
+  expire mid-page.
+- **The browser squares and re-encodes before upload** (canvas, 400px, JPEG 0.85).
+  A 600×900 PNG test file arrived as a 5.5 KB JPEG. This keeps every avatar the same
+  shape and weight, and avoids both the bucket ceiling and the Next server-action
+  body limit — so no `bodySizeLimit` config was needed.
+- The path is stable, so `avatar_url` carries a `?v=<timestamp>` stamp; without it
+  browsers keep showing the previous picture.
+- `saveAvatar()` takes **no path**. The server derives the location from the session,
+  so a caller cannot point their avatar at someone else's file.
+- `next.config.mjs` gained `images.remotePatterns` for `*.supabase.co` storage —
+  wildcarded because staging and prod have different hostnames.
+
+**Testing (staging)** — 15 browser/API checks: upload saves `avatar_url` with the
+cache stamp, the file lands in the owner's folder as a small JPEG, it is publicly
+readable, it renders in the header, inbox, conversation bubble and admin table,
+another user cannot write into the folder, and removing it clears both the column
+and the stored object and falls back to initials. T34 still 15/15, fatigue checks
+pass, `next build`/`lint`/`tsc` clean. Staging swept — 0 users, 0 avatar objects.
+
+**Limits worth knowing**
+- One picture per person at a fixed path; no crop/zoom control (it centre-crops),
+  no gallery or history.
+- Deleting an account does not delete its avatar object. The storage policy lets
+  admins delete avatars, but nothing calls it — the file is orphaned in the bucket.
+  Worth a sweep later; it is a few KB per departed account.
+- Animated GIFs are accepted by the bucket but the canvas step flattens them to a
+  still JPEG.
+- Avatars are not shown on the student's own thread list (only the staff inbox),
+  since a student already knows who they are writing to.
+
 ## Not yet done / not yet verified
 
 - **T33 — human read-and-verify** of the 20 sampled questions against the docx
