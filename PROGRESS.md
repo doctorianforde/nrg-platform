@@ -1081,6 +1081,134 @@ the whole "Parent / Child" topic string. Extending the alias list alone will not
 it needs first-segment keying or a populated `cluster` column. The 20 commonest
 unmatched first segments are listed in the audit report.
 
+## Key-mismatch pool cleared + review venue set up (Claude, 2026-09-20) — staging only
+
+Four asks from Ian. Items 2 and 4 are done, 1 is done and testable, 3 is a written
+proposal awaiting Jade.
+
+### 4. The 77 "key mismatch" review pool — all false positives
+
+Read all 77 by hand. In every case the rationale **did** support the keyed option. The
+audit's `DISAGREES` rule fires on rationales that *contrast*: they describe the correct
+answer, then characterise the alternatives without using a negation word, so the
+distractor description out-scores the keyed option by token overlap and a sound item
+looks wrong.
+
+Three changes to `scripts/audit-prototype-data.ts`, in the order that mattered:
+
+1. **Per-question RNG.** The option shuffle ran off one global `mulberry32` stream
+   consumed in iteration order, so adding a single row reshuffled every row after it.
+   Naively promoting the 70 would have silently invalidated the option order already in
+   staging *and* the 807 letter references repaired against it the day before. Each row
+   is now seeded from its own `source_id` (`seedFrom` → FNV-1a ⊕ SEED), making the export
+   a pure function of its input. **Verified:** removing 70 rows from the middle of the
+   export changed 0 of the 4,798 surviving rows. Re-runs are byte-identical.
+2. **A `COMPOUND_OPTION` guard.** "All of the above" / "Both A and B" carry no
+   distinctive tokens, so the keyed option always scores ~0 against individually-worded
+   distractors — the heuristic cannot speak to them at all. 7 of the 77 were exactly
+   this. They also breach the client's own no-compound-options standard, so they now
+   return `UNVERIFIABLE` and stay in human review rather than entering a clean import.
+3. **`HAND_REVIEWED_KEY_OK`** — the remaining 70 ids, recorded in the script with the
+   reasoning, so the judgement travels with the code and survives a re-run. An id is
+   only there because a person read that question; the heuristic is unchanged for data
+   nobody has read.
+
+Also fixed the CJK repair, which ran words together (`andorientation`) because the
+prototype's generator emitted the tokens flush against the preceding word
+(`...observation, and定向 strategies`). The repair table moved to
+**`scripts/lib/cjk.ts`** because `fix-explanation-letters.ts` has to apply the *same*
+transform to match DB option text back to the prototype source — when the two disagreed
+it silently skipped the row and left its letters wrong. Unknown CJK is now quarantined
+instead of shipped; that surfaced one more token (`承诺不` → "promises not").
+
+Re-imported and re-verified on staging:
+
+- prototype rows **4,728 → 4,798**; all still `is_active=false` / `review_status=pending`
+  / `is_ai_generated=true`; the 2,516 pre-existing rows and Jade's 100 live questions
+  untouched; **prod untouched** (2,460 questions, 0 prototype rows).
+- `audit`: `clean=4798 agrees=4798 disagrees=0 unverifiable=2574 anomalies=24`.
+- Independent re-derivation from the prototype source (none of the audit's code):
+  4,726 of 4,798 matched, **0 key errors**. The 2 flagged rows were verifier artefacts —
+  one an undecoded `—`, one the CJK row above.
+- Answer positions even: A 1,217 · B 1,192 · C 1,204 · D 1,185.
+- Letter fixer: 766 rows rewritten (1,755 references), then **idempotent** — a second
+  pass plans 0 and reports 826 already correct.
+- Explanation diff DB vs CSV across all 4,798: 4,032 identical, 766 differing **only**
+  in option letters, **0 differing in any other text**.
+- RLS e2e (T34) still 15/15. `next build` clean.
+
+### 2. Copyright material — confirmed never committed
+
+`docs/phase-1/COPYRIGHT_REVIEW_LIST.md` + `scripts/list-copyright-items.ts` list 269
+held-back items (145 Saunders-derived across 18 files, 124 verbatim NCLEX with 0
+rationales) as **identifiers only** — id, domain, taxonomy, topic. No stem, option or
+rationale is written to a tracked file, because the text is the thing under review and
+Git history is hard to purge. `scripts/data/` is gitignored; verified 0 of 269 stems and
+0 rationales appear in the tracked doc. Recommendation in the doc: **drop rather than
+rewrite** — ~5% more questions against real legal exposure, and a rewrite deep enough to
+clear the derivative-work problem is just writing new questions.
+
+### 1. Where to review the staging bank
+
+**A Vercel preview deployment.** The project's Preview environment variables already
+point at staging (`kwhaqhhwqykckarjbdod`) — confirmed via `vercel env pull
+--environment=preview`. So any non-`main` branch pushed to the repo gets a URL that
+serves the real `/teacher/review` UI against the 4,798-row staging bank, with no path to
+prod. Production env vars point at prod and are untouched.
+
+Two things were missing and are now fixed:
+
+- **Staging had zero accounts**, so nobody could log in (the T34 e2e test cleans up after
+  itself). Created a `teacher` account for Jade on staging — `jade@nrg-staging.test`,
+  password handed to Ian separately. Staging only; prod still has only Ian's
+  `super_admin`.
+- **The review queue could not separate the two banks.** Both Jade's AI batch and the
+  imported prototype bank are `is_ai_generated=true`, so the source filter's `ai` option
+  showed one undifferentiated list of 7,214 pending items — 289 pages. Added a
+  **`prototype`** source filter (`src/lib/review/filters.ts`) and a "Prototype" row
+  badge. The partition is exact: ai 2,416 + prototype 4,798 = 7,214, no overlap, nothing
+  lost. `ai` uses `or(source.is.null,source.neq.prototype-import)` rather than a bare
+  `.neq()`, because SQL's `NULL <> 'x'` is NULL and would have hidden any AI row whose
+  source was never set.
+
+Proved end-to-end with Playwright against a dev server pointed at staging, logged in as
+Jade: **12/12 assertions** — sign-in, the three filter counts, pagination, row badge,
+detail page with options/explanation/approve-reject actions, domain filter (1,093) and
+text search (9 for "digoxin"). Spot-checked the letter fix in the real UI:
+`proto:nrg-rankup:5916` had "Salbutamol (A)" when Salbutamol is option D; it now reads
+"Salbutamol (D)", and every letter reference names the drug actually in that slot.
+
+### 3. The 726 cluster-less topics — proposal written, needs Jade
+
+Not applied. `docs/phase-1/TOPIC_CLUSTER_PROPOSAL.md` (generated by
+`scripts/propose-topic-clusters.ts`, read-only unless `--apply`, refuses to run against
+prod).
+
+The number is now **726** topics, not 719, holding **4,630 of 7,314** questions — so
+anything targeting study by clinical area cannot see 63% of the bank; the review screen
+shows their Area as "—".
+
+The proposal's core point: **this is 101 decisions, not 726.** Prototype topics are named
+`Clinical area / Sub-topic`, and the 726 share only 101 distinct first segments, so
+mapping a segment assigns every topic beneath it. Proposed split, into the five clusters
+that already exist (no schema change): maternal-child 1,553 · med-surg 1,524 ·
+management/professional 931 · safety/procedures 412 · psychosocial 210.
+
+Two deliberate non-decisions, both explained in the doc:
+
+- **Do not collapse the topics.** 349 hold a single question and it looks like sprawl,
+  but I tested the hypothesis that the sub-topic half just restates the RENR domain — it
+  does not. Only 53 of 726 (7%) do; the other 673 name a genuine clinical sub-topic.
+  Collapsing would discard teaching detail to fix a different problem.
+- **Do not add clusters.** Every segment has an obvious home in the existing five.
+
+Separate issues found while measuring, each needing its own decision: two naming
+conventions now coexist in `topics` (curated `Cardiac` vs imported
+`Cardiovascular Disorders / Heart Failure`); 56 topics are bare abbreviations (`COPD`,
+`CAP`, `T2DM`, `CKD`, `TB`, `BPH`, `RDS`, `IHD & ACS`) that would display to students
+as-is; near-duplicates at different granularity; and **every topic in both environments
+has `domain_id` NULL** (pre-existing — the migrate script never sets it).
+
 ## Not yet done / not yet verified
 
 - **T33 — human read-and-verify** of the 20 sampled questions against the docx

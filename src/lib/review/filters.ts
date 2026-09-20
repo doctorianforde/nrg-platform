@@ -17,11 +17,16 @@ export const STATUS_BADGE: Record<ReviewStatus, string> = {
 
 /** Where a reviewable question came from. Student submissions carry this `source`. */
 export const STUDENT_SOURCE = "student-submission";
-export const SOURCES = ["all", "ai", "student"] as const;
+/** The audited prototype bank, imported by scripts/migrate-questions.ts --source. */
+export const PROTOTYPE_SOURCE = "prototype-import";
+export const SOURCES = ["all", "ai", "prototype", "student"] as const;
 export type SourceFilter = (typeof SOURCES)[number];
 export const SOURCE_LABEL: Record<SourceFilter, string> = {
-  all: "AI + student",
-  ai: "AI-generated",
+  all: "All review sources",
+  // Both banks are is_ai_generated, so without splitting them the queue is one
+  // undifferentiated list and there is no way to work through either bank on its own.
+  ai: "AI-generated (excl. prototype)",
+  prototype: "Prototype bank (imported)",
   student: "Student submissions",
 };
 
@@ -85,9 +90,14 @@ export function filtersToQuery(f: Filters, override: Partial<Filters> = {}): str
 export function applyFilters<T>(query: T, f: Filters): T {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let q: any = query;
-  // The queue covers both the AI bank and student submissions. Jade's own imports
-  // are neither, so they never appear here.
-  if (f.source === "ai") q = q.eq("is_ai_generated", true);
+  // The queue covers the AI bank, the imported prototype bank and student
+  // submissions. Jade's own hand-written imports are none of these, so they never
+  // appear here.
+  // `source` is nullable, and SQL's NULL <> 'x' is NULL, not true - a bare .neq()
+  // would silently hide any AI row whose source was never set.
+  if (f.source === "ai")
+    q = q.eq("is_ai_generated", true).or(`source.is.null,source.neq.${PROTOTYPE_SOURCE}`);
+  else if (f.source === "prototype") q = q.eq("source", PROTOTYPE_SOURCE);
   else if (f.source === "student") q = q.eq("source", STUDENT_SOURCE);
   else q = q.or(`is_ai_generated.eq.true,source.eq.${STUDENT_SOURCE}`);
   if (f.status !== "all") q = q.eq("review_status", f.status);

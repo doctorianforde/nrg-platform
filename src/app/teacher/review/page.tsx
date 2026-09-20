@@ -14,6 +14,7 @@ import {
   REVIEW_STATUSES,
   SOURCES,
   SOURCE_LABEL,
+  PROTOTYPE_SOURCE,
   STATUS_BADGE,
   STATUS_LABEL,
   STUDENT_SOURCE,
@@ -179,8 +180,20 @@ export default async function ReviewListPage({ searchParams }: { searchParams: R
                       <span className={`rounded px-1.5 py-0.5 ${STATUS_BADGE[r.review_status as ReviewStatus] ?? STATUS_BADGE.pending}`}>
                         {STATUS_LABEL[r.review_status as ReviewStatus] ?? r.review_status}
                       </span>
-                      <Badge tone={r.source === STUDENT_SOURCE ? "green" : "blue"}>
-                        {r.source === STUDENT_SOURCE ? "Student" : "AI"}
+                      <Badge
+                        tone={
+                          r.source === STUDENT_SOURCE
+                            ? "green"
+                            : r.source === PROTOTYPE_SOURCE
+                              ? "purple"
+                              : "blue"
+                        }
+                      >
+                        {r.source === STUDENT_SOURCE
+                          ? "Student"
+                          : r.source === PROTOTYPE_SOURCE
+                            ? "Prototype"
+                            : "AI"}
                       </Badge>
                       <span>{r.domains?.code}</span>
                       <span>·</span>
