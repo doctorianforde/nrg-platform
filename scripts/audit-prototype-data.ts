@@ -137,6 +137,18 @@ function stripOptionPrefix(options: string[]): string[] {
   return options.map((o) => o.replace(/^[A-E][.)]\s+/, "").trim());
 }
 
+// Stray CJK tokens from the prototype's generators (found 2026-09-20 during
+// pre-import screening). Intent is unambiguous in context; repaired inline.
+const CJK_REPAIRS: Array<[RegExp, string]> = [
+  [/not替代/g, "not a substitute"],
+  [/永久NPO/g, "permanent NPO"],
+  [/定向 strategies/g, "orientation strategies"],
+];
+function repairCjk(s: string): string {
+  for (const [re, to] of CJK_REPAIRS) s = s.replace(re, to);
+  return s;
+}
+
 function normalise(family: Family, raw: RawQuestion, file: string): NormQuestion | { skip: string } {
   let options = (raw.options ?? []).map((o) => String(o));
   if (family.stripLetterPrefix) options = stripOptionPrefix(options);
@@ -150,7 +162,7 @@ function normalise(family: Family, raw: RawQuestion, file: string): NormQuestion
   }
   if (correctIdx < 0 || correctIdx > 3) return { skip: `bad-correct-${raw.correct}` };
 
-  const stem = String(raw.stem ?? "")
+  const stem = repairCjk(String(raw.stem ?? ""))
     .replace(/\*\*/g, "")
     .replace(/\\\?"$/, "")
     .replace(/\\"$/, "")
@@ -164,9 +176,9 @@ function normalise(family: Family, raw: RawQuestion, file: string): NormQuestion
     taxonomy: String(raw.taxonomy ?? "").toUpperCase().trim(),
     topic: String(raw.topic ?? "").trim(),
     stem,
-    options: options.map((o) => o.replace(/\*\*/g, "").trim()),
+    options: options.map((o) => repairCjk(o).replace(/\*\*/g, "").trim()),
     correctIdx,
-    rationale: String(raw.rationale ?? "").replace(/\*\*/g, "").trim(),
+    rationale: repairCjk(String(raw.rationale ?? "")).replace(/\*\*/g, "").trim(),
   };
 }
 

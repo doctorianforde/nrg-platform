@@ -19,6 +19,13 @@
  *                         AI-generated batch (source="ai_generated") after both
  *                         land in the same questions table. Pass a different
  *                         --author for a future contributor's file.
+ *   --ai-generated       sets is_ai_generated=true (default false — Jade's files)
+ *   --inactive           sets is_active=false AND review_status='pending', so the
+ *                         rows land in the teacher review queue instead of going
+ *                         live. The questions_ai_active_requires_approval CHECK
+ *                         would reject is_active=true + is_ai_generated anyway.
+ *   --source <value>     overrides the hardcoded source="client-import"
+ *                         (e.g. "prototype-import" for the audited prototype bank)
  *
  * Keys are read from the environment / .env.local — never hardcode them here.
  * Uses the service_role key (bypasses RLS). Never run against prod until the
@@ -128,6 +135,9 @@ const SHEET   = flag("sheet");
 const OFFLINE = has("offline");
 const AUTHOR  = flag("author") ?? "Jade Nicome";
 const AUTHOR_TAG = `Author: ${AUTHOR}`;
+const AI_GENERATED = has("ai-generated");
+const INACTIVE = has("inactive");
+const SOURCE  = flag("source") ?? "client-import";
 const BATCH   = 100;
 const RUN_ID  = new Date().toISOString().replace(/[:.]/g, "-");
 
@@ -282,6 +292,7 @@ function parseRow(row: Row, col: Partial<Record<Field, string>>, rowNo: number):
 // ─── Main ────────────────────────────────────────────────────────────────────
 async function main() {
   console.log(`\nNRG question migration · env=${ENV} · ${DRY ? "DRY RUN" : "WRITE"} · run_id=${RUN_ID}`);
+  console.log(`Row flags: source="${SOURCE}" is_ai_generated=${AI_GENERATED} is_active=${!INACTIVE}${INACTIVE ? " review_status=pending" : ""}`);
   const file = resolve(FILE!);
   const rows = (await loadRows(file)).slice(0, LIMIT);
   if (rows.length === 0) throw new Error("no rows found");
@@ -365,7 +376,8 @@ async function main() {
       topic_id: q.topic ? topicByKey.get(topicKey(domainByCode.get(q.domain_key)!, q.topic)) ?? null : null,
       body: q.body, explanation: q.explanation,
       cognitive_level: q.cognitive_level, difficulty: q.difficulty,
-      question_type: q.question_type, source: "client-import", is_ai_generated: false, is_active: true,
+      question_type: q.question_type, source: SOURCE, is_ai_generated: AI_GENERATED, is_active: !INACTIVE,
+      ...(INACTIVE ? { review_status: "pending" } : {}),
     }));
     const { data: inserted, error } = await db.from("questions").upsert(rowsToUpsert, { onConflict: "source_id" }).select("id, source_id");
     if (error) {

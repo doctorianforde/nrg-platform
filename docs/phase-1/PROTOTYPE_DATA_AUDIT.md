@@ -334,3 +334,86 @@ The AGREES check cannot exclude a rationale written to justify a wrong key — b
 risk is about the *content* being wrong, not the *key* being mis-assigned. That is
 exactly the risk a nurse-educator review addresses, and it is the same risk carried by
 any question in the bank.
+
+## Post-report addendum (Kimi, 2026-09-20 — pre-import screening + staging import)
+
+- **The 3 CJK rows are fixed**, in `repairCjk()` inside `scripts/audit-prototype-data.ts`
+  so re-runs keep the fix: `not替代`→"not a substitute", `永久NPO`→"permanent NPO",
+  `定向 strategies`→"orientation strategies" (2 occurrences). Intent was unambiguous
+  in context in all three. Both CSVs regenerate clean; offline validation holds at
+  4,728 ok / 0 errors.
+- **Letter references in explanations:** 495 of 4,728 explanations cite options as
+  `(A)`–`(D)` in SOURCE order. The anti-bias shuffle reorders options, so those letters
+  no longer match displayed order. Flagged for the review queue — fix on approval or
+  batch-repair beforehand. A known cost of shuffling; the alternative (answer-first
+  order) recreates the position bias.
+- **Staging import executed the same day** as an unapproved review queue: all 4,728
+  rows `is_ai_generated=true, is_active=false, review_status='pending',
+  source='prototype-import'`, tagged `Author: NRG prototype bank`. Verified end-to-end
+  (7,244 total = 2,516 + 4,728; 0 live; 18,912 options all 4-per-question with exactly
+  1 correct; domains/cognitive match CSV exactly; 20/20 letter-exact spot-check;
+  e2e RLS 15/15). One staging schema fix was required first: the partial unique index
+  on `source_id` could not serve as an `ON CONFLICT` arbiter — replaced with a plain
+  unique index on staging; migration `20260920050000` must reach prod before any prod
+  import. Full numbers in `PROGRESS.md`.
+
+---
+
+## Staging import — independent verification (Claude, 2026-09-20)
+
+Verified against staging directly, not from the import log.
+
+**Confirmed as reported:** 7,244 questions total, exactly 4,728 tagged
+`source='prototype-import'`, pre-existing 2,516 untouched. All 4,728 are
+`is_active=false`, `review_status='pending'`, `is_ai_generated=true`, none reviewed.
+Jade's original 100 are still active and approved. The `Author: NRG prototype bank`
+tag exists and links to all 4,728. A 400-row sample had exactly 4 options and exactly
+1 correct answer each. **Nothing is visible to students.** T34 RLS still 15/15.
+Production is untouched — 2,460 questions, 0 prototype rows.
+
+**The unique-index swap is sound.** Probed it live: a duplicate `source_id` is
+rejected (409), and two rows with NULL `source_id` both insert successfully. So
+uniqueness is enforced for real ids and NULLs remain distinct, exactly as the
+migration claims. Prod will need `20260920050000` before any prod import.
+
+### Correction: the stale letter references are 843, not 495
+
+The report counted one pattern — parenthesised `(A)`–`(D)`, which is indeed 495.
+Counting every positional form across all 4,728 explanations:
+
+| Form | Count |
+|---|---|
+| `(A)` … `(D)` | 495 |
+| `A)` … `D)` | 379 |
+| "Option A" / "option B" | 314 |
+| "answer A" | 77 |
+| bare "A." starting a clause | 16 |
+| **Any of the above (deduplicated)** | **843 — 17.8% of the import** |
+
+This is not cosmetic. A real example, `proto:clinical-skills:9180`:
+
+> "…While dry mucous membranes **(A)**, thirst **(C)**, and decreased skin turgor
+> **(D)** are signs of dehydration…"
+
+After the anti-bias shuffle those letters point at different options, so the
+explanation now argues against the wrong distractors. A student reading it is
+actively misinformed, and a reviewer may reject a sound question because its
+explanation appears incoherent.
+
+**Recommended fix: remap rather than strip.** Do not delete the letters — the
+explanations are more useful with them. The mapping is recoverable *without*
+relying on the RNG seed: for each question, match each original option's **text**
+against the shuffled order to derive old-letter → new-letter, then rewrite the
+references. Text matching is self-verifying in a way that reproducing a seeded
+shuffle is not. Fix before Jade reviews, so he is not reading broken prose.
+
+### Two topic-taxonomy gaps
+
+- **719 of 1,213 staging topics now have `cluster_id` NULL** — introduced by this
+  import (prod has 479 topics, 0 without a cluster). Clusters are the clinical-area
+  axis the study filters use, so these 719 topics are unreachable by area.
+- **`topics.domain_id` is NULL for every topic in both environments** (1,213/1,213
+  staging, 479/479 prod). **Pre-existing**, not caused by this import — the migration
+  script has never set it, and `topicKey()` deliberately ignores the domain when
+  de-duplicating by name. Worth fixing before mock exams are generated from a
+  domain/cluster blueprint, because the topic→domain link simply is not there.

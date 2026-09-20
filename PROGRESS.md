@@ -973,6 +973,109 @@ copyright call on the 269 Saunders-derived and verbatim-NCLEX items, and whether
 work the review pools (77 key-mismatch candidates, ~1,365 weak rationales, 168
 ASE-domain mis-tags, 24 mangled stems).
 
+## Prototype bank imported to STAGING as review queue (Kimi, 2026-09-20) — 4,728 rows, nothing live
+
+Ian gave the staging go (same day). Import executed as an unapproved review queue:
+every row `is_ai_generated=true, is_active=false, review_status='pending',
+source='prototype-import'`, tagged `Author: NRG prototype bank` (a third author tag,
+distinct from "Author: Jade Nicome" = his 100 hand-written and "Author: AI-generated" =
+the 2,000-bank). **Prod untouched; nothing is visible to students.** Jade approves
+through `/teacher/review`; approval is what sets `is_active=true`.
+
+**Pre-import fixes**
+- The 3 CJK rows flagged above are fixed — intent unambiguous in all three, repaired in
+  the audit script (`repairCjk` in `scripts/audit-prototype-data.ts`, so re-runs keep
+  the fix): `not替代`→"not a substitute", `永久NPO`→"permanent NPO", `定向
+  strategies`→"orientation strategies" (2 occurrences). Re-validated: 4,728 ok, 0 errors.
+- `scripts/migrate-questions.ts` grew `--ai-generated`, `--inactive`, `--source <v>`
+  flags (defaults unchanged — Jade's original path behaves identically). `--author`
+  already existed.
+- **Schema fix on staging (prod pending Ian):** the first import attempt failed wholesale
+  (success=0 / error=4,728, wrote nothing) — `idx_q_source_id` is a *partial* unique
+  index, which Postgres refuses as an `ON CONFLICT (source_id)` arbiter. Replaced with a
+  plain unique index on staging (semantics unchanged: NULLs still distinct; 0 duplicate
+  source_ids existed — Postgres verified during creation). Migration file:
+  `supabase/migrations/20260920050000_source_id_unique_arbiter.sql` — **needs applying
+  to prod before any future prod import**, or prod upserts fail the same way.
+
+**Post-import verification (real counts via `scripts/verify-proto-import.ts`)**
+- Questions: 2,516 → **7,244** (+4,728 exactly). Pre-existing 2,516 untouched.
+- Flags: 0 violations among all 4,728. Live leak: `prototype-import AND is_active=true` = **0**.
+- Options: 4,728 questions × 4 options (18,912 rows), exactly 1 correct each. 0 failures.
+- Domains match CSV exactly (NP 1069, PC 1099, NLM 581, CDM 611, HPMW 457, COM 440,
+  PD 471); cognitive KC/AP/ASE → knowledge/application/analysis 1640/2091/997, exact.
+- 20-row seeded spot-check vs CSV (stem, keyed option text, explanation): 0 mismatches.
+- Review queue: 4,728 pending+AI+prototype-import rows; 4,728 `Author: NRG prototype
+  bank` tag links. They appear at /teacher/review under Source "AI-generated".
+- `node scripts/e2e-rls-test.mjs`: **15/15 PASS** after the bulk insert.
+
+**Topic-taxonomy findings (not fixed — Ian/Jade's call)**
+- +726 topic rows (487 → 1,213), 719 with `cluster_id NULL`. Expected ~1,508 new rows,
+  but topic creation dedupes by **slug without the domain** — same-named topics across
+  domains share one row, and script-created topics get `domain_id NULL`. Also, the
+  migration matches the full "Parent / Child" topic string against CLUSTER_ALIASES (our
+  cluster column is empty), so only 81/4,728 rows matched any alias. Extending the alias
+  table needs first-segment keying (or a filled cluster column) to do anything.
+- Top unmatched first segments: nursing theorists 173, nursing profession 162, nursing
+  research 151, nursing ethics 133, neonatal jaundice 96, trauma & environmental
+  emergencies 89, cardiovascular disorders 84, oncology & hematologic disorders 82,
+  GI & hepatobiliary 80, musculoskeletal 74, endocrine & metabolic 70, respiratory 68,
+  renal & urinary 68, wound care & aseptic technique 64, fluid balance & I/O management
+  63, pediatric infectious disease 62, delegation/assignment/supervision 62, pediatric
+  GI & nutritional 60, substance abuse & withdrawal safety 59, family dynamics &
+  counselling 59.
+
+**Known caveats for the review queue**
+- 495 of 4,728 explanations contain `(A)`–`(D)` letter references in SOURCE order; after
+  the anti-bias shuffle those letters no longer match displayed order. Reviewers should
+  rewrite or strip these on approval (or we batch-fix beforehand — needs a decision).
+- The failed first run left 4,728 error rows in `migration_log`
+  (run_id `2026-09-20T10-28-20-628Z`) — historical, harmless.
+
+## Prototype bank imported to STAGING (Kimi, 2026-09-20) — verified, nothing live
+
+4,728 audited prototype questions are in staging, in Jade's review queue. Import by
+Kimi from `docs/phase-1/KIMI_STAGING_IMPORT_BRIEF.md`; I verified it against staging
+directly. Full detail appended to `docs/phase-1/PROTOTYPE_DATA_AUDIT.md`.
+
+**State:** 7,244 questions on staging (2,516 pre-existing + 4,728 new). Every imported
+row is `is_active=false`, `review_status='pending'`, `is_ai_generated=true`,
+`source='prototype-import'`, tagged `Author: NRG prototype bank` — a third tag,
+distinct from Jade's 100 (`Author: Jade Nicome`) and the earlier generated bank.
+**Nothing reached students**; approval through `/teacher/review` is what activates a
+question. Prod untouched (2,460 questions, 0 prototype rows). T34 still 15/15.
+
+**Schema change to carry forward.** The upsert failed wholesale on first attempt
+(`success=0, error=4728`, nothing written) because `questions.source_id` had a
+*partial* unique index, which Postgres will not accept as an `ON CONFLICT` arbiter
+and PostgREST cannot express the predicate for. Replaced with a plain unique index in
+`20260920050000_source_id_unique_arbiter.sql`. I probed this live: duplicate
+source_ids are rejected, multiple NULLs still insert, so the semantics really are
+unchanged. **Prod needs this migration before any prod import**, or it will fail the
+same way. This supersedes the T30 note about writing
+`ON CONFLICT (source_id) WHERE source_id IS NOT NULL` — that works in raw SQL but not
+through the client library.
+
+**Blocker found in verification — 843 explanations, not 495.** Kimi flagged 495
+explanations containing `(A)`–`(D)` references left in pre-shuffle order. Counting
+every positional form — `(A)`, `A)`, "Option A", "answer A", bare "A." — the real
+figure is **843, 17.8% of the import**. These now point at the wrong distractors, so
+the prose argues against the wrong options. **Fix before Jade reviews.** Recommended
+approach is to remap rather than strip, deriving old-letter → new-letter by matching
+option *text* between the prototype source and the shuffled order — that is
+self-verifying and needs no reliance on the shuffle seed.
+
+**Two topic-taxonomy gaps:** 719 of 1,213 staging topics now have `cluster_id` NULL
+(new — prod has 0 such), so those topics are unreachable by clinical area; and
+`topics.domain_id` is NULL for every topic in both environments (pre-existing — the
+migration script has never set it, and topic de-duplication ignores the domain). Both
+matter before mock exams are built from a domain/cluster blueprint.
+
+Only 81 of 4,728 rows matched a `CLUSTER_ALIASES` entry, because the script matches
+the whole "Parent / Child" topic string. Extending the alias list alone will not help;
+it needs first-segment keying or a populated `cluster` column. The 20 commonest
+unmatched first segments are listed in the audit report.
+
 ## Not yet done / not yet verified
 
 - **T33 — human read-and-verify** of the 20 sampled questions against the docx
