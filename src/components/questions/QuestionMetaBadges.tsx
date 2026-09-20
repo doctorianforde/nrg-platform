@@ -32,7 +32,7 @@ export function QuestionMetaBadges({ meta }: { meta: QuestionMeta }) {
         </Badge>
       ) : null}
       {meta.difficulty ? (
-        <Badge tone={DIFFICULTY_TONE[meta.difficulty] ?? "gray"}>{meta.difficulty}</Badge>
+        <Badge tone={DIFFICULTY_TONE[meta.difficulty] ?? "gray"}>{capitalize(meta.difficulty)}</Badge>
       ) : null}
       {meta.question_type === "sata" ? <Badge tone="blue">Select all that apply</Badge> : null}
     </div>

@@ -132,9 +132,9 @@ export function ReviewForm({ question: q, qs }: { question: Question; qs: string
             <dd>
               {editing ? (
                 <select name="difficulty" defaultValue={q.difficulty} className={input}>
-                  {DIFFICULTIES.map((d) => <option key={d}>{d}</option>)}
+                  {DIFFICULTIES.map((d) => <option key={d} value={d}>{capitalize(d)}</option>)}
                 </select>
-              ) : q.difficulty}
+              ) : capitalize(q.difficulty)}
             </dd>
           </dl>
         </section>

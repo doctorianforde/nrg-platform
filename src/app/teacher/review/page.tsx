@@ -127,7 +127,7 @@ export default async function ReviewListPage({ searchParams }: { searchParams: R
             <select name="difficulty" defaultValue={f.difficulty ?? ""} className={selectCls}>
               <option value="">All</option>
               {DIFFICULTIES.map((d) => (
-                <option key={d} value={d}>{d}</option>
+                <option key={d} value={d}>{capitalize(d)}</option>
               ))}
             </select>
           </label>
@@ -169,7 +169,7 @@ export default async function ReviewListPage({ searchParams }: { searchParams: R
                       <span>·</span>
                       <span>{capitalize(r.cognitive_level)}</span>
                       <span>·</span>
-                      <span>{r.difficulty}</span>
+                      <span>{capitalize(r.difficulty)}</span>
                       <span className="ml-auto font-mono text-gray-400">{r.source_id?.split(":").pop()}</span>
                     </div>
                     <p className="mt-1 text-sm line-clamp-2">{r.body}</p>
