@@ -200,6 +200,7 @@ export type Database = {
         Args: { p_total: number; p_correct: number; p_domain?: number }
         Returns: { correct_count: number; domain_id: number | null; finished_at: string; id: string; student_id: string; total_answered: number }
       }
+      study_streak: { Args: { p_user: string }; Returns: number }
       xp_total: { Args: { p_user: string }; Returns: number }
       user_role: { Args: never; Returns: string }
     }

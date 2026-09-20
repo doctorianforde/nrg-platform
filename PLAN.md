@@ -99,6 +99,33 @@ tests against this schema needs to assert on affected-row counts, not HTTP statu
 T36 Mock exam tables migration · T37 Mock exam RLS + rationale-release gate ·
 T38 Full-text search for mock exam review.
 
+## Jade's prototype (`OKComputer_NRG_Website/`) — reviewed 2026-09-20
+
+Full inventory in `PROGRESS.md`. Short version: a working Vite/React prototype (11
+pages), ~11,400 questions, ~16 Word specs, and 15 topic-review decks. **The folder is
+gitignored** — it breaks `next build` if type-checked — so `PROGRESS.md` is the only
+record that travels.
+
+Taken from it already: his 25-level Benner rank ladder, his XP award values, and his
+study-streak definition (all live in `src/lib/xp/` + migrations `20260920030000`,
+`20260920040000`).
+
+| Next candidate | Blocked on |
+|---|---|
+| Topic reviews (15 decks ready) | Nothing — best content-value-per-effort item left |
+| Topic Elo + real analytics | Practice needs per-answer rows, not just session totals |
+| Import ~9,300 questions | **Answer-key audit** (3 families have keys stuck in slots 0–1) + a call on 269 copyright-flagged items |
+| Rank-up exams | The question import above |
+| Case study simulator (100 cases) | A new schema for vitals/labs/phases |
+| Q-gen AI grading | An LLM key and budget |
+| Group study / live sessions | Realtime infra + Google Meet |
+| Subscriptions | **Pricing is unwritten** in the spec |
+
+**Decisions only Ian or Jade can make:** rank naming (the brief says Bronze→Diamond,
+`rankSystemData.ts` says Benner — I followed Benner); free-tier limits (v1 says 50
+questions/day, v2 says 10/day and no mocks); pricing; and whether to keep the
+Saunders-derived and verbatim-NCLEX questions at all.
+
 ## Not yet tracked (post-T38, no task IDs assigned)
 
 - **AI-generated question review workflow.** 2,000 AI-generated questions exist in

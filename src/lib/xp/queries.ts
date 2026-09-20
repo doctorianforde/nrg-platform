@@ -7,6 +7,8 @@ type Db = SupabaseClient<Database>;
 export type XpSummary = RankProgress & {
   /** Total per reason, for the "where this came from" breakdown. */
   byReason: { reason: string; amount: number; count: number }[];
+  /** Consecutive days with 10+ questions answered — the client's definition. */
+  streak: number;
 };
 
 /**
@@ -17,11 +19,10 @@ export type XpSummary = RankProgress & {
  * anyone's).
  */
 export async function loadXp(supabase: Db, userId: string): Promise<XpSummary> {
-  const { data } = await supabase
-    .from("xp_events")
-    .select("amount, reason")
-    .eq("user_id", userId)
-    .limit(5000);
+  const [{ data }, { data: streak }] = await Promise.all([
+    supabase.from("xp_events").select("amount, reason").eq("user_id", userId).limit(5000),
+    supabase.rpc("study_streak", { p_user: userId }),
+  ]);
 
   const rows = data ?? [];
   const totals = new Map<string, { amount: number; count: number }>();
@@ -39,6 +40,7 @@ export async function loadXp(supabase: Db, userId: string): Promise<XpSummary> {
     byReason: Array.from(totals.entries())
       .map(([reason, v]) => ({ reason, ...v }))
       .sort((a, b) => b.amount - a.amount),
+    streak: typeof streak === "number" ? streak : 0,
   };
 }
 

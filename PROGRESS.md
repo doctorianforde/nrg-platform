@@ -729,6 +729,133 @@ the practice RPC records and adds 10; and a student cannot grant themselves XP (
 All temporary accounts, submissions and practice rows removed — prod is back to
 1 profile, 0 XP rows, 0 practice rows, 0 student submissions.
 
+## Review of `OKComputer_NRG_Website/` — Jade's prototype (Claude, 2026-09-20)
+
+Reviewed the folder Ian dropped beside the app. It holds three things: a working
+Vite/React prototype (`app/`), ~16 Word specs, and 15 topic-review decks. This is the
+authoritative record of what is in there, since the folder is gitignored and will not
+travel with the repo.
+
+**Note on the specs:** `NRG_Complete_Template_Package_v2.docx` supersedes the 13
+individual templates and *changes numbers*. Where they disagree, v2 wins.
+
+### What the prototype contains (11 routed pages)
+
+Real, working mechanics worth taking:
+| Page | What it does | State |
+|---|---|---|
+| RankSystemPage + `rankSystemData.ts` | 25-level Benner ladder, per-topic Elo, readiness score, XP award table, rank-up config | **Formulas real; UI is mock data.** The best IP in the folder |
+| MockExamPage | 40 mocks × 100 q / 150 min, week-gated release (Mon+Thu), flagging, question-jump grid, per-domain + per-taxonomy results, fatigue curve | Real logic over real data; persists to `localStorage` only |
+| CaseStudyPage | 100 Caribbean case studies as phased simulations — progressive vitals/labs, per-phase decision, per-option explanation | Real logic, real content |
+| QuestionBankPage → QuizSessionPage | Filter (50 topics × 7 domains × taxonomy × count) → shuffled runner, 90 s/question, option shuffle that re-keys the answer | Real; saves nothing |
+| QuestionGenerationPage | "Author 1 question per 24 h to keep access" gate + a 6-criterion rubric | Gate real; **the AI grader is `Math.random()`** |
+| StudyLobbyPage | Group rooms: waiting → 60%-ready auto-start → countdown → timed questions → deferred rationales | Phase machine real; **peers are `Math.random()`** |
+| NursingKnowledgeBlock | Floating fact widget, ~36 facts, 30 s rotation, pause/dismiss | Real, self-contained |
+
+Mockups with nothing behind them: **AnalyticsPage** (every figure a literal, the "AI
+recommendations" are hand-written prose), **InstructorDashboardPage** (8 fake students,
+invented class stats, dead Export button), **LoginPage** (`handleLogin` ignores the form
+and navigates home), **HomePage** (fabricated testimonials; the RENR domain/taxonomy
+blueprint copy is worth keeping). `Home.tsx` is Vite boilerplate. `TopicReviewsPage.tsx`
+exists but is **not routed**. `store/useAppStore.ts` has clean daily-reset and streak
+rules but is imported by **zero** pages.
+
+### The question data (~11,400 items) — do not bulk-import
+
+`app/src/data/` is 12 MB across 77 files. Roughly **9,300 items are genuinely new**,
+RENR-tagged (domain + KC/AP/ASE) and rationale-complete. But there are real problems,
+and an answer-key audit has to come first:
+- **Broken answer keys.** `mockExamPoolBatch1–4` (4,000 q): ~91% of correct answers sit
+  in the first two option slots, and ~30% have an empty rationale. `caribbeanProfessionalism1000`:
+  84% at index 1. `renrBatch4`: 828/1,025 at index 0 or 1. These were pasted answer-first
+  and never shuffled — the prototype only looks right because it shuffles at runtime.
+- **Copyright.** All 18 `saunders_*` files carry the header
+  `// Source: Saunders Q&A Review (paraphrased for RENR format)` (145 q).
+  `gapFillingQuestions` (124 q) are verbatim classic NCLEX items with 100% empty
+  rationales. **Both need a rewrite or legal sign-off before going anywhere near prod.**
+- **Empty stubs.** `agentSwarmBatch1–4`, `medSurgQuestions`, `safetyQuestions`,
+  `psychosocialQuestions`, `managementQuestions`, `maternalChildQuestions`,
+  `clinicalJudgmentQuestions`, `cardiacMiHfQuestions` are all `= []`.
+- **Shape differences** to handle on import: `correct` is a 0-based index in most
+  families, a **letter** in the 30 `caribbean2000part*` files, and a per-option boolean
+  in case studies; `nrg1000*` prefixes option text with `"A. "`; no `difficulty` and no
+  SATA anywhere (all 4-option single-answer).
+- **100 case studies / 800 phase questions** are valuable but need their own schema
+  (vitals, labs, body systems, phases).
+
+### What I implemented from it
+
+1. **Rank ladder replaced with Jade's own** (`src/lib/xp/ranks.ts`). I had shipped a
+   5-rank Benner ladder earlier the same day; his design is 25 levels, five per tier,
+   0 → 32,500 XP, with per-level descriptions. Now taken verbatim from
+   `app/src/data/rankSystemData.ts`, so the platform matches what he designed.
+2. **XP awards re-based on his `XP_AWARDS`** (`20260920030000`): mock exam 250, +150 for
+   clearing the 66% RENR pass mark; practice 100 for 25+ questions, 40 for 10+, else 10;
+   approved question stays 150 (his `qgen75to89` tier). My earlier weights would have
+   made a 32,500-XP ladder unclimbable. Verified 6/6 — 65% pays 250, 70% pays 400.
+   *Deviation:* his mock award assumes exactly 100 questions; ours are any length, so the
+   bonus is judged on percentage, not count.
+3. **Study streak** (`20260920040000`) to his Analytics definition — consecutive days
+   with ≥10 questions, computed on read from practice and mock sessions so there is no
+   counter to drift. Shown on the rank card. Verified 8/8 including lapse, gap, and
+   sub-threshold days.
+
+Safe to re-base the weights because the XP ledger was empty in both environments.
+
+### What I could not do, and why
+
+**Needs a decision from Ian or Jade first**
+- **Rank naming conflict.** `NurseBrain_Programme_Brief.docx` says Bronze → Diamond;
+  `rankSystemData.ts` says Benner. I followed Benner (the newer, more detailed file, and
+  what the brief itself calls the framework). Worth confirming with Jade.
+- **Free-tier limits contradict themselves.** v1: 50 questions/day, 1 mock/week.
+  **v2: 10/day, no mock exams at all.** Pick one.
+- **Subscription pricing is literally unwritten** — "$XX/month or $XXX/year". No code
+  can be written against that.
+- **Importing the 9,300 questions** — needs the answer-key audit above, plus a call on
+  the 269 copyright-flagged items.
+- **"School/university (required for marketing database collection)"** is a privacy and
+  consent decision, not just a column.
+
+**Needs an external service**
+- **LLM API + budget** — the Q-generation grader (currently `Math.random`), question
+  generation, and the classification agents.
+- **Payments** — gateway choice including "local Caribbean payment methods".
+- **Realtime infra** — synchronised group study (90 s timer, lock-in, live anonymous
+  percentage bars). Supabase Realtime could do it, but it is a build, not a setting.
+- **Google Meet** — group debriefs, office hours, the post-mock live review of the top
+  40% hardest questions.
+- **SMS** — v2 wants 2FA for Premium/Instructor/Admin via email *or* SMS OTP. Email-only
+  would avoid a provider.
+- **Email** — still unconfigured. Already flagged: Supabase's built-in sender is capped
+  at a few per hour.
+- **Licensed content** — RENR Prep Guide, CARICOM curriculum, ICN/WHO/CDC guidelines,
+  and the YouTube channels named by brand (Osmosis, Khan Academy Medicine, Ninja Nerd).
+
+**Buildable, just not built yet** (ranked by how self-contained)
+1. **Topic Elo** — his formula is complete (logistic expectation vs 1500, K = 10/20/30
+   by difficulty, 7 competence bands, 20 topics). Blocked on data, not design: practice
+   currently stores only per-session totals, so Elo could only be fed from mock exam
+   responses until practice records per-answer rows.
+2. **Analytics page for real** — every formula is specified (accuracy, improvement rate,
+   stamina bands 0–29/30–59/60–100, recommendation triggers at <70% domain accuracy).
+   Same blocker: needs per-answer practice data for the domain/taxonomy breakdown.
+3. **Topic reviews** — 15 finished decks sit in `nrg_htn_review/` and
+   `nrg_medical_surgical_reviews/` as structured YAML-ish `.pptd` plus clean
+   `outline.md`. Needs a table and a reading page; his XP spec already awards 30 for
+   reading one. Highest content-value-per-effort item left.
+4. **Rank-up exams** — fully specified: 20 questions, pass 14 (66%), 12 weak-area + 8
+   broad, minimums of 5/10 ASE, 7/12 weak, 4/8 broad. `nrg1000RankUpQuestions` (500 q)
+   is the intended bank. Needs the import first.
+5. **Nursing Knowledge Block** — self-contained widget plus a facts table.
+6. **Cross-linking** — question → its topic review → 3 related questions; needs the
+   topic reviews first.
+7. **Case study simulator** — the phased-disclosure engine and the 100-case dataset.
+8. **Mock exam regulator to v2 rules** — always 100 q / 150 min, domain match within 2%,
+   taxonomy within 3%, stem-length ratio 2:1:1:1 per 5-question block, no back-navigation,
+   2 × 5 min breaks with the clock running. Our mock engine exists but does not enforce
+   these.
+
 ## Not yet done / not yet verified
 
 - **T33 — human read-and-verify** of the 20 sampled questions against the docx
