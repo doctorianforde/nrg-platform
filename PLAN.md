@@ -140,22 +140,21 @@ Saunders-derived and verbatim-NCLEX questions at all.
   mapping (the doc flags the arguable calls, e.g. gynae-oncology sitting in med-surg),
   then `--apply` on staging. Deliberately does NOT collapse the 726 topics: only 7%
   restate the RENR domain, the other 673 name a real clinical sub-topic.
-- **Review venue for the staging bank**: BLOCKED on Ian, not solved. Staging-side work
-  is done (Claude, 2026-09-20): Jade has a staging `teacher` account, and the review
-  queue now has a `prototype` source filter so the imported bank can be worked
-  separately from Jade's AI batch (both are `is_ai_generated` and were one
-  undifferentiated 7,214-item list). 12/12 Playwright assertions against staging.
-  **But a Vercel preview URL will not work for Jade** — I first said it would and that
-  was wrong. The project uses Vercel's Standard Protection
-  (`ssoProtection: all_except_custom_domains`), so every per-deployment URL 302s to
-  `vercel.com/sso-api`; only the production alias is public. The account is Hobby, which
-  has no team members, so Jade cannot be invited either. **Owner: Ian**, pick one:
-  (1) a second Vercel project for staging whose Production Branch is `staging` and whose
-  env vars point at staging — its production URL is exempt from the gate (recommended);
-  (2) disable Vercel Authentication on the existing project, which makes all future
-  previews public (Password Protection is Pro-only); or (3) import to prod as
-  inactive/pending and review on the public prod URL, which needs migration
-  `20260920050000` on prod first. See `PROGRESS.md` for the trade-offs.
+- **Review venue for the staging bank**: DONE and live (Claude, 2026-09-20) —
+  **https://nrg-platform-staging.vercel.app**, a second Vercel project
+  (`nrg-platform-staging`) on the same repo with its own env vars pointing at the
+  staging Supabase project. Publicly reachable because it is that project's production
+  alias; a preview URL would not have worked, since the org uses Vercel Standard
+  Protection and every per-deployment URL 302s to `vercel.com/sso-api` (the account is
+  Hobby, so Jade could not be invited either). Its production branch is `main`, not a
+  separate `staging` branch — Vercel's API will not set the production branch, and
+  tracking `main` is better anyway: current code, staging data, nothing to keep in sync.
+  A push to `main` now updates both sites. Verified black-box that each site talks only
+  to its own database; prod env vars untouched. Jade: `jade@nrg-staging.test` (teacher),
+  then `/teacher/review` → Source → "Prototype bank (imported)". 7/7 live assertions
+  plus a 7-page smoke test. **Owner: Ian** — send Jade the URL and password.
+  Note the URL is public with open signup; the 4,798 imported questions are all
+  inactive so a stranger cannot see them, but Password Protection is Pro-only.
 - **Topic clusters for the imported bank**: APPLIED to staging (Claude, 2026-09-20) on
   Ian's go-ahead. All 726 previously cluster-less topics now have a clinical area; 0
   questions left without one, down from 4,630 of 7,314. Exactly 726 rows changed, no

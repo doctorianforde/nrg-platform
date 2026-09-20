@@ -1150,49 +1150,71 @@ clear the derivative-work problem is just writing new questions.
 
 ### 1. Where to review the staging bank
 
-**Corrected 2026-09-20 (same session).** My first answer here was "push a branch and
-send Jade the preview URL". That is wrong on this account, and the correction matters
-more than the original finding.
+**Resolved 2026-09-20 — live at https://nrg-platform-staging.vercel.app**
 
-The Preview environment variables *do* point at staging (`kwhaqhhwqykckarjbdod`) —
-confirmed with `vercel env pull --environment=preview`. Production vars point at prod and
-are untouched. So the *data* side is right.
+My first answer was "push a branch and send Jade the preview URL". That was wrong, and
+the correction is the useful part of this entry.
 
-But **preview URLs are gated by Vercel Authentication and Jade cannot open them.** The
-project has `ssoProtection.deploymentType = "all_except_custom_domains"` (Vercel's
-"Standard Protection"). Verified empirically: a per-deployment URL returns `302` to
-`https://vercel.com/sso-api?...`, while the production alias `nrg-platform.vercel.app`
-returns `200`. Every preview URL is a per-deployment URL, so every preview is gated.
-The account is on the **Hobby** plan, which has no team members, so Ian cannot invite
-Jade to view a protected deployment either.
+The Preview environment variables *do* point at staging (`kwhaqhhwqykckarjbdod`) — that
+part was right. But **preview URLs are gated and Jade could never have opened one.** The
+project uses Vercel's Standard Protection
+(`ssoProtection.deploymentType = "all_except_custom_domains"`). Verified directly: a
+per-deployment URL returns `302` to `https://vercel.com/sso-api?...`, while the
+production alias returns `200`. Every preview URL *is* a per-deployment URL. The account
+is on the **Hobby** plan, which has no team members, so Jade could not have been invited
+to view a protected deployment either.
 
-Options, in the order I'd pick them:
+### What was built instead — a second Vercel project
 
-1. **A second Vercel project for staging** (recommended). Same GitHub repo, Production
-   Branch set to `staging`, its own env vars pointing at the staging Supabase project.
-   Its *production* URL is exempt from the SSO gate, so it is publicly reachable and
-   Jade signs in with his staging account. Gives a durable staging site rather than a
-   per-branch URL, and changes nothing about the prod project's protection.
-2. **Disable Vercel Authentication** on the existing project (Settings → Deployment
-   Protection). One toggle, then branch previews work — but it makes every future
-   preview publicly reachable, and Password Protection is Pro-only so there is no
-   middle setting on Hobby.
-3. **Import to prod as inactive/pending and review there.** Where this has to end up
-   anyway; prod is already public with open signup. Needs migration `20260920050000`
-   applied to prod first. Puts 4,798 unreviewed rows in the prod database — they cannot
-   go live without approval (the `questions_ai_active_requires_approval` CHECK), but it
-   is still a product call, not a mechanical one.
+`nrg-platform-staging` (`prj_polFw0WdQaEOST34t8oRvMCQXII1`), same GitHub repo, its own
+environment variables pointing at the staging Supabase project. Because
+`https://nrg-platform-staging.vercel.app` is that project's *production* alias, it is
+exempt from the SSO gate and publicly reachable.
 
-All three are outward-facing and need Ian's go-ahead, so none has been done. Note that
-options 1 and 2 both expose a URL where anyone can self-sign-up as a student; that is
-the same exposure prod already has, and staging has only 100 live questions (Jade's
-own), so it is not a new class of risk.
+One deviation from the plan, for the better: **its production branch is `main`, not a
+separate `staging` branch.** Vercel's API refuses to set the production branch (it is a
+dashboard-only field — `PATCH /v9/projects/{id}` rejects `productionBranch`,
+`gitRepository` and `link` as unknown properties, and `POST /v9/projects/{id}/link`
+silently keeps `main`). Tracking `main` turns out to be what we actually want: the
+staging site always runs current code against staging data, with no branch to keep in
+sync and no drift. A `staging` branch was created and then deleted, since with
+`productionBranch=main` it would only have produced gated preview deployments.
 
-Two things that *were* missing are now fixed, and both were needed regardless of venue:
+So there are now two sites off one repo, and a push to `main` updates both:
+
+| Site | Database | Public? |
+|---|---|---|
+| `nrg-platform.vercel.app` | prod `cdvubijjepwmhhkgppbl` | yes |
+| `nrg-platform-staging.vercel.app` | staging `kwhaqhhwqykckarjbdod` | yes |
+
+Confirmed black-box in a real browser rather than by reading credentials: the prod site
+contacts only the prod Supabase host, the staging site only the staging host. The
+env-var write had a hard assertion that refused to proceed if any prod project ref
+appeared in the values being written to the staging project. Prod's own variables were
+not touched.
+
+**Jade's access:** `https://nrg-platform-staging.vercel.app`, account
+`jade@nrg-staging.test` (role `teacher`), password handed to Ian separately. Then
+`/teacher/review` → Source → "Prototype bank (imported)".
+
+Verified on the live site, signed in as Jade — **7/7**: no Vercel login wall, sign-in,
+prototype bank 4,798 (which is itself the proof it is hitting staging, since prod has 0
+prototype rows), Jade's AI batch separately at 2,416, the clinical-area filter, the
+detail page's approve/reject actions, and a real Area shown instead of a dash. Network
+capture confirms prod was never contacted. Separately smoke-tested 7 more pages
+(`/teacher`, `/teacher/messages`, `/teacher/mock-exams`, `/study`, `/study/profile`,
+`/study/practice`) — all 200, no uncaught page errors.
+
+**Worth knowing:** the staging URL is public and signup is open, so anyone with the link
+can register as a student there. That is the same exposure prod already has, and staging
+has only 100 live questions (Jade's own) — the 4,798 imported ones are all
+`is_active=false`, so a signed-up stranger cannot see them. Password Protection would
+close this but is Pro-only.
+
+### Two fixes that were needed regardless of venue
 
 - **Staging had zero accounts**, so nobody could log in (the T34 e2e test cleans up after
-  itself). Created a `teacher` account for Jade on staging — `jade@nrg-staging.test`,
-  password handed to Ian separately. Staging only; prod still has only Ian's
+  itself). Jade now has a `teacher` account there. Prod still has only Ian's
   `super_admin`.
 - **The review queue could not separate the two banks.** Both Jade's AI batch and the
   imported prototype bank are `is_ai_generated=true`, so the source filter's `ai` option
@@ -1203,12 +1225,9 @@ Two things that *were* missing are now fixed, and both were needed regardless of
   `.neq()`, because SQL's `NULL <> 'x'` is NULL and would have hidden any AI row whose
   source was never set.
 
-Proved end-to-end with Playwright against a dev server pointed at staging, logged in as
-Jade: **12/12 assertions** — sign-in, the three filter counts, pagination, row badge,
-detail page with options/explanation/approve-reject actions, domain filter (1,093) and
-text search (9 for "digoxin"). Spot-checked the letter fix in the real UI:
-`proto:nrg-rankup:5916` had "Salbutamol (A)" when Salbutamol is option D; it now reads
-"Salbutamol (D)", and every letter reference names the drug actually in that slot.
+Spot-checked the letter fix in the real UI: `proto:nrg-rankup:5916` had "Salbutamol (A)"
+when Salbutamol is option D; it now reads "Salbutamol (D)", and every letter reference
+names the drug actually in that slot.
 
 ### 3. The 726 cluster-less topics — APPLIED to staging
 
