@@ -121,7 +121,9 @@ T38 Full-text search for mock exam review.
   `20260919020000_student_messaging.sql` on prod; it REPLACES the `profiles` SELECT
   policy so each side can see the other's name along a shared conversation, and
   `20260919030000_staff_initiated_threads.sql`, which lets Jade write first and
-  widens that policy so teachers can read the student roster. See `PROGRESS.md`.
+  widens that policy so teachers can read the student roster. **Both applied to prod
+  2026-09-19 and smoke-tested there; the feature is live.** Remaining: Jade needs a
+  prod account promoted to `teacher` (SQL in `PROGRESS.md`). See `PROGRESS.md`.
 - **Analytics / rank pages**: not built — no backing tables in our schema; needs Ian's
   data-model decision first (see Phase 1 table above).
 - **Three unreviewed docx files** in Jade's RENR folder — see `PROGRESS.md`.

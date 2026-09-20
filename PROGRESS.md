@@ -279,7 +279,7 @@ recommendation categories.
 - Nothing tracks fatigue across attempts over time; each report is one sitting.
 - Exams under 16 questions get no analysis at all — quarters would be meaningless.
 
-## Student profile + messaging (Claude, 2026-09-19) — built, tested on staging, NOT yet on prod
+## Student profile + messaging (Claude, 2026-09-19) — LIVE ON PROD
 
 A student profile section with a direct line to teaching staff, so students can ask
 Jade questions and get feedback in the app.
@@ -359,6 +359,34 @@ staff (403).
   closable from the UI yet, though the DB and UI both honour `closed`.
 - `src/lib/supabase/types.ts` was hand-edited again for the two new tables:
   `supabase gen types` needs Docker, which isn't set up on this machine.
+### Shipped to prod, 2026-09-19
+
+Both migrations (`20260919020000`, `20260919030000`) applied to
+`cdvubijjepwmhhkgppbl` after a clean dry run — prod migration history is 19/19 with
+no drift, and `db push --dry-run` now reports "up to date". Vercel deployed `main`
+automatically; `/study/profile` and `/teacher/messages` are live and correctly
+redirect signed-out visitors to `/login`.
+
+Smoke-tested against **prod** with a temporary student and teacher (10 checks, all
+passing): student opens a thread, posts, teacher sees it with the student's name and
+status flipped to `open`, teacher replies, trigger flips to `answered`, student reads
+the teacher's name, `mark_thread_read()` returns 204, and a teacher can open a thread
+first. Both temporary users deleted afterwards — prod is back to 1 profile (Ian),
+0 threads, 0 messages.
+
+**The one thing still needed to use it:** prod has exactly one account, Ian's, and its
+role is `student`. Nobody can reach `/teacher/messages` until an account is promoted.
+Once Jade signs up at `https://nrg-platform.vercel.app/signup` and confirms his email,
+run this in the prod SQL editor:
+
+```sql
+update public.profiles set role = 'teacher'
+ where id = (select id from auth.users where email = '<jade@email>');
+```
+
+The role guard trigger allows this from the SQL editor (`auth.uid()` is null there).
+There is no self-service path to a teacher role, by design.
+
 - If prod deploys before the migration is applied, the pages degrade to empty rather
   than erroring (the queries return no rows), but nothing can be sent.
 
