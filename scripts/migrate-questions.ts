@@ -37,7 +37,11 @@ import { resolve, extname } from "node:path";
 
 // ─── Field mapping (T26 decides the final aliases) ───────────────────────────
 const FIELD_MAP = {
-  source_id:       ["id", "question_id", "qid", "number", "no", "#"],
+  // "source_id" must be listed explicitly: aliases are matched after stripping
+  // non-alphanumerics, so "source_id" normalises to "sourceid" and would not
+  // otherwise match "id". Without it a CSV carrying a source_id column silently
+  // fell back to hash: ids and lost its provenance.
+  source_id:       ["source_id", "id", "question_id", "qid", "number", "no", "#"],
   domain:          ["domain", "category", "subject", "area"],
   topic:           ["topic", "subtopic", "sub_topic", "unit"],
   cluster:         ["cluster", "study_cluster", "clinical_area", "subject_area", "system", "specialty"],

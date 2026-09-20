@@ -818,8 +818,10 @@ re-base.
   **v2: 10/day, no mock exams at all.** Pick one.
 - **Subscription pricing is literally unwritten** — "$XX/month or $XXX/year". No code
   can be written against that.
-- **Importing the 9,300 questions** — needs the answer-key audit above, plus a call on
-  the 269 copyright-flagged items.
+- **Importing the prototype questions** — audit done 2026-09-20 (`docs/phase-1/PROTOTYPE_DATA_AUDIT.md`):
+  4,728 rows ready in `proto-import-clean.csv` (offline-validated), blocked on Ian/Jade's
+  go/no-go, plus a call on the 269 copyright-flagged items. The "~9,300" figure was an
+  overcount — the mock pool is mostly duplicates of the banks.
 - **"School/university (required for marketing database collection)"** is a privacy and
   consent decision, not just a column.
 
@@ -901,6 +903,75 @@ while keeping the content.
 than an admin action — worth moving if Jade wants to maintain them himself. Favourites
 and "don't show this again" are not implemented, and the widget appears only on the
 home page (`src/app/page.tsx`), not inside the study flow.
+
+## Prototype question-data audit (Kimi, 2026-09-20) — done, import NOT executed
+
+Full report: `docs/phase-1/PROTOTYPE_DATA_AUDIT.md`. Script: `scripts/audit-prototype-data.ts`
+(deterministic, seed 42). Outputs: `scripts/data/proto-import-clean.csv` (4,728 rows),
+`scripts/data/proto-quarantine.csv` (5,897 rows, reason column), `proto-audit-stats.json`.
+
+**The headline answer to the answer-key question: the slot-0/1 skew is benign.** For every
+family with rationales, the rationale cross-check supports the keyed option (AGREES =
+4,728/4,728 verifiable). The skew is paste-order, not wrong keys; options are shuffled
+and re-keyed on export (re-key verified letter-exact against source for all 1,516 clean
+caribbean2000 rows, 0 mismatches). Hand-checking 25 of the 77 flagged DISAGREES found
+~85–90% are false positives (enumeration rationales, NOT-questions, rebuttal-by-
+restatement) — quarantine is a review pool, not a bin.
+
+**The mock exam pool is a mirage.** `mockExamPoolBatch1–4` (4,000 items) is ~2,790
+stem-identical copies of the seven real banks; only 1,202 stems are unique and nearly
+all of those have empty rationales — unkey-auditable. The pool contributes zero clean
+rows. The real verifiable unique content is **4,728 questions**, not ~9,300.
+
+**Quarantined (not deleted):** 2,567 unverifiable (incl. the 1,202 unrationaled pool
+items), 2,792 duplicate stems, 269 copyright-flagged (145 Saunders-derived, 124
+verbatim NCLEX — Ian/Jade call: rewrite or drop), 168 caribbean2000 items with
+`domain: "ASE"` (taxonomy pasted into domain; needs re-tagging), 24 mangled stems
+(a find-replace ate "St." — "at a the hospital. Kitts"), 1 malformed.
+
+**Validated offline only:** `migrate-questions.ts --offline` → 4,728 ok, 0 errors,
+0 skipped, all 7 domains. No database touched; no import run — that's a separate
+decision after Ian and Jade read the report.
+
+## Prototype data audit — Kimi's pass, independently verified (2026-09-20)
+
+Kimi ran the audit from `docs/phase-1/KIMI_DATA_AUDIT_BRIEF.md`. Deliverables:
+`scripts/audit-prototype-data.ts`, `scripts/data/proto-import-clean.csv` (4,728 rows),
+`scripts/data/proto-quarantine.csv` (5,897 rows with reasons), and
+`docs/phase-1/PROTOTYPE_DATA_AUDIT.md`.
+
+**Its verdict: the slot-0/1 answer-key skew was benign.** The keys were right; the
+options had simply been pasted answer-first and never shuffled. Fixed at export with a
+seeded shuffle and re-key.
+
+**I verified this independently** — re-parsing the prototype from scratch and
+re-deriving the expected answer, using none of the audit's own code. 4,659 of 4,728
+rows (98.5%) re-derived, **0 key errors**. Full table and method appended to the audit
+report. The two apparent mismatches were my own comparison failing to decode `\uXXXX`
+escapes, not key errors.
+
+**The "~9,300 importable" figure in my earlier review was wrong**, and the audit caught
+why: `mockExamPoolBatch1–4` is largely re-packaged copies of the real banks — about
+2,790 stem-identical duplicates, and its 1,202 unique stems are almost entirely
+rationale-less, so they cannot be key-audited at all. Real importable content is
+**4,728**. Recommendation accepted: drop the pool as a source and build mock sets from
+the banks instead.
+
+**Two findings my review added:**
+1. **Fixed a latent bug in `migrate-questions.ts`** — `source_id` was not in its
+   `FIELD_MAP` aliases, so a `source_id` column normalised to `sourceid`, matched
+   nothing, and every row silently fell back to a `hash:` id. That would have destroyed
+   provenance for a 4,728-row import. It never surfaced before because Jade's original
+   100 questions were loaded as hand-written SQL, not through the script.
+2. **Three rows carry stray CJK characters** (`maternal-child:6858`,
+   `nrg-general:5416`, `nrg-rankup:6032`) — a generation artefact. Fix or quarantine
+   before import.
+
+Nothing has been imported. `migrate-questions.ts --offline` reproduces 4,728 ok /
+0 errors / all 7 domains. Still waiting on Ian and Jade: the go/no-go to staging, the
+copyright call on the 269 Saunders-derived and verbatim-NCLEX items, and whether to
+work the review pools (77 key-mismatch candidates, ~1,365 weak rationales, 168
+ASE-domain mis-tags, 24 mangled stems).
 
 ## Not yet done / not yet verified
 
