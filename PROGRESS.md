@@ -802,6 +802,12 @@ and an answer-key audit has to come first:
 
 Safe to re-base the weights because the XP ledger was empty in both environments.
 
+**Shipped to prod 2026-09-20.** `20260920030000` and `20260920040000` applied to
+`cdvubijjepwmhhkgppbl`; history 28/28, no drift, `db push --dry-run` reports "up to
+date". Vercel deployed `de8fada`. Verified on prod: `study_streak()` returns 0 for the
+one real account, and the ledger is still empty, so no totals were disturbed by the
+re-base.
+
 ### What I could not do, and why
 
 **Needs a decision from Ian or Jade first**
