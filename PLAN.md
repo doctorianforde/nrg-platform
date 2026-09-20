@@ -115,7 +115,7 @@ study-streak definition (all live in `src/lib/xp/` + migrations `20260920030000`
 | Topic reviews (15 decks ready) | Nothing — best content-value-per-effort item left |
 | Nursing Knowledge facts | **Built (133 facts).** Needs Jade's clinical sign-off — see `docs/phase-1/nursing-knowledge-facts-for-review.pdf` |
 | Topic Elo + real analytics | Practice needs per-answer rows, not just session totals |
-| Import prototype questions | **Staging import done + key pool cleared (2026-09-20)** — now **4,798** rows in the review queue (`source='prototype-import'`, all `is_active=false`/`pending`), independently re-verified with 0 key errors, letter references idempotently correct, RLS 15/15. The 77 key-mismatch items were all false positives of the token-overlap heuristic: 70 hand-reviewed and promoted, 7 compound-option items held for human review. The export is now deterministic per question, so later edits cannot reshuffle unrelated rows. **Blocked on:** Jade's clinical review/approval; prod import (needs migration `20260920050000` applied to prod first — never done); the topic-cluster proposal below; the 269 copyright-flagged items |
+| Import prototype questions | **Staging import done + key pool cleared (2026-09-20)** — now **4,798** rows in the review queue (`source='prototype-import'`, all `is_active=false`/`pending`), independently re-verified with 0 key errors, letter references idempotently correct, RLS 15/15. The 77 key-mismatch items were all false positives of the token-overlap heuristic: 70 hand-reviewed and promoted, 7 compound-option items held for human review. The export is now deterministic per question, so later edits cannot reshuffle unrelated rows. **Blocked on:** Jade's clinical review/approval; prod import (needs migration `20260920050000` applied to prod first — never done); the 269 copyright-flagged items (topic clusters now applied on staging) |
 | Rank-up exams | The question import above |
 | Case study simulator (100 cases) | A new schema for vitals/labs/phases |
 | Q-gen AI grading | An LLM key and budget |
@@ -140,13 +140,33 @@ Saunders-derived and verbatim-NCLEX questions at all.
   mapping (the doc flags the arguable calls, e.g. gynae-oncology sitting in med-surg),
   then `--apply` on staging. Deliberately does NOT collapse the 726 topics: only 7%
   restate the RENR domain, the other 673 name a real clinical sub-topic.
-- **Review venue for the staging bank**: SET UP (Claude, 2026-09-20). Vercel Preview
-  env vars already point at staging, so any non-`main` branch gives Jade a URL serving
-  the real `/teacher/review` UI against staging with no path to prod. Added a
-  `prototype` source filter so the imported bank can be worked separately from Jade's AI
-  batch (both are `is_ai_generated`, and were one undifferentiated 7,214-item list).
-  Created a staging `teacher` account for Jade. 12/12 Playwright assertions.
-  **Owner: Ian** — push a branch and send Jade the preview URL.
+- **Review venue for the staging bank**: BLOCKED on Ian, not solved. Staging-side work
+  is done (Claude, 2026-09-20): Jade has a staging `teacher` account, and the review
+  queue now has a `prototype` source filter so the imported bank can be worked
+  separately from Jade's AI batch (both are `is_ai_generated` and were one
+  undifferentiated 7,214-item list). 12/12 Playwright assertions against staging.
+  **But a Vercel preview URL will not work for Jade** — I first said it would and that
+  was wrong. The project uses Vercel's Standard Protection
+  (`ssoProtection: all_except_custom_domains`), so every per-deployment URL 302s to
+  `vercel.com/sso-api`; only the production alias is public. The account is Hobby, which
+  has no team members, so Jade cannot be invited either. **Owner: Ian**, pick one:
+  (1) a second Vercel project for staging whose Production Branch is `staging` and whose
+  env vars point at staging — its production URL is exempt from the gate (recommended);
+  (2) disable Vercel Authentication on the existing project, which makes all future
+  previews public (Password Protection is Pro-only); or (3) import to prod as
+  inactive/pending and review on the public prod URL, which needs migration
+  `20260920050000` on prod first. See `PROGRESS.md` for the trade-offs.
+- **Topic clusters for the imported bank**: APPLIED to staging (Claude, 2026-09-20) on
+  Ian's go-ahead. All 726 previously cluster-less topics now have a clinical area; 0
+  questions left without one, down from 4,630 of 7,314. Exactly 726 rows changed, no
+  already-clustered topic touched, no topic renamed, prod untouched, nothing live.
+  Whole-bank spread: med-surg 2,487 · maternal-child 2,033 · professional 1,409 ·
+  safety 908 · psychosocial 477. Done as 101 segment decisions rather than 726 topic
+  decisions — see `docs/phase-1/TOPIC_CLUSTER_PROPOSAL.md`. Deliberately did NOT
+  collapse the 726 topics (only 7% restate the RENR domain; 673 name a real sub-topic)
+  and did NOT add clusters. **Owner: Jade** — the mapping wants a nursing eye on the
+  arguable calls the doc flags; correcting one means editing `RULES` in
+  `scripts/propose-topic-clusters.ts` and re-running `--apply`.
 - **Copyright decision on 269 held-back questions**: AWAITING Ian/Jade. List at
   `docs/phase-1/COPYRIGHT_REVIEW_LIST.md` (identifiers only — no stems in git).
   145 Saunders-derived + 124 verbatim NCLEX (0 rationales). Recommendation in the doc:
