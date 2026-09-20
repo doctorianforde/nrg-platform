@@ -563,7 +563,7 @@ own folder, a second signed-in user is refused (400), the avatar is publicly
 readable, and the bucket rejects a 3 MB file. Both accounts and all objects
 removed — prod is back to 1 profile and 0 avatar objects.
 
-## Event calendar (Claude, 2026-09-19) — built, tested on staging, NOT yet on prod
+## Event calendar (Claude, 2026-09-19) — LIVE ON PROD
 
 A month calendar on `/study/profile`, which every role can reach, so it is "visible
 on all profiles". Students add private entries; staff publish to a chosen audience.
@@ -620,6 +620,16 @@ swept to 0 rows.
   published event, so today it behaves as "hide from students".
 - Month navigation is a full page load; only day selection is client-side.
 - No timezone handling beyond storing wall-clock dates, which is deliberate.
+
+### Shipped to prod, 2026-09-19
+
+`20260919060000` applied to `cdvubijjepwmhhkgppbl`; prod history is 23/23 with no
+drift and `db push --dry-run` reports "up to date". Vercel deployed `c1a02fd`.
+Smoke-tested on prod with a temporary teacher and two students (7 checks): a student
+creates a private entry but is refused when publishing to everyone (403); staff
+publish successfully; a second student sees only the published event; staff cannot
+read the private entry; and a `selected` event reaches the named student and not the
+other. All events and accounts removed — prod is back to 1 profile, 0 events.
 
 ## Not yet done / not yet verified
 
