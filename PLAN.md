@@ -114,7 +114,7 @@ study-streak definition (all live in `src/lib/xp/` + migrations `20260920030000`
 |---|---|
 | Topic reviews (15 decks ready) | Nothing — best content-value-per-effort item left |
 | Topic Elo + real analytics | Practice needs per-answer rows, not just session totals |
-| Import ~9,300 questions | **Answer-key audit** (3 families have keys stuck in slots 0–1) + a call on 269 copyright-flagged items |
+| Import ~9,300 questions | **Answer-key audit first** — brief ready to hand over at `docs/phase-1/KIMI_DATA_AUDIT_BRIEF.md`. Then a call on 269 copyright-flagged items |
 | Rank-up exams | The question import above |
 | Case study simulator (100 cases) | A new schema for vitals/labs/phases |
 | Q-gen AI grading | An LLM key and budget |
@@ -192,6 +192,11 @@ Saunders-derived and verbatim-NCLEX questions at all.
 Kimi runs locally on your Mac, so it's well-suited to anything that's mechanical,
 self-contained, and doesn't need production Supabase judgment calls or client
 communication. Good candidates, roughly in priority order:
+
+0. **Prototype data audit** — hand `docs/phase-1/KIMI_DATA_AUDIT_BRIEF.md` over as-is.
+   Self-contained; needs no chat context. Output is a report plus an offline-validated
+   CSV, deliberately stopping short of importing. The import decision stays with you
+   and Jade.
 
 1. **T33 — Sample QA script.** *(Done 2026-09-19 by Claude: `scripts/qa-sample.mjs`; only the human read-and-verify remains.)* Write a script that pulls 20 random questions tagged
    `Author: Jade Nicome` from prod, prints them alongside the matching rows in
