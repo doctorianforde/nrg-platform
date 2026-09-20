@@ -2,6 +2,7 @@ import { requireRole } from "@/lib/auth/session";
 import { DashboardShell } from "@/components/DashboardShell";
 import { fetchQuizQuestions } from "@/lib/quiz/fetch";
 import { TutorSession } from "@/components/questions/TutorSession";
+import { recordPracticeSession } from "@/lib/xp/actions";
 
 export const dynamic = "force-dynamic";
 
@@ -49,6 +50,10 @@ export default async function PracticeSessionPage({
         title={scope > 0 ? "Filtered practice" : "Mixed practice"}
         backHref="/study/practice"
         backLabel="Change filters"
+        onComplete={async (total, correct) => {
+          "use server";
+          await recordPracticeSession(total, correct, int(sp.domain));
+        }}
       />
     </DashboardShell>
   );

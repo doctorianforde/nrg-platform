@@ -3,6 +3,7 @@ import { requireRole } from "@/lib/auth/session";
 import { capitalize } from "@/lib/format";
 import { createClient } from "@/lib/supabase/server";
 import { DashboardShell } from "@/components/DashboardShell";
+import { Badge } from "@/components/ui/Badge";
 import {
   applyFilters,
   COGNITIVE_LEVELS,
@@ -11,8 +12,11 @@ import {
   PAGE_SIZE,
   parseFilters,
   REVIEW_STATUSES,
+  SOURCES,
+  SOURCE_LABEL,
   STATUS_BADGE,
   STATUS_LABEL,
+  STUDENT_SOURCE,
   type ReviewStatus,
 } from "@/lib/review/filters";
 
@@ -26,8 +30,8 @@ export default async function ReviewListPage({ searchParams }: { searchParams: R
   const f = parseFilters(searchParams);
 
   const listQuery = f.cluster
-    ? supabase.from("questions").select("id, body, cognitive_level, difficulty, review_status, source_id, domains(code, name), topics!inner(name, cluster_id)", { count: "exact" })
-    : supabase.from("questions").select("id, body, cognitive_level, difficulty, review_status, source_id, domains(code, name), topics(name, cluster_id)", { count: "exact" });
+    ? supabase.from("questions").select("id, body, cognitive_level, difficulty, review_status, source_id, source, domains(code, name), topics!inner(name, cluster_id)", { count: "exact" })
+    : supabase.from("questions").select("id, body, cognitive_level, difficulty, review_status, source_id, source, domains(code, name), topics(name, cluster_id)", { count: "exact" });
 
   const [list, domains, clusters, ...counts] = await Promise.all([
     applyFilters(listQuery, f)
@@ -36,7 +40,10 @@ export default async function ReviewListPage({ searchParams }: { searchParams: R
     supabase.from("domains").select("id, code, name").order("display_order"),
     supabase.from("topic_clusters").select("id, name").order("display_order"),
     ...REVIEW_STATUSES.map((s) =>
-      supabase.from("questions").select("id", { count: "exact", head: true }).eq("is_ai_generated", true).eq("review_status", s)
+      applyFilters(
+        supabase.from("questions").select("id", { count: "exact", head: true }),
+        { ...f, status: s }
+      ).eq("review_status", s)
     ),
   ]);
 
@@ -48,7 +55,7 @@ export default async function ReviewListPage({ searchParams }: { searchParams: R
   const rows = list.data ?? [];
 
   return (
-    <DashboardShell profile={profile} email={user.email} title="Review AI-generated questions">
+    <DashboardShell profile={profile} email={user.email} title="Review questions">
       <div className="text-gray-900 space-y-5">
         <section className="rounded-lg border border-[hsl(270,15%,88%)] bg-white p-5">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
@@ -81,7 +88,8 @@ export default async function ReviewListPage({ searchParams }: { searchParams: R
             ))}
           </div>
           <p className="mt-3 text-xs text-gray-600">
-            Approving a question sets it active for students. Pending, needs-changes and rejected questions stay inactive.
+            Approving a question sets it active for students. Pending, needs-changes and rejected questions stay
+            inactive. Approving a student&apos;s submission also awards them XP.
           </p>
         </section>
 
@@ -92,6 +100,14 @@ export default async function ReviewListPage({ searchParams }: { searchParams: R
               <option value="all">All</option>
               {REVIEW_STATUSES.map((s) => (
                 <option key={s} value={s}>{STATUS_LABEL[s]}</option>
+              ))}
+            </select>
+          </label>
+          <label className="grid gap-1">
+            <span className="text-xs text-gray-600">Source</span>
+            <select name="source" defaultValue={f.source} className={selectCls}>
+              {SOURCES.map((s) => (
+                <option key={s} value={s}>{SOURCE_LABEL[s]}</option>
               ))}
             </select>
           </label>
@@ -163,6 +179,9 @@ export default async function ReviewListPage({ searchParams }: { searchParams: R
                       <span className={`rounded px-1.5 py-0.5 ${STATUS_BADGE[r.review_status as ReviewStatus] ?? STATUS_BADGE.pending}`}>
                         {STATUS_LABEL[r.review_status as ReviewStatus] ?? r.review_status}
                       </span>
+                      <Badge tone={r.source === STUDENT_SOURCE ? "green" : "blue"}>
+                        {r.source === STUDENT_SOURCE ? "Student" : "AI"}
+                      </Badge>
                       <span>{r.domains?.code}</span>
                       <span>·</span>
                       <span>{r.topics?.name}</span>

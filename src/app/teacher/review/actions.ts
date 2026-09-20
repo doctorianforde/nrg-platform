@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { requireRole } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
-import { COGNITIVE_LEVELS, DIFFICULTIES, filtersToQuery, parseFilters } from "@/lib/review/filters";
+import { COGNITIVE_LEVELS, DIFFICULTIES, filtersToQuery, parseFilters, STUDENT_SOURCE } from "@/lib/review/filters";
 import { findNextId } from "@/lib/review/queue";
 import type { Database } from "@/lib/supabase/types";
 
@@ -27,10 +27,14 @@ export async function submitReview(_prev: ReviewState, fd: FormData): Promise<Re
 
   const { data: current } = await supabase
     .from("questions")
-    .select("id, is_ai_generated, question_type, updated_at, question_options(id)")
+    .select("id, is_ai_generated, source, question_type, updated_at, question_options(id)")
     .eq("id", id)
     .maybeSingle();
-  if (!current || !current.is_ai_generated) return { error: "Question not found." };
+  // The queue covers the AI bank and student submissions; anything else (a client
+  // import) is not reviewed here.
+  if (!current || !(current.is_ai_generated || current.source === STUDENT_SOURCE)) {
+    return { error: "Question not found." };
+  }
   if (current.updated_at !== str(fd, "updated_at")) {
     return { error: "Someone changed this question after you opened it. Reload the page to see the latest version, then try again." };
   }

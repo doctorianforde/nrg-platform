@@ -15,12 +15,23 @@ export const STATUS_BADGE: Record<ReviewStatus, string> = {
   rejected: "bg-red-100 text-red-800",
 };
 
+/** Where a reviewable question came from. Student submissions carry this `source`. */
+export const STUDENT_SOURCE = "student-submission";
+export const SOURCES = ["all", "ai", "student"] as const;
+export type SourceFilter = (typeof SOURCES)[number];
+export const SOURCE_LABEL: Record<SourceFilter, string> = {
+  all: "AI + student",
+  ai: "AI-generated",
+  student: "Student submissions",
+};
+
 export const COGNITIVE_LEVELS = ["knowledge", "comprehension", "application", "analysis"] as const;
 export const DIFFICULTIES = ["easy", "medium", "hard"] as const;
 export const PAGE_SIZE = 25;
 
 export type Filters = {
   status: ReviewStatus | "all";
+  source: SourceFilter;
   domain: number | null;
   cluster: number | null;
   cognitive: string | null;
@@ -43,6 +54,7 @@ export function parseFilters(sp: SearchParams): Filters {
   const status = first(sp.status);
   return {
     status: status === "all" ? "all" : oneOf(status, REVIEW_STATUSES) ?? "pending",
+    source: oneOf(first(sp.source), SOURCES) ?? "all",
     domain: intOrNull(first(sp.domain)),
     cluster: intOrNull(first(sp.cluster)),
     cognitive: oneOf(first(sp.cognitive), COGNITIVE_LEVELS),
@@ -57,6 +69,7 @@ export function filtersToQuery(f: Filters, override: Partial<Filters> = {}): str
   const m = { ...f, ...override };
   const p = new URLSearchParams();
   if (m.status !== "pending") p.set("status", m.status);
+  if (m.source !== "all") p.set("source", m.source);
   if (m.domain) p.set("domain", String(m.domain));
   if (m.cluster) p.set("cluster", String(m.cluster));
   if (m.cognitive) p.set("cognitive", m.cognitive);
@@ -72,7 +85,11 @@ export function filtersToQuery(f: Filters, override: Partial<Filters> = {}): str
 export function applyFilters<T>(query: T, f: Filters): T {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let q: any = query;
-  q = q.eq("is_ai_generated", true);
+  // The queue covers both the AI bank and student submissions. Jade's own imports
+  // are neither, so they never appear here.
+  if (f.source === "ai") q = q.eq("is_ai_generated", true);
+  else if (f.source === "student") q = q.eq("source", STUDENT_SOURCE);
+  else q = q.or(`is_ai_generated.eq.true,source.eq.${STUDENT_SOURCE}`);
   if (f.status !== "all") q = q.eq("review_status", f.status);
   if (f.domain) q = q.eq("domain_id", f.domain);
   if (f.cluster) q = q.eq("topics.cluster_id", f.cluster);

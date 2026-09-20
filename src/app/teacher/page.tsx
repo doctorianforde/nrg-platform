@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { DashboardShell } from "@/components/DashboardShell";
 import { Card, CardTitle } from "@/components/ui/Card";
 import { StatCard } from "@/components/ui/StatCard";
-import { STATUS_LABEL, type ReviewStatus } from "@/lib/review/filters";
+import { STATUS_LABEL, STUDENT_SOURCE, type ReviewStatus } from "@/lib/review/filters";
 import { hasUnread } from "@/lib/messages/types";
 
 export const dynamic = "force-dynamic";
@@ -77,7 +77,7 @@ export default async function Page() {
   const { count: pending } = await supabase
     .from("questions")
     .select("id", { count: "exact", head: true })
-    .eq("is_ai_generated", true)
+    .or(`is_ai_generated.eq.true,source.eq.${STUDENT_SOURCE}`)
     .eq("review_status", "pending");
 
   const { data: threadRows } = await supabase
@@ -92,7 +92,7 @@ export default async function Page() {
       supabase
         .from("questions")
         .select("id", { count: "exact", head: true })
-        .eq("is_ai_generated", true)
+        .or(`is_ai_generated.eq.true,source.eq.${STUDENT_SOURCE}`)
         .eq("review_status", status)
         .then((r) => r.count ?? 0)
     )

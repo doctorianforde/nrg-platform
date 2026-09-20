@@ -6,6 +6,7 @@ import { Avatar } from "@/components/ui/Avatar";
 
 const NAV: Array<{ href: string; label: string; min: Profile["role"] }> = [
   { href: "/study", label: "Study", min: "student" },
+  { href: "/study/submit", label: "Write a question", min: "student" },
   { href: "/study/profile", label: "Profile", min: "student" },
   { href: "/teacher", label: "Teacher", min: "teacher" },
   { href: "/teacher/messages", label: "Messages", min: "teacher" },

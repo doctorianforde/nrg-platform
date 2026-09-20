@@ -40,6 +40,18 @@ export type Database = {
         Update: { event_id?: string; user_id?: string }
         Relationships: [{ foreignKeyName: "calendar_event_audience_event_id_fkey"; columns: ["event_id"]; isOneToOne: false; referencedRelation: "calendar_events"; referencedColumns: ["id"] }]
       }
+      xp_events: {
+        Row: { amount: number; created_at: string; id: string; reason: string; source_id: string | null; user_id: string }
+        Insert: { amount: number; created_at?: string; id?: string; reason: string; source_id?: string | null; user_id: string }
+        Update: { amount?: number; created_at?: string; id?: string; reason?: string; source_id?: string | null; user_id?: string }
+        Relationships: []
+      }
+      practice_sessions: {
+        Row: { correct_count: number; domain_id: number | null; finished_at: string; id: string; student_id: string; total_answered: number }
+        Insert: { correct_count: number; domain_id?: number | null; finished_at?: string; id?: string; student_id: string; total_answered: number }
+        Update: { correct_count?: number; domain_id?: number | null; finished_at?: string; id?: string; student_id?: string; total_answered?: number }
+        Relationships: [{ foreignKeyName: "practice_sessions_domain_id_fkey"; columns: ["domain_id"]; isOneToOne: false; referencedRelation: "domains"; referencedColumns: ["id"] }]
+      }
       case_studies: {
         Row: { clinical_scenario: string; created_at: string; domain_id: number | null; id: string; is_active: boolean }
         Insert: { clinical_scenario: string; created_at?: string; domain_id?: number | null; id?: string; is_active?: boolean }
@@ -184,6 +196,11 @@ export type Database = {
         Returns: { created_at: string; decided_at: string | null; decided_by: string | null; id: string; note: string | null; requested_role: string; status: string; user_id: string }
       }
       mark_thread_read: { Args: { p_thread_id: string }; Returns: undefined }
+      record_practice_session: {
+        Args: { p_total: number; p_correct: number; p_domain?: number }
+        Returns: { correct_count: number; domain_id: number | null; finished_at: string; id: string; student_id: string; total_answered: number }
+      }
+      xp_total: { Args: { p_user: string }; Returns: number }
       user_role: { Args: never; Returns: string }
     }
     Enums: { [_ in never]: never }

@@ -631,6 +631,90 @@ publish successfully; a second student sees only the published event; staff cann
 read the private entry; and a `selected` event reaches the named student and not the
 other. All events and accounts removed — prod is back to 1 profile, 0 events.
 
+## Levelling: XP, ranks, student submissions (Claude, 2026-09-20) — staging only, NOT on prod
+
+Students earn XP and climb a rank ladder. Mock exams and approved question
+submissions are the big awards; practice is a small one.
+
+**Ranks — Benner's stages.** Novice → Advanced Beginner → Competent → Proficient →
+Expert, at 0 / 300 / 1,000 / 2,500 / 5,000 XP. Patricia Benner's "From Novice to
+Expert" is the standard nursing competency progression, so the ladder speaks the
+language students are already studying rather than inventing game tiers — and it is
+exactly the range the brief asked for. Renaming them is a one-line change in
+`src/lib/xp/ranks.ts`.
+
+**Weights** (all in the migration, one place):
+- Mock exam: `100 + score`, so a 72% paper pays 172. Biggest commitment, and doing
+  well pays more.
+- Approved question: flat **150** — the largest single award, and only on approval.
+- Practice run: `min(25, questions answered)`, so a one-question session can't be
+  farmed.
+
+**Why a ledger, not a counter.** `xp_events` is append-only: it gives students the
+"where did this come from" breakdown, lets the total be recomputed if weights ever
+change, and a UNIQUE index on `(reason, source_id)` makes every award idempotent — a
+question approved, un-approved and re-approved pays once (tested). There is **no
+INSERT policy at all**; XP is only ever written by SECURITY DEFINER functions, so
+nobody can grant themselves any.
+
+**Student question submissions** (`/study/submit`)
+- Stem, four options with one marked correct, reasoning, domain, optional level and
+  difficulty. Students see their own submissions with status and any reviewer notes.
+- The insert policy only permits a draft that is `review_status='pending'`,
+  `is_active=false`, `is_ai_generated=false` and attributed to the author. A new
+  `trg_protect_question_review` trigger independently stops a non-staff account
+  touching `review_status`, `is_active`, `reviewed_by` or `created_by`.
+- Submissions carry `source='student-submission'`, which is what the review queue
+  keys off. `/teacher/review` gained a **Source** filter (AI + student / AI-generated
+  / Student submissions) and an AI-or-Student badge per row; the detail page, the
+  review action and the teacher dashboard counts all follow the same scope.
+- Approval fires `trg_award_question_xp`, which pays the author. It fires on the
+  transition only, so the 2,500-odd questions already at `approved` awarded nothing
+  retroactively, and an AI question (no author) pays nobody.
+
+**Practice tracking** — practice saved nothing at all before this. `practice_sessions`
+now records length, correct count and domain via the `record_practice_session` RPC,
+which the tutor runner calls once when a run finishes. The client reports its tally;
+the server decides the XP and attributes the session to the caller, and refuses an
+implausible length. This also finally gives data on how students actually study.
+
+**Two real bugs caught by the end-to-end test, both fixed before prod:**
+1. `can_manage_question()` let teachers manage their own questions and the AI bank
+   but *not* a student submission, so Approve silently affected 0 rows and no XP was
+   awarded. Fixed in `20260920020000` — a teacher may manage anything genuinely in
+   review (own, AI, or authored by a non-staff account), while another teacher's
+   question still stays with its author or an admin.
+2. `submitReview` still required `is_ai_generated`, so it rejected student
+   submissions with "Question not found." The page guard had been widened but the
+   action hadn't.
+
+**Testing (staging)** — 30 browser/API checks: rank card starts at Novice and lists
+all five stages; a submission saves as pending/inactive with four options and awards
+nothing; it appears in the queue badged "Student"; approval activates it and pays 150
+to the author, attributed to the question, and paying once on re-approval; a practice
+run records and pays 5; a 75% mock exam pays 175; the total and rank advance to
+Advanced Beginner with all three sources named. Boundaries: a student cannot grant
+themselves XP, read another's XP, submit a pre-approved live question, approve their
+own question, insert a practice session directly, or inflate a session length (403/400
+on each). T34 still 15/15; fatigue checks pass; build, lint and tsc clean.
+
+**Repo hygiene, unrelated to this feature:** an untracked `OKComputer_NRG_Website/`
+reference site had appeared beside the app (a sibling of the already-ignored
+`_v62`). Because `tsconfig.json` includes `**/*.ts(x)`, its 239 type errors **failed
+`next build`** — it would have broken Vercel the moment it was committed. Now
+excluded in `tsconfig.json` and added to `.gitignore`. Nothing was deleted; the
+tailwind tokens sampled from it are unaffected.
+
+**Limits worth knowing**
+- XP only flows from the three sources above. Flashcards and case studies still
+  persist nothing, so they award nothing.
+- Ranks are cosmetic — nothing is gated behind them, and there is no leaderboard.
+- Submissions are single-answer MCQ with exactly four options; no SATA, no images,
+  and a student cannot edit a submission after it has been decided.
+- Nothing rate-limits submissions beyond approval being the reward, so a flood of
+  weak drafts would land in Jade's queue. The Source filter keeps them separable.
+- XP is never deducted, including when an approved question is later rejected.
+
 ## Not yet done / not yet verified
 
 - **T33 — human read-and-verify** of the 20 sampled questions against the docx

@@ -13,6 +13,8 @@ import { hasAtLeast } from "@/lib/auth/roles";
 import { loadEvents, loadStudentOptions, monthRange } from "@/lib/calendar/queries";
 import { parseMonth, toDateKey } from "@/lib/calendar/types";
 import { CalendarPanel } from "@/components/calendar/CalendarPanel";
+import { loadXp } from "@/lib/xp/queries";
+import { RankCard } from "@/components/xp/RankCard";
 
 export const dynamic = "force-dynamic";
 
@@ -31,7 +33,8 @@ export default async function StudentProfilePage({
   );
   const { from, to } = monthRange(year, month);
 
-  const [events, students, threads, attempts, { data: sessions }] = await Promise.all([
+  const [xp, events, students, threads, attempts, { data: sessions }] = await Promise.all([
+    loadXp(supabase, user.id),
     loadEvents(supabase, user.id, isStaff, from, to),
     isStaff ? loadStudentOptions(supabase) : Promise.resolve([]),
     loadThreads(supabase, user.id, false),
@@ -115,6 +118,8 @@ export default async function StudentProfilePage({
           </div>
 
           <div className="space-y-5">
+            <RankCard xp={xp} />
+
             <Card className="rounded-xl border-brand-100">
               <CardTitle className="mb-3">Your details</CardTitle>
               <AvatarUpload

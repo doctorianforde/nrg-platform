@@ -143,7 +143,14 @@ T38 Full-text search for mock exam review.
   teachers/admins publish to everyone, all students, staff, or named students. Needs
   `20260919060000_calendar_events.sql`, **applied to prod 2026-09-19 and smoke-tested
   there; live.** See `PROGRESS.md`.
-- **Analytics / rank pages**: not built — no backing tables in our schema; needs Ian's
+- **Levelling (XP + ranks + student submissions)**: DONE 2026-09-20 (Claude) — Benner
+  ranks Novice→Expert, XP ledger, `/study/submit` for student-authored questions
+  feeding the existing review queue, and practice-session tracking. Needs
+  `20260920010000_xp_ranks_and_submissions.sql` and
+  `20260920020000_teachers_can_review_submissions.sql` on prod. See `PROGRESS.md`.
+- **Analytics / rank pages**: partly addressed — `practice_sessions` now collects
+  study-habit data, and XP/ranks exist. Leaderboards and the analytics pages
+  themselves are still not built — no backing tables in our schema; needs Ian's
   data-model decision first (see Phase 1 table above).
 - **Three unreviewed docx files** in Jade's RENR folder — see `PROGRESS.md`.
 - **Local AI provider wiring**: `scripts/generate-questions.ts` already supports

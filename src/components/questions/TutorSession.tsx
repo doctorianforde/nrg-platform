@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/cn";
 import type { QuizQuestion } from "@/lib/quiz/types";
@@ -29,12 +29,16 @@ export function TutorSession({
   intro,
   backHref = "/study/practice",
   backLabel = "Back to practice setup",
+  onComplete,
 }: {
   questions: QuizQuestion[];
   title?: string;
   intro?: string;
   backHref?: string;
   backLabel?: string;
+  /** Called once when a run finishes, so practice can be recorded and XP awarded.
+   *  Case studies leave it unset and record nothing. */
+  onComplete?: (total: number, correct: number) => void | Promise<void>;
 }) {
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<string[]>([]);
@@ -42,6 +46,17 @@ export function TutorSession({
   const [tally, setTally] = useState({ correct: 0, wrong: 0 });
   const [finished, setFinished] = useState(false);
   const played = useRef(false);
+  const reported = useRef(false);
+
+  // Report once per run. The tally is state, so this waits for it to settle rather
+  // than firing inside the click handler with a stale count.
+  useEffect(() => {
+    if (!finished || reported.current || !onComplete) return;
+    const total = tally.correct + tally.wrong;
+    if (total === 0) return;
+    reported.current = true;
+    void onComplete(total, tally.correct);
+  }, [finished, tally, onComplete]);
 
   if (questions.length === 0) {
     return (
@@ -74,6 +89,7 @@ export function TutorSession({
               setRevealed(false);
               setTally({ correct: 0, wrong: 0 });
               setFinished(false);
+              reported.current = false;
               played.current = false;
             }}
             className="rounded-md bg-primary px-5 py-2 text-sm font-medium text-primary-foreground hover:bg-brand-800"

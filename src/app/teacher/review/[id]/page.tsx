@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { requireRole } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 import { DashboardShell } from "@/components/DashboardShell";
-import { filtersToQuery, parseFilters, STATUS_BADGE, STATUS_LABEL, type ReviewStatus } from "@/lib/review/filters";
+import { filtersToQuery, parseFilters, STATUS_BADGE, STATUS_LABEL, STUDENT_SOURCE, type ReviewStatus } from "@/lib/review/filters";
 import { findNextId, findPosition } from "@/lib/review/queue";
 import { ReviewForm } from "./ReviewForm";
 
@@ -26,12 +26,14 @@ export default async function ReviewQuestionPage({
   const { data: q } = await supabase
     .from("questions")
     .select(
-      `id, body, explanation, cognitive_level, difficulty, question_type, review_status, review_notes, reviewed_at, reviewed_by, is_active, is_ai_generated, source_id, updated_at, domains(code, name), topics(name, topic_clusters(name)), question_options(id, body, is_correct, rationale, display_order)`
+      `id, body, explanation, cognitive_level, difficulty, question_type, review_status, review_notes, reviewed_at, reviewed_by, is_active, is_ai_generated, source, source_id, updated_at, domains(code, name), topics(name, topic_clusters(name)), question_options(id, body, is_correct, rationale, display_order)`
     )
     .eq("id", params.id)
     .order("display_order", { referencedTable: "question_options" })
     .maybeSingle();
-  if (!q || !q.is_ai_generated) notFound();
+  // The queue covers the AI bank and student submissions; a client import is
+  // neither and is not reviewed here.
+  if (!q || !(q.is_ai_generated || q.source === STUDENT_SOURCE)) notFound();
 
   const [nextId, pos] = await Promise.all([findNextId(supabase, f, q.id), findPosition(supabase, f, q.id)]);
 
