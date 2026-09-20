@@ -390,7 +390,7 @@ There is no self-service path to a teacher role, by design.
 - If prod deploys before the migration is applied, the pages degrade to empty rather
   than erroring (the queries return no rows), but nothing can be sent.
 
-## Teacher approval + account admin (Claude, 2026-09-19) — built, tested on staging, NOT yet on prod
+## Teacher approval + account admin (Claude, 2026-09-19) — LIVE ON PROD
 
 Signup now asks whether you are a student or a teacher. Students get in; teachers
 get a *request* an admin approves. Plus account management: change role, suspend
@@ -481,6 +481,25 @@ admins on demand.
 - Suspension relies on an already-issued access token expiring (~1h) for the DB API;
   page loads bounce immediately.
 - `src/lib/supabase/types.ts` hand-edited again — `supabase gen types` needs Docker.
+
+### Shipped to prod, 2026-09-19
+
+`20260919040000` applied to `cdvubijjepwmhhkgppbl` after a clean dry run; prod
+history is 20/20 with no drift and `db push --dry-run` reports "up to date". Vercel
+deployed `d0337b9`. Verified on prod: `admin_contacts` holds both addresses, **Ian's
+account is now `super_admin`**, and a smoke test confirmed a teacher signup lands as
+a student with a pending request while a student signup creates none and is not
+promoted. Both temporary accounts deleted — prod is back to 1 profile, 0 requests.
+
+**Jade still needs to sign up.** He goes to `https://nrg-platform.vercel.app/signup`,
+picks either option, and lands as `super_admin` automatically because his address is
+in `admin_contacts` — no SQL needed, and the choice on the form is irrelevant for him.
+
+**Two things for Ian before real signups:**
+1. Configure custom SMTP on the Supabase project. The built-in sender is capped at a
+   few emails an hour, and confirmation emails simply fail past that.
+2. Optional: set `RESEND_API_KEY` in Vercel to turn on the "a teacher is waiting"
+   email. The in-app list at `/admin` works regardless.
 
 ## Not yet done / not yet verified
 

@@ -128,7 +128,9 @@ T38 Full-text search for mock exam review.
   student/teacher, teachers need approval at `/admin`, plus role change, suspend and
   delete. Ian and Jade are in `admin_contacts` and become `super_admin` on signup
   (Ian's existing account is promoted by the migration). Needs
-  `20260919040000_teacher_approval_and_admin.sql` on prod. Email notification is
+  `20260919040000_teacher_approval_and_admin.sql`, **applied to prod 2026-09-19 and
+  smoke-tested there; live.** Jade just needs to sign up (auto super_admin).
+  Email notification is
   wired to Resend but dormant until `RESEND_API_KEY` is set in Vercel.
   **Action for Ian:** Supabase's built-in email is rate-limited to a few per hour —
   configure custom SMTP before real signups. See `PROGRESS.md`.
