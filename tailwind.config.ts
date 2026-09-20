@@ -58,6 +58,25 @@ const config: Config = {
         heading: ["var(--font-poppins)", "var(--font-inter)", "sans-serif"],
         brand: ["var(--font-nunito)", "var(--font-inter)", "sans-serif"],
       },
+      keyframes: {
+        // Overshoot slightly on the way in so the card lands with a little weight.
+        "bounce-in": {
+          "0%": { transform: "translateY(14px) scale(0.96)", opacity: "0" },
+          "55%": { transform: "translateY(-6px) scale(1.02)", opacity: "1" },
+          "78%": { transform: "translateY(2px) scale(0.995)" },
+          "100%": { transform: "translateY(0) scale(1)", opacity: "1" },
+        },
+        // A shorter hop, for when the content changes but the card stays put.
+        "bounce-nudge": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "35%": { transform: "translateY(-7px)" },
+          "70%": { transform: "translateY(2px)" },
+        },
+      },
+      animation: {
+        "bounce-in": "bounce-in 480ms cubic-bezier(0.34, 1.56, 0.64, 1) both",
+        "bounce-nudge": "bounce-nudge 420ms cubic-bezier(0.34, 1.56, 0.64, 1)",
+      },
     },
   },
   plugins: [],

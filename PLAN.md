@@ -113,6 +113,7 @@ study-streak definition (all live in `src/lib/xp/` + migrations `20260920030000`
 | Next candidate | Blocked on |
 |---|---|
 | Topic reviews (15 decks ready) | Nothing — best content-value-per-effort item left |
+| Nursing Knowledge facts | **Built (133 facts).** Needs Jade's clinical sign-off — see `docs/phase-1/nursing-knowledge-facts-for-review.pdf` |
 | Topic Elo + real analytics | Practice needs per-answer rows, not just session totals |
 | Import ~9,300 questions | **Answer-key audit first** — brief ready to hand over at `docs/phase-1/KIMI_DATA_AUDIT_BRIEF.md`. Then a call on 269 copyright-flagged items |
 | Rank-up exams | The question import above |
