@@ -129,6 +129,18 @@ Saunders-derived and verbatim-NCLEX questions at all.
 
 ## Not yet tracked (post-T38, no task IDs assigned)
 
+- **Question provenance**: FIXED on staging and prod (Claude, 2026-09-20).
+  360 of Jade's own questions were live on prod flagged `is_ai_generated=true` with no
+  author tag and `review_status='approved'` / `reviewed_by=NULL` — nobody had approved
+  them. Ian confirmed they are Jade's writing; `20260920070000` corrects the flag,
+  tags them `Author: Jade Nicome`, leaves `is_active` alone (prod stays 460 live,
+  staging stays 100), and adds `questions_approval_needs_a_reviewer` so an AI question
+  can never again be approved without a named reviewer. The 2,000 AI questions are
+  identical in both environments and were always inert; duplication is impossible via
+  the unique `source_id` index plus upsert. **Nothing outstanding.**
+  Prod and staging deliberately differ on live content (460 vs 100) and staging holds
+  56 questions prod lacks (`jade:nrg-qbank-starter-56`) — Ian's call, staging is a
+  sandbox.
 - **Group exams + exam timer**: DONE and LIVE on prod (Claude, 2026-09-20). Up to 5
   students sit the same paper at the same time, each answering for themselves, so
   XP/rank/streak/fatigue all keep working unchanged; a shared answer sheet was rejected

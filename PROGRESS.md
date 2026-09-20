@@ -1435,6 +1435,61 @@ student accounts, and creating throwaway students there to prove a feature alrea
 proven by 62 assertions on an identical schema is not worth writing to the production
 database. The staging site runs the same commit.
 
+## Provenance fix: Jade's questions were flagged as AI (Claude, 2026-09-20) — LIVE ON PROD
+
+Ian asked whether prod's 2,000 AI questions were the same as staging's, and whether
+they could be kept out of prod until Jade reviews them.
+
+**They are identical, and they were already held back in prod** — 2,000 `ai:*` rows in
+each environment, same `source_id`s, all `review_status='pending'` and
+`is_active=false` in both. They have never been visible to students. Duplication is
+also structurally impossible now: `source_id` carries a plain unique index in both
+environments (`20260920050000`) and the migrate script upserts on it, so re-importing
+a file updates in place. 0 duplicate `source_id`s on prod.
+
+**The real problem was next to them.** Prod was serving 460 live questions against
+staging's 100. The 360-question gap was seven `jade:*` batches — `nrg-new-100`,
+`nrg-renr-100-original`, `nrg-soft-launch-mock`, `nrg-mock-paper-1`/`-2`,
+`nrg-restart-master-15`, `nrg-new-set-5` — flagged `is_ai_generated=true`, carrying
+**no author tag**, and marked `review_status='approved'` with **`reviewed_by=NULL`**.
+Nobody had approved them; the flag was set so the rows could satisfy
+`questions_ai_active_requires_approval` and go live. Only `jade:nrg-sample-1` (100)
+had been imported correctly.
+
+So the concern about unreviewed content reaching students was well founded — it was
+just pointing at the wrong 2,000. Ian confirmed the 360 are Jade's own writing, so the
+AI flag was wrong on import.
+
+`20260920070000_correct_jade_provenance.sql`, applied to staging then prod:
+
+- `is_ai_generated -> false` and `review_status -> 'approved'` for every `jade:%` row
+  that was flagged AI, matching both `nrg-sample-1` and the convention
+  `20260919010000` already applied to human-authored questions.
+- **`is_active` deliberately untouched** — prod's stay live, staging's stay inactive.
+  Ian's call: staging is a sandbox, not a mirror, so the 460-vs-100 difference stands.
+- The `Author: Jade Nicome` tag applied to all of them, so everything Jade wrote is
+  discoverable the same way regardless of which file it arrived in.
+- New CHECK `questions_approval_needs_a_reviewer`: an AI question cannot be
+  `approved` with `reviewed_by IS NULL`. The older constraint stopped an *unapproved*
+  AI question going live; it did nothing about a bulk UPDATE writing 'approved' with
+  nobody accountable, which is exactly how this happened. `submitReview` always writes
+  `reviewed_by`, so the real review path is unaffected — verified both directions.
+
+Scoped to the `jade:` prefix, so it could not touch the `ai:` bank or the `proto:`
+import.
+
+Verified after each apply. Staging: 0 of Jade's flagged AI, live still 100, all 516
+tagged, AI review queue now exactly the two machine banks (6,798 = 2,000 + 4,798).
+Prod: still 2,460 questions and **still 460 live, so students saw no change**, 0
+flagged AI among Jade's, all 460 tagged, the AI bank untouched at 2,000 pending and
+none live. The guard was then tested live in both: approving an AI question with no
+reviewer is rejected (23514) and leaves the row untouched; a named reviewer still
+succeeds.
+
+Side effect that is the point rather than a cost: Jade's own questions have left the
+AI review queue. He should not be reviewing his own writing as though a machine wrote
+it. Proofreading his transcriptions is the separate T33 task.
+
 ## Not yet done / not yet verified
 
 - **T33 — human read-and-verify** of the 20 sampled questions against the docx
