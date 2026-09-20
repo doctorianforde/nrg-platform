@@ -9,6 +9,7 @@ import { isRole, ROLE_HOME, sanitizeNext } from "@/lib/auth/roles";
 const ERROR_COPY: Record<string, string> = {
   missing_code: "That sign-in link is incomplete. Request a new one.",
   profile_missing: "Your account has no profile yet. Contact support.",
+  suspended: "This account has been suspended. Contact your administrator.",
 };
 
 // T22: email + password sign-in, then route by profiles.role (or ?next=).

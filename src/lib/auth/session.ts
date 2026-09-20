@@ -8,6 +8,7 @@ export type Profile = {
   subscription_tier: Tier;
   full_name: string | null;
   avatar_url: string | null;
+  suspended_at: string | null;
 };
 
 /** Server-side: current auth user + profile row, or null when signed out. */
@@ -20,7 +21,7 @@ export async function getSession() {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("id, role, subscription_tier, full_name, avatar_url")
+    .select("id, role, subscription_tier, full_name, avatar_url, suspended_at")
     .eq("id", user.id)
     .single();
 
@@ -36,6 +37,9 @@ export async function requireRole(required: Role, currentPath: string) {
   const session = await getSession();
   if (!session) redirect(`/login?next=${encodeURIComponent(currentPath)}`);
   if (!session.profile) redirect("/login?error=profile_missing");
+  // A suspended account is also banned at the auth layer, which blocks new
+  // sign-ins; this turns away whatever is left of an already-issued token.
+  if (session.profile.suspended_at) redirect("/login?error=suspended");
   if (!hasAtLeast(session.profile.role, required)) {
     redirect(ROLE_HOME[session.profile.role]);
   }

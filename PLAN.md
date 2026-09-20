@@ -124,6 +124,14 @@ T38 Full-text search for mock exam review.
   widens that policy so teachers can read the student roster. **Both applied to prod
   2026-09-19 and smoke-tested there; the feature is live.** Remaining: Jade needs a
   prod account promoted to `teacher` (SQL in `PROGRESS.md`). See `PROGRESS.md`.
+- **Teacher approval + account admin**: DONE 2026-09-19 (Claude) — signup asks
+  student/teacher, teachers need approval at `/admin`, plus role change, suspend and
+  delete. Ian and Jade are in `admin_contacts` and become `super_admin` on signup
+  (Ian's existing account is promoted by the migration). Needs
+  `20260919040000_teacher_approval_and_admin.sql` on prod. Email notification is
+  wired to Resend but dormant until `RESEND_API_KEY` is set in Vercel.
+  **Action for Ian:** Supabase's built-in email is rate-limited to a few per hour —
+  configure custom SMTP before real signups. See `PROGRESS.md`.
 - **Analytics / rank pages**: not built — no backing tables in our schema; needs Ian's
   data-model decision first (see Phase 1 table above).
 - **Three unreviewed docx files** in Jade's RENR folder — see `PROGRESS.md`.

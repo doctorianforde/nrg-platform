@@ -16,6 +16,18 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_contacts: {
+        Row: { created_at: string; email: string; note: string | null }
+        Insert: { created_at?: string; email: string; note?: string | null }
+        Update: { created_at?: string; email?: string; note?: string | null }
+        Relationships: []
+      }
+      role_requests: {
+        Row: { created_at: string; decided_at: string | null; decided_by: string | null; id: string; note: string | null; requested_role: string; status: string; user_id: string }
+        Insert: { created_at?: string; decided_at?: string | null; decided_by?: string | null; id?: string; note?: string | null; requested_role: string; status?: string; user_id: string }
+        Update: { created_at?: string; decided_at?: string | null; decided_by?: string | null; id?: string; note?: string | null; requested_role?: string; status?: string; user_id?: string }
+        Relationships: []
+      }
       case_studies: {
         Row: { clinical_scenario: string; created_at: string; domain_id: number | null; id: string; is_active: boolean }
         Insert: { clinical_scenario: string; created_at?: string; domain_id?: number | null; id?: string; is_active?: boolean }
@@ -92,9 +104,9 @@ export type Database = {
         Relationships: []
       }
       profiles: {
-        Row: { avatar_url: string | null; created_at: string; full_name: string | null; id: string; role: string; subscription_tier: string; updated_at: string }
-        Insert: { avatar_url?: string | null; created_at?: string; full_name?: string | null; id: string; role?: string; subscription_tier?: string; updated_at?: string }
-        Update: { avatar_url?: string | null; created_at?: string; full_name?: string | null; id?: string; role?: string; subscription_tier?: string; updated_at?: string }
+        Row: { avatar_url: string | null; created_at: string; full_name: string | null; id: string; role: string; subscription_tier: string; suspended_at: string | null; updated_at: string }
+        Insert: { avatar_url?: string | null; created_at?: string; full_name?: string | null; id: string; role?: string; subscription_tier?: string; suspended_at?: string | null; updated_at?: string }
+        Update: { avatar_url?: string | null; created_at?: string; full_name?: string | null; id?: string; role?: string; subscription_tier?: string; suspended_at?: string | null; updated_at?: string }
         Relationships: []
       }
       question_options: {
@@ -154,6 +166,10 @@ export type Database = {
       search_mock_exam_questions: {
         Args: { p_query: string; p_student_id: string }
         Returns: { body: string; completed_at: string; is_correct: boolean; question_id: string; rank: number; session_id: string; set_title: string }[]
+      }
+      decide_role_request: {
+        Args: { p_request_id: string; p_approve: boolean; p_note?: string }
+        Returns: { created_at: string; decided_at: string | null; decided_by: string | null; id: string; note: string | null; requested_role: string; status: string; user_id: string }
       }
       mark_thread_read: { Args: { p_thread_id: string }; Returns: undefined }
       user_role: { Args: never; Returns: string }

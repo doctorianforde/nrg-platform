@@ -7,6 +7,10 @@ import { Badge, type BadgeTone } from "@/components/ui/Badge";
 import { StatCard } from "@/components/ui/StatCard";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { cn } from "@/lib/cn";
+import { loadAccounts, loadPendingRequests } from "@/lib/admin/queries";
+import { RequestActions } from "@/components/admin/RequestActions";
+import { AccountActions } from "@/components/admin/AccountActions";
+import { fmtDateTime } from "@/lib/mock-exam/utils";
 
 export const dynamic = "force-dynamic";
 
@@ -192,6 +196,12 @@ export default async function Page() {
     )
   );
 
+  const [pendingRequests, accounts] = await Promise.all([
+    loadPendingRequests(),
+    loadAccounts(),
+  ]);
+  const isSuper = profile.role === "super_admin";
+
   const { data: recentProfiles } = await supabase
     .from("profiles")
     .select("id, full_name, role, subscription_tier, created_at")
@@ -204,8 +214,95 @@ export default async function Page() {
       email={user.email}
       title="Admin dashboard"
       eyebrow="Administration"
-      subtitle="Platform usage, recent signups and content overview. Read-only."
+      subtitle="Approve teacher accounts, manage people, and review platform usage."
     >
+      <h2 className="mb-3 font-heading text-lg font-semibold">
+        Teacher access requests
+        {pendingRequests.length > 0 ? (
+          <Badge tone="amber" className="ml-2 align-middle">
+            {pendingRequests.length} waiting
+          </Badge>
+        ) : null}
+      </h2>
+      <Card className="mb-8 rounded-xl border-brand-100">
+        {pendingRequests.length === 0 ? (
+          <EmptyState
+            title="Nothing waiting"
+            body="When someone signs up and asks for a teacher account, it appears here for you to approve or deny."
+          />
+        ) : (
+          <ul className="divide-y divide-border">
+            {pendingRequests.map((r) => (
+              <li key={r.id} className="py-4 first:pt-0 last:pb-0">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="font-medium text-card-foreground">{r.name ?? "(no name given)"}</span>
+                  <span className="text-sm text-muted-foreground">{r.email}</span>
+                  <Badge tone="amber">Asked to be a teacher</Badge>
+                  <span className="ml-auto text-xs text-muted-foreground">{fmtDateTime(r.createdAt)}</span>
+                </div>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  They have student access until you approve this.
+                </p>
+                <RequestActions requestId={r.id} />
+              </li>
+            ))}
+          </ul>
+        )}
+      </Card>
+
+      <h2 className="mb-3 font-heading text-lg font-semibold">People</h2>
+      <Card className="mb-8 overflow-x-auto rounded-xl border-brand-100">
+        <table className="w-full min-w-[46rem] text-sm">
+          <thead>
+            <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-muted-foreground">
+              <th className="pb-2 pr-3 font-medium">Person</th>
+              <th className="pb-2 pr-3 font-medium">Role</th>
+              <th className="pb-2 pr-3 font-medium">Joined</th>
+              <th className="pb-2 font-medium">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-border">
+            {accounts.map((a) => (
+              <tr key={a.id} className="align-top">
+                <td className="py-3 pr-3">
+                  <span className="block font-medium text-card-foreground">
+                    {a.name ?? "(no name)"}
+                    {a.id === user.id ? (
+                      <span className="ml-1 text-xs font-normal text-muted-foreground">(you)</span>
+                    ) : null}
+                  </span>
+                  <span className="block text-xs text-muted-foreground">{a.email}</span>
+                </td>
+                <td className="py-3 pr-3">
+                  <Badge tone={ROLE_TONE[a.role] ?? "gray"}>{a.role.replace("_", " ")}</Badge>
+                  {a.suspended ? (
+                    <Badge tone="red" className="ml-1">
+                      Suspended
+                    </Badge>
+                  ) : null}
+                </td>
+                <td className="py-3 pr-3 text-xs text-muted-foreground">{fmtDateTime(a.createdAt)}</td>
+                <td className="py-3">
+                  <AccountActions
+                    userId={a.id}
+                    email={a.email}
+                    role={a.role}
+                    suspended={a.suspended}
+                    canManage={a.id !== user.id && (isSuper || a.role !== "super_admin")}
+                    canMakeAdmin={isSuper}
+                  />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p className="mt-3 text-xs text-muted-foreground">
+          Changing a role and suspending sign-in are both reversible. Deleting is not — it removes
+          the account and its own history, though questions they wrote stay in the bank.
+          {isSuper ? "" : " Only a super admin can create admins or change another super admin."}
+        </p>
+      </Card>
+
       <h2 className="mb-3 font-heading text-lg font-semibold">Users</h2>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         <StatCard label="Total users" value={totalUsers.toLocaleString()} icon={<UsersIcon />} iconTone="blue" />

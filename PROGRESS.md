@@ -390,6 +390,98 @@ There is no self-service path to a teacher role, by design.
 - If prod deploys before the migration is applied, the pages degrade to empty rather
   than erroring (the queries return no rows), but nothing can be sent.
 
+## Teacher approval + account admin (Claude, 2026-09-19) — built, tested on staging, NOT yet on prod
+
+Signup now asks whether you are a student or a teacher. Students get in; teachers
+get a *request* an admin approves. Plus account management: change role, suspend
+sign-in, delete.
+
+**Interpretation flagged:** the ask said "if they select student an email is sent",
+but the same sentence ends "approve or deny **teachers**", so the approval gate is on
+the teacher choice. Students self-serve, as before — gating them would block the
+paying side of the platform. Say the word if that's wrong.
+
+**Where it appears**
+- `/signup` — a student/teacher choice, student preselected. The teacher option is
+  labelled "Needs approval before it is granted", and the confirmation screen says
+  they start with student access while Jade or Ian review it.
+- `/admin` — "Teacher access requests" (approve/deny with an optional note, kept on
+  the record) and a "People" table: change role, suspend or restore sign-in, delete.
+  Reachable by admin and super_admin.
+- Code: `supabase/migrations/20260919040000_teacher_approval_and_admin.sql`,
+  `src/lib/admin/`, `src/components/admin/`.
+
+**Ian and Jade as super admins**
+`admin_contacts` holds `doctorianforde@gmail.com` and `jadenicome1@gmail.com`. It does
+two jobs: an address in it is promoted to `super_admin` automatically when it signs
+up, and it is the recipient list for request notifications. Ian's existing prod
+account is promoted by the migration itself. Jade needs no manual SQL — he just signs
+up and lands as a super admin. Verified on staging: signing up with Ian's address
+produced `role=super_admin` with no intervention.
+
+**Schema**
+- `role_requests` — user_id, requested_role (only `teacher` today), status
+  (`pending|approved|denied`), note, decided_by/at. A partial unique index allows at
+  most one open request per person. No INSERT or UPDATE policy: rows are created by
+  the signup trigger and decided only through `decide_role_request()`.
+- `handle_new_user` extended: reads `requested_role` from signup metadata, records a
+  request for `teacher`, and promotes an `admin_contacts` address to `super_admin`.
+  Self-service signup still can never grant a role — the T12 privilege guard blocks
+  that, and this trigger only ever writes `student` or the bootstrap `super_admin`.
+- `profiles.suspended_at` — read by `requireRole()`, which now turns a suspended
+  account away with `?error=suspended`. The authoritative block is an auth-level ban
+  set through the admin API; this column is what the app and admin screen read.
+- **Deletion semantics**, decided deliberately: a person's own history follows them
+  (`mock_exam_sessions` and `messages` now cascade), authored questions survive
+  unattributed (`questions.created_by` → SET NULL), and owning a mock exam set
+  *blocks* deletion — a paper other students have sat shouldn't vanish with its
+  author, so the UI says to suspend or reassign instead.
+
+**Guards** (all re-checked server-side; the UI is not the gate)
+Admin-only actions; you cannot act on your own account; only a super_admin can create
+admins or change another super_admin; deleting requires typing the account's email.
+
+**Email**
+`src/lib/admin/email.ts` posts to Resend when `RESEND_API_KEY` is set and silently
+skips otherwise — no SDK, one fetch, and a mail failure can never break signup. Set
+`RESEND_API_KEY` (and optionally `RESEND_FROM`) in Vercel to turn it on; until then
+the in-app request list is the channel. The notify call runs after signup, before the
+address is confirmed, so it can't require a session — it therefore verifies the
+address really has a pending request before sending, so it can't be used to mail the
+admins on demand.
+
+**Testing (staging)**
+- 18 browser/API checks on the admin flow: bootstrap promotion, request listed with
+  name and email, approve grants the role, request clears, suspend records and
+  actually blocks sign-in, restore re-enables it, demote works, delete is disabled
+  until the email is typed then removes the account, your own row offers no actions,
+  and a student is redirected away from `/admin`.
+- 6 checks on the signup form: the choice is offered with student preselected, the
+  teacher option is labelled as needing approval, `requested_role` is transmitted
+  correctly for both choices, the name is trimmed, and the teacher confirmation
+  explains the wait. The Supabase call is stubbed in that test — see below.
+- 6 checks on deletion cascades: deleting a teacher who wrote a message succeeds and
+  leaves the student's messages intact; deleting the student takes the thread with it.
+- T34 RLS suite still 15/15; fatigue unit checks still pass; `next build`, `next lint`
+  and `tsc` clean. All staging users deleted afterwards.
+
+**Limits worth knowing**
+- **Supabase's built-in email is rate-limited** (a handful per hour), and staging hit
+  that ceiling during testing — public signup then fails with "email rate limit
+  exceeded". Real signups need custom SMTP configured on the Supabase project before
+  launch. This is the same area as the still-unverified T16 email templates.
+- Supabase also rejects `@example.com` on public signup, so end-to-end signup tests
+  can't use the `e2e-test.example.com` addresses the other suites rely on. The form
+  test therefore stubs the Supabase call and asserts the payload; the trigger side is
+  covered by the seeded tests, which use identical metadata.
+- Only `teacher` can be requested. Admin is granted by a super admin from the People
+  table, never requested.
+- `admin_contacts` is seeded by migration; adding a third platform admin means an
+  INSERT (super_admin only) rather than a UI.
+- Suspension relies on an already-issued access token expiring (~1h) for the DB API;
+  page loads bounce immediately.
+- `src/lib/supabase/types.ts` hand-edited again — `supabase gen types` needs Docker.
+
 ## Not yet done / not yet verified
 
 - **T33 — human read-and-verify** of the 20 sampled questions against the docx
