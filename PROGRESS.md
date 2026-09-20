@@ -336,10 +336,24 @@ Jade questions and get feedback in the app.
   a successful action returned `null` — the same value the form started with, so the
   reset effect never re-fired. Success is now its own state.
 
+### Follow-up, same day: staff can start conversations (`20260919030000`)
+
+Ian asked for Jade to be able to reach out first, which needs a roster, so the
+profiles policy is wider than the original decision 2: **a teacher may now read
+every student profile**, not only students who have already written in. Staff
+profiles stay private from each other, and students still see staff names only
+along a shared thread. `/teacher/messages` gained a "Write to a student" form;
+`trg_validate_thread_session` now also rejects a thread whose owner is staff.
+
+This deliberately changes a T34 assertion. `scripts/e2e-rls-test.mjs` previously
+asserted "teacher cannot read all profiles" (exactly 1 row); it now asserts the
+teacher reads students plus their own row but **not** other teachers or admins —
+still 15/15. Verified with 14 further browser/API checks: the roster lists students
+and excludes staff, the student receives and can reply to a teacher-started thread,
+students still cannot read the roster, and a teacher cannot open a thread owned by
+staff (403).
+
 **Limits worth knowing**
-- Staff cannot start a conversation, only reply. That follows directly from decision
-  2: they cannot see students who have not written in. If Jade should be able to
-  reach out first, that needs a roster and a wider profiles policy — Ian's call.
 - No notifications outside the app (no email/push); unread is shown on the dashboard.
 - No attachments or images, and no typing/delivery indicators. Threads are not
   closable from the UI yet, though the DB and UI both honour `closed`.

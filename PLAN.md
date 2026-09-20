@@ -119,9 +119,9 @@ T38 Full-text search for mock exam review.
 - **Student profile + messaging**: DONE 2026-09-19 (Claude) — `/study/profile` and
   `/teacher/messages`, threads that can cite a mock exam attempt. Needs migration
   `20260919020000_student_messaging.sql` on prod; it REPLACES the `profiles` SELECT
-  policy so each side can see the other's name along a shared conversation. Staff
-  cannot start a thread (no roster access) — revisit if Jade wants to reach out
-  first. See `PROGRESS.md`.
+  policy so each side can see the other's name along a shared conversation, and
+  `20260919030000_staff_initiated_threads.sql`, which lets Jade write first and
+  widens that policy so teachers can read the student roster. See `PROGRESS.md`.
 - **Analytics / rank pages**: not built — no backing tables in our schema; needs Ian's
   data-model decision first (see Phase 1 table above).
 - **Three unreviewed docx files** in Jade's RENR folder — see `PROGRESS.md`.

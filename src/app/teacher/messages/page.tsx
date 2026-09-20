@@ -4,13 +4,18 @@ import { DashboardShell } from "@/components/DashboardShell";
 import { Card, CardTitle } from "@/components/ui/Card";
 import { StatCard } from "@/components/ui/StatCard";
 import { ThreadList } from "@/components/messages/ThreadList";
-import { loadThreads } from "@/lib/messages/queries";
+import { loadStudentRoster, loadThreads } from "@/lib/messages/queries";
+import { NewStaffThreadForm } from "@/components/messages/NewStaffThreadForm";
 
 export const dynamic = "force-dynamic";
 
 export default async function TeacherMessagesPage() {
   const { user, profile } = await requireRole("teacher", "/teacher/messages");
-  const threads = await loadThreads(createClient(), user.id, true);
+  const supabase = createClient();
+  const [threads, students] = await Promise.all([
+    loadThreads(supabase, user.id, true),
+    loadStudentRoster(supabase),
+  ]);
 
   const unread = threads.filter((t) => t.unread).length;
   const awaiting = threads.filter((t) => t.status === "open").length;
@@ -27,8 +32,16 @@ export default async function TeacherMessagesPage() {
         <div className="grid gap-4 sm:grid-cols-3">
           <StatCard label="Unread" value={unread} hint={unread > 0 ? "Students are waiting" : "All caught up"} />
           <StatCard label="Awaiting a reply" value={awaiting} />
-          <StatCard label="Conversations" value={threads.length} />
+          <StatCard label="Conversations" value={threads.length} hint={`${students.length} students registered`} />
         </div>
+
+        <Card className="rounded-xl border-brand-100">
+          <CardTitle className="mb-1">Write to a student</CardTitle>
+          <p className="mb-3 text-sm text-muted-foreground">
+            Start a conversation without waiting for them to ask — it lands on their profile.
+          </p>
+          <NewStaffThreadForm students={students} />
+        </Card>
 
         <Card className="rounded-xl border-brand-100">
           <CardTitle className="mb-2">Inbox</CardTitle>
@@ -40,8 +53,7 @@ export default async function TeacherMessagesPage() {
             emptyBody="When a student sends a question from their profile, it lands here."
           />
           <p className="mt-3 text-xs text-muted-foreground">
-            Students start these conversations — you can reply to any of them, but you can&apos;t
-            open one, because the student roster isn&apos;t visible to teachers.
+            Conversations started by either side appear here.
           </p>
         </Card>
       </div>

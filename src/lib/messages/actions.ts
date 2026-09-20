@@ -54,6 +54,45 @@ export async function createThread(_prev: MessageState, fd: FormData): Promise<M
   redirect(`/study/profile/threads/${thread.id}`);
 }
 
+/** Staff open a conversation with a student. The roster is teacher-visible. */
+export async function createThreadForStudent(
+  _prev: MessageState,
+  fd: FormData
+): Promise<MessageState> {
+  const { user, profile } = await requireSession();
+  if (!hasAtLeast(profile.role, "teacher")) return { error: "Only teaching staff can do that." };
+  const supabase = createClient();
+
+  const studentId = field(fd, "student_id");
+  const subject = field(fd, "subject");
+  const body = field(fd, "body");
+
+  if (!studentId) return { error: "Choose a student to write to." };
+  if (!subject) return { error: "Give the message a short subject." };
+  if (subject.length > MAX_SUBJECT) return { error: `Keep the subject under ${MAX_SUBJECT} characters.` };
+  if (!body) return { error: "Write your message before sending." };
+  if (body.length > MAX_BODY) return { error: `Keep your message under ${MAX_BODY} characters.` };
+
+  const { data: thread, error } = await supabase
+    .from("message_threads")
+    .insert({ student_id: studentId, subject })
+    .select("id")
+    .single();
+  // trg_validate_thread_session rejects a student_id that is really staff.
+  if (error) return { error: `Could not start the conversation: ${error.message}` };
+
+  const { error: msgError } = await supabase
+    .from("messages")
+    .insert({ thread_id: thread.id, author_id: user.id, body });
+  if (msgError) {
+    await supabase.from("message_threads").delete().eq("id", thread.id);
+    return { error: `Could not send your message: ${msgError.message}` };
+  }
+
+  revalidatePath("/teacher/messages");
+  redirect(`/teacher/messages/${thread.id}`);
+}
+
 /** Reply in an existing thread. Works for both sides; RLS decides who may post. */
 export async function postReply(_prev: MessageState, fd: FormData): Promise<MessageState> {
   const { user, profile } = await requireSession();

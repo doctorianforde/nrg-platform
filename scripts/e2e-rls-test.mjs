@@ -88,8 +88,17 @@ try {
   r = await call(`/rest/v1/questions?id=eq.${t1q}`, { method: "PATCH", token: teacher1.token, body: { body: "edited by owner teacher1" } });
   check("own-teacher UPDATE succeeds", r.status === 200, `status=${r.status}`);
 
-  r = await call("/rest/v1/profiles?select=id", { token: teacher1.token });
-  check("teacher cannot read all profiles", r.status === 200 && r.data.length === 1 && r.data[0].id === teacher1.uid, `status=${r.status} rows=${r.data?.length}`);
+  // Changed deliberately by 20260919030000 (staff-initiated messaging): a teacher
+  // needs the student roster to choose who to write to. Other staff stay private.
+  r = await call("/rest/v1/profiles?select=id,role", { token: teacher1.token });
+  {
+    const ids = new Set((r.data ?? []).map((p) => p.id));
+    check(
+      "teacher reads students + own row, but not other staff",
+      r.status === 200 && ids.has(teacher1.uid) && ids.has(student.uid) && !ids.has(teacher2.uid) && !ids.has(admin.uid),
+      `status=${r.status} rows=${r.data?.length} own=${ids.has(teacher1.uid)} student=${ids.has(student.uid)} otherTeacher=${ids.has(teacher2.uid)} admin=${ids.has(admin.uid)}`
+    );
+  }
 
   // ---- 3. ADMIN ----
   r = await call("/rest/v1/questions?select=id", { token: admin.token });

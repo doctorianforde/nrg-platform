@@ -186,3 +186,24 @@ export async function loadCitableAttempts(supabase: Db, studentId: string): Prom
     completedAt: s.completed_at,
   }));
 }
+
+export type RosterStudent = { id: string; name: string };
+
+/**
+ * Students a staff member can write to.
+ *
+ * Names come from the signup form; anyone who never set one is shown with a short
+ * id fragment so two unnamed students are still tellable apart.
+ */
+export async function loadStudentRoster(supabase: Db): Promise<RosterStudent[]> {
+  const { data } = await supabase
+    .from("profiles")
+    .select("id, full_name")
+    .eq("role", "student")
+    .order("full_name", { nullsFirst: false })
+    .limit(500);
+  return (data ?? []).map((p) => ({
+    id: p.id,
+    name: p.full_name?.trim() || `Unnamed student (${p.id.slice(0, 6)})`,
+  }));
+}
