@@ -6,11 +6,14 @@ import { QuestionMetaBadges } from "@/components/questions/QuestionMetaBadges";
 import { RationalePanel } from "@/components/questions/RationalePanel";
 import type { QuizQuestion } from "@/lib/quiz/types";
 import { fmtDateTime, fmtPct } from "@/lib/mock-exam/utils";
+import { buildFatigueReport } from "@/lib/mock-exam/fatigue";
+import { FatigueAnalysis } from "@/components/mock-exam/FatigueAnalysis";
 
 type ResponseRow = {
   question_id: string;
   selected_option_ids: string[];
   is_correct: boolean | null;
+  answered_at?: string | null;
 };
 
 function LockIcon({ className }: { className?: string }) {
@@ -57,6 +60,12 @@ export function ResultsView({
 }) {
   const byQuestion = new Map(responses.map((r) => [r.question_id, r]));
   const total = session.total_questions ?? questions.length;
+  // `questions` is already in the order the student sat them (preserveOrder).
+  const fatigue = buildFatigueReport(
+    questions.map((q) => q.id),
+    responses,
+    session.started_at
+  );
 
   return (
     <div className="space-y-5">
@@ -95,6 +104,8 @@ export function ResultsView({
           </div>
         </div>
       )}
+
+      {fatigue ? <FatigueAnalysis report={fatigue} /> : null}
 
       <Card className="rounded-xl border-brand-100">
         <h2 className="font-heading font-semibold text-card-foreground">Question review</h2>

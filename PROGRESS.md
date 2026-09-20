@@ -197,6 +197,88 @@ patterns. Restyle applied across the app on top of it:
   authoring flow, case-study vitals/phases — all documented in the spec, all need Ian's
   data-model/product decisions first.
 
+## Fatigue analysis (Claude, 2026-09-19) — built, tested on staging, NOT yet on prod
+
+Implements the client's `Fatigue_Analysis_Data_Prompt.docx` (kept in the repo root).
+That spec was written against a prototype that held the whole exam in memory, so it
+needed adapting rather than transcribing. No schema change — it reads what
+`mock_exam_responses` already stores.
+
+**Where it appears**
+- Student: `/study/mock-exams/session/[id]` after submitting — a four-quarter card
+  grid with the spec's colour rules (green 70+, amber 50+, red below), drop badges,
+  the red final-quarter banner, and one recommendation.
+- Teacher: `/teacher/mock-exams/[id]` — "Cohort fatigue", the class distribution
+  across completed attempts.
+- Logic: `src/lib/mock-exam/fatigue.ts` (pure, no React, no DB).
+  UI: `src/components/mock-exam/`. Tests: `npx tsx scripts/test-fatigue.ts` (38 checks).
+
+**Kept from the spec:** quarter segmentation, the 15-point drop line, the 70/50
+colour thresholds, the drop badge, the final-quarter warning banner, and the four
+recommendation categories.
+
+**Changed, and why**
+1. *Segments come from the set's real length*, not a hardcoded 100 questions / 25 per
+   quarter. Our sets are any size; a 37-question set splits 9/9/9/10.
+2. *Correctness reads `mock_exam_responses.is_correct`*, graded in Postgres by
+   `trg_grade_mock_exam_response`. The spec compared one selected index against one
+   correct index, which cannot express SATA and would mean shipping the answer key to
+   the browser — the exam runner is deliberately built never to receive it.
+3. *Accuracy is measured over ANSWERED questions; skips are counted separately.* The
+   spec's prose said the same but its code counted every slot in the range, so a
+   skipped question was scored wrong and a tiring student was penalised twice over.
+   Rising skips are themselves a fatigue signal and are reported on their own terms.
+4. **A 15-point gap is inside the noise band.** This is the substantive change. At 25
+   questions a quarter the two-proportion standard error is ~13 points, so the spec's
+   flat 15-point rule fires on chance roughly a quarter of the time even when nothing
+   is wrong. Quarters are now labelled `Lower` (amber) at 15+ points — the client's
+   line, preserved and visible — and `Drop` (red) only when the fall also clears
+   sampling error (one-sided 95%). Only a red drop triggers the warning banner. Without
+   this the product tells students to change how they study on the strength of a coin
+   flip.
+5. *Pattern and recommendation are computed in code*, not by an LLM. The spec's
+   section 7 prompt asked a model to sort four numbers against four fixed rules; in
+   code that is deterministic, free, instant, and unit-testable. It also needs no API
+   key at runtime and cannot return different advice for the same exam twice.
+
+**Dropped, and why**
+- *The 0–100 instructor "fatigue score" and its bands (0–29 / 30–59 / 60+).* The spec
+  never defined how the score was produced — in the prototype it was mock data.
+  Replaced with a measured quantity: points between a student's first and last
+  quarter, banded under 10 / 10–19 / 20+.
+- *`Estimated accuracy penalty: -Math.floor(fatigue * 0.3)%`.* An invented formula
+  with nothing behind it. Showing a teacher a fabricated prediction is worse than
+  showing nothing, so the card reports the drop actually observed.
+- *The fixed class figures* (18/22/8 students, "average class stamina 41"). Prototype
+  placeholders; the cohort card computes real counts.
+
+**Added (the schema allows what the prototype could not)**
+- *Pace per quarter* from `answered_at`. Withheld when the timestamps aren't
+  monotonic, because `saveResponse` rewrites `answered_at` on every save, so a
+  revisited question carries a later stamp than the questions after it. In that case
+  the card says why instead of showing a wrong number.
+
+**Testing**
+- 38 unit checks, no DB or network: `npx tsx scripts/test-fatigue.ts`.
+- Browser end-to-end on staging (Playwright + Chrome), 21 checks: three seeded
+  100-question attempts (late cliff with skips, steady slide, steady with a revisit)
+  read back through the real student and teacher pages. `next build`, `next lint` and
+  `tsc` all clean. Seeded exam data and temp users deleted afterwards — staging is
+  back to 0 mock exam sets / sessions / responses.
+- Two real bugs were caught this way and fixed: a steady slide was classified as a
+  late drop, and then an 88/84/78/35 attempt (a mild slide ending in a 43-point cliff)
+  was classified as gradual and told the student their accuracy "edged down ... rather
+  than falling off a cliff". Both are now regression-tested.
+
+**Limits worth knowing**
+- Segment accuracy counts only answered questions, so it deliberately won't match the
+  headline score when questions were skipped. The card says so.
+- The cohort card is anonymous: RLS lets teachers read sessions but not other users'
+  profiles, so no student names. Naming students there needs a `profiles` policy
+  change — Ian's call, same family as the T34 finding.
+- Nothing tracks fatigue across attempts over time; each report is one sitting.
+- Exams under 16 questions get no analysis at all — quarters would be meaningless.
+
 ## Not yet done / not yet verified
 
 - **T33 — human read-and-verify** of the 20 sampled questions against the docx

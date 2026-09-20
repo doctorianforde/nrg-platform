@@ -9,11 +9,16 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { StatCard } from "@/components/ui/StatCard";
 import { QuestionMetaBadges } from "@/components/questions/QuestionMetaBadges";
 import { canManageSet, fmtDateTime, fmtPct } from "@/lib/mock-exam/utils";
+import { buildFatigueReport, summariseCohort, type FatigueReport } from "@/lib/mock-exam/fatigue";
+import { CohortFatigueCard } from "@/components/mock-exam/CohortFatigueCard";
 import { removeQuestion } from "./actions";
 import { ReleaseRationalesForm } from "./ReleaseRationalesForm";
 import { QuestionSearch } from "./QuestionSearch";
 
 export const dynamic = "force-dynamic";
+
+/** How many completed attempts one page render will analyse for cohort fatigue. */
+const COHORT_SESSION_LIMIT = 200;
 
 function LockIcon({ className }: { className?: string }) {
   return (
@@ -59,6 +64,34 @@ export default async function ManageMockExamSetPage({
   const released = set.rationale_released_at != null;
   const sessionList = sessions ?? [];
   const completed = sessionList.filter((s) => s.completed_at != null);
+
+  // Cohort fatigue. Capped so a long-lived set can't pull an unbounded number of
+  // response rows into one page render.
+  const analysed = completed.slice(0, COHORT_SESSION_LIMIT);
+  const orderedQuestionIds = questions.map((q) => q.question.id);
+  let cohort = null;
+  if (analysed.length > 0 && orderedQuestionIds.length > 0) {
+    const { data: cohortResponses } = await supabase
+      .from("mock_exam_responses")
+      .select("session_id, question_id, selected_option_ids, is_correct, answered_at")
+      .in(
+        "session_id",
+        analysed.map((s) => s.id)
+      );
+
+    const bySession = new Map<string, typeof cohortResponses>();
+    for (const row of cohortResponses ?? []) {
+      const bucket = bySession.get(row.session_id);
+      if (bucket) bucket.push(row);
+      else bySession.set(row.session_id, [row]);
+    }
+    const reports = analysed
+      .map((s) =>
+        buildFatigueReport(orderedQuestionIds, bySession.get(s.id) ?? [], s.started_at)
+      )
+      .filter((r): r is FatigueReport => r !== null);
+    cohort = summariseCohort(reports);
+  }
   const avgScore =
     completed.length > 0
       ? completed.reduce((n, s) => n + (s.score_pct ?? 0), 0) / completed.length
@@ -79,6 +112,8 @@ export default async function ManageMockExamSetPage({
           <StatCard label="Completed attempts" value={completed.length} />
           <StatCard label="Average score" value={fmtPct(avgScore)} hint="Completed attempts only" />
         </div>
+
+        <CohortFatigueCard cohort={cohort} />
 
         <Card className="rounded-xl border-brand-100">
           <div className="flex flex-wrap items-start justify-between gap-4">

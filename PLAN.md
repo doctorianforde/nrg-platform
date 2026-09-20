@@ -111,6 +111,11 @@ T38 Full-text search for mock exam review.
 - **Mock exam UI**: DONE 2026-09-19 (Kimi) — student exam runner + results, teacher
   set builder + rationale release. App-layer rationale gate implemented per T36–T38
   rules. See `PROGRESS.md`.
+- **Fatigue analysis**: DONE 2026-09-19 (Claude) — student results + teacher cohort
+  card, from the client's `Fatigue_Analysis_Data_Prompt.docx`. No schema change.
+  Several parts of that spec were deliberately not followed (statistically unsound
+  15-point rule, fabricated instructor scores, an LLM call for deterministic maths) —
+  reasons in `PROGRESS.md`. Needs deploy only; nothing pending on prod DB.
 - **Analytics / rank pages**: not built — no backing tables in our schema; needs Ian's
   data-model decision first (see Phase 1 table above).
 - **Three unreviewed docx files** in Jade's RENR folder — see `PROGRESS.md`.

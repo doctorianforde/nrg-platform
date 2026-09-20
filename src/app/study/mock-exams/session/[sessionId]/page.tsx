@@ -35,7 +35,7 @@ export default async function MockExamSessionPage({
       .order("display_order"),
     supabase
       .from("mock_exam_responses")
-      .select("question_id, selected_option_ids, is_correct")
+      .select("question_id, selected_option_ids, is_correct, answered_at")
       .eq("session_id", session.id),
   ]);
   if (!set) redirect("/study/mock-exams");
@@ -65,6 +65,7 @@ export default async function MockExamSessionPage({
             question_id: string;
             selected_option_ids: string[];
             is_correct: boolean | null;
+            answered_at: string | null;
           }>}
           rationaleReleased={set.rationale_released_at != null}
         />
