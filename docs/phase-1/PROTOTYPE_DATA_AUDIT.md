@@ -417,3 +417,62 @@ shuffle is not. Fix before Jade reviews, so he is not reading broken prose.
   script has never set it, and `topicKey()` deliberately ignores the domain when
   de-duplicating by name. Worth fixing before mock exams are generated from a
   domain/cluster blueprint, because the topic→domain link simply is not there.
+
+---
+
+## Letter references repaired (Claude, 2026-09-20)
+
+`scripts/fix-explanation-letters.ts` — run against staging, and the CSV patched to
+match so a future import carries the fix.
+
+**Result: 807 of 807 explanations now verify exactly.** Confirmed by taking each
+question's *original* rationale from the prototype source, applying the derived
+mapping, and checking it equals what is stored. 0 mismatches. The CSV re-validates
+at 4,728 ok / 0 errors.
+
+### How the mapping is recovered
+
+Not from the shuffle's RNG seed. For each question the original option order is read
+back from the prototype source and matched to the stored order **by text**, which
+gives old-letter → new-letter directly. If a single option fails to match, the row is
+skipped rather than guessed at. Worked example, `proto:clinical-skills:9180`:
+
+| | A | B | C | D |
+|---|---|---|---|---|
+| prototype order | Dry mucous membranes | Acute weight loss ✔ | Thirst | Skin turgor |
+| stored order | Thirst | Dry mucous membranes | Acute weight loss ✔ | Skin turgor |
+
+so A→B, B→C, C→A, D→D, and the explanation "dry mucous membranes (A), thirst (C)"
+becomes "(B)" and "(A)" — each phrase pointing at the option that actually holds it.
+
+### Which forms are rewritten, and which are deliberately left
+
+Only forms that cannot mean anything else: `(A)`, and `option/answer/choice A`.
+
+**Not** rewritten, because the corpus proves them unsafe:
+- `A)` without an opening bracket — 784 rows match, but most are things like
+  "fever >=38 C)" and "with vitamin C)". Rewriting these would corrupt clinical text.
+- bare `A.` — all 16 occurrences are "C. difficile", "C. perfringens", "Plan B.",
+  "inhibin A.". None is an option reference.
+
+35 rows contain **only** these unsafe forms and were left untouched. They are listed
+by the script and want a human eye; the count is small enough to read in one sitting.
+
+### Two corrections to earlier figures in this document
+
+- **The scale of the problem was 808 rows, not 843.** My earlier count included the
+  unsafe `A)` and `A.` patterns, which are overwhelmingly false positives. 808 is the
+  number with a reference that can be identified with confidence.
+- The first run fixed 715 and silently skipped 37 as "stem not found in source",
+  because it compared undecoded source text (`—`) against decoded database text.
+  Decoding escapes first raised the source index from 2,159 to 6,640 usable stems and
+  cleared all 37.
+
+### The script is idempotent, on purpose
+
+It derives the target text from the immutable source rationale rather than
+transforming whatever is currently stored. Transforming stored text would shift the
+letters a *second* time on a re-run — exactly the bug that would be hardest to notice.
+A second run now reports "0 to rewrite, 807 already correct". It also refuses to touch
+any row whose stored text no longer matches the source, so later hand-edits are safe
+from it.

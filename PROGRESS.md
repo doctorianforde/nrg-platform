@@ -1056,14 +1056,19 @@ same way. This supersedes the T30 note about writing
 `ON CONFLICT (source_id) WHERE source_id IS NOT NULL` — that works in raw SQL but not
 through the client library.
 
-**Blocker found in verification — 843 explanations, not 495.** Kimi flagged 495
-explanations containing `(A)`–`(D)` references left in pre-shuffle order. Counting
-every positional form — `(A)`, `A)`, "Option A", "answer A", bare "A." — the real
-figure is **843, 17.8% of the import**. These now point at the wrong distractors, so
-the prose argues against the wrong options. **Fix before Jade reviews.** Recommended
-approach is to remap rather than strip, deriving old-letter → new-letter by matching
-option *text* between the prototype source and the shuffled order — that is
-self-verifying and needs no reliance on the shuffle seed.
+**Stale letter references: found, scoped, and FIXED.** Kimi flagged 495 explanations
+carrying `(A)`–`(D)` references left in pre-shuffle order. The confident total is
+**808 rows (17.1%)** once `option A` and `answer A` are counted too — my first pass
+said 843, which over-counted by including `A)` and bare `A.`, and those are
+overwhelmingly false positives ("fever >=38 C)", "C. difficile", "Plan B.").
+
+Repaired by `scripts/fix-explanation-letters.ts`: **807 of 807 now verify exactly**
+against the original rationale with the derived mapping applied. Staging and the CSV
+are both updated. The mapping comes from matching option *text* between the prototype
+source and the stored order — not from the shuffle seed — so it is self-verifying, and
+the script is idempotent because it derives the target from the immutable source
+rather than transforming stored text. Only unambiguous forms are rewritten; 35 rows
+containing solely the unsafe forms are listed for a human. Detail in the audit report.
 
 **Two topic-taxonomy gaps:** 719 of 1,213 staging topics now have `cluster_id` NULL
 (new — prod has 0 such), so those topics are unreachable by clinical area; and
