@@ -28,6 +28,18 @@ export type Database = {
         Update: { created_at?: string; decided_at?: string | null; decided_by?: string | null; id?: string; note?: string | null; requested_role?: string; status?: string; user_id?: string }
         Relationships: []
       }
+      calendar_events: {
+        Row: { audience: string; created_at: string; created_by: string; description: string | null; end_time: string | null; event_date: string; id: string; start_time: string | null; title: string; updated_at: string }
+        Insert: { audience?: string; created_at?: string; created_by: string; description?: string | null; end_time?: string | null; event_date: string; id?: string; start_time?: string | null; title: string; updated_at?: string }
+        Update: { audience?: string; created_at?: string; created_by?: string; description?: string | null; end_time?: string | null; event_date?: string; id?: string; start_time?: string | null; title?: string; updated_at?: string }
+        Relationships: []
+      }
+      calendar_event_audience: {
+        Row: { event_id: string; user_id: string }
+        Insert: { event_id: string; user_id: string }
+        Update: { event_id?: string; user_id?: string }
+        Relationships: [{ foreignKeyName: "calendar_event_audience_event_id_fkey"; columns: ["event_id"]; isOneToOne: false; referencedRelation: "calendar_events"; referencedColumns: ["id"] }]
+      }
       case_studies: {
         Row: { clinical_scenario: string; created_at: string; domain_id: number | null; id: string; is_active: boolean }
         Insert: { clinical_scenario: string; created_at?: string; domain_id?: number | null; id?: string; is_active?: boolean }

@@ -563,6 +563,64 @@ own folder, a second signed-in user is refused (400), the avatar is publicly
 readable, and the bucket rejects a 3 MB file. Both accounts and all objects
 removed — prod is back to 1 profile and 0 avatar objects.
 
+## Event calendar (Claude, 2026-09-19) — built, tested on staging, NOT yet on prod
+
+A month calendar on `/study/profile`, which every role can reach, so it is "visible
+on all profiles". Students add private entries; staff publish to a chosen audience.
+
+**Where it appears**
+- `/study/profile` → "Calendar": month grid with prev/next, a dot per event, and the
+  selected day's events beside it with add/edit/remove.
+- Code: `supabase/migrations/20260919060000_calendar_events.sql`,
+  `src/lib/calendar/`, `src/components/calendar/`.
+
+**Audiences**
+`self` (private), `everyone`, `students`, `teachers`, `selected` (named students,
+chosen from the roster). Students only ever get `self` — the selector isn't rendered
+for them, the insert policy rejects anything else, and a trigger independently
+refuses a non-`self` audience from a non-staff author.
+
+**The visibility call worth knowing:** a student's `self` entry is invisible to
+**staff too**, not just other students. "Students can make entries only on their
+profile" reads as personal, so this is not a diary teachers browse. Verified: an
+admin reading that row directly gets 0 rows. If you would rather staff see student
+entries, that is a one-line policy change — but it should be a deliberate one.
+
+**Schema notes**
+- `event_date DATE` plus optional `start_time`/`end_time TIME`, not `timestamptz`.
+  An exam date is a wall-clock fact; storing it as an instant makes it shift for
+  anyone reading from another timezone. Date keys are built from local parts, never
+  `toISOString()`, for the same reason.
+- CHECK constraints: end time cannot precede start, and an end time requires a start.
+- `calendar_event_audience` holds the named recipients. The events SELECT policy
+  consults it through a SECURITY DEFINER helper (`is_calendar_target`) so the two
+  tables' policies don't reference each other.
+- Editing rights mirror the RLS policy exactly (`canEdit` in the query layer): your
+  own entries, plus any published entry if you are staff. A student's private entry
+  is never editable by anyone else.
+
+**Testing (staging)** — 24 browser/API checks: the calendar renders for every role;
+a student's form has no audience choice and their entry is labelled "Just me" with
+readable times; staff get all five audiences; an `everyone` event reaches both
+students; a `selected` event reaches only the named student and names them; a second
+student sees neither the targeted event nor anyone's private entry; and at the API a
+student cannot publish to everyone, cannot create an entry as someone else, cannot
+delete another student's entry, and cannot promote their own entry to `everyone`
+(403 on each). T34 still 15/15, fatigue checks pass, build/lint/tsc clean. Staging
+swept to 0 rows.
+
+**Limits worth knowing**
+- Staff events show "Set by teaching staff" rather than the author's name to a
+  student, because a student can only read a staff name along a shared conversation
+  (the `20260919020000` rule). The fallback reads fine; showing real names here would
+  mean widening that policy.
+- Single-day events only — no multi-day spans, no repeats, no reminders, and no
+  notification when an event is published (it simply appears).
+- The `teachers` audience is included for completeness but staff already see every
+  published event, so today it behaves as "hide from students".
+- Month navigation is a full page load; only day selection is client-side.
+- No timezone handling beyond storing wall-clock dates, which is deliberate.
+
 ## Not yet done / not yet verified
 
 - **T33 — human read-and-verify** of the 20 sampled questions against the docx

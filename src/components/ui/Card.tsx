@@ -2,13 +2,16 @@ import { cn } from "@/lib/cn";
 
 export function Card({
   className,
+  id,
   children,
 }: {
   className?: string;
+  /** Set when a card needs to be an anchor target. */
+  id?: string;
   children: React.ReactNode;
 }) {
   return (
-    <div className={cn("rounded-lg border border-border bg-card p-5 shadow-sm", className)}>
+    <div id={id} className={cn("rounded-lg border border-border bg-card p-5 shadow-sm", className)}>
       {children}
     </div>
   );

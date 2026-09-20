@@ -138,6 +138,10 @@ T38 Full-text search for mock exam review.
   in the header, message threads and admin table. Needs
   `20260919050000_avatar_storage.sql`, **applied to prod 2026-09-19 and smoke-tested
   there; live.** See `PROGRESS.md`.
+- **Event calendar**: DONE 2026-09-19 (Claude) — month calendar on `/study/profile`
+  for every role. Students add private entries (invisible to staff by design);
+  teachers/admins publish to everyone, all students, staff, or named students. Needs
+  `20260919060000_calendar_events.sql` on prod. See `PROGRESS.md`.
 - **Analytics / rank pages**: not built — no backing tables in our schema; needs Ian's
   data-model decision first (see Phase 1 table above).
 - **Three unreviewed docx files** in Jade's RENR folder — see `PROGRESS.md`.

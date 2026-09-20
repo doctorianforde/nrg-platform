@@ -9,6 +9,10 @@ import { DisplayNameForm } from "./DisplayNameForm";
 import { AvatarUpload } from "./AvatarUpload";
 import { loadCitableAttempts, loadThreads } from "@/lib/messages/queries";
 import { fmtDateTime, fmtPct } from "@/lib/mock-exam/utils";
+import { hasAtLeast } from "@/lib/auth/roles";
+import { loadEvents, loadStudentOptions, monthRange } from "@/lib/calendar/queries";
+import { parseMonth, toDateKey } from "@/lib/calendar/types";
+import { CalendarPanel } from "@/components/calendar/CalendarPanel";
 
 export const dynamic = "force-dynamic";
 
@@ -21,8 +25,15 @@ export default async function StudentProfilePage({
   const supabase = createClient();
 
   const attach = typeof searchParams.attach === "string" ? searchParams.attach : undefined;
+  const isStaff = hasAtLeast(profile.role, "teacher");
+  const { year, month } = parseMonth(
+    typeof searchParams.m === "string" ? searchParams.m : undefined
+  );
+  const { from, to } = monthRange(year, month);
 
-  const [threads, attempts, { data: sessions }] = await Promise.all([
+  const [events, students, threads, attempts, { data: sessions }] = await Promise.all([
+    loadEvents(supabase, user.id, isStaff, from, to),
+    isStaff ? loadStudentOptions(supabase) : Promise.resolve([]),
     loadThreads(supabase, user.id, false),
     loadCitableAttempts(supabase, user.id),
     supabase
@@ -62,6 +73,23 @@ export default async function StudentProfilePage({
             hint={unread > 0 ? "Your teacher has replied" : "Nothing new"}
           />
         </div>
+
+        <Card id="calendar" className="scroll-mt-20 rounded-xl border-brand-100">
+          <CardTitle>Calendar</CardTitle>
+          <p className="mb-4 mt-1 text-sm text-muted-foreground">
+            {isStaff
+              ? "Your own entries plus anything you publish. Pick who each event is for — everyone, all students, staff, or named students."
+              : "Exam dates and anything your teachers have shared with you. Entries you add here are private to you."}
+          </p>
+          <CalendarPanel
+            year={year}
+            month={month}
+            events={events}
+            isStaff={isStaff}
+            students={students}
+            todayKey={toDateKey(new Date())}
+          />
+        </Card>
 
         <div className="grid gap-5 lg:grid-cols-[1fr_20rem]">
           <div className="space-y-5">
