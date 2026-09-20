@@ -5,6 +5,7 @@ import { DashboardShell } from "@/components/DashboardShell";
 import { fetchQuizQuestions } from "@/lib/quiz/fetch";
 import { ExamRunner } from "./ExamRunner";
 import { ResultsView } from "./ResultsView";
+import { GroupStandings, type Standing } from "@/components/exam/GroupStandings";
 
 export const dynamic = "force-dynamic";
 
@@ -18,6 +19,10 @@ export default async function MockExamSessionPage({
     `/study/mock-exams/session/${params.sessionId}`
   );
   const supabase = createClient();
+
+  // A timed attempt whose deadline passed while the browser was shut gets closed
+  // and scored here, so reloading the page shows results rather than a dead timer.
+  await supabase.rpc("complete_expired_exam_sessions");
 
   const { data: session } = await supabase
     .from("mock_exam_sessions")
@@ -44,6 +49,39 @@ export default async function MockExamSessionPage({
   // Enforces is_active=true; inactive set questions silently drop out.
   const questions = await fetchQuizQuestions({ ids, preserveOrder: true });
 
+  // For a group attempt, how everyone placed — scores only, never their answers.
+  let standings: Standing[] | null = null;
+  if (session.group_id) {
+    const [{ data: roster }, { data: groupSessions }] = await Promise.all([
+      supabase
+        .from("exam_group_members")
+        .select("student_id")
+        .eq("group_id", session.group_id)
+        .order("joined_at"),
+      supabase
+        .from("mock_exam_sessions")
+        .select("student_id, score_pct, correct_count, total_questions, completed_at")
+        .eq("group_id", session.group_id),
+    ]);
+    const ids = (roster ?? []).map((r) => r.student_id);
+    const { data: people } = await supabase
+      .from("profiles")
+      .select("id, full_name")
+      .in("id", ids.length > 0 ? ids : ["00000000-0000-0000-0000-000000000000"]);
+    standings = (roster ?? []).map((r) => {
+      const s = groupSessions?.find((x) => x.student_id === r.student_id);
+      return {
+        studentId: r.student_id,
+        name: people?.find((p) => p.id === r.student_id)?.full_name?.trim() || "A classmate",
+        scorePct: s?.score_pct ?? null,
+        correct: s?.correct_count ?? null,
+        total: s?.total_questions ?? null,
+        completed: Boolean(s?.completed_at),
+        isYou: r.student_id === user.id,
+      };
+    });
+  }
+
   if (session.completed_at) {
     return (
       <DashboardShell
@@ -57,6 +95,11 @@ export default async function MockExamSessionPage({
             : "Real exam conditions — no feedback while answering. Rationales unlock after your teacher's class review."
         }
       >
+        {standings ? (
+          <div className="mb-5">
+            <GroupStandings standings={standings} />
+          </div>
+        ) : null}
         <ResultsView
           setTitle={set.title}
           session={session}
@@ -68,6 +111,7 @@ export default async function MockExamSessionPage({
             answered_at: string | null;
           }>}
           rationaleReleased={set.rationale_released_at != null}
+          groupStillSitting={standings?.some((x) => !x.completed) ?? false}
         />
       </DashboardShell>
     );
@@ -106,6 +150,8 @@ export default async function MockExamSessionPage({
         setTitle={set.title}
         questions={examQuestions}
         initialAnswers={initialAnswers}
+        expiresAt={session.expires_at ?? null}
+        groupId={session.group_id ?? null}
       />
     </DashboardShell>
   );

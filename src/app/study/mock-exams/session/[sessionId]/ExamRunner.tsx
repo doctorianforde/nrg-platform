@@ -23,16 +23,32 @@ export type ExamQuestion = {
 
 const SAVE_DEBOUNCE_MS = 600;
 
+/** mm:ss, or h:mm:ss once there is an hour or more left. */
+function formatRemaining(ms: number): string {
+  const total = Math.max(0, Math.floor(ms / 1000));
+  const h = Math.floor(total / 3600);
+  const m = Math.floor((total % 3600) / 60);
+  const s = total % 60;
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return h > 0 ? `${h}:${pad(m)}:${pad(s)}` : `${m}:${pad(s)}`;
+}
+
 export function ExamRunner({
   sessionId,
   setTitle,
   questions,
   initialAnswers,
+  expiresAt,
+  groupId,
 }: {
   sessionId: string;
   setTitle: string;
   questions: ExamQuestion[];
   initialAnswers: Record<string, string[]>;
+  /** ISO deadline, or null for an untimed exam. */
+  expiresAt: string | null;
+  /** Set when this attempt is part of a group exam. */
+  groupId: string | null;
 }) {
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string[]>>(initialAnswers);
@@ -49,6 +65,32 @@ export function ExamRunner({
     const map = timers.current;
     return () => map.forEach((t) => clearTimeout(t));
   }, []);
+
+  // Countdown. This is a courtesy, not the enforcement: the real deadline lives on
+  // the session row and RLS refuses any answer written past it, so a tampered or
+  // simply wrong client clock cannot buy extra time.
+  const [remaining, setRemaining] = useState<number | null>(() =>
+    expiresAt ? Math.max(0, new Date(expiresAt).getTime() - Date.now()) : null
+  );
+  const autoSubmitted = useRef(false);
+  const submitRef = useRef<() => void>(() => {});
+
+  useEffect(() => {
+    if (!expiresAt) return;
+    const deadline = new Date(expiresAt).getTime();
+    const tick = () => {
+      const ms = Math.max(0, deadline - Date.now());
+      setRemaining(ms);
+      // Fire once. Without the guard the interval would resubmit every second.
+      if (ms === 0 && !autoSubmitted.current) {
+        autoSubmitted.current = true;
+        submitRef.current();
+      }
+    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, [expiresAt]);
 
   if (questions.length === 0) {
     return (
@@ -106,6 +148,9 @@ export function ExamRunner({
       // renders the results view.
     });
   };
+  // Keeps the countdown's auto-submit pointing at the current closure without
+  // making the interval depend on it.
+  submitRef.current = submit;
 
   return (
     <div>
@@ -123,6 +168,27 @@ export function ExamRunner({
             ‹ Exit
           </Link>
           <span className="truncate text-sm font-semibold text-card-foreground">{setTitle}</span>
+          {groupId ? (
+            <span className="shrink-0 rounded bg-brand-100 px-1.5 py-0.5 text-[11px] font-medium text-brand-800">
+              Group
+            </span>
+          ) : null}
+          {remaining !== null ? (
+            <span
+              role="timer"
+              aria-live={remaining <= 60_000 ? "assertive" : "off"}
+              className={cn(
+                "shrink-0 rounded px-2 py-0.5 text-sm font-semibold tabular-nums",
+                remaining <= 60_000
+                  ? "bg-red-100 text-red-800"
+                  : remaining <= 300_000
+                    ? "bg-amber-100 text-amber-800"
+                    : "bg-gray-100 text-gray-700"
+              )}
+            >
+              {remaining === 0 ? "Time up" : formatRemaining(remaining)}
+            </span>
+          ) : null}
           <span className="ml-auto shrink-0 text-sm text-muted-foreground">
             <strong className="text-card-foreground">
               Question {index + 1} of {questions.length}

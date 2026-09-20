@@ -129,6 +129,20 @@ Saunders-derived and verbatim-NCLEX questions at all.
 
 ## Not yet tracked (post-T38, no task IDs assigned)
 
+- **Group exams + exam timer**: BUILT and verified on staging, **not deployed**
+  (Claude, 2026-09-20). Up to 5 students sit the same paper at the same time, each
+  answering for themselves, so XP/rank/streak/fatigue all keep working unchanged; a
+  shared answer sheet was rejected because it would make rank mean "was in good groups".
+  Students form groups with a 6-character join code, teachers assign them to named
+  students and can see results. Optional `duration_minutes` per set, enforced in RLS
+  (not just the browser countdown), with lazy settlement of abandoned attempts.
+  Migration `20260920060000_group_exams_and_timer.sql`. 62 assertions across database,
+  student UI and teacher UI. **Owner: Ian** — this is blocked on prod migrations:
+  `main` deploys BOTH Vercel projects, and prod has neither `20260920050000` nor
+  `20260920060000`, so pushing before they are applied would run the code against a
+  database with no `exam_groups` table. Apply both to prod, then push.
+  Worth deciding later: a non-assessed collaborative mode (one shared answer sheet,
+  flat XP, excluded from readiness) as a separate practice feature.
 - **Topic clusters for the imported bank**: PROPOSED, not applied (Claude, 2026-09-20).
   726 topics on staging have no `cluster_id` and carry **4,630 of 7,314** questions, so
   study and filtering by clinical area cannot see 63% of the bank. Proposal at

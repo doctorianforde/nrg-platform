@@ -45,6 +45,7 @@ export function ResultsView({
   questions,
   responses,
   rationaleReleased,
+  groupStillSitting = false,
 }: {
   setTitle: string;
   session: {
@@ -58,6 +59,12 @@ export function ResultsView({
   questions: QuizQuestion[];
   responses: ResponseRow[];
   rationaleReleased: boolean;
+  /**
+   * True while a group-mate is still answering this same paper. The per-question
+   * review names the correct option, so showing it to whoever finishes first
+   * hands them the answers to read out to the people still sitting the exam.
+   */
+  groupStillSitting?: boolean;
 }) {
   const byQuestion = new Map(responses.map((r) => [r.question_id, r]));
   const total = session.total_questions ?? questions.length;
@@ -108,6 +115,18 @@ export function ResultsView({
 
       {fatigue ? <FatigueAnalysis report={fatigue} /> : null}
 
+      {groupStillSitting ? (
+        <Card className="rounded-xl border-amber-200 bg-amber-50/60">
+          <h2 className="font-heading font-semibold text-amber-900">
+            Question review opens when everyone has finished
+          </h2>
+          <p className="mt-1 text-sm text-amber-800">
+            Your score is above. The question-by-question review names the correct option, so it
+            stays shut until the rest of your group has handed in — otherwise finishing first
+            would mean holding their answers.
+          </p>
+        </Card>
+      ) : (
       <Card className="rounded-xl border-brand-100">
         <h2 className="font-heading font-semibold text-card-foreground">Question review</h2>
         <p className="mt-1 text-xs text-muted-foreground">
@@ -177,6 +196,7 @@ export function ResultsView({
           })}
         </ul>
       </Card>
+      )}
 
       <div className="flex flex-wrap gap-3">
         <Link

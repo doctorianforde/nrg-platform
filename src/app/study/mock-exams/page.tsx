@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/Badge";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { fmtDateTime, fmtPct } from "@/lib/mock-exam/utils";
 import { StartExamForm } from "./StartExamForm";
+import { CreateGroupForm, JoinGroupForm } from "./GroupForms";
 
 export const dynamic = "force-dynamic";
 
@@ -39,10 +40,12 @@ export default async function MockExamsPage() {
   const { user, profile } = await requireRole("student", "/study/mock-exams");
   const supabase = createClient();
 
-  const [{ data: sets }, { data: sessions }] = await Promise.all([
+  const [{ data: sets }, { data: sessions }, { data: myGroupRows }] = await Promise.all([
     supabase
       .from("mock_exam_sets")
-      .select("id, title, description, rationale_released_at, mock_exam_set_questions(question_id)")
+      .select(
+        "id, title, description, duration_minutes, rationale_released_at, mock_exam_set_questions(question_id)"
+      )
       .eq("is_active", true)
       .order("created_at", { ascending: false }),
     supabase
@@ -50,7 +53,28 @@ export default async function MockExamsPage() {
       .select("id, set_id, started_at, completed_at, score_pct")
       .eq("student_id", user.id)
       .order("started_at", { ascending: false }),
+    // Groups I am in that have not finished — a lobby waiting on people, or an
+    // exam already running that I should be pulled back into.
+    supabase
+      .from("exam_group_members")
+      .select("group_id, exam_groups!inner(id, name, status, set_id, join_code)")
+      .eq("student_id", user.id)
+      .in("exam_groups.status", ["lobby", "running"]),
   ]);
+
+  // The embedded join comes back as an object (or, defensively, an array).
+  type GroupLite = {
+    id: string;
+    name: string | null;
+    status: string;
+    set_id: string;
+    join_code: string;
+  };
+  const myGroups: GroupLite[] = (myGroupRows ?? []).flatMap((r) => {
+    const g = (r as { exam_groups: GroupLite | GroupLite[] | null }).exam_groups;
+    return g ? (Array.isArray(g) ? g : [g]) : [];
+  });
+  const setTitleById = new Map((sets ?? []).map((s) => [s.id, s.title]));
 
   const sessionsBySet = new Map<string, SessionRow[]>();
   for (const s of (sessions ?? []) as SessionRow[]) {
@@ -67,6 +91,49 @@ export default async function MockExamsPage() {
       eyebrow="Exam format"
       subtitle="RENR-style mock exams in real exam conditions — no feedback while you answer, and explanations stay locked until your teacher releases them after class review."
     >
+      <section className="mb-5 rounded-2xl border border-brand-100 bg-card p-5 shadow-sm">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <h2 className="font-heading text-base font-semibold text-card-foreground">
+              Sit an exam with your group
+            </h2>
+            <p className="mt-1 max-w-xl text-sm text-muted-foreground">
+              Up to 5 of you take the same paper at the same time. Everyone answers for
+              themselves, so you each get your own score and your own XP — you just see how
+              you placed at the end.
+            </p>
+          </div>
+          <JoinGroupForm />
+        </div>
+
+        {myGroups.length > 0 ? (
+          <ul className="mt-4 space-y-2 border-t border-border pt-4">
+            {myGroups.map((g) => (
+              <li key={g.id} className="flex flex-wrap items-center gap-2 text-sm">
+                <Badge tone={g.status === "running" ? "green" : "amber"}>
+                  {g.status === "running" ? "In progress" : "Waiting"}
+                </Badge>
+                <span className="text-card-foreground">{g.name || "Group exam"}</span>
+                <span className="text-muted-foreground">
+                  · {setTitleById.get(g.set_id) ?? "Mock exam"}
+                </span>
+                {g.status === "lobby" ? (
+                  <span className="font-mono text-xs tracking-widest text-muted-foreground">
+                    {g.join_code}
+                  </span>
+                ) : null}
+                <Link
+                  href={`/study/mock-exams/group/${g.id}`}
+                  className="ml-auto rounded-lg bg-brand-700 px-3 py-1.5 text-xs font-semibold text-white"
+                >
+                  {g.status === "running" ? "Rejoin" : "Open lobby"}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+      </section>
+
       {(!sets || sets.length === 0) ? (
         <EmptyState
           title="No mock exams available yet"
@@ -101,9 +168,11 @@ export default async function MockExamsPage() {
                 ) : null}
                 <p className="mt-2 text-xs text-muted-foreground">
                   {count} question{count === 1 ? "" : "s"}
+                  {set.duration_minutes ? ` · ${set.duration_minutes} min` : ""}
                 </p>
-                <div className="mt-4">
+                <div className="mt-4 space-y-2">
                   <StartExamForm setId={set.id} />
+                  <CreateGroupForm setId={set.id} />
                 </div>
                 {past.length > 0 && (
                   <div className="mt-4 border-t border-border pt-3">

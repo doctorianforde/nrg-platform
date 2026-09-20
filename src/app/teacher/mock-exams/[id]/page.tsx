@@ -14,6 +14,7 @@ import { CohortFatigueCard } from "@/components/mock-exam/CohortFatigueCard";
 import { removeQuestion } from "./actions";
 import { ReleaseRationalesForm } from "./ReleaseRationalesForm";
 import { QuestionSearch } from "./QuestionSearch";
+import { GroupsPanel, type GroupRow, type StudentOption } from "./GroupsPanel";
 
 export const dynamic = "force-dynamic";
 
@@ -44,22 +45,58 @@ export default async function ManageMockExamSetPage({
     .maybeSingle();
   if (!set || !canManageSet(profile, set)) notFound();
 
-  const [{ data: setQuestions }, { data: sessions }] = await Promise.all([
-    supabase
-      .from("mock_exam_set_questions")
-      .select("display_order, questions(id, body, question_type, cognitive_level, difficulty, is_active)")
-      .eq("set_id", set.id),
-    supabase
-      .from("mock_exam_sessions")
-      .select("id, started_at, completed_at, score_pct, correct_count, total_questions")
-      .eq("set_id", set.id)
-      .order("started_at", { ascending: false }),
-  ]);
+  // Settle anyone whose time ran out before showing group results.
+  await supabase.rpc("complete_expired_exam_sessions");
+
+  const [{ data: setQuestions }, { data: sessions }, { data: groupRows }, { data: roster }] =
+    await Promise.all([
+      supabase
+        .from("mock_exam_set_questions")
+        .select("display_order, questions(id, body, question_type, cognitive_level, difficulty, is_active)")
+        .eq("set_id", set.id),
+      supabase
+        .from("mock_exam_sessions")
+        .select("id, student_id, started_at, completed_at, score_pct, correct_count, total_questions, group_id")
+        .eq("set_id", set.id)
+        .order("started_at", { ascending: false }),
+      supabase
+        .from("exam_groups")
+        .select("id, name, status, join_code, created_at, exam_group_members(student_id)")
+        .eq("set_id", set.id)
+        .order("created_at", { ascending: false }),
+      supabase.from("profiles").select("id, full_name").eq("role", "student").order("full_name"),
+    ]);
 
   const questions = (setQuestions ?? [])
     .map((row) => ({ order: row.display_order, question: row.questions }))
     .filter((r): r is { order: number; question: NonNullable<typeof r.question> } => Boolean(r.question))
     .sort((a, b) => a.order - b.order);
+
+  const studentName = (id: string) =>
+    roster?.find((p) => p.id === id)?.full_name?.trim() || "A student";
+  const groups: GroupRow[] = (groupRows ?? []).map((g) => ({
+    id: g.id,
+    name: g.name,
+    status: g.status,
+    joinCode: g.join_code,
+    members: (g.exam_group_members ?? []).map((m) => {
+      const sess = (sessions ?? []).find(
+        (x) => x.group_id === g.id && x.student_id === m.student_id
+      );
+      return {
+        studentId: m.student_id,
+        name: studentName(m.student_id),
+        scorePct: sess?.score_pct ?? null,
+        correct: sess?.correct_count ?? null,
+        total: sess?.total_questions ?? null,
+        completed: Boolean(sess?.completed_at),
+      };
+    }),
+  }));
+  const studentOptions: StudentOption[] = (roster ?? []).map((p) => ({
+    id: p.id,
+    name: p.full_name?.trim() || "A student",
+  }));
 
   const released = set.rationale_released_at != null;
   const sessionList = sessions ?? [];
@@ -227,11 +264,17 @@ export default async function ManageMockExamSetPage({
             </Card>
           </div>
 
-          <aside className="lg:sticky lg:top-4 lg:self-start">
+          <aside className="space-y-5 lg:sticky lg:top-4 lg:self-start">
             <Card className="rounded-xl border-brand-100">
               <CardTitle className="mb-3">Add questions</CardTitle>
               <QuestionSearch setId={set.id} existingIds={questions.map((q) => q.question.id)} />
             </Card>
+            <GroupsPanel
+              setId={set.id}
+              durationMinutes={set.duration_minutes}
+              students={studentOptions}
+              groups={groups}
+            />
           </aside>
         </div>
 

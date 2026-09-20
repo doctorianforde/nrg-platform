@@ -34,6 +34,24 @@ export function CreateSetForm() {
         </label>
         <textarea id="set-desc" name="description" rows={2} className={inputCls} placeholder="What this mock exam covers" />
       </div>
+      <div>
+        <label htmlFor="set-duration" className="mb-1 block text-sm font-medium text-card-foreground">
+          Time limit <span className="font-normal text-muted-foreground">(optional)</span>
+        </label>
+        <input
+          id="set-duration"
+          name="duration_minutes"
+          type="number"
+          min={5}
+          max={600}
+          className={inputCls}
+          placeholder="Minutes — leave blank for no time limit"
+        />
+        <p className="mt-1 text-xs text-muted-foreground">
+          A timed set counts down for solo attempts too. In a group exam the clock starts for
+          everyone at the same moment.
+        </p>
+      </div>
       {state?.error ? (
         <p role="alert" className="rounded bg-red-50 px-3 py-2 text-sm text-red-800">
           {state.error}

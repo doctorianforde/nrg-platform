@@ -105,3 +105,90 @@ export async function addQuestion(
   revalidatePath(`/teacher/mock-exams/${setId}`);
   return null;
 }
+
+/**
+ * Set or clear the exam's time limit. Blank clears it back to untimed.
+ * The 5-600 range is also a CHECK constraint, so a crafted request cannot
+ * sneak a one-minute exam past this.
+ */
+export async function setDuration(
+  _prev: ManageSetState,
+  fd: FormData
+): Promise<ManageSetState> {
+  const setId = String(fd.get("set_id") ?? "");
+  const raw = String(fd.get("duration_minutes") ?? "").trim();
+  const managed = await getManagedSet(setId);
+  if ("error" in managed) return managed;
+
+  let duration: number | null = null;
+  if (raw) {
+    const n = Number(raw);
+    if (!Number.isInteger(n) || n < 5 || n > 600) {
+      return { error: "A time limit must be a whole number of minutes between 5 and 600." };
+    }
+    duration = n;
+  }
+
+  const { error } = await managed.supabase
+    .from("mock_exam_sets")
+    .update({ duration_minutes: duration })
+    .eq("id", setId);
+  if (error) return { error: `Could not save the time limit: ${error.message}` };
+
+  revalidatePath(`/teacher/mock-exams/${setId}`);
+  return null;
+}
+
+/**
+ * Put named students into a group on this paper. The teacher owns the group and
+ * starts it; they are not a member themselves, because a group exam is something
+ * students sit. Capacity (2-5) and the students-only rule are enforced in
+ * assign_exam_group, not here.
+ */
+export async function assignGroup(
+  _prev: ManageSetState,
+  fd: FormData
+): Promise<ManageSetState> {
+  const setId = String(fd.get("set_id") ?? "");
+  const name = String(fd.get("name") ?? "").trim();
+  const ids = fd.getAll("student_ids").map(String).filter(Boolean);
+  const managed = await getManagedSet(setId);
+  if ("error" in managed) return managed;
+
+  if (ids.length < 2 || ids.length > 5) {
+    return { error: "Pick between 2 and 5 students." };
+  }
+
+  const { error } = await managed.supabase.rpc("assign_exam_group", {
+    p_set_id: setId,
+    p_student_ids: ids,
+    p_name: name || null,
+  });
+  if (error) {
+    const m = error.message.toLowerCase();
+    if (m.includes("already in a group")) {
+      return { error: "One of those students is already in a group for this exam." };
+    }
+    return { error: `Could not create the group: ${error.message}` };
+  }
+
+  revalidatePath(`/teacher/mock-exams/${setId}`);
+  return null;
+}
+
+/** Starts a group the teacher assigned. Everyone's clock begins together. */
+export async function startAssignedGroup(
+  _prev: ManageSetState,
+  fd: FormData
+): Promise<ManageSetState> {
+  const setId = String(fd.get("set_id") ?? "");
+  const groupId = String(fd.get("group_id") ?? "");
+  const managed = await getManagedSet(setId);
+  if ("error" in managed) return managed;
+
+  const { error } = await managed.supabase.rpc("start_exam_group", { p_group: groupId });
+  if (error) return { error: `Could not start the group: ${error.message}` };
+
+  revalidatePath(`/teacher/mock-exams/${setId}`);
+  return null;
+}

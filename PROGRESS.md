@@ -1281,6 +1281,122 @@ conventions now coexist in `topics` (curated `Cardiac` vs imported
 as-is; near-duplicates at different granularity; and **every topic in both environments
 has `domain_id` NULL** (pre-existing — the migrate script never sets it).
 
+## Group exams + an exam timer (Claude, 2026-09-20) — STAGING ONLY, not deployed
+
+Ian asked for "a group test option where students can do a test as part of a group, up
+to 5". Four design questions went back first; his answers: the **group challenge**
+model, groups formable by **both students (join code) and teachers (named students)**,
+teachers can **see group results**, and **yes to an optional time limit**.
+
+### Why this model and not a shared answer sheet
+
+A group of five could have sat one paper and produced one score. That was rejected on
+product grounds, not technical ones. Everything downstream of `mock_exam_sessions` —
+XP, rank, the study streak, the fatigue report, every teacher analytic — depends on a
+score meaning *this student knows this*. With a shared sheet one strong member carries
+four others and a rank stops meaning "ready for RENR", which is the one thing the
+platform exists to tell someone. The challenge model keeps the social pull (sit it
+together, see how you placed) while every member still produces their own ordinary
+session row, so **nothing downstream needed changing**.
+
+Genuine collaboration still has teaching value and is worth adding later as an
+explicitly non-assessed practice mode — flat participation XP, excluded from readiness
+and fatigue. It should not be the thing that counts.
+
+### Migration `20260920060000_group_exams_and_timer.sql`
+
+- `exam_groups` (set, creator, 6-character join code, `max_members` 2–5, status
+  lobby → running → finished/cancelled, shared `expires_at`) and `exam_group_members`
+  (one row per student, pointing at their own session).
+- `mock_exam_sessions` gains nullable `group_id` and `expires_at`; `mock_exam_sets`
+  gains `duration_minutes` (5–600, NULL = untimed). Nullable throughout, so solo
+  attempts are untouched and nothing needed backfilling.
+- Every write is a SECURITY DEFINER RPC (`create_exam_group`, `join_exam_group`,
+  `assign_exam_group`, `start_exam_group`, `leave_exam_group`), and neither new table
+  has an INSERT/UPDATE policy. The rules cannot be bypassed from a client.
+
+Four things that were easy to get wrong, and what was done about each:
+
+1. **"Up to 5" is not a CHECK constraint.** A check cannot count sibling rows, and the
+   obvious trigger is racy — two students joining a 4-member group both count 4, both
+   pass, and the group ends up with 6. `enforce_exam_group_capacity` takes
+   `SELECT ... FOR UPDATE` on the group row first so concurrent joins serialise.
+   Tested with two simultaneous joins on a 2-seat group: one succeeded, final
+   membership 2.
+2. **The deadline has to be server-side.** The countdown in the browser is a courtesy;
+   the enforcement is `session_accepts_answers()`, which the two
+   `mock_exam_responses` policies now call. Past the deadline, both INSERT and UPDATE
+   are refused — so a tampered or merely wrong client clock buys nothing. Verified:
+   403 on a new answer and on editing an existing one.
+3. **A closed laptop must not leave a session open forever.**
+   `complete_expired_exam_sessions()` settles and scores anything past its deadline,
+   and runs lazily whenever a session, group or teacher page is read.
+   `complete_mock_exam_session` was replaced to allow one extra case — anyone may close
+   an attempt *whose deadline has already passed*, since the score is determined by
+   then. Before the deadline it is still the student or an admin only, so a teacher
+   cannot force-submit a live exam. Both directions tested.
+4. **Staggered finishing leaks answers.** Found by looking at a real screenshot rather
+   than by reasoning: the results page names the correct option for every question, so
+   in a group the first person to hand in can read the answers out to the people still
+   sitting. Solo, this never mattered. The question review is now withheld while any
+   group-mate is still going — score and standings show immediately, the per-question
+   review opens when the last member submits.
+
+XP is unchanged and needed no new rules: each member's own session pays through the
+existing `complete_mock_exam_session`, and `xp_events`' unique `(reason, source_id)`
+index means a timed-out attempt still pays exactly once. No group-completion bonus was
+added — five friends could spin up groups to farm it.
+
+### App
+
+Student: a group panel on `/study/mock-exams` (join by code, plus any live group of
+theirs), "Sit it with a group" on each set card, a lobby at
+`/study/mock-exams/group/[groupId]` showing the code and who has joined, and shared
+standings on the results page. The lobby **polls every 3 seconds** rather than using
+Supabase Realtime — five people looking at a screen for a minute does not justify a
+websocket dependency and a second authorization surface. That is also what pulls the
+other members into the exam when the owner starts.
+
+Teacher: a panel on the set page to set/clear the time limit, build a group from named
+students (2–5, checkbox roster), start it, and watch each group's scores. Set creation
+takes a time limit too.
+
+`mock_exam_responses` stays own-or-staff, so the standings show scores and never
+answers — confirmed by a group-mate reading 0 rows of someone else's responses.
+
+### Verification
+
+- **27 database assertions** across three API-level suites: capacity, the join race,
+  the one-live-group-per-paper rule, staff exclusion, start permissions, the shared
+  deadline, answer refusal after expiry, scoring, XP paid once, group-mate visibility
+  (scores yes, answers no, outsiders nothing), profile names in the lobby, and the
+  group closing when the last member submits.
+- **18 UI assertions** with three real students in three browsers: create, join by
+  code, the roster filling, non-owners having no Start button, the owner starting,
+  everyone getting their own session, the countdown, and a member being pulled in by
+  the poll.
+- **6 more** on answering and the review gate: answers recorded, a real score, review
+  withheld while a classmate is still sitting, then opening once they hand in.
+- **11 more** on the teacher flow: time limit, assigning a group, starting it, results,
+  and the student being taken into their attempt.
+- `next build` and `tsc --noEmit` clean. `src/lib/supabase/types.ts` extended by hand
+  for the new tables and RPCs (`supabase gen types` needs Docker, which this machine
+  does not have — the file already said so).
+
+Staging was returned to a clean state afterwards: test users, groups and sets removed,
+7,314 questions and exactly 100 live (Jade's own). One thing to own: an earlier
+Playwright run had **approved an AI question** through Jade's staging account, leaving
+it live. That was found while auditing the cleanup, and reverted to
+`pending` / `is_active=false`; approved-AI is back to 0.
+
+### Not deployed — and `main` must not be pushed until prod is migrated
+
+The code queries `exam_groups` and `duration_minutes`, which **prod does not have**.
+Prod is also still missing `20260920050000` (the unique `source_id` arbiter). Since
+both Vercel projects deploy from `main`, pushing would put this live against a database
+without the tables. **Prod needs `20260920050000` and `20260920060000` applied first**;
+both are tested on staging. Held for Ian's go-ahead.
+
 ## Not yet done / not yet verified
 
 - **T33 — human read-and-verify** of the 20 sampled questions against the docx

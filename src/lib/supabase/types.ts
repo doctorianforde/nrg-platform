@@ -1,6 +1,8 @@
 // Generated from nrg-platform-prod via the Supabase MCP connector (2026-09-18).
 // Hand-maintained since: questions.review_* (20260919010000) and the messaging tables
 // (20260919020000). `supabase gen types` needs Docker, which isn't set up on this machine.
+// Extended by hand for 20260920060000 (exam_groups, exam_group_members, the group/
+// timer columns and the group RPCs).
 // Regenerate after every migration (questions review_* columns added by hand for 20260919010000): npx supabase gen types typescript --project-id cdvubijjepwmhhkgppbl > src/lib/supabase/types.ts
 export type Json =
   | string
@@ -107,10 +109,28 @@ export type Database = {
         ]
       }
       mock_exam_sessions: {
-        Row: { completed_at: string | null; correct_count: number | null; id: string; score_pct: number | null; set_id: string; started_at: string; student_id: string; total_questions: number | null }
-        Insert: { completed_at?: string | null; correct_count?: number | null; id?: string; score_pct?: number | null; set_id: string; started_at?: string; student_id: string; total_questions?: number | null }
-        Update: { completed_at?: string | null; correct_count?: number | null; id?: string; score_pct?: number | null; set_id?: string; started_at?: string; student_id?: string; total_questions?: number | null }
-        Relationships: [{ foreignKeyName: "mock_exam_sessions_set_id_fkey"; columns: ["set_id"]; isOneToOne: false; referencedRelation: "mock_exam_sets"; referencedColumns: ["id"] }]
+        Row: { completed_at: string | null; correct_count: number | null; expires_at: string | null; group_id: string | null; id: string; score_pct: number | null; set_id: string; started_at: string; student_id: string; total_questions: number | null }
+        Insert: { completed_at?: string | null; correct_count?: number | null; expires_at?: string | null; group_id?: string | null; id?: string; score_pct?: number | null; set_id: string; started_at?: string; student_id: string; total_questions?: number | null }
+        Update: { completed_at?: string | null; correct_count?: number | null; expires_at?: string | null; group_id?: string | null; id?: string; score_pct?: number | null; set_id?: string; started_at?: string; student_id?: string; total_questions?: number | null }
+        Relationships: [
+          { foreignKeyName: "mock_exam_sessions_set_id_fkey"; columns: ["set_id"]; isOneToOne: false; referencedRelation: "mock_exam_sets"; referencedColumns: ["id"] },
+          { foreignKeyName: "mock_exam_sessions_group_id_fkey"; columns: ["group_id"]; isOneToOne: false; referencedRelation: "exam_groups"; referencedColumns: ["id"] },
+        ]
+      }
+      exam_groups: {
+        Row: { created_at: string; created_by: string; expires_at: string | null; finished_at: string | null; id: string; join_code: string; max_members: number; name: string | null; set_id: string; started_at: string | null; status: string; updated_at: string }
+        Insert: { created_at?: string; created_by: string; expires_at?: string | null; finished_at?: string | null; id?: string; join_code: string; max_members?: number; name?: string | null; set_id: string; started_at?: string | null; status?: string; updated_at?: string }
+        Update: { created_at?: string; created_by?: string; expires_at?: string | null; finished_at?: string | null; id?: string; join_code?: string; max_members?: number; name?: string | null; set_id?: string; started_at?: string | null; status?: string; updated_at?: string }
+        Relationships: [{ foreignKeyName: "exam_groups_set_id_fkey"; columns: ["set_id"]; isOneToOne: false; referencedRelation: "mock_exam_sets"; referencedColumns: ["id"] }]
+      }
+      exam_group_members: {
+        Row: { group_id: string; invited: boolean; is_owner: boolean; joined_at: string; session_id: string | null; student_id: string }
+        Insert: { group_id: string; invited?: boolean; is_owner?: boolean; joined_at?: string; session_id?: string | null; student_id: string }
+        Update: { group_id?: string; invited?: boolean; is_owner?: boolean; joined_at?: string; session_id?: string | null; student_id?: string }
+        Relationships: [
+          { foreignKeyName: "exam_group_members_group_id_fkey"; columns: ["group_id"]; isOneToOne: false; referencedRelation: "exam_groups"; referencedColumns: ["id"] },
+          { foreignKeyName: "exam_group_members_session_id_fkey"; columns: ["session_id"]; isOneToOne: false; referencedRelation: "mock_exam_sessions"; referencedColumns: ["id"] },
+        ]
       }
       mock_exam_set_questions: {
         Row: { display_order: number; question_id: string; set_id: string }
@@ -122,9 +142,9 @@ export type Database = {
         ]
       }
       mock_exam_sets: {
-        Row: { created_at: string; created_by: string; description: string | null; id: string; is_active: boolean; rationale_released_at: string | null; rationale_released_by: string | null; title: string; updated_at: string }
-        Insert: { created_at?: string; created_by: string; description?: string | null; id?: string; is_active?: boolean; rationale_released_at?: string | null; rationale_released_by?: string | null; title: string; updated_at?: string }
-        Update: { created_at?: string; created_by?: string; description?: string | null; id?: string; is_active?: boolean; rationale_released_at?: string | null; rationale_released_by?: string | null; title?: string; updated_at?: string }
+        Row: { created_at: string; created_by: string; description: string | null; duration_minutes: number | null; id: string; is_active: boolean; rationale_released_at: string | null; rationale_released_by: string | null; title: string; updated_at: string }
+        Insert: { created_at?: string; created_by: string; description?: string | null; duration_minutes?: number | null; id?: string; is_active?: boolean; rationale_released_at?: string | null; rationale_released_by?: string | null; title: string; updated_at?: string }
+        Update: { created_at?: string; created_by?: string; description?: string | null; duration_minutes?: number | null; id?: string; is_active?: boolean; rationale_released_at?: string | null; rationale_released_by?: string | null; title?: string; updated_at?: string }
         Relationships: []
       }
       profiles: {
@@ -203,6 +223,15 @@ export type Database = {
       study_streak: { Args: { p_user: string }; Returns: number }
       xp_total: { Args: { p_user: string }; Returns: number }
       user_role: { Args: never; Returns: string }
+      create_exam_group: { Args: { p_set_id: string; p_name?: string | null; p_max_members?: number }; Returns: { created_at: string; created_by: string; expires_at: string | null; finished_at: string | null; id: string; join_code: string; max_members: number; name: string | null; set_id: string; started_at: string | null; status: string; updated_at: string } }
+      join_exam_group: { Args: { p_code: string }; Returns: { created_at: string; created_by: string; expires_at: string | null; finished_at: string | null; id: string; join_code: string; max_members: number; name: string | null; set_id: string; started_at: string | null; status: string; updated_at: string } }
+      assign_exam_group: { Args: { p_set_id: string; p_student_ids: string[]; p_name?: string | null }; Returns: { created_at: string; created_by: string; expires_at: string | null; finished_at: string | null; id: string; join_code: string; max_members: number; name: string | null; set_id: string; started_at: string | null; status: string; updated_at: string } }
+      start_exam_group: { Args: { p_group: string }; Returns: { created_at: string; created_by: string; expires_at: string | null; finished_at: string | null; id: string; join_code: string; max_members: number; name: string | null; set_id: string; started_at: string | null; status: string; updated_at: string } }
+      leave_exam_group: { Args: { p_group: string }; Returns: undefined }
+      complete_expired_exam_sessions: { Args: never; Returns: number }
+      is_exam_group_member: { Args: { p_group: string }; Returns: boolean }
+      shares_exam_group_with: { Args: { p_other: string }; Returns: boolean }
+      session_accepts_answers: { Args: { p_session: string }; Returns: boolean }
     }
     Enums: { [_ in never]: never }
     CompositeTypes: { [_ in never]: never }
