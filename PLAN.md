@@ -147,7 +147,8 @@ T38 Full-text search for mock exam review.
   ranks Novice→Expert, XP ledger, `/study/submit` for student-authored questions
   feeding the existing review queue, and practice-session tracking. Needs
   `20260920010000_xp_ranks_and_submissions.sql` and
-  `20260920020000_teachers_can_review_submissions.sql` on prod. See `PROGRESS.md`.
+  `20260920020000_teachers_can_review_submissions.sql`, **both applied to prod
+  2026-09-20 and smoke-tested there; live.** See `PROGRESS.md`.
 - **Analytics / rank pages**: partly addressed — `practice_sessions` now collects
   study-habit data, and XP/ranks exist. Leaderboards and the analytics pages
   themselves are still not built — no backing tables in our schema; needs Ian's

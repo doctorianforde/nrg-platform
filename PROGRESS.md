@@ -631,7 +631,7 @@ publish successfully; a second student sees only the published event; staff cann
 read the private entry; and a `selected` event reaches the named student and not the
 other. All events and accounts removed — prod is back to 1 profile, 0 events.
 
-## Levelling: XP, ranks, student submissions (Claude, 2026-09-20) — staging only, NOT on prod
+## Levelling: XP, ranks, student submissions (Claude, 2026-09-20) — LIVE ON PROD
 
 Students earn XP and climb a rank ladder. Mock exams and approved question
 submissions are the big awards; practice is a small one.
@@ -714,6 +714,20 @@ tailwind tokens sampled from it are unaffected.
 - Nothing rate-limits submissions beyond approval being the reward, so a flood of
   weak drafts would land in Jade's queue. The Source filter keeps them separable.
 - XP is never deducted, including when an approved question is later rejected.
+
+### Shipped to prod, 2026-09-20
+
+Both migrations applied to `cdvubijjepwmhhkgppbl`; prod history is 26/26 with no
+drift and `db push --dry-run` reports "up to date". Vercel deployed `73d12b5`, and
+`/study/submit` is live (redirects signed-out visitors to `/login`).
+
+Smoke-tested on prod with a temporary teacher and student (9 checks): **no XP was
+awarded retroactively** to the 2,500-odd already-approved questions (0 ledger rows);
+a student submits a pending draft and earns nothing yet; a student cannot submit a
+live pre-approved question (403); a teacher approves it and the author receives 150;
+the practice RPC records and adds 10; and a student cannot grant themselves XP (403).
+All temporary accounts, submissions and practice rows removed — prod is back to
+1 profile, 0 XP rows, 0 practice rows, 0 student submissions.
 
 ## Not yet done / not yet verified
 
