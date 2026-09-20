@@ -1389,13 +1389,51 @@ Playwright run had **approved an AI question** through Jade's staging account, l
 it live. That was found while auditing the cleanup, and reverted to
 `pending` / `is_active=false`; approved-AI is back to 0.
 
-### Not deployed — and `main` must not be pushed until prod is migrated
+### Deployed to prod, 2026-09-20
 
-The code queries `exam_groups` and `duration_minutes`, which **prod does not have**.
-Prod is also still missing `20260920050000` (the unique `source_id` arbiter). Since
-both Vercel projects deploy from `main`, pushing would put this live against a database
-without the tables. **Prod needs `20260920050000` and `20260920060000` applied first**;
-both are tested on staging. Held for Ian's go-ahead.
+`20260920050000` and `20260920060000` applied to prod, then `main` pushed — which
+deploys both Vercel projects.
+
+Pre-flight on prod before touching it, all read-only: 2,460 questions, 460 live, 1
+profile, no exam sessions, `exam_groups` absent (404), and — the one that mattered —
+**0 duplicate `source_id` values**, since `20260920050000` rebuilds that index as a
+plain unique index and would have aborted the transaction on a duplicate. Then a dry
+run alone, read, and only then the apply.
+
+The first two apply attempts were refused by the permission classifier as a production
+deploy: the existing Bash rule matched the *direct* host, while CLAUDE.md now routes
+through the pooler, so the pattern no longer matched. Ian added a pooler rule. A
+consolidated paste-ready SQL file was prepared as a fallback and was not needed; if it
+is ever wanted again the generator is in the session scratchpad, and the important
+detail is that it also inserts the `supabase_migrations.schema_migrations` rows —
+without those a later `db push` re-runs the migration, which is exactly the desync that
+happened on staging when `20260920050000` was applied by hand.
+
+Verified on prod after applying:
+
+- `exam_groups`, `exam_group_members`, `mock_exam_sets.duration_minutes`,
+  `mock_exam_sessions.group_id/expires_at` all present;
+  `complete_expired_exam_sessions` callable.
+- Nothing pre-existing moved: still 2,460 questions, 460 live, 1 profile, 0 prototype
+  rows, 0 groups. Migration history 28 of 28, nothing pending.
+- The replaced policies are right, checked in `pg_policies` rather than assumed —
+  **exactly one** `profiles` SELECT policy (not a duplicate left behind), carrying all
+  five clauses including the new `shares_exam_group_with`; the four
+  `mock_exam_responses` policies; and the group-aware
+  `mock_exam_sessions: own, group-mate, or teacher+ read`.
+- `idx_q_source_id` is now `CREATE UNIQUE INDEX ... (source_id)` — plain, not partial,
+  so it can finally act as an `ON CONFLICT` arbiter. **This unblocks a prod import of
+  the prototype bank**, which is now a content decision rather than a schema one.
+
+Post-deploy: both projects READY on `5ddba0c`. Prod `/`, `/login`, `/signup` all 200
+with no 5xx, and `/study/mock-exams` and `/teacher/mock-exams` redirect cleanly rather
+than erroring for a signed-out visitor. On staging, signed in as Jade: the teacher
+mock-exam page renders and the review queue still reports 4,798 prototype questions.
+
+Group exams were not re-exercised end to end against prod, deliberately — prod has no
+student accounts, and creating throwaway students there to prove a feature already
+proven by 62 assertions on an identical schema is not worth writing to the production
+database. The staging site runs the same commit.
 
 ## Not yet done / not yet verified
 
