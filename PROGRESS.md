@@ -501,7 +501,7 @@ in `admin_contacts` — no SQL needed, and the choice on the form is irrelevant 
 2. Optional: set `RESEND_API_KEY` in Vercel to turn on the "a teacher is waiting"
    email. The in-app list at `/admin` works regardless.
 
-## Profile pictures (Claude, 2026-09-19) — built, tested on staging, NOT yet on prod
+## Profile pictures (Claude, 2026-09-19) — LIVE ON PROD
 
 `profiles.avatar_url` has existed since T09 but nothing ever wrote to it. This adds
 the storage behind it and shows the picture wherever a person appears.
@@ -553,6 +553,15 @@ pass, `next build`/`lint`/`tsc` clean. Staging swept — 0 users, 0 avatar objec
   still JPEG.
 - Avatars are not shown on the student's own thread list (only the staff inbox),
   since a student already knows who they are writing to.
+
+### Shipped to prod, 2026-09-19
+
+`20260919050000` applied to `cdvubijjepwmhhkgppbl`; prod history is 21/21 with no
+drift and `db push --dry-run` reports "up to date". Vercel deployed `4101832`.
+Smoke-tested on prod with two temporary accounts: the owner can upload into their
+own folder, a second signed-in user is refused (400), the avatar is publicly
+readable, and the bucket rejects a 3 MB file. Both accounts and all objects
+removed — prod is back to 1 profile and 0 avatar objects.
 
 ## Not yet done / not yet verified
 

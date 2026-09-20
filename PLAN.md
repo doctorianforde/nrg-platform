@@ -136,8 +136,8 @@ T38 Full-text search for mock exam review.
   configure custom SMTP before real signups. See `PROGRESS.md`.
 - **Profile pictures**: DONE 2026-09-19 (Claude) — upload on `/study/profile`, shown
   in the header, message threads and admin table. Needs
-  `20260919050000_avatar_storage.sql` on prod (creates the `avatars` bucket and its
-  policies). See `PROGRESS.md`.
+  `20260919050000_avatar_storage.sql`, **applied to prod 2026-09-19 and smoke-tested
+  there; live.** See `PROGRESS.md`.
 - **Analytics / rank pages**: not built — no backing tables in our schema; needs Ian's
   data-model decision first (see Phase 1 table above).
 - **Three unreviewed docx files** in Jade's RENR folder — see `PROGRESS.md`.
