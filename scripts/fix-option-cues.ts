@@ -156,7 +156,7 @@ function printStats(label: string, s: ReturnType<typeof cueStats>) {
 // Deterministic selection: only items that actually carry the length cue,
 // quota'd per RENR domain so the sample mirrors the bank, ordered by md5(id)
 // so the same --limit always returns the same items.
-async function fetchBatch(limit: number, out: string) {
+async function fetchBatch(limit: number, out: string, excludeFrom?: string) {
   const db = staging();
   const qs = await fetchAllAiQuestions(db);
   console.log(`  read ${qs.length} ai:* questions from staging`);
@@ -176,11 +176,26 @@ async function fetchBatch(limit: number, out: string) {
     })
     .filter(q => q.opts.length === 4 && q.opts.filter(o => o.c).length === 1);
 
+  // Items already rewritten in an earlier batch are excluded by source_id rather
+  // than relying on the cue filter: a rewritten item can still be marginally the
+  // longest (21% of batch 1 are) and would otherwise be picked up twice.
+  const done = new Set<string>();
+  if (excludeFrom) {
+    for (const f of excludeFrom.split(",")) {
+      const raw = JSON.parse(readFileSync(f.trim(), "utf8"));
+      const list: Item[] = Array.isArray(raw) ? raw : raw.items;
+      for (const i of list) done.add(i.source_id);
+    }
+    console.log(`  excluding ${done.size} already-rewritten questions`);
+  }
+
   const flagged = all.filter(q => {
+    if (done.has(q.source_id)) return false;
     const c = q.opts.find(o => o.c)!;
     const dMax = Math.max(...q.opts.filter(o => !o.c).map(o => o.t.length));
     return c.t.length > dMax;
   });
+  console.log(`  ${flagged.length} of ${all.length} still carry the length cue`);
 
   const byDom = new Map<string, typeof flagged>();
   for (const q of flagged) {
@@ -371,7 +386,7 @@ async function main() {
   const flag = (n: string) => a.includes(n);
   const val = (n: string) => { const i = a.indexOf(n); return i >= 0 ? a[i + 1] : undefined; };
 
-  if (flag("--fetch")) return fetchBatch(Number(val("--limit") ?? 100), val("--out") ?? "batch.json");
+  if (flag("--fetch")) return fetchBatch(Number(val("--limit") ?? 100), val("--out") ?? "batch.json", val("--exclude"));
   if (flag("--apply")) return apply(val("--in")!, flag("--commit"));
   if (flag("--report")) return report(val("--source-ids-from"));
   console.log("Usage: --fetch --limit N --out FILE | --apply --in FILE [--commit] | --report [--source-ids-from FILE]");

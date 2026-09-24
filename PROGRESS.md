@@ -1621,6 +1621,50 @@ Originals are backed up with the rewrites at `scripts/data/ai-option-cue-batch1.
 (gitignored — question stems stay out of git, per the copyright-list convention).
 Prod untouched: its 2,000 AI questions are byte-identical, inert and still original.
 
+## Answer-option cues: second 100 rewritten (Claude, 2026-09-24) — STAGING ONLY
+
+A second batch of 100, on the same terms as the first. **200 of 2,000 are now fixed.**
+
+This batch was drawn from the full bank — the first was not, because of the PostgREST
+1,000-row truncation described above. 1,559 of the remaining 1,900 questions still carry
+the length cue. Domain quota: CDM 19, COM 10, HPMW 11, NLM 16, NP 29, PC 11, PD 4.
+
+| | Before | After |
+|---|---|---|
+| Correct is longest | 100% (selection criterion) | **6%** |
+| Correct vs distractor length | 129.5 vs 69.7 chars | 60.6 vs 59 |
+| Mean length tell | 59.8 chars | **1.6 chars** |
+| Compound: correct vs distractors | 88% vs 31% | **93% vs 92%** |
+| Answer position spread | — | 26 / 26 / 24 / 24% |
+
+Verified from the database after applying: the 100 show the figures above, the other
+1,900 still show 77.9% and a 39.5-char tell. All 2,000 still have exactly 4 options and
+exactly 1 correct answer, 1,997 are `pending` (the 3 Jade reviewed are untouched), and
+the single live AI question is still the one he approved.
+
+Four of my own rewrites were rejected by the validator and reworked — one length-ratio
+breach and three where the correct option was compound but fewer than two distractors
+were, which is the mistake I keep making and the reason that rule is mechanical.
+
+Two option sets had to be rebuilt rather than trimmed: the eclampsia item offered
+single words ("Magnesium sulfate" against "Diazepam") and the negligence item offered
+"Damages" against "Breach of duty". Both fell below the 12-character floor and could
+not satisfy the length-ratio rule as one-word answers, so each was rewritten as four
+parallel phrases.
+
+Backup of originals plus the rewrites: `scripts/data/ai-option-cue-batch2.json`
+(gitignored). Prod untouched.
+
+### Near-duplicates keep appearing
+
+Batch 1 turned up two SVT items, two opioid overdoses, three DKA/potassium items and
+two extravasations. Batch 2 adds a third SVT item, a third opioid overdose, a second
+toddler-dehydration item, a second post-thyroidectomy hypocalcaemia item, a second
+panic-attack item and a second wrong-client-identification item — several of which
+duplicate questions already rewritten in batch 1. **Roughly one in ten of the 200 is a
+near-duplicate of another question in the bank.** A dedup pass should run before anyone
+pays to rewrite the remaining 1,800, or the duplicates get rewritten twice.
+
 ## Jade has been reviewing on staging (found 2026-09-24)
 
 Not previously recorded anywhere. Jade reviewed three AI questions on **2026-09-21**,
@@ -1642,12 +1686,13 @@ replaced by cognitive taxonomy. Prod has 0 reviewed and 0 live AI questions.
 
 - **T33 — human read-and-verify** of the 20 sampled questions against the docx
   (script above is ready; the judgment call is not done).
-- **1,900 AI questions still carry the answer-length cue** (100 fixed on staging
+- **1,800 AI questions still carry the answer-length cue** (200 fixed on staging
   2026-09-24). Needs either an API key for a scripted pass or more hand work.
 - **Jade's two open review notes** — regional practice framing, and taxonomy vs
   difficulty. Both need Ian's or Jade's decision before anyone acts.
-- **Near-duplicate questions in the AI bank** — several found incidentally in a
-  100-item sample; no systematic dedup has been run.
+- **Near-duplicate questions in the AI bank** — roughly 1 in 10 of the 200 items
+  reviewed so far duplicates another question, some across both batches. No systematic
+  dedup has been run; it should happen before the remaining 1,800 are rewritten.
 - **T35 — Notify client (Jade) that M2 is delivered.** Not done — this is Ian's call,
   not an AI task.
 - **Three unreviewed files** in `Downloads/RENR/NRG RENR QUESTIONS/`:
