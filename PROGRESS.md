@@ -1665,6 +1665,51 @@ duplicate questions already rewritten in batch 1. **Roughly one in ten of the 20
 near-duplicate of another question in the bank.** A dedup pass should run before anyone
 pays to rewrite the remaining 1,800, or the duplicates get rewritten twice.
 
+## Answer-option cues: third 100 rewritten (Claude, 2026-09-24) — STAGING ONLY
+
+**300 of 2,000 are now fixed.** Same terms as the previous two batches.
+
+| | Before | After |
+|---|---|---|
+| Correct is longest | 100% (selection criterion) | **9%** |
+| Correct vs distractor length | 125.3 vs 73.4 chars | 59.5 vs 58.8 |
+| Mean length tell | 51.9 chars | **0.7 chars** |
+| Compound: correct vs distractors | 88% vs 33% | **96% vs 96%** |
+| Answer position spread | — | 25 / 24 / 25 / 26% |
+
+Verified from the database: the other 1,900 still sit at 72.9% and a 36.9-char tell.
+All 2,000 keep four options and one correct answer; 1,997 `pending`; Jade's three
+reviewed items untouched.
+
+### Duplicate detection now runs in the selection
+
+`scripts/fix-option-cues.ts --fetch` now fingerprints each stem (stop-worded token
+set, Jaccard ≥ 0.5) and skips two kinds of duplicate. Building it cost little and
+quantified the problem properly:
+
+- **47** candidates were restatements of questions already rewritten in batches 1–2;
+- **82** more duplicated another candidate in the same pool.
+
+So ~129 of roughly 1,556 viable candidates — about **8%** — are near-duplicates, which
+matches the one-in-ten impression from reading them. Every one would have been paid for
+and reviewed twice. The whole-bank dedup pass is still not done; this only protects
+future batches from the overlap.
+
+### The "did you actually change it" guard earned its place
+
+Seq 66 (types of shock) was rejected for having 3 of 4 options unchanged. That was
+correct: the item offered bare labels — "Cardiogenic shock" against "Distributive
+(septic) shock" — and I had only shortened the one option that broke the length ratio.
+A one-word option cannot satisfy a ratio rule and tells a student nothing, so all four
+were rebuilt as parallel phrases naming each mechanism. Two comparable items appeared in
+batch 2 and one more here (ECG changes in hyperkalaemia); **bare-label option sets are a
+recurring shape in this bank and always need rebuilding rather than trimming.**
+
+Two other rewrites were rejected and reworked: one compound-parity failure and one
+length ratio at 1.26 against a 1.25 limit.
+
+Backup at `scripts/data/ai-option-cue-batch3.json` (gitignored). Prod untouched.
+
 ## Jade has been reviewing on staging (found 2026-09-24)
 
 Not previously recorded anywhere. Jade reviewed three AI questions on **2026-09-21**,
@@ -1686,13 +1731,13 @@ replaced by cognitive taxonomy. Prod has 0 reviewed and 0 live AI questions.
 
 - **T33 — human read-and-verify** of the 20 sampled questions against the docx
   (script above is ready; the judgment call is not done).
-- **1,800 AI questions still carry the answer-length cue** (200 fixed on staging
+- **1,700 AI questions still carry the answer-length cue** (300 fixed on staging
   2026-09-24). Needs either an API key for a scripted pass or more hand work.
 - **Jade's two open review notes** — regional practice framing, and taxonomy vs
   difficulty. Both need Ian's or Jade's decision before anyone acts.
-- **Near-duplicate questions in the AI bank** — roughly 1 in 10 of the 200 items
-  reviewed so far duplicates another question, some across both batches. No systematic
-  dedup has been run; it should happen before the remaining 1,800 are rewritten.
+- **Near-duplicate questions in the AI bank** — measured at ~8% of viable candidates
+  by the detector now built into `--fetch`. Future batches skip them, but no whole-bank
+  dedup pass has been run, so the duplicates are still in the review queue for Jade.
 - **T35 — Notify client (Jade) that M2 is delivered.** Not done — this is Ian's call,
   not an AI task.
 - **Three unreviewed files** in `Downloads/RENR/NRG RENR QUESTIONS/`:

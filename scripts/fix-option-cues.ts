@@ -89,6 +89,24 @@ function staging(): SupabaseClient {
 
 const isCompound = (s: string) => /\band\b/i.test(s) || s.includes(",");
 
+// ─── Near-duplicate detection ────────────────────────────────────────────────
+// The bank contains a lot of restated questions — the same clinical scenario with
+// different wording and numbers. Found while rewriting: three separate stable-SVT
+// items, three opioid overdoses, three DKA/potassium items. Rewriting both copies
+// is wasted work, and a reviewer has to read the same question twice, so batches
+// skip candidates that duplicate something already rewritten.
+const STOP = new Set("a an the of to in on at for with and or is are was were be been being this that these those which what who whom should would could most best first next client patient nurse nursing care action take takes taking following his her their its it as by from after before during her him she he they".split(" "));
+function shingle(text: string): Set<string> {
+  const w = text.toLowerCase().replace(/[^a-z0-9\s]/g, " ").split(/\s+/).filter(t => t.length > 2 && !STOP.has(t));
+  return new Set(w);
+}
+function jaccard(a: Set<string>, b: Set<string>): number {
+  let inter = 0;
+  for (const t of a) if (b.has(t)) inter++;
+  return inter / (a.size + b.size - inter || 1);
+}
+const DUP_THRESHOLD = 0.5;
+
 /**
  * PostgREST caps a plain select() at 1,000 rows and returns the truncated set
  * WITHOUT error — which silently halved the question bank the first time this
@@ -189,29 +207,48 @@ async function fetchBatch(limit: number, out: string, excludeFrom?: string) {
     console.log(`  excluding ${done.size} already-rewritten questions`);
   }
 
+  // Fingerprint everything already rewritten, so a restatement of one of those
+  // is not picked up as a fresh candidate.
+  const doneShingles = all.filter(q => done.has(q.source_id)).map(q => shingle(q.body));
+
+  let dupSkipped = 0;
   const flagged = all.filter(q => {
     if (done.has(q.source_id)) return false;
+    const sh = shingle(q.body);
+    if (doneShingles.some(d => jaccard(sh, d) >= DUP_THRESHOLD)) { dupSkipped++; return false; }
     const c = q.opts.find(o => o.c)!;
     const dMax = Math.max(...q.opts.filter(o => !o.c).map(o => o.t.length));
     return c.t.length > dMax;
   });
+  if (dupSkipped) console.log(`  skipped ${dupSkipped} near-duplicates of already-rewritten questions`);
   console.log(`  ${flagged.length} of ${all.length} still carry the length cue`);
 
-  const byDom = new Map<string, typeof flagged>();
-  for (const q of flagged) {
+  // Also refuse to put two restatements of the same scenario in one batch.
+  const chosenShingles: Set<string>[] = [];
+  let intraSkipped = 0;
+  const distinct = flagged.filter(q => {
+    const sh = shingle(q.body);
+    if (chosenShingles.some(d => jaccard(sh, d) >= DUP_THRESHOLD)) { intraSkipped++; return false; }
+    chosenShingles.push(sh);
+    return true;
+  });
+  if (intraSkipped) console.log(`  skipped ${intraSkipped} that duplicate another candidate in the pool`);
+
+  const byDom = new Map<string, typeof distinct>();
+  for (const q of distinct) {
     if (!byDom.has(q.dom)) byDom.set(q.dom, []);
     byDom.get(q.dom)!.push(q);
   }
-  const picked: typeof flagged = [];
+  const picked: typeof distinct = [];
   for (const [, list] of [...byDom.entries()].sort((a, b) => a[0].localeCompare(b[0]))) {
     list.sort((a, b) => md5(a.id).localeCompare(md5(b.id)));
-    picked.push(...list.slice(0, Math.round(limit * list.length / flagged.length)));
+    picked.push(...list.slice(0, Math.round(limit * list.length / distinct.length)));
   }
   // Per-domain quotas round down to fewer than `limit`; top up deterministically
   // from whatever is left so the batch size is exactly what was asked for.
   if (picked.length < limit) {
     const taken = new Set(picked.map(q => q.id));
-    const rest = flagged.filter(q => !taken.has(q.id)).sort((a, b) => md5(a.id).localeCompare(md5(b.id)));
+    const rest = distinct.filter(q => !taken.has(q.id)).sort((a, b) => md5(a.id).localeCompare(md5(b.id)));
     picked.push(...rest.slice(0, limit - picked.length));
   }
   picked.sort((a, b) => a.dom.localeCompare(b.dom) || md5(a.id).localeCompare(md5(b.id)));
