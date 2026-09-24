@@ -1537,10 +1537,117 @@ session that later did the prod deploy and recorded it *inside* the same section
 without touching the heading. Writing the deploy note at the bottom of a section is not
 enough; the heading is what a skimming reader and a fresh AI session both read.
 
+## Answer-option cues in the AI bank: first 100 rewritten (Claude, 2026-09-24) — STAGING ONLY
+
+Ian's read of the 2,000 AI-generated questions was that the answers are too obvious —
+the correct option is usually longer and the distractors are clearly wrong. Measured
+before touching anything, and it is worse than a tendency:
+
+| Cue | AI bank (n=2,000) | Chance |
+|---|---|---|
+| Correct option is the longest | **83.0%** | 25% |
+| Correct option mean length | **110.6** chars vs 67.5 for distractors | — |
+| Correct option is compound ("and"/comma) | **80.3%** vs 31.4% of distractors | — |
+
+**A student who never reads the stem and picks the longest option scores about 83%.**
+These items were measuring test-wiseness, not nursing. The compound cue is the same
+flaw in a second form: the correct answer was usually the one that did several things
+("treat, notify AND collect specimens") while the distractors did one.
+
+The distractors were independently bad — mostly unsafe or absurd ("prescribe
+antibiotics to the whole settlement", "discharge home"), which a student rejects
+without knowing any nursing.
+
+### What was done
+
+100 questions rewritten by hand — new options and new explanations, stems untouched.
+Selection is deterministic, restricted to items that actually carry the length cue, and
+quota'd per RENR domain: CDM 17, COM 9, HPMW 11, NLM 16, NP 29, PC 11, PD 7.
+
+| | Before | After |
+|---|---|---|
+| Correct is longest | 100% (selection criterion) | **21%** |
+| Mean length tell | 51.2 chars | **1.2 chars** |
+| Compound: correct vs distractors | 90% vs 32% | **93% vs 91%** |
+| Answer position spread | — | 29 / 23 / 25 / 23% |
+
+Verified by reading back from staging, not from the script's own arithmetic: the 100
+show the figures above, the other 1,900 still show 82.1% and a 42.6-char tell, so
+nothing else moved. `review_status` untouched — all 100 remain `pending` for Jade.
+0 questions with the wrong option count, 0 with the wrong number of correct answers.
+
+### `scripts/fix-option-cues.ts`
+
+The harness, not the writer — rewrites come from a JSON file, whoever produced them.
+That split is the point. `docs/phase-1/nrg-item-writing-rules.md` **already** said
+"distractors are plausible, similar in length and grammar, and reflect common student
+errors", and the generation run ignored it. Asking a model nicely does not work, so the
+constraint is enforced on the way in:
+
+- per item: length spread ≤1.25x, correct within +12 chars of the distractor mean, ≥2
+  of 3 distractors compound if the correct one is, 4 distinct options, explanation ≥200
+  chars, no option letters (options get reordered), and ≥3 of 4 options actually changed
+  from the original;
+- per batch: correct-is-longest ≤35%, and no answer position above 35%.
+
+Both batch gates earned their place during this run. The first pass came back at 55%
+correct-is-longest — the per-item tolerance was satisfied and the skew survived anyway.
+The position gate caught the correct answer sitting in slot 1 41% of the time, which
+would have replaced a length cue with a positional one. Three of my own rewrites were
+rejected by the validator and reworked.
+
+**Bug worth remembering: PostgREST silently caps `select()` at 1,000 rows.** The first
+report showed 12 rewritten and 988 others — 1,000, not 2,000 — and returned no error.
+The selection for this batch was therefore drawn from an arbitrary half of the bank
+rather than all of it. The 100 are genuine cue-carrying items and the fix is sound, but
+they are less representative than intended. `fetchAllAiQuestions` now pages; any future
+batch is drawn from the full 2,000.
+
+### Not fixed, and needing a human
+
+- **1,900 questions still carry the cue.** At this rate that is a large amount of hand
+  work; it is the case for an API key and a scripted pass, with this validator as the
+  gate and these 100 as few-shot examples.
+- **The rewrite makes Jade's review more necessary, not less.** Obviously-wrong
+  distractors are useless but harmless. Plausible distractors can be accidentally
+  *defensible*, which makes an item unfair in a way nobody notices until a student is
+  marked wrong for a reasonable answer. Every one of these 100 needs a nursing eye.
+- **Near-duplicate items exist in the bank.** Seen in this sample alone: two
+  supraventricular-tachycardia items, two opioid-overdose items, three diabetic
+  ketoacidosis/potassium items and two extravasation items. Worth a systematic
+  dedup pass.
+
+Originals are backed up with the rewrites at `scripts/data/ai-option-cue-batch1.json`
+(gitignored — question stems stay out of git, per the copyright-list convention).
+Prod untouched: its 2,000 AI questions are byte-identical, inert and still original.
+
+## Jade has been reviewing on staging (found 2026-09-24)
+
+Not previously recorded anywhere. Jade reviewed three AI questions on **2026-09-21**,
+after the last session's notes were written:
+
+- one **approved** (`spec1915`) — it is now the single live AI question on staging;
+- `spec1885` **needs_changes**: *"Regionally accepted practices. Rather than Trinidad
+  and Tobago. Questions should be in a taxonomy rather than a diffoculty"*;
+- `spec730` **needs_changes**: *"Rationals should contain the rational for the wrong
+  answer options as well"*.
+
+The third note is now satisfied for these 100 — every rewritten explanation states why
+each wrong option is wrong, and the validator enforces a floor on it. The other two are
+open and need Ian's or Jade's steer: what "regionally accepted" should mean in place of
+Trinidad-and-Tobago-specific protocols, and whether he wants the `difficulty` field
+replaced by cognitive taxonomy. Prod has 0 reviewed and 0 live AI questions.
+
 ## Not yet done / not yet verified
 
 - **T33 — human read-and-verify** of the 20 sampled questions against the docx
   (script above is ready; the judgment call is not done).
+- **1,900 AI questions still carry the answer-length cue** (100 fixed on staging
+  2026-09-24). Needs either an API key for a scripted pass or more hand work.
+- **Jade's two open review notes** — regional practice framing, and taxonomy vs
+  difficulty. Both need Ian's or Jade's decision before anyone acts.
+- **Near-duplicate questions in the AI bank** — several found incidentally in a
+  100-item sample; no systematic dedup has been run.
 - **T35 — Notify client (Jade) that M2 is delivered.** Not done — this is Ian's call,
   not an AI task.
 - **Three unreviewed files** in `Downloads/RENR/NRG RENR QUESTIONS/`:
