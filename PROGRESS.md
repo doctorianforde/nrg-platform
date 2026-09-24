@@ -1801,6 +1801,72 @@ rebuilt as four parallel phrases rather than trimmed. Present in all five batche
 
 Backup at `scripts/data/ai-option-cue-batch5.json` (gitignored). Prod untouched.
 
+## Answer-option cues: the last 645 rewritten — the cue is gone (Claude, 2026-09-24) — STAGING ONLY
+
+**1,545 of 2,000 items rewritten (77%), and every item that carried the
+answer-length cue has now been fixed.** Two batches: 400 (batch 6) and 245
+(batch 7).
+
+| | Batch 6 (400) | Batch 7 (245) |
+|---|---|---|
+| Correct is longest | 100% → **13%** | 100% → **16.7%** |
+| Correct vs distractor length | 126.3 / 72.1 → 55.2 / 55.5 | 125.9 / 72.1 → 52.9 / 53.2 |
+| Mean length tell | 54.2 → **−0.3 chars** | 53.8 → **−0.3 chars** |
+| Compound: correct vs distractors | 89.3 / 35.3 → 96.8 / 96.8 | 89 / 34 → 95.5 / 95.6 |
+| Answer position | 25.3 / 24.8 / 25 / 25% | 25.3 / 24.9 / 24.9 / 24.9% |
+
+### Whole bank, measured from the database
+
+| | Baseline (2026-09-24, before any work) | Now |
+|---|---|---|
+| Correct is longest | **83.0%** | **18.1%** |
+| Correct vs distractor length | 110.6 / 67.5 chars | 57.8 / 55.5 |
+| Mean length tell | **43.1 chars** | **2.3 chars** |
+| Compound: correct vs distractors | 80.3% / 31.4% | 85.5% / 79.3% |
+
+Chance is 25%, so 18.1% is below chance — a student who ignores the stem and
+picks the longest option now scores worse than guessing, against ~83% before.
+
+The 455 items never rewritten are the ones that never carried the cue: they sit
+at **25.1% correct-is-longest, which is exactly chance**, with a 9.4-char tell.
+They were excluded by the selection criterion, not skipped. Nothing in the bank
+still rewards picking the longest option.
+
+Structure verified independently over the Supabase connector: all 2,000 items
+have exactly four options and exactly one correct answer, 1,997 are `pending`,
+and Jade's three reviewed items are untouched.
+
+### The batch-7 write died halfway and the report caught it
+
+The first `--apply --commit` for batch 7 exited without completing and without
+an error in its log. Re-running `--report` showed the batch at 45.7%
+correct-is-longest instead of 16.7% — roughly half the updates had landed.
+Re-running the apply completed all 245. **The lesson: always re-report after a
+commit rather than trusting the exit path**, since `--apply` is idempotent and a
+partial write looks like nothing at all in the log.
+
+### Self-error rate held steady
+
+Sixteen of my own rewrites were rejected by the validator across the two batches
+(11 in batch 6, 5 in batch 7) — **every single one a compound-parity failure**,
+where the correct option carried a comma or an "and" that fewer than two
+distractors matched. Across seven batches that is the only error type that keeps
+recurring, and the mechanical gate caught all of them before anything reached
+the database.
+
+### Near-duplicates are now the dominant remaining defect
+
+The fetch skipped 118 near-duplicates in batch 6 and 156 in batch 7, but many
+pairs still came through inside each batch — two failure-to-thrive infants, two
+pre-dialysis hyperkalaemias, two compartment syndromes, two DKA items, two croup
+items, three tuberculosis-isolation items, three panic-attack items and several
+advance-directive pairs. The token-overlap detector cannot see them because the
+scenarios are genuinely reworded. **With the length cue gone, duplication is the
+largest quality problem left in the bank**, and it needs semantic comparison.
+
+Backups at `scripts/data/ai-option-cue-batch6.json` and `batch7.json`
+(gitignored). Prod untouched.
+
 ## Jade has been reviewing on staging (found 2026-09-24)
 
 Not previously recorded anywhere. Jade reviewed three AI questions on **2026-09-21**,
