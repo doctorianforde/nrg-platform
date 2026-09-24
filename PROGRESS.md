@@ -1754,6 +1754,53 @@ need semantic comparison, not token overlap, to find the rest.
 
 Backup at `scripts/data/ai-option-cue-batch4.json` (gitignored). Prod untouched.
 
+## Answer-option cues: a further 300 rewritten (Claude, 2026-09-24) — STAGING ONLY
+
+**900 of 2,000 are now fixed — 45% of the bank.** Same method, same validator,
+one batch of 300.
+
+| | Before | After |
+|---|---|---|
+| Correct is longest | 100% (selection criterion) | **21.7%** |
+| Correct vs distractor length | 122.6 vs 71.2 chars | 56.6 vs 56.4 |
+| Mean length tell | 51.4 chars | **0.2 chars** |
+| Compound: correct vs distractors | 87.3% vs 35% | **94.3% vs 94.7%** |
+| Answer position spread | — | **25 / 24.7 / 25.3 / 25%** |
+
+Domain quota: CDM 53, COM 30, HPMW 33, NLM 50, NP 80, PC 34, PD 20.
+
+Verified from the database after applying. Across the whole bank the 900 rewritten
+items sit at 17.1% correct-is-longest with a 0.5-char tell; the **1,100 still
+untouched sit at 69% with a 35.6-char tell** and compound 74.6% vs 30.8%. Structure
+checked independently over the Supabase connector: all 2,000 have exactly four
+options and exactly one correct answer, 1,997 are `pending`, and Jade's three
+reviewed items are untouched (one still carries its original 151-char explanation,
+which is below our 200-char floor — proof the rewrite never reached it).
+
+At least ten of my own rewrites were rejected by the validator and reworked. Nearly
+all were compound-parity failures — the correct option carrying a comma or an "and"
+that fewer than two distractors matched — plus one length-ratio breach and one where
+I had changed only a single option. **Compound parity is now my most frequent
+self-error across all five batches**, which is exactly why it is a mechanical gate
+and not a note to self.
+
+### Near-duplicates the detector still misses
+
+The fetch skipped 81 restatements of already-rewritten questions and 59 duplicates
+within the candidate pool. Three pairs still came through inside this batch — two
+eclamptic-seizure items, two items on reflecting after a refused amputation, and two
+on delegation accountability. Same finding as batch 4, now confirmed twice: **token
+overlap catches reworded duplicates, not rewritten ones.** A whole-bank dedup needs
+semantic comparison.
+
+### Bare-label option sets, still the second defect
+
+Two more in this batch — hypercalcaemia findings and infant developmental milestones —
+where the original options were too short for any length rule to apply. Each was
+rebuilt as four parallel phrases rather than trimmed. Present in all five batches now.
+
+Backup at `scripts/data/ai-option-cue-batch5.json` (gitignored). Prod untouched.
+
 ## Jade has been reviewing on staging (found 2026-09-24)
 
 Not previously recorded anywhere. Jade reviewed three AI questions on **2026-09-21**,
