@@ -56,9 +56,10 @@ closed.**
 (`is_ai_generated=true`), generated via `scripts/generate-questions.ts` against the
 RENR domain × taxonomy × cluster distribution. Confirmed 2026-09-19: all 2,000 sit
 `is_active=false` as designed, pending teacher review (Jade's 100 real questions are
-the only `is_active=true` rows — 100/2,100 total). **A review UI now exists on
-staging** (`/teacher/review`, see below) but is not yet on prod; until it is, use "How to
-access questions to review" below.
+the only `is_active=true` rows — 100/2,100 total). **The review UI (`/teacher/review`)
+is live on both prod and staging** — see that section below. *(Counts in this paragraph
+are the 2026-09-18 snapshot; prod now holds 2,460 questions with 460 live, after the
+provenance fix. Jade's review of the imported prototype bank should happen on staging.)*
 
 ## T34 — RLS end-to-end test: done (Kimi, staging, 2026-09-19)
 
@@ -89,9 +90,14 @@ checks all 100 rows for only-in-CSV / only-in-DB mismatches.
   *migration* was faithful, not the *docx→CSV transcription*. Ian (or Jade) still has
   to read each block against `NRG RENR Sample Questions #1.docx` and `Sample Answers
   #1.docx`. That human check is what closes T33.
-- Committed as `f1d4d95` (local, not pushed).
+- Committed as `f1d4d95`, since pushed to `origin/main`.
 
-## Question review section (Claude, 2026-09-19): built + tested on staging, NOT yet on prod
+## Question review section (Claude, 2026-09-19) — LIVE ON PROD
+
+> Status corrected 2026-09-24: `20260919010000_question_review_workflow.sql` is applied to
+> **both** staging and prod (verified against `supabase_migrations.schema_migrations` in each),
+> and `/teacher/review` ships in the deployed build. The "staging only" wording below was
+> written before the 2026-09-20 prod deploy and never updated.
 
 Lets Jade evaluate the 2,000 AI-generated questions in the app instead of raw SQL.
 
@@ -131,7 +137,7 @@ Lets Jade evaluate the 2,000 AI-generated questions in the app instead of raw SQ
   students until the read policy is tightened. Now more relevant than before.
 - **To go live for Jade:** (1) Ian OKs the migration on prod, (2) deploy the app,
   (3) promote Jade's prod account to `teacher` (or `admin`) with SQL, (4) he opens
-  `/teacher/review`. Committed as `6927c9e` (local, not pushed).
+  `/teacher/review`. Committed as `6927c9e`, since pushed to `origin/main`.
 
 ## Frontend build-out (Kimi, 2026-09-19): /study, dashboards, mock exam UI — built AND restyled to the reference design
 
@@ -197,7 +203,10 @@ patterns. Restyle applied across the app on top of it:
   authoring flow, case-study vitals/phases — all documented in the spec, all need Ian's
   data-model/product decisions first.
 
-## Fatigue analysis (Claude, 2026-09-19) — built, tested on staging, NOT yet on prod
+## Fatigue analysis (Claude, 2026-09-19) — LIVE ON PROD
+
+> Status corrected 2026-09-24: this needed no migration, only a deploy, and the code has
+> been on `origin/main` since the 2026-09-20 push that deployed both Vercel projects.
 
 Implements the client's `Fatigue_Analysis_Data_Prompt.docx` (kept in the repo root).
 That spec was written against a prototype that held the whole exam in memory, so it
@@ -1281,7 +1290,10 @@ conventions now coexist in `topics` (curated `Cardiac` vs imported
 as-is; near-duplicates at different granularity; and **every topic in both environments
 has `domain_id` NULL** (pre-existing — the migrate script never sets it).
 
-## Group exams + an exam timer (Claude, 2026-09-20) — STAGING ONLY, not deployed
+## Group exams + an exam timer (Claude, 2026-09-20) — LIVE ON PROD
+
+> The heading originally read "staging only"; the prod apply and deploy are recorded in
+> "Deployed to prod, 2026-09-20" at the end of this section. Heading corrected 2026-09-24.
 
 Ian asked for "a group test option where students can do a test as part of a group, up
 to 5". Four design questions went back first; his answers: the **group challenge**
@@ -1490,6 +1502,41 @@ Side effect that is the point rather than a cost: Jade's own questions have left
 AI review queue. He should not be reviewing his own writing as though a machine wrote
 it. Proofreading his transcriptions is the separate T33 task.
 
+## Doc reconciliation against the live databases (Claude, 2026-09-24)
+
+No code or schema changed. This log and `PLAN.md` had drifted from what is actually
+deployed, in a way that would mislead a cold-start AI session or a hand-off to Kimi —
+four sections still described work as staging-only or unbuilt that had shipped on
+2026-09-20.
+
+Checked rather than assumed: `supabase_migrations.schema_migrations` was read on both
+projects via the Supabase connector. **Prod and staging each hold the same 29
+migrations**, `20260916012340` through `20260920070000`, matching
+`supabase/migrations/` file-for-file with nothing pending on either side. In
+particular `20260919010000_question_review_workflow` — which `PLAN.md` still listed as
+awaiting Ian's go-ahead — has been on prod since the 2026-09-20 `db push`, which
+carried every then-pending migration, not just the group-exam pair named in that
+session's notes. `git status` is clean and `main` is level with `origin/main`, so the
+deployed build includes `/teacher/review`.
+
+Corrected here: the question-review, fatigue-analysis and group-exam headings (all now
+LIVE ON PROD, each with a dated note saying what the old wording claimed); the
+"how to access questions to review" section, which told the reader the review UI was
+not on prod; the Git section, which listed two long-since-pushed commits as local; and
+the frontend bullet under "not yet done", which claimed the `/study`, `/teacher` and
+`/admin` UIs were largely unbuilt — 24 pages exist under `src/app/`.
+
+That bullet list is now what it says it is: only genuinely open items, each with an
+owner. Everything left on it is a content, policy or client-communication call for Ian
+or Jade, plus three mechanical AI chores (T16 email templates, the RLS grant revoke,
+`topics.domain_id`).
+
+**Worth noticing for next time:** the drift was one-directional — work got done and the
+doc kept saying it hadn't. Three of the four wrong headings were written in the same
+session that later did the prod deploy and recorded it *inside* the same section
+without touching the heading. Writing the deploy note at the bottom of a section is not
+enough; the heading is what a skimming reader and a fresh AI session both read.
+
 ## Not yet done / not yet verified
 
 - **T33 — human read-and-verify** of the 20 sampled questions against the docx
@@ -1500,19 +1547,35 @@ it. Proofreading his transcriptions is the separate T33 task.
   `NRG_100_New_Questions.docx`, `NRG_Rewritten_Sample_Questions_1_Questions_Only.docx`,
   `NRQ_Rewritten_Sample_Questions_1.docx`. Unknown whether these are new content or
   alternate drafts of the same 100 questions — flagged, not investigated.
-- Frontend build-out for `/study`, `/teacher`, `/admin`, `/super-admin` — route
-  guards and auth exist, and the teacher review queue is now built (see above), but the
-  other page UIs (question practice flow, flashcards,
-  case studies, mock exam UI) are
-  largely unbuilt as of this log. Check `src/app/` directly for current state before
-  assuming anything here is stale.
+- **Copyright call on 269 held-back questions** (145 Saunders-derived, 124 verbatim
+  NCLEX). List at `docs/phase-1/COPYRIGHT_REVIEW_LIST.md`; recommendation is to drop
+  rather than rewrite. Ian's call.
+- **Policy decision: should students see inactive questions?** (T34 finding #1.) The
+  `questions: authenticated read` policy has qual `true`. One-line change once decided.
+- **Analytics / rank pages** — no backing tables exist for leaderboards or performance
+  analytics. Needs Ian's data-model decision before anyone builds.
+- **Prod import of the prototype bank** (4,798 rows, live on staging's review queue).
+  Schema has been ready since `20260920050000`; this is now purely a content decision.
+- **Jade's clinical review** of the 4,798 prototype questions, the 2,000 AI questions,
+  the 133 nursing-knowledge facts, and the staging topic-cluster mapping.
+
+The frontend build-out is **no longer outstanding** — this bullet previously claimed the
+`/study`, `/teacher`, `/admin` and `/super-admin` UIs were "largely unbuilt", which was
+already false when written. Verified 2026-09-24: 24 pages exist under `src/app/`,
+covering practice, flashcards, case studies, mock exams (solo + group), submissions,
+profile, messaging, the review queue, and all three dashboards.
 
 ## How to access questions to review
 
-The in-app review UI (`/teacher/review`) is built but not yet on prod, so until then review
-happens directly against the database. Note: the manual `is_active` update below now also needs
-`review_status = 'approved'` once the review migration is applied (the new CHECK constraint requires it). Both are read-only browsing — safe to do on
-prod.
+**The in-app review UI is now the normal route** — `/teacher/review` is live on prod and
+on staging, so raw SQL is only a fallback for bulk browsing or for questions the UI does
+not surface. For Jade's review of the imported prototype bank, use the staging site
+(https://nrg-platform-staging.vercel.app → `/teacher/review` → Source → "Prototype bank
+(imported)"), not prod.
+
+The SQL below is read-only browsing and safe to run on either project. Note that manually
+setting `is_active = true` now also requires `review_status = 'approved'`, and — since
+`20260920070000` — an AI question additionally requires a non-NULL `reviewed_by`.
 
 **Option A — Supabase Studio (no code):**
 - Prod: `https://supabase.com/dashboard/project/cdvubijjepwmhhkgppbl/editor`
@@ -1564,5 +1627,10 @@ Jade for content sign-off) — say the word and I'll pull a batch into an .xlsx.
 
 ## Git
 
-- `HEAD` at start of the 2026-09-19 session: `ba6d4eb`. Since then, local commits on `main` (not pushed to
-  `origin/main`): `f1d4d95` (T33 QA script), `6927c9e` (review queue + migration + docs).
+`main` is clean and level with `origin/main` (verified 2026-09-24, `HEAD` = `490380b`,
+"fix(data): correct the provenance of Jade's questions, and require a named reviewer").
+The earlier note here — that `f1d4d95` and `6927c9e` were unpushed — was stale; both
+shipped in the 2026-09-20 push.
+
+A push to `main` deploys **both** Vercel projects: `nrg-platform` (prod DB) and
+`nrg-platform-staging` (staging DB). There is no separate staging branch.

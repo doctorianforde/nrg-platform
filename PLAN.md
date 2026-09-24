@@ -8,6 +8,12 @@ for *what actually happened*, this file is for *what's left and who does it*.
 ## Status legend
 `done` · `pending` · `needs-verify` (marked done before, not re-confirmed) · `blocked`
 
+**Reconciled against the live databases 2026-09-24.** Prod and staging both hold the
+same 29 migrations (`20260916012340` → `20260920070000`), matching
+`supabase/migrations/` with nothing pending on either side; `main` is clean and level
+with `origin/main`. Rows that claimed a prod migration or deploy was still pending have
+been corrected — see the 2026-09-24 entry in `PROGRESS.md` for what was wrong and why.
+
 ---
 
 ## Phase 1 — you vs. AI, everything still open
@@ -24,9 +30,9 @@ actually needs to do it.
 | T35 — Notify Jade that M2 is delivered | **You** | Client communication. Not an AI task under any circumstance here. |
 | RLS hardening (revoke unneeded grants) | **AI** (Kimi) | Mechanical, well-specified, no judgment needed — optional hardening, do whenever. |
 | Review the 2,000 AI-generated questions (currently `is_active=false`) | **You / Jade** (content judgment), **AI** (tooling) | AI generated them and can build the review UI/export, but a nursing-exam SME (you or Jade) has to actually judge clinical accuracy before anything goes live to students. This is the single biggest remaining content-risk item in Phase 1. |
-| Teacher review UI for the above | **Done on staging** (Claude, 2026-09-19) — **you**: OK the prod migration + deploy | Built `/teacher/review`; tested 22/22 on staging. Waiting on your go-ahead to apply `20260919010000_question_review_workflow.sql` to prod, deploy, and give Jade a teacher account. See `PROGRESS.md`. |
-| Frontend build-out: `/study`, `/teacher`, `/admin`, `/super-admin` | **Built + restyled** (Kimi, 2026-09-19) — **you**: review + deploy when ready | Built against the real schema (no migrations), then restyled page-by-page to the reference design. Full design spec saved at `docs/design-spec-okcomputer.md`. See `PROGRESS.md`. |
-| Mock exam student/teacher UI | **Built + restyled** (Kimi, 2026-09-19) — **you**: review the rationale-gate behavior before deploy | Student exam runner (zero feedback while answering), results with rationales gated on `rationale_released_at`; teacher set builder + deliberate one-way release button. Business rules enforced at app layer; restyle touched markup only. See `PROGRESS.md`. |
+| Teacher review UI for the above | **Done — live on prod** (Claude, 2026-09-19) | `20260919010000_question_review_workflow.sql` is applied to prod (verified 2026-09-24) and `/teacher/review` is deployed. Remaining fragment: Jade still needs a **prod** teacher account — he has one on staging. |
+| Frontend build-out: `/study`, `/teacher`, `/admin`, `/super-admin` | **Done — deployed** (Kimi, 2026-09-19) | Built against the real schema, restyled to the reference design (`docs/design-spec-okcomputer.md`). 24 pages under `src/app/`; shipped in the 2026-09-20 push. **You**: a look-over whenever convenient, but nothing blocks on it. |
+| Mock exam student/teacher UI | **Done — deployed** (Kimi, 2026-09-19) — **you**: sanity-check the rationale gate against a real attempt | Student runner (zero feedback while answering), results gated on `rationale_released_at`, teacher set builder + one-way release. The gate is enforced at the app layer, so it is worth seeing once with your own eyes on a real exam. |
 | Analytics / rank system (reference: AnalyticsPage, RankSystemPage) | **You** (decision), then **AI** (build) | The reference prototype has these pages but our schema has no analytics/performance/rank tables — no data model exists to build against. Needs your call on what to track before anyone builds it. |
 | T16 — verify email templates | **AI** (Kimi) | Low-stakes dashboard check. |
 | Three unreviewed docx files in Jade's RENR folder | **You** (decision), then **AI** (processing) | Need your read on what Jade actually wants before any script touches them — could be new content, could be duplicate drafts. |
@@ -115,7 +121,7 @@ study-streak definition (all live in `src/lib/xp/` + migrations `20260920030000`
 | Topic reviews (15 decks ready) | Nothing — best content-value-per-effort item left |
 | Nursing Knowledge facts | **Built (133 facts).** Needs Jade's clinical sign-off — see `docs/phase-1/nursing-knowledge-facts-for-review.pdf` |
 | Topic Elo + real analytics | Practice needs per-answer rows, not just session totals |
-| Import prototype questions | **Staging import done + key pool cleared (2026-09-20)** — now **4,798** rows in the review queue (`source='prototype-import'`, all `is_active=false`/`pending`), independently re-verified with 0 key errors, letter references idempotently correct, RLS 15/15. The 77 key-mismatch items were all false positives of the token-overlap heuristic: 70 hand-reviewed and promoted, 7 compound-option items held for human review. The export is now deterministic per question, so later edits cannot reshuffle unrelated rows. **Blocked on:** Jade's clinical review/approval; prod import (schema now ready — `20260920050000` applied to prod 2026-09-20, so this is a content decision, not a blocker); the 269 copyright-flagged items (topic clusters applied on staging) |
+| Import prototype questions | **Staging import done + key pool cleared (2026-09-20)** — now **4,798** rows in the review queue (`source='prototype-import'`, all `is_active=false`/`pending`), independently re-verified with 0 key errors, letter references idempotently correct, RLS 15/15. The 77 key-mismatch items were all false positives of the token-overlap heuristic: 70 hand-reviewed and promoted, 7 compound-option items held for human review. The export is now deterministic per question, so later edits cannot reshuffle unrelated rows. **Blocked on:** Jade's clinical review/approval, which is the only real gate left. The prod import is unblocked (`20260920050000` is on prod) and the topic clusters are applied on staging; the 269 copyright-flagged items need Ian's drop-or-keep call first. |
 | Rank-up exams | The question import above |
 | Case study simulator (100 cases) | A new schema for vitals/labs/phases |
 | Q-gen AI grading | An LLM key and budget |
@@ -189,13 +195,18 @@ Saunders-derived and verbatim-NCLEX questions at all.
   not caused by any import; the migrate script never sets it and topics de-duplicate by
   name alone. Question-level domain is correct, so nothing is broken today. Either
   populate the column or drop it. **Owner: AI**, once someone decides which.
-- **AI-generated question review workflow.** 2,000 AI-generated questions exist in
-  prod as `is_ai_generated=true`, all `is_active=false` (confirmed). Review UI + schema
-  are built and tested on staging (2026-09-19); prod migration/deploy pending Ian's OK.
+- **AI-generated question review workflow**: DONE and LIVE ON PROD (Claude,
+  2026-09-19). 2,000 AI questions sit in prod as `is_ai_generated=true`,
+  `review_status='pending'`, all `is_active=false` — inert, never seen by a student.
+  `20260919010000_question_review_workflow.sql` is applied to prod and staging
+  (verified 2026-09-24) and `/teacher/review` is deployed to both. **What is actually
+  outstanding is the reviewing, not the tooling** — Jade has to judge the questions,
+  and he needs a prod teacher account to do it there (he has one on staging).
 - **Frontend build-out**: DONE 2026-09-19 (Kimi) — `/study` lobby + practice/tutor
   mode + flashcards + case studies, `/teacher` dashboard, `/admin` + `/super-admin`
-  read-only dashboards. Restyle against the reference's exact page layouts pending.
-  See `PROGRESS.md` (2026-09-19 entry).
+  read-only dashboards, all restyled to the reference layouts the same day (see the
+  "Design restyle pass" entry in `PROGRESS.md`). Deployed in the 2026-09-20 push;
+  24 pages under `src/app/`. Nothing outstanding.
 - **Mock exam UI**: DONE 2026-09-19 (Kimi) — student exam runner + results, teacher
   set builder + rationale release. App-layer rationale gate implemented per T36–T38
   rules. See `PROGRESS.md`.
@@ -203,7 +214,8 @@ Saunders-derived and verbatim-NCLEX questions at all.
   card, from the client's `Fatigue_Analysis_Data_Prompt.docx`. No schema change.
   Several parts of that spec were deliberately not followed (statistically unsound
   15-point rule, fabricated instructor scores, an LLM call for deterministic maths) —
-  reasons in `PROGRESS.md`. Needs deploy only; nothing pending on prod DB.
+  reasons in `PROGRESS.md`. Deployed in the 2026-09-20 push; no schema change was
+  needed, so nothing is outstanding.
 - **Student profile + messaging**: DONE 2026-09-19 (Claude) — `/study/profile` and
   `/teacher/messages`, threads that can cite a mock exam attempt. Needs migration
   `20260919020000_student_messaging.sql` on prod; it REPLACES the `profiles` SELECT
@@ -262,14 +274,14 @@ communication. Good candidates, roughly in priority order:
    The *scripting* is a good Kimi task; the actual judgment call on "is this an
    accurate transcription" should stay with you or Jade.
 
-2. **Frontend page build-out** for `/study`, `/teacher`, `/admin`. These are
-   well-scoped once you hand Kimi a spec (which components, which Supabase queries,
-   which role guards apply) — good fit for a local coding agent grinding through UI
-   work without needing production credentials.
+2. ~~**Frontend page build-out** for `/study`, `/teacher`, `/admin`.~~ *(Done
+   2026-09-19 by Kimi and deployed — 24 pages under `src/app/`. Left here because the
+   reasoning still holds for the next UI task: hand Kimi a spec naming the components,
+   the Supabase queries and the role guards, and it can grind through UI work without
+   ever needing production credentials.)*
 
-3. **AI-generated question review UI** *(done on staging 2026-09-19 — see `PROGRESS.md`)* — a teacher-facing page listing
-   `is_active=false` questions with approve/reject/edit actions. Same reasoning as
-   above: well-specified once scoped, mechanical to build.
+3. ~~**AI-generated question review UI**~~ *(done 2026-09-19, live on prod and
+   staging — `/teacher/review`.)*
 
 4. **T16 verification** — check the Supabase dashboard for email template state and
    fix if still default/pending. Low-stakes, mechanical.
