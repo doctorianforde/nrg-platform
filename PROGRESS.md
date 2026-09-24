@@ -1710,6 +1710,50 @@ length ratio at 1.26 against a 1.25 limit.
 
 Backup at `scripts/data/ai-option-cue-batch3.json` (gitignored). Prod untouched.
 
+## Answer-option cues: 300 more rewritten (Claude, 2026-09-24) — STAGING ONLY
+
+**600 of 2,000 are now fixed — 30% of the bank.** Same method, same validator, one
+batch of 300 instead of three of 100.
+
+| | Before | After |
+|---|---|---|
+| Correct is longest | 100% (selection criterion) | **17.7%** |
+| Correct vs distractor length | 122.1 vs 71.2 chars | 56 vs 55.7 |
+| Mean length tell | 50.9 chars | **0.3 chars** |
+| Compound: correct vs distractors | 85.7% vs 29.3% | **92.7% vs 95.7%** |
+| Answer position spread | — | **25 / 25 / 25 / 25%** |
+
+Domain quota: CDM 53, COM 30, HPMW 33, NLM 50, NP 80, PC 34, PD 20.
+
+Verified from the database after applying: the remaining 1,700 still show 64.4% and a
+32.3-char tell. All 2,000 keep four options and exactly one correct answer, 1,997 are
+`pending`, and Jade's three reviewed items are untouched.
+
+Ten of my own rewrites were rejected by the validator and reworked — eight
+compound-parity failures, one length ratio and one where I had changed only a single
+option. That is a 3.3% self-error rate across 300, all caught mechanically before
+anything reached the database.
+
+### Bare-label option sets, again
+
+Three more items in this batch offered options too short to satisfy any length rule —
+a paracetamol dose calculation ("7.5 mL" against "15 mL") and two others. Each was
+rebuilt as four parallel phrases. **This is now the single most common structural
+defect after the length cue itself**, appearing in all four batches, and a scripted
+pass will need to detect and rebuild these rather than trim them.
+
+### Duplicate detection held up
+
+The detector skipped 59 restatements of already-rewritten questions and 73 duplicates
+within the candidate pool — 132 of about 1,450 viable candidates, consistent with the
+~8% measured on batch 3. Even so, three near-duplicate pairs survived it inside this
+batch (two hypovolaemic-shock items, two caregiver-burnout items, two sepsis-reflection
+items), because they restate a scenario in genuinely different words. **The Jaccard
+threshold catches reworded duplicates, not rewritten ones** — a whole-bank dedup will
+need semantic comparison, not token overlap, to find the rest.
+
+Backup at `scripts/data/ai-option-cue-batch4.json` (gitignored). Prod untouched.
+
 ## Jade has been reviewing on staging (found 2026-09-24)
 
 Not previously recorded anywhere. Jade reviewed three AI questions on **2026-09-21**,
@@ -1731,7 +1775,7 @@ replaced by cognitive taxonomy. Prod has 0 reviewed and 0 live AI questions.
 
 - **T33 — human read-and-verify** of the 20 sampled questions against the docx
   (script above is ready; the judgment call is not done).
-- **1,700 AI questions still carry the answer-length cue** (300 fixed on staging
+- **1,400 AI questions still carry the answer-length cue** (600 fixed on staging
   2026-09-24). Needs either an API key for a scripted pass or more hand work.
 - **Jade's two open review notes** — regional practice framing, and taxonomy vs
   difficulty. Both need Ian's or Jade's decision before anyone acts.
