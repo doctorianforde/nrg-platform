@@ -1884,12 +1884,53 @@ open and need Ian's or Jade's steer: what "regionally accepted" should mean in p
 Trinidad-and-Tobago-specific protocols, and whether he wants the `difficulty` field
 replaced by cognitive taxonomy. Prod has 0 reviewed and 0 live AI questions.
 
+## Generation pipeline: MCQ authoring standard v0.1 (Claude, 2026-10-04) — code only, NOT committed, NOT run against any DB
+
+Context: Oct 1 call with Jade + Ian's three MCQ rules (entry-level scope, no visual flagging of
+abnormal data, colour-coded answer review). `scripts/generate-questions.ts` now enforces them
+mechanically, because asking nicely did not work for the answer-length cue (see the option-cue fix).
+
+- New `scripts/generation-rules.json` (override with `--rules <path>`). **Settled rules (enforced):**
+  critical-care / ICU and nurse-practitioner / advanced-practice terms are hard-rejected anywhere in an item;
+  visual-flag patterns (markdown bold/italics, arrows, "(high)"/"(low)"/"(abnormal)" labels) rejected;
+  every item must carry `option_types` = exactly one each of correct / close / priority / incorrect (colours per Case Study V3 s.11: green / yellow / orange / red, text label always shown);
+  a rationale (>=30 chars) for each of the three distractors plus the correct answer (>=60);
+  correct option must not be the longest by more than 12 chars, option length spread <= 1.4x;
+  near-duplicate stems rejected (word-set Jaccard >= 0.7) against the batch AND the target DB.
+- **Open items sit behind switches, all OFF** (`switches_pending_jade`): `block_nursing_diagnosis_items`,
+  `drop_difficulty`, `regional_wording_not_tt`, `enforce_abbreviation_rule`, `extra_forbidden_patterns`.
+  Pending Ian's talk with Jade. With the abbreviation switch off, unexpanded abbreviations are logged as warnings only.
+- Batch-level checks printed and saved in the run JSON (`checks`): % of items where the correct option is strictly the
+  longest, correct-answer position distribution, rejection reasons by rule.
+- Review sheet (.md) now labels each option with its type. `--insert` writes `question_options.distractor_type`
+  only when `store_option_types` is true — **that column does not exist yet** (needs a staging migration first).
+- Tested offline: `--provider mock` run, plus a fake OpenAI-compatible server returning 8 crafted items
+  (1 clean, 7 each violating a different rule): clean passed, all 7 rejected with the right reason. tsc strict clean.
+  No real model was called and nothing was inserted anywhere.
+- Not changed: `docs/phase-1/nrg-item-writing-rules.md` still says "use Trinidad & Tobago context"; that line conflicts
+  with Jade's "regionally accepted practices" note and should be revisited when that switch is decided.
+
+## AI bank screen against MCQ standard v0.1 (Claude, 2026-10-04) — read-only, staging
+
+Query script: `scripts/sql/review-screen.sql` (run in the SQL editor; changes nothing). Population = `is_ai_generated`
+rows on staging: 4,798 prototype imports (`proto:*`) + 2,000 generated (`ai:*`).
+- Wrong-option rationales missing: ALL 4,798 proto rows (0 of the 2,000 ai rows). The proto bank has no per-distractor
+  rationale text at all, so it cannot be colour-coded until a rationale pass writes them.
+- Answer-length cue: correct option is the longest by >12 chars in 85% of proto rows (4,099) vs 5% of ai rows (104 — the
+  option-cue repair already ran on the ai rows). Position of the correct answer is flat (~25% each) in both.
+- Keyword hits (not verdicts): critical care 151 (138 proto, 13 ai), advanced practice / NP 19 (all proto),
+  "(elevated)"/"(low)" style value labels 12 (proto). Pending-Jade switches: nursing-diagnosis phrase 41, Trinidad-specific wording 67.
+- Blueprint balance of the whole AI pool vs official RENR: PC 19.3% (target 10), NP 24.9% (30), CDM 15.0% (20), NLM 13.0% (15),
+  PD 8.5% (5); taxonomy knowledge 30.2% (20), application 46.1% (50), analysis 23.7% (30).
+- Not checked: near-duplicates (previously ~10%), model-level review of scope/distractor quality, competency-level syllabus coverage
+  (the competency number is not stored). Nothing was deactivated or edited.
+
 ## Not yet done / not yet verified
 
 - **T33 — human read-and-verify** of the 20 sampled questions against the docx
   (script above is ready; the judgment call is not done).
-- **1,400 AI questions still carry the answer-length cue** (600 fixed on staging
-  2026-09-24). Needs either an API key for a scripted pass or more hand work.
+- ~~1,400 AI questions still carry the answer-length cue~~ — stale: all 1,545 that carried it were rewritten on staging (see the option-cue entries above).
+  The rewrite left per-option rationales misaligned; see the 2026-10-04/05 entry at the end of this file.
 - **Jade's two open review notes** — regional practice framing, and taxonomy vs
   difficulty. Both need Ian's or Jade's decision before anyone acts.
 - **Near-duplicate questions in the AI bank** — measured at ~8% of viable candidates
@@ -1988,3 +2029,148 @@ shipped in the 2026-09-20 push.
 
 A push to `main` deploys **both** Vercel projects: `nrg-platform` (prod DB) and
 `nrg-platform-staging` (staging DB). There is no separate staging branch.
+
+## AI bank: rationale misalignment, colour-coded option types, 50-question trial (Claude, 2026-10-04/05) — STAGING ONLY, prod untouched
+
+**Colour system (settled).** Per Case Study Prompt V3 s.11, rationale view only, text label always shown, correct letter and text first:
+correct = green, close = yellow, priority/sequencing = orange, incorrect/unsafe = red. This replaces my earlier paraphrase of the
+Oct 1 minutes (which had "opposite" = orange). Ian confirmed the MCQ bank keeps **exactly one of each type per question**.
+`scripts/generation-rules.json` `option_types` = close / correct / incorrect / priority; `generate-questions.ts` prompt, mock and validator updated
+(offline mock run: 20/20 pass, tsc strict clean). Still uncommitted.
+
+**Staging schema/data changes applied**
+- Migration `add_question_options_distractor_type`: `question_options.distractor_type text` (nullable; CHECK in correct/close/priority/incorrect).
+  NOT applied to prod.
+- `distractor_type = 'correct'` backfilled from `is_correct` on every staging option row (7,314). The 21,942 wrong options are NULL except the 150 below.
+- 179 flagged questions (13 ai, 166 proto; all inactive) set to `review_status = 'needs_changes'` with a `review_notes` line naming the rule hit
+  (critical-care terms / advanced-practice terms / visual flagging). Keyword matches, so some are false positives; Jade confirms before editing.
+  One further flagged question was already `rejected` and left alone. Nothing deleted or deactivated beyond that; none of the 179 was live.
+
+**Defect found: rationales misaligned in the AI bank.** The Sept 24 option-cue rewrite replaced and reordered options in 1,545 of 2,000 AI
+questions but left per-option rationales in their old positions. The keyed option moved in 1,156 of them, so many rationales sit on the wrong
+option (confirmed on sampled items; some questions only partly off, e.g. two rationales swapped). The Oct 4 screen missed it because it checked
+that rationales existed, not that they matched their option. Exact count of affected questions is unknown (<=1,156 by the moved-key test).
+Prod's 2,000 AI rows are the original, aligned versions (length cue still present) and are inactive. The 4 approved+active AI rows on staging were not checked.
+
+**Trial fix: 50 questions rewritten.** 40 where the key moved + 10 where it did not (seeded random, `random.seed(7)`). Five subagents wrote a fresh
+rationale and a type for every option; a validator (`validate.py`: one of each type, key typed correct, rationale lengths 60+/30+, no forbidden or
+visual-flag patterns, no label prefix) passed all 50. No clinical flags raised; two weaker type fits noted (spec1577, spec1713). Written to staging
+(200 option rows). Before-values for ALL 2,000 AI questions saved in staging table `_backup_ai_option_rationales_20261004` (RLS on, no policies;
+drop once the rewrite is accepted). Review sheet sent to Ian: `NRG_Rationale_Trial_50.xlsx` (not in the repo).
+Not yet read in full by a nurse: all 200 rationales still need Jade's review; close-vs-priority is a judgement call.
+
+**State of the question pools (re-queried 2026-10-04)**
+- Prod: 460 live (human-written, approved) + 2,000 AI inactive/pending. No prototype rows.
+- Staging AI (2,000): 4 approved+active, ~1,989 pending, needs_changes and rejected small. 50 now have aligned, typed rationales; 1,950 still misaligned/untyped.
+- Staging prototype (4,798): 4,771 pending, 10 needs_changes, 7 rejected, 10 approved+active. No wrong-option rationales at all; correct-longest in 85%.
+  Needs regenerating or a full rationale pass; cannot be colour-coded as is.
+
+**Not done**
+- Rationale pass for the remaining ~1,950 AI questions (same method; the validator is the gate; the 1,106 moved-key questions not in the trial are the priority) and the 4,798 prototype questions.
+- App code for the colour view: `src/lib/supabase/types.ts` types and a rationale-view component. Then `store_option_types` can be turned on in the generator.
+- Abbreviation clean-up across the bank (waiting on which abbreviations are exempt and whether it is stem-only).
+- Nothing approved, sent to prod, or committed. The pipeline has never been run against a real model or with `--insert`.
+
+## Pipeline guide PDF + subscription (agent) modes (Claude, 2026-10-05) — code + docs only, nothing run against a DB or a real model
+
+Ian asked for a how-to PDF covering three modes (provider-agnostic, Kimi, Claude Sonnet/Opus), and prefers his flat-rate
+plans (Kimi Allegretto, Claude Max) over per-token APIs. Guide: `docs/phase-1/NRG_Question_Pipeline_Guide.pdf`
+(7 pages; rebuild with `scripts/build-pipeline-guide.py`).
+
+`scripts/generate-questions.ts` changes (all uncommitted, alongside the MCQ-standard work above):
+- **Bug fixed — anthropic provider would 400 on current models.** It always sent `temperature`, which Sonnet 5.5 / Opus 5.5
+  reject. Now sends no temperature, sends `output_config.effort` (`--effort`, default high; Opus 5.5 would otherwise default to
+  medium), max_tokens 16000, default model `claude-sonnet-5-5`, and fails the batch on `stop_reason` refusal / max_tokens.
+  `generation-config.example.json` model updated to match.
+- **`--provider kimi`**: Moonshot's OpenAI-compatible API (`MOONSHOT_API_KEY`, default `kimi-k3`, `MOONSHOT_BASE_URL` override).
+  No temperature unless `--temperature` is given; `--effort` → `reasoning_effort`. Request shape checked against a local fake
+  server only — not yet against Moonshot.
+- **Subscription mode, `--prompt-out P` + `--provider file --input items.json`**: the script writes the full system prompt and
+  all spec batches to a brief; Kimi Code or Claude Code writes `{"items":[...]}`; the file provider runs the unchanged validator
+  (one attempt, no retries) and each failure now records its reason so the agent can fix just those specs. `--insert` works
+  from the same file. Tested offline: mock run 8/8; file run with one deliberately broken item → 7 kept, 1 failure with the right reason.
+
+## First subscription-mode run: 10-question sample set (Claude, 2026-10-05) — local files only, nothing inserted
+
+Ran mode C end to end with Claude Code (Opus) as the writer: `--prompt-out` brief → 10 items written to the planned specs
+(NP 3, CDM 2, NLM 2, PC 1, HPMW 1, COM 1; AP 5, ASE 3, KC 2) → `--provider file --dedup-db --env staging` (read-only).
+First pass 10/10 valid but the batch check flagged the key as longest in 50% of items; three keys shortened → 10/10, 0 warnings,
+key-longest 20%, positions A2/B3/C2/D3. Output in `data/generated/sample10.*` (gitignored); PDF sent to Ian:
+`data/generated/NRG_RENR_Practice_Set_10.pdf` (rendered by `scripts/build-question-set-pdf.py`). Not reviewed by Jade; not in any database.
+
+## Rule: blood glucose in mg/dL, never mmol/L (Ian, 2026-10-05) — applies to the whole project
+
+Caribbean practice reports blood glucose in **mg/dL**. Applied to: the generator prompt (MCQ standard item 4),
+`docs/phase-1/nrg-item-writing-rules.md`, and the validator (`forbidden_patterns.glucose-mmol` in `scripts/generation-rules.json`,
+which rejects a glucose value followed by mmol; tested: it caught Q5 of the sample set). Sample set Q5 converted (3.1 mmol/L → 56 mg/dL),
+revalidated 10/10, PDF regenerated. The rule covers glucose only; electrolytes are untouched.
+**Existing bank not converted** (read-only keyword scan): staging ~104 questions (63 ai, 38 proto, 3 human); prod 64 ai (inactive) and
+3 live Jade questions — `jade:nrg-new-100:q1` and `q10` give glucose in mmol/L; `jade:nrg-restart-master-15:q2` mentions glucose in an mmol/L lab list.
+Needs Ian/Jade's go before anything is converted, and Jade's sign-off for his own live items.
+
+## Full bank review against MCQ standard v0.1 (Claude, started 2026-10-05) — STAGING ONLY, in progress
+
+Ian chose: full standard review of every question; staging first, prod only after his OK; Jade's questions as proposals only.
+- Shared validator extracted to `scripts/lib/mcq-standard.ts` (generator now imports it; identical results on regression runs).
+- `scripts/review-bank.ts`: `--export` (batches of 25 by source_id), `--check` (shared validator + batch length/position checks),
+  `--apply [--commit]` (staging only, refuses any other project URL and refuses Jade's pool), `--status` (counts rows whose review_notes carry `[review-v0.1`).
+  Option rows are updated in place by display_order, so option ids are kept. Flagged items: content untouched, set `needs_changes`, `is_active=false`, note appended.
+- Reviewer brief: `docs/phase-1/REVIEW_BRIEF.md` (works for Claude or Kimi subagents). Key rule after the pilot: reviewers **never change the keyed
+  answer**; a suspected wrong key is flagged `clinical-key` with a proposed rewrite for Jade.
+- **Backup before any edit:** staging tables `_backup_review_questions_20261005` (7,314) and `_backup_review_options_20261005` (29,256), RLS on, no policies.
+- Pilot (Sonnet subagents, 25 ai + 25 proto): 50/50 passed the gate; 45 rewritten, 5 flagged (DKA potassium key disputed, a duplicate NG-tube item,
+  one key change converted to a flag, two proto items needing an X-ray / physician-level interpretation). Weakest area: close/priority labels on knowledge items;
+  the brief now has a decision test for each type.
+- Working files: `data/review/<pool>/bNNNN.{in,out,applied}.json` (gitignored). Resume with `data/review/apply-ready.sh` and `npx tsx scripts/review-bank.ts --status`.
+- Order: ai (80 batches) → proto (192) → jade (21, proposals only, Opus). Prod untouched; a before/after sheet goes to Ian before anything is ported.
+- **Gates added mid-run (2026-10-05)**, enforced by `--check` for every batch: (1) no gendered pronoun the original question never used
+  (agents were inventing he/she for ungendered clients); (2) **negative stems** ("needs further teaching", NOT/EXCEPT/LEAST, "contraindicated",
+  "should … avoid") must be flagged `negative-stem`. Their distractors are true statements, so one-of-each typing doesn't fit; one forced rewrite
+  (spec1698, catheter care) ended up with three defensible answers. **Decision needed from Ian/Jade:** keep negative stems with a different
+  type scheme, or convert them to positive stems (which changes the key). About 1–2% of the AI bank.
+- Other recurring flags: `clinical-key` (reviewer thinks the key is wrong: e.g. deep tissue injury vs Stage 1, refeeding → phosphate,
+  NG placement pH vs X-ray first, T&T pentavalent schedule), scope (vasopressor infusions), duplicates. Weak spot: close/priority labels on
+  dose-calculation and knowledge items.
+- Progress at 2026-10-05 wave 3 launch: ai 825/2000 applied on staging, proto 25/4798, jade 0/516.
+- **AI pool COMPLETE on staging (2026-10-05):** 2,000/2,000 reviewed; 1,939 rewritten and typed, 61 flagged (`needs_changes`, content untouched).
+  Verified in the DB: every AI question has 4 rationales; key strictly longest in 20.2% (was 83% originally); one mmol/L glucose left (spec1019, flagged DKA item).
+  spec1329 (was approved+active on staging) was flagged — likely wrong key (refeeding → phosphate) — and is now inactive.
+  Flags so far: negative-stem 24, clinical-key 16, scope 7, needs-jade 6, duplicate 5, other 6. Report: `data/review/NRG_Bank_Review_Report.pdf` + `flags.csv`
+  (rebuild with `scripts/build-review-report.py`), sent to Ian. Three APGAR items had totals that don't match their keys (generation error pattern).
+- Prototype pool exported: 192 batches (4,798 unique). Next: proto waves, then Jade's 516 as proposals (Opus).
+- Proto progress (2026-10-05, wave P3 launched): 1,025/4,798 applied. Flag rate is much higher than the AI pool (~15%, up to 36% in NICU/PICU
+  clusters): mostly `scope` (ventilation, vasopressors, ICP, ERCP, specialist work-ups). Real key errors caught: GCS 13 keyed as moderate TBI,
+  anion-gap arithmetic, sunlight phototherapy, Caribbean RSV season, ROP staging. Three reviewer key-narrowings (10312, 11190, and 10501's
+  tramadol removal kept as a safety edit) — the first two converted to `clinical-key` flags; brief now says narrowing/broadening the key = change.
+- Proto at 2,825/4,798 (wave P6 launched). More reviewer edits converted to `clinical-key`/`needs-jade` flags by the coordinator:
+  9210 (stem temp changed to fit key), 6298/6544/6584 (stem data changed in ways that bear on the key), 6463 (number in key changed),
+  9373 (garbled stem reconstructed by guess). Note for Jade: where "elevated/low" labels were replaced with numbers, some values are
+  reviewer-invented but consistent with the original wording (e.g. 6738, 6749, 6788). Only apply a batch after its agent reports done.
+- 5533 (proto): key glucose 12 mmol/L rendered as 'about 200 mg/dL' (strict 216) to match HbA1c 8.5% eAG ~197; accepted as a conversion, Jade to note.
+- Proto b3650-b3700: ~20 nursing-research-methods items (qualitative designs etc.) flagged as scope by the reviewer. Likely over-flagged — research/EBP basics may sit in the RENR Professional Development domain. Jade to decide; could be cleared and rewritten in bulk.
+- 2026-10-05 evening: the final proto wave (b4025–b4775) hit the Claude Max session limit; all 8 agents stopped before writing anything
+  (verified: no partial .out.json files), and the wave was relaunched after the reset. Proto at 4,025/4,798 applied before the relaunch.
+  Jade's 516 exported to `data/review/jade/` (21 batches) for the proposal pass. If a session limit hits again: check for .out.json
+  files, re-run `--check` on them, and relaunch only the missing batches.
+- **PAUSED by Ian (2026-10-05).** Final proto wave stopped mid-run. Any b4025–b4775 `.out.json` left behind is unapplied and may be partial:
+  re-run `--check` on it, or delete it and re-review. To resume: launch subagents on the missing proto batches with the REVIEW_BRIEF prompt,
+  apply each batch only after its agent reports done, then Jade's 516 (`data/review/jade/`, proposals only), then rebuild the report
+  (`scripts/build-review-report.py`) and send it to Ian before anything goes to prod.
+- **Proto pool COMPLETE on staging (2026-10-05):** 4,798/4,798 reviewed; 4,253 rewritten and typed with 4 rationales each, ~545 flagged.
+  Key strictly longest 21.1% (was 85%). 2 of the 10 approved+active proto rows were flagged and deactivated (8 remain active).
+  8101 had been applied with a key-fitting stem edit; restored from `_backup_review_*` and flagged (the restore path works).
+- Jade pass launched: 7 Opus subagents on `data/review/jade/` (21 batches), conservative proposals only; `--apply` refuses the jade pool.
+- **Jade pass COMPLETE (2026-10-05):** 516/516 proposals written by Opus subagents in `data/review/jade/`, all pass `--check`; 461 proposed
+  revisions, 55 flagged (31 clinical-key, 14 needs-jade, 4 scope, 4 duplicate, 3 negative-stem). Nothing applied (tool refuses the jade pool).
+- **PROD CHANGE (Ian's explicit instruction, 2026-10-05):** 6 live questions keyed to a wrong (5 unsafe) option were set `is_active=false` on prod
+  with a review_notes line: `jade:nrg-soft-launch-mock:` q35, q50, q66, q70, q71, q75. The correct answer is one of each item's existing options;
+  re-activate after Jade confirms the key. Same miskey pattern in 24 `nrg-qbank-starter-56` items — staging only, never live. Other live prod items
+  were scanned (soft-launch set by eye; all sets by the Opus pass): no further miskeys; renr-100-original q96 is a Benner judgement call, left live.
+- **Whole review done.** Report `data/review/NRG_Bank_Review_Report.pdf` + `flags.csv` (661 flags: scope 324, clinical-key 190, needs-jade 92,
+  negative-stem 63, duplicate 17, other 6) sent to Ian. **Next, needs Ian:** approve porting staging rewrites to prod (by source_id — the prod AI rows
+  are the original versions), decide negative-stem / numeric-calculation policy, and pass Jade the flags + his proposals. Nothing committed to git yet.
+- **Prod port prepared, NOT applied (2026-10-05):** `scripts/port-review-to-prod.ts` builds one SQL file from staging + review verdicts
+  (1,939 rewrites, 61 flag updates), guarded to touch only inactive+pending AI rows with 4 options, snapshotting all ai:* rows first.
+  Dry-run against staging in a rolled-back transaction: 1,939 × (1 question + 4 options) and 61 flags matched exactly. `--apply-prod` refuses
+  without CONFIRM_PROD=yes and the distractor_type column. The two staging-only migrations (distractor_type, AI rationale backup) are now
+  repo files. Runbook: `docs/phase-1/PROD_PORT_RUNBOOK.md`. Committed to main.

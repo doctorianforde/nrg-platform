@@ -1,0 +1,46 @@
+{
+  "_readme": "Authoring rules for scripts/generate-questions.ts (MCQ standard v0.1). 'settled' rules are enforced. Anything under switches_pending_jade is OFF until Ian confirms it with Jade; flip the boolean, no code change needed. Pass --rules <path> to use a different file.",
+  "version": "mcq-standard-v0.1",
+
+  "forbidden_patterns": [
+    { "id": "critical-care", "pattern": "critical care|intensive care|\\bICU\\b|\\bCCU\\b|\\bNICU\\b|\\bPICU\\b|vasopressor|inotrope|arterial line|swan.?ganz|mechanical ventilat|ventilator.?dependent" },
+    { "id": "advanced-practice", "pattern": "nurse practitioner|nursing practitioner|advanced[- ]practice" },
+    { "id": "np-abbreviation", "pattern": "\\bNP\\b", "flags": "" },
+    { "id": "glucose-mmol", "pattern": "(glucose|glycaemi|glycemi|sugar)\\D{0,40}\\d+(\\.\\d+)?\\s*mmol" }
+  ],
+  "_units_note": "Caribbean / Trinidad and Tobago practice reports blood glucose in mg/dL, not mmol/L (Ian, 2026-10-05). glucose-mmol rejects any glucose value given in mmol/L. Electrolytes are not covered by this rule.",
+
+  "visual_flag_patterns": [
+    { "id": "markdown-emphasis", "pattern": "\\*\\*|__|(?<!\\w)\\*[^*\\s][^*]*\\*(?!\\w)" },
+    { "id": "arrow-or-symbol", "pattern": "[↑↓▲▼⬆⬇⚠❗]" },
+    { "id": "value-label", "pattern": "\\((?:high|low|critical|abnormal|normal|elevated|decreased|H|L)\\)|\\b(?:critically|abnormally) (?:high|low)\\b", "flags": "i" }
+  ],
+
+  "option_types": ["close", "correct", "incorrect", "priority"],
+
+  "length_cue": {
+    "max_len_ratio": 1.4,
+    "max_correct_gap": 12,
+    "min_option_chars": 8,
+    "max_option_chars": 200,
+    "min_rationale_chars": 60,
+    "max_batch_pct_longest": 35,
+    "max_batch_pct_any_position": 35
+  },
+
+  "near_duplicate_jaccard": 0.7,
+
+  "abbreviation_allowlist": ["IV", "BP", "RN", "HIV", "CPR", "ECG", "WHO", "FIRST", "MOST", "BEST", "NEXT", "NOT", "LEAST", "PRIORITY", "ABC", "ABCs", "ICN", "RENR"],
+  "_abbreviation_allowlist_note": "Which abbreviations count as universal is still Ian's call. Only matters when enforce_abbreviation_rule is true; otherwise unexpanded abbreviations are logged as warnings.",
+
+  "switches_pending_jade": {
+    "block_nursing_diagnosis_items": false,
+    "drop_difficulty": false,
+    "regional_wording_not_tt": false,
+    "enforce_abbreviation_rule": false,
+    "extra_forbidden_patterns": []
+  },
+
+  "store_option_types": false,
+  "_store_option_types_note": "Set true only after the question_options.distractor_type column exists on the target database (staging migration first)."
+}

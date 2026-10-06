@@ -9,13 +9,15 @@
  * is_active=false so a teacher must approve before students see anything.
  *
  * Works with any chat-completion API:
- *   --provider anthropic            ANTHROPIC_API_KEY            (default model claude-sonnet-4-5)
+ *   --provider anthropic            ANTHROPIC_API_KEY            (default model claude-sonnet-5-5; or claude-opus-5-5)
+ *   --provider kimi                 MOONSHOT_API_KEY             (default model kimi-k3; Moonshot's OpenAI-compatible API)
  *   --provider openai               OPENAI_API_KEY               (default gpt-4o)
  *   --provider gemini               GEMINI_API_KEY               (default gemini-2.0-flash)
  *   --provider ollama               OLLAMA_HOST (default http://localhost:11434), --model required
  *   --provider compatible           AI_BASE_URL + AI_API_KEY — any OpenAI-compatible endpoint
  *                                   (Groq, Together, OpenRouter, Mistral, DeepSeek, LM Studio…)
  *   --provider mock                 no network; fake items for testing the pipeline
+ *   --provider file                 no network; validates items an agent already wrote (--input items.json)
  *
  * Usage:
  *   npx tsx scripts/generate-questions.ts --config docs/phase-1/generation-config.example.json --plan-only
@@ -29,6 +31,10 @@
  *   --env           staging | prod  (prod also needs CONFIRM_PROD=yes)
  *   --dedup-db      also reject stems that already exist in the target DB
  *   --max-calls N   safety cap on API requests
+ *   --effort L      reasoning effort for anthropic (low|medium|high|xhigh|max) and kimi (low|high|max)
+ *   --temperature T sampling temperature (ignored for anthropic: current Claude models reject it)
+ *   --prompt-out P  write the full system prompt + per-batch specs to P and exit (for agent mode)
+ *   --input P       with --provider file: the {"items":[...]} JSON the agent produced
  *
  * Keys come from the environment / .env.local only. Never hardcode them.
  */
@@ -37,6 +43,7 @@ import { createClient } from "@supabase/supabase-js";
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
+import { checkMcq, jacc, loadRules, tok, type Rules } from "./lib/mcq-standard";
 
 // ─── Fixed RENR references (from the client's template) ──────────────────────
 const DOMAINS = [
@@ -78,9 +85,9 @@ type Config = {
   exclusions?: string;
   allow_sata?: boolean;            // default false (single best answer only)
   options_per_item?: number;       // default 4
-  provider?: Provider; model?: string; batch?: number; temperature?: number;
+  provider?: Provider; model?: string; batch?: number; temperature?: number; effort?: string;
 };
-type Provider = "anthropic" | "openai" | "gemini" | "ollama" | "compatible" | "mock";
+type Provider = "anthropic" | "kimi" | "openai" | "gemini" | "ollama" | "compatible" | "mock" | "file";
 
 // ─── CLI ─────────────────────────────────────────────────────────────────────
 const args = process.argv.slice(2);
@@ -107,7 +114,10 @@ cfg.model = flag("model") ?? cfg.model;
 cfg.batch = Number(flag("batch") ?? cfg.batch ?? 5);
 cfg.options_per_item ??= 4;
 cfg.allow_sata ??= false;
-cfg.temperature ??= 0.7;
+if (flag("temperature")) cfg.temperature = Number(flag("temperature"));
+if (flag("effort")) cfg.effort = flag("effort");
+// Kimi only gets a temperature when one was asked for: some Kimi models accept a single fixed value.
+if (cfg.provider !== "kimi") cfg.temperature ??= 0.7;
 if (!cfg.title || !cfg.total || !cfg.audience) { console.error("Need title, total and audience (config file or flags)."); process.exit(2); }
 
 const PLAN_ONLY = has("plan-only");
@@ -116,11 +126,17 @@ const DEDUP_DB  = has("dedup-db") || INSERT;
 const ENV       = (flag("env") ?? "staging") as "staging" | "prod";
 const MAX_CALLS = Number(flag("max-calls") ?? 200);
 const RUN_ID    = new Date().toISOString().replace(/[:.]/g, "-");
+const PROMPT_OUT = flag("prompt-out");
 const OUT       = flag("out") ?? `data/generated/${slug(cfg.title)}-${RUN_ID}.json`;
 
 const maybeFile = (v?: string) => (v && existsSync(resolve(v)) ? readFileSync(resolve(v), "utf8") : v ?? "");
 function slug(s: string) { return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 60); }
 const sha = (s: string) => createHash("sha256").update(s.toLowerCase().replace(/\s+/g, " ").trim()).digest("hex");
+
+// ─── Authoring rules (MCQ standard) ──────────────────────────────────────────
+// Settled rules are enforced; open items sit behind switches in the rules file (see scripts/lib/mcq-standard.ts).
+const RULES: Rules = loadRules(flag("rules") ?? "scripts/generation-rules.json");
+const SW = RULES.switches_pending_jade;
 
 // ─── Distribution planner (largest-remainder rounding) ───────────────────────
 function apportion(total: number, weights: { code: string; pct: number }[]): Record<string, number> {
@@ -165,6 +181,13 @@ function buildPlan(total: number) {
 }
 
 // ─── Prompt (the master prompt, with the fields filled from config) ──────────
+function standardBlock(): string {
+  return `MCQ AUTHORING STANDARD (${RULES.version}) — mandatory:
+1. Scope: write for the entry-level registered nurse. Do not test specialist or advanced-practice knowledge, roles, orders or privileges. If a decision needs specialist information, supply it in the stem. Do not write critical-care / ICU content or any "nurse practitioner" or advanced-practice content.
+2. No visual flagging: write every vital sign, assessment finding and laboratory value in plain text with identical formatting. No bold, italics, arrows, symbols, or labels such as high, low, critical, normal or abnormal. The student decides what is abnormal.
+3. Option types: exactly four options, one of each type. "correct" = the one best answer. "close" = near-correct: partly right but not the best answer. "priority" = a lower-priority action or a sequencing/timing error (right idea, wrong order or wrong moment). "incorrect" = an inappropriate or unsafe answer that a plausible entry-level nurse could still consider, failing through a subtle reasoning error and never absurd. Report each option's type in option_types. Write a rationale for every one of the four options that cites the specific data in the stem (never generic text such as "this misses the main priority"). Keep options parallel in length and grammar; the correct option must not be the longest.
+4. Units: give blood glucose in mg/dL (Caribbean practice), never mmol/L, e.g. 54 mg/dL, not 3.0 mmol/L.${SW.block_nursing_diagnosis_items ? '\n5. Do not write nursing-diagnosis (NANDA / "nursing diagnosis") items.' : ""}${SW.regional_wording_not_tt ? "\n6. Regional wording: where practice differs by territory, test the regionally accepted practice, not a Trinidad and Tobago-specific policy. This overrides any earlier instruction to use Trinidad and Tobago context." : ""}${SW.enforce_abbreviation_rule ? "\n7. Abbreviations: give the full name before its abbreviation on first use." : ""}`;
+}
 function systemPrompt(): string {
   const dw = applyOverride(DOMAINS, cfg.domain_weights), tw = applyOverride(TAXONOMY, cfg.taxonomy_weights), cw = applyOverride(CLUSTERS, cfg.cluster_weights);
   return `Act as an expert NRG nursing item writer and RENR-style examination designer (Registered Nurse examination, Trinidad & Tobago / Caribbean context).
@@ -185,8 +208,7 @@ ${cfg.topic_emphasis ? `Topic emphasis: ${cfg.topic_emphasis}` : "Topic emphasis
 ${maybeFile(cfg.source_material) ? `Source material:\n${maybeFile(cfg.source_material)}` : "Source material: rely on current evidence-based nursing practice and standard nursing curricula."}
 
 Question style: ${cfg.question_format ?? "single-best-answer multiple choice; mix of stand-alone and short clinical-scenario stems"}.
-Difficulty target: ${cfg.difficulty_target ?? "exam-level mixed difficulty"}.
-${cfg.allow_sata ? "Select-all-that-apply items are permitted only when the spec says so." : "Never write select-all-that-apply items: exactly one option is correct."}
+${SW.drop_difficulty ? "" : `Difficulty target: ${cfg.difficulty_target ?? "exam-level mixed difficulty"}.\n`}${cfg.allow_sata ? "Select-all-that-apply items are permitted only when the spec says so." : "Never write select-all-that-apply items: exactly one option is correct."}
 Each item has exactly ${cfg.options_per_item} options.
 
 NRG item-writing rules:
@@ -194,10 +216,12 @@ ${maybeFile(cfg.item_writing_rules) || "- Stems are clinically realistic, comple
 
 Exclusions: ${cfg.exclusions ?? "none"}.
 
+${standardBlock()}
+
 For every item, internally ensure the domain tag and taxonomy tag match what the stem actually demands, the scenario is clinically realistic, only one answer is best, and distractors are plausible and level-appropriate.
 
 OUTPUT: respond with a single JSON object and nothing else — no prose, no markdown fences. Schema:
-{"items":[{"spec":<number from the request>,"stem":"...","options":[{"label":"A","text":"..."},...],"correct":["B"],"rationale_correct":"...","distractor_rationales":{"A":"...","C":"...","D":"..."},"topic":"short topic name","domain":"<code>","taxonomy":"<code>","cluster":"<code>","difficulty":"easy|medium|hard"}]}`;
+{"items":[{"spec":<number from the request>,"stem":"...","options":[{"label":"A","text":"..."},...],"correct":["B"],"rationale_correct":"...","option_types":{"A":"incorrect","B":"correct","C":"close","D":"priority"},"distractor_rationales":{"A":"...","C":"...","D":"..."},"topic":"short topic name","domain":"<code>","taxonomy":"<code>","cluster":"<code>"${SW.drop_difficulty ? "" : ',"difficulty":"easy|medium|hard"'}}]}`;
 }
 function batchPrompt(specs: Spec[]): string {
   const lines = specs.map(s => {
@@ -220,13 +244,22 @@ async function postJson(url: string, headers: Record<string, string>, body: unkn
 
 const providers: Record<Provider, () => Chat> = {
   anthropic: () => {
-    const key = need("ANTHROPIC_API_KEY"); const model = cfg.model ?? "claude-sonnet-4-5";
+    const key = need("ANTHROPIC_API_KEY"); const model = cfg.model ?? "claude-sonnet-5-5";
+    // No temperature: Sonnet 5.5 / Opus 5.5 return 400 on it. Depth is set with effort instead
+    // (Opus 5.5 defaults to medium, so it is always sent explicitly).
     return async (system, user) => {
       const r = await postJson("https://api.anthropic.com/v1/messages",
         { "x-api-key": key, "anthropic-version": "2023-06-01" },
-        { model, max_tokens: 8000, temperature: cfg.temperature, system, messages: [{ role: "user", content: user }] });
-      return r.content.map((c: any) => c.text ?? "").join("");
+        { model, max_tokens: 16000, output_config: { effort: cfg.effort ?? "high" }, system, messages: [{ role: "user", content: user }] });
+      if (r.stop_reason === "refusal") throw new Error(`model declined (${r.stop_details?.category ?? "no category"})`);
+      if (r.stop_reason === "max_tokens") throw new Error("response hit max_tokens; lower --batch");
+      return r.content.filter((c: any) => c.type === "text").map((c: any) => c.text).join("");
     };
+  },
+  kimi: () => {
+    const key = need("MOONSHOT_API_KEY"); const model = cfg.model ?? "kimi-k3";
+    const base = (process.env.MOONSHOT_BASE_URL ?? "https://api.moonshot.ai/v1").replace(/\/$/, "");
+    return openaiCompatible(base, key, model, !has("no-json-mode"), cfg.effort ? { reasoning_effort: cfg.effort } : {});
   },
   openai: () => {
     const key = need("OPENAI_API_KEY"); const model = cfg.model ?? "gpt-4o";
@@ -255,18 +288,27 @@ const providers: Record<Provider, () => Chat> = {
       return r.candidates[0].content.parts.map((p: any) => p.text).join("");
     };
   },
+  file: () => {
+    const p = flag("input"); if (!p) throw new Error("--provider file needs --input <items.json>");
+    const text = readFileSync(resolve(p), "utf8");
+    return async () => text; // every batch reads the same file and keeps only its own spec numbers
+  },
   mock: () => async (_s, user) => {
     const specs = [...user.matchAll(/spec (\d+): domain (\w+).*?taxonomy (\w+).*?cluster (\w+)/g)];
-    return JSON.stringify({ items: specs.map(m => ({
-      spec: Number(m[1]), stem: `[MOCK ${m[1]}] A client in a ${m[4]} scenario requires ${m[3]}-level ${m[2]} judgement. Which action is best?`,
-      options: [{ label: "A", text: "Option A" }, { label: "B", text: "Correct option" }, { label: "C", text: "Option C" }, { label: "D", text: "Option D" }],
-      correct: ["B"], rationale_correct: "Mock rationale.", distractor_rationales: { A: "wrong", C: "wrong", D: "wrong" },
-      topic: "Mock topic", domain: m[2], taxonomy: m[3], cluster: m[4], difficulty: "medium" })) });
+    return JSON.stringify({ items: specs.map(m => {
+      const ck = "ABCD"[Number(m[1]) % 4]; const kinds = ["incorrect", "close", "priority"]; let ki = 0;
+      const types: Record<string, string> = {}; const dr: Record<string, string> = {};
+      for (const l of "ABCD") { if (l === ck) types[l] = "correct"; else { types[l] = kinds[ki++]; dr[l] = `Mock rationale for option ${l} citing the stem data of spec ${m[1]}.`; } }
+      return { spec: Number(m[1]), stem: `Mock item ${m[1]}: a client in a ${m[4].toLowerCase()} scenario needs ${m[3].toLowerCase()} level ${m[2].toLowerCase()} judgement. ${Array.from({ length: 9 }, (_, i) => `w${m[1]}k${i}`).join(" ")} Which action is best?`,
+        options: "ABCD".split("").map(l => ({ label: l, text: `Mock option ${l} for spec ${m[1]}` })),
+        correct: [ck], rationale_correct: `Mock rationale for the correct option ${ck}, citing the stem data of spec ${m[1]}.`, option_types: types, distractor_rationales: dr,
+        topic: "Mock topic", domain: m[2], taxonomy: m[3], cluster: m[4], difficulty: "medium" };
+    }) });
   },
 };
-function openaiCompatible(base: string, key: string, model: string, jsonMode: boolean): Chat {
+function openaiCompatible(base: string, key: string, model: string, jsonMode: boolean, extra: Record<string, unknown> = {}): Chat {
   return async (system, user) => {
-    const body: any = { model, temperature: cfg.temperature, messages: [{ role: "system", content: system }, { role: "user", content: user }] };
+    const body: any = { model, ...(cfg.temperature !== undefined ? { temperature: cfg.temperature } : {}), ...extra, messages: [{ role: "system", content: system }, { role: "user", content: user }] };
     if (jsonMode) body.response_format = { type: "json_object" };
     const r = await postJson(`${base}/chat/completions`, key ? { authorization: `Bearer ${key}` } : {}, body);
     return r.choices[0].message.content;
@@ -276,8 +318,8 @@ function openaiCompatible(base: string, key: string, model: string, jsonMode: bo
 // ─── Validation ──────────────────────────────────────────────────────────────
 type Item = {
   spec: number; stem: string; options: { label: string; text: string }[]; correct: string[];
-  rationale_correct: string; distractor_rationales: Record<string, string>; topic: string;
-  domain: string; taxonomy: string; cluster: string; difficulty: "easy" | "medium" | "hard";
+  rationale_correct: string; distractor_rationales: Record<string, string>; option_types: Record<string, string>; topic: string;
+  domain: string; taxonomy: string; cluster: string; difficulty?: "easy" | "medium" | "hard";
 };
 function extractJson(text: string): any {
   const t = text.replace(/```(?:json)?/gi, "").trim();
@@ -286,30 +328,17 @@ function extractJson(text: string): any {
   return JSON.parse(t.slice(a, b + 1));
 }
 function validateItem(raw: any, spec: Spec): { ok: true; item: Item; warnings: string[] } | { ok: false; error: string } {
-  const w: string[] = [];
-  if (!raw || typeof raw.stem !== "string" || raw.stem.trim().length < 20) return { ok: false, error: "missing/short stem" };
-  if (!Array.isArray(raw.options) || raw.options.length !== cfg.options_per_item) return { ok: false, error: `expected ${cfg.options_per_item} options` };
-  const labels = raw.options.map((o: any) => String(o.label ?? "").toUpperCase());
-  const expected = "ABCDEF".slice(0, cfg.options_per_item!).split("");
-  if (labels.join("") !== expected.join("")) return { ok: false, error: `option labels ${labels.join("")} ≠ ${expected.join("")}` };
-  if (raw.options.some((o: any) => !o.text || String(o.text).trim().length < 1)) return { ok: false, error: "blank option" };
-  const correct: string[] = (Array.isArray(raw.correct) ? raw.correct : [raw.correct]).map((c: any) => String(c).toUpperCase());
-  if (correct.some(c => !expected.includes(c))) return { ok: false, error: `correct ${correct} not in options` };
-  if (!cfg.allow_sata && correct.length !== 1) return { ok: false, error: "must have exactly one correct option" };
-  if (!raw.rationale_correct) return { ok: false, error: "missing rationale_correct" };
-  const stemL = raw.stem.toLowerCase();
-  if (/all of the above|none of the above/i.test(raw.options.map((o: any) => o.text).join(" "))) return { ok: false, error: "all/none of the above" };
-  if (!cfg.allow_sata && /select all that apply/.test(stemL)) return { ok: false, error: "SATA stem when not allowed" };
+  const r = checkMcq(raw, RULES, { optionsPerItem: cfg.options_per_item, allowSata: cfg.allow_sata });
+  if (!r.ok) return r;
+  const w = r.warnings;
   if (String(raw.domain).toUpperCase() !== spec.domain) w.push(`domain ${raw.domain}→${spec.domain}`);
   if (String(raw.taxonomy).toUpperCase() !== spec.taxonomy) w.push(`taxonomy ${raw.taxonomy}→${spec.taxonomy}`);
   if (String(raw.cluster).toUpperCase() !== spec.cluster) w.push(`cluster ${raw.cluster}→${spec.cluster}`);
   const difficulty = ["easy", "medium", "hard"].includes(String(raw.difficulty).toLowerCase()) ? String(raw.difficulty).toLowerCase() : "medium";
   return { ok: true, warnings: w, item: {
-    spec: spec.n, stem: String(raw.stem).trim(), options: raw.options.map((o: any) => ({ label: String(o.label).toUpperCase(), text: String(o.text).trim() })),
-    correct, rationale_correct: String(raw.rationale_correct).trim(),
-    distractor_rationales: Object.fromEntries(Object.entries(raw.distractor_rationales ?? {}).map(([k, v]) => [k.toUpperCase(), String(v)])),
+    spec: spec.n, ...r.item,
     topic: String(raw.topic ?? "").trim() || CLUSTERS.find(c => c.code === spec.cluster)!.name,
-    domain: spec.domain, taxonomy: spec.taxonomy, cluster: spec.cluster, difficulty: difficulty as Item["difficulty"],
+    domain: spec.domain, taxonomy: spec.taxonomy, cluster: spec.cluster, difficulty: SW.drop_difficulty ? undefined : (difficulty as Item["difficulty"]),
   } };
 }
 
@@ -331,26 +360,38 @@ async function main() {
   console.log("  domains  :", Object.entries(plan.dCounts).map(([k, v]) => `${k}=${v}`).join("  "));
   console.log("  taxonomy :", Object.entries(plan.tCounts).map(([k, v]) => `${k}=${v}`).join("  "));
   console.log("  clusters :", Object.entries(plan.cCounts).map(([k, v]) => `${k}=${v}`).join("  "));
+  if (PROMPT_OUT) {
+    const batches: string[] = [];
+    for (let i = 0; i < plan.specs.length; i += cfg.batch!) batches.push(`### Batch ${batches.length + 1}\n\n${batchPrompt(plan.specs.slice(i, i + cfg.batch!))}`);
+    mkdirSync(dirname(resolve(PROMPT_OUT)), { recursive: true });
+    writeFileSync(resolve(PROMPT_OUT), `# Generation brief: ${cfg.title}\n\n## System prompt\n\n${systemPrompt()}\n\n## Item specs\n\nWrite every spec below into ONE JSON object {"items":[...]}, one item per spec, using the schema in the system prompt.\n\n${batches.join("\n\n")}\n`);
+    console.log(`Wrote the full prompt + ${plan.specs.length} specs → ${PROMPT_OUT}`);
+    return;
+  }
   if (PLAN_ONLY) return;
 
   const chat = providers[cfg.provider!]();
   const system = systemPrompt();
   const existing = new Set<string>();
+  const seenToks: Set<string>[] = [];
   let db: ReturnType<typeof supa> | null = null;
   if (DEDUP_DB) {
     db = supa();
     for (let from = 0; ; from += 1000) {
       const { data, error } = await db.from("questions").select("body").range(from, from + 999);
       if (error) throw error;
-      data!.forEach(r => existing.add(sha(r.body)));
+      data!.forEach(r => { existing.add(sha(r.body)); seenToks.push(tok(r.body)); });
       if (data!.length < 1000) break;
     }
     console.log(`Loaded ${existing.size} existing stems from ${ENV} for dedup`);
   }
 
+  const rejects: Record<string, number> = {};
+  const lastErr = new Map<number, string>();
   const items: Item[] = []; const failures: { spec: number; error: string }[] = []; const warnings: string[] = [];
   let calls = 0; let queue = [...plan.specs];
-  for (let attempt = 0; queue.length && attempt < 3; attempt++) {
+  const ATTEMPTS = cfg.provider === "file" ? 1 : 3; // a file cannot change between retries
+  for (let attempt = 0; queue.length && attempt < ATTEMPTS; attempt++) {
     const retry: Spec[] = [];
     for (let i = 0; i < queue.length; i += cfg.batch!) {
       const batch = queue.slice(i, i + cfg.batch!);
@@ -364,28 +405,43 @@ async function main() {
       let ok = 0;
       for (const spec of batch) {
         const v = validateItem(got.get(spec.n), spec);
-        if (!v.ok) { retry.push(spec); continue; }
-        const h = sha(v.item.stem);
-        if (existing.has(h)) { retry.push(spec); warnings.push(`spec ${spec.n}: duplicate stem, regenerating`); continue; }
-        existing.add(h); items.push(v.item); ok++;
+        if (!v.ok) { retry.push(spec); lastErr.set(spec.n, v.error); rejects[v.error] = (rejects[v.error] ?? 0) + 1; continue; }
+        const h = sha(v.item.stem), tk = tok(v.item.stem);
+        if (existing.has(h) || seenToks.some(x => jacc(x, tk) >= RULES.near_duplicate_jaccard)) { retry.push(spec); lastErr.set(spec.n, "duplicate / near-duplicate stem"); warnings.push(`spec ${spec.n}: duplicate / near-duplicate stem, regenerating`); continue; }
+        existing.add(h); seenToks.push(tk); items.push(v.item); ok++;
         v.warnings.forEach(w => warnings.push(`spec ${spec.n}: model tagged ${w} (spec kept)`));
       }
       console.log(`${ok}/${batch.length} ok`);
     }
     queue = retry;
-    if (queue.length) console.log(`  retrying ${queue.length} spec(s) (attempt ${attempt + 2})`);
+    if (queue.length && attempt + 1 < ATTEMPTS) console.log(`  retrying ${queue.length} spec(s) (attempt ${attempt + 2})`);
   }
-  queue.forEach(s => failures.push({ spec: s.n, error: "failed validation after 3 attempts" }));
+  queue.forEach(s => failures.push({ spec: s.n, error: `failed after ${ATTEMPTS} attempt(s): ${lastErr.get(s.n) ?? "no item returned"}` }));
   items.sort((a, b) => a.spec - b.spec);
+
+  // ── Batch-level cue checks (per-item rules cannot catch skew) ──
+  const pos: Record<string, number> = {}; let longest = 0;
+  for (const it of items) {
+    const c = it.correct[0]; pos[c] = (pos[c] ?? 0) + 1;
+    const lens = it.options.map(o => o.text.length);
+    const cl = it.options.find(o => o.label === c)!.text.length;
+    if (lens.filter(n => n >= cl).length === 1) longest++; // strictly the longest
+  }
+  const pct = (n: number) => (items.length ? Math.round((100 * n) / items.length) : 0);
+  const LC = RULES.length_cue;
+  if (pct(longest) > LC.max_batch_pct_longest) warnings.push(`BATCH: correct option is the longest in ${pct(longest)}% of items (limit ${LC.max_batch_pct_longest}%)`);
+  for (const [k, n] of Object.entries(pos)) if (pct(n) > LC.max_batch_pct_any_position) warnings.push(`BATCH: correct answer is option ${k} in ${pct(n)}% of items (limit ${LC.max_batch_pct_any_position}%)`);
+  const checks = { rules_version: RULES.version, pct_correct_longest: pct(longest), correct_position_counts: pos, rejection_reasons: rejects };
+  console.log("  checks   :", JSON.stringify(checks));
 
   // ── Save JSON + Markdown review sheet ──
   mkdirSync(dirname(resolve(OUT)), { recursive: true });
-  const outJson = { run_id: RUN_ID, config: { ...cfg }, plan: { domains: plan.dCounts, taxonomy: plan.tCounts, clusters: plan.cCounts }, api_calls: calls, items, failures, warnings };
+  const outJson = { run_id: RUN_ID, config: { ...cfg }, plan: { domains: plan.dCounts, taxonomy: plan.tCounts, clusters: plan.cCounts }, api_calls: calls, checks, items, failures, warnings };
   writeFileSync(resolve(OUT), JSON.stringify(outJson, null, 2));
   const md = [`# ${cfg.title}`, ``, `Generated ${RUN_ID} · ${cfg.provider}/${cfg.model ?? "default"} · ${items.length}/${cfg.total} items · status: PENDING TEACHER REVIEW`, ``,
     `Plan — domains: ${Object.entries(plan.dCounts).map(([k, v]) => `${k} ${v}`).join(", ")} · taxonomy: ${Object.entries(plan.tCounts).map(([k, v]) => `${k} ${v}`).join(", ")} · clusters: ${Object.entries(plan.cCounts).map(([k, v]) => `${k} ${v}`).join(", ")}`, ``,
-    ...items.flatMap(it => [`## ${it.spec}. [${it.domain} · ${it.taxonomy} · ${it.cluster} · ${it.difficulty}] ${it.topic}`, ``, it.stem, ``,
-      ...it.options.map(o => `${o.label}. ${o.text}`), ``, `**Answer: ${it.correct.join(", ")}** — ${it.rationale_correct}`, ``,
+    ...items.flatMap(it => [`## ${it.spec}. [${it.domain} · ${it.taxonomy} · ${it.cluster}${it.difficulty ? " · " + it.difficulty : ""}] ${it.topic}`, ``, it.stem, ``,
+      ...it.options.map(o => `${o.label}. ${o.text}  [${(it.option_types[o.label] ?? "").toUpperCase()}]`), ``, `**Answer: ${it.correct.join(", ")}** — ${it.rationale_correct}`, ``,
       ...Object.entries(it.distractor_rationales).map(([k, v]) => `- ${k}: ${v}`), ``]),
     failures.length ? `## Failed specs\n${failures.map(f => `- ${f.spec}: ${f.error}`).join("\n")}` : ""];
   writeFileSync(resolve(OUT).replace(/\.json$/, ".md"), md.join("\n"));
@@ -415,7 +471,7 @@ async function main() {
     const rows = batch.map(it => ({
       source_id: `ai:${RUN_ID}:${it.spec}`, source: `ai:${cfg.provider}/${cfg.model ?? "default"}`,
       domain_id: domainId.get(it.domain)!, topic_id: topicId.get(it.topic.toLowerCase()) ?? null,
-      body: it.stem, explanation: it.rationale_correct, cognitive_level: taxDb[it.taxonomy], difficulty: it.difficulty,
+      body: it.stem, explanation: it.rationale_correct, cognitive_level: taxDb[it.taxonomy], difficulty: it.difficulty ?? "medium",
       question_type: it.correct.length > 1 ? "sata" : "mcq", is_ai_generated: true, is_active: false,
     }));
     const { data, error } = await db.from("questions").upsert(rows, { onConflict: "source_id" }).select("id, source_id");
@@ -424,6 +480,7 @@ async function main() {
     const opts = batch.flatMap(it => it.options.map((o, idx) => ({
       question_id: idBySource.get(`ai:${RUN_ID}:${it.spec}`)!, body: o.text, is_correct: it.correct.includes(o.label),
       rationale: it.correct.includes(o.label) ? it.rationale_correct : it.distractor_rationales[o.label] ?? null, display_order: idx + 1,
+      ...(RULES.store_option_types ? { distractor_type: it.option_types[o.label] } : {}),
     })));
     const { error: oErr } = await db.from("question_options").insert(opts);
     if (oErr) console.error("options insert failed:", oErr.message); else inserted += batch.length;
