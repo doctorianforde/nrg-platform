@@ -6,7 +6,7 @@ Status: **ready, pending Ian's review.** Nothing in this runbook has been run ag
 
 | Pool | On prod today | This port |
 |---|---|---|
-| AI bank (`ai:*`), 2,000 | Original versions, all inactive and pending | **1,991 rewrites** (new stem, options, typed options, a rationale per option; negative-stem items in the new format; 7 keys changed in the 2026-10-09 fix pass, see data/review/fix/JADE_CHECKLIST.md) + **9 retirements** (duplicates, set to `rejected`) |
+| AI bank (`ai:*`), 2,000 | Original versions, all inactive and pending | **1,991 rewrites** (new stem, options, typed options, a rationale per option; negative-stem items in the new format; 7 keys changed in the 2026-10-09 fix pass, see docs/phase-1/FIX_JADE_CHECKLIST.md) + **9 retirements** (duplicates, set to `rejected`) |
 | Prototype bank (`proto:*`), 4,798 | Not on prod | Not part of this port (separate import decision) |
 | Jade's questions (`jade:*`) | 460 live | **Nothing.** His 461 revisions are proposals awaiting his sign-off. 6 miskeyed soft-launch items are already deactivated (Ian's instruction, 2026-10-05) |
 

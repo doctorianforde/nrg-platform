@@ -2228,5 +2228,5 @@ test uses the I/II/III combination format, which bears on the ~15 "needs-jade" c
   approval; 71 with `KEY CHANGED:`), 177 retired (`rejected`, inactive, reason in review_notes; reversible), 0 still flagged.
   `review-bank.ts` gained `--status-filter` and a `retire` verdict; `port-review-to-prod.ts` reads data/review/fix/ai-* and ports
   retirements. Prod port regenerated: 1,991 rewrites + 9 retirements, staging dry run matched. Jade's list:
-  `data/review/fix/JADE_CHECKLIST.md`. (Correction: an earlier message in this session reported these numbers before the
+  `docs/phase-1/FIX_JADE_CHECKLIST.md`. (Correction: an earlier message in this session reported these numbers before the
   reviewers had finished; the figures here are the verified ones.)

@@ -1,0 +1,272 @@
+# Fix pass (2026-10-09): items for Jade
+
+554 `needs_changes` questions resolved on staging under docs/phase-1/FIX_BRIEF.md: 377 rewritten (now `pending`, so each still
+needs Jade's approval) and 177 retired (`rejected`, reversible). Search review notes for `[review-v0.1 2026-10-09]`.
+
+## Judgement calls the reviewers were unsure of
+
+Also: items naming Milton Cato Memorial Hospital (7375, 7477, 7165) were reconstructed from a garbled stem; T&T-specific rules in 5447, 5547, 7939, 7953, 7954, 8053 use general principles.
+
+- `proto:caribbean2000:10312`: Revised Trauma Score: entry-level enough?
+- `proto:renr-batch4:8988`: Upper GI bleed: crossmatch before IV PPI (NICE) vs common local practice
+- `proto:maternal-child:6977`: WHO Plan C infant volumes: protocol-dependent
+- `proto:maternal-child:6984`: IV potassium 40 mEq/L: protocol-dependent
+- `proto:professionalism:7377`: Regional Nursing Body vs national councils
+- `proto:caribbean2000:11403`: MEOWS chart: local ward practice?
+- `proto:caribbean2000:11460`: Shivering 37.9°C after misoprostol treated as expected
+- `proto:clinical-skills:9757`: Alteplase 185/110 threshold: physician territory?
+- `proto:maternal-child:6513`: Exchange-transfusion prep: borderline scope
+
+## Answer keys changed (71)
+
+- `ai:ai-renr-2000-20260918:spec1329`: blood glucose → serum phosphate, potassium and magnesium because refeeding syndrome (NICE) is driven by these electrolytes, as the original explanation stated
+- `ai:ai-renr-2000-20260918:spec281`: 7 → 6 because the findings sum to 2+1+1+1+1 = 6
+- `ai:ai-renr-2000-20260918:spec490`: suprapubic pressure plus a recorder → helpers to McRoberts' position and suprapubic pressure because RCOG guidance makes McRoberts' the first manoeuvre
+- `ai:ai-renr-2000-20260918:spec621`: 6 → 5 because the findings sum to 1+1+1+1+1 = 5
+- `ai:ai-renr-2000-20260918:spec670`: routine X-ray before first feeds → standard protocol with training and audit because NHS/NPSA guidance uses aspirate pH first-line
+- `ai:ai-renr-2000-20260918:spec814`: nurse detains the client → nurse assesses risk, encourages the client to stay and gets an urgent psychiatric review, because detention needs a physician's legal order
+- `proto:caribbean2000:10131`: 'Somogyi effect or inadequate basal insulin' → 'evening/basal insulin dose too high' because morning lows reflect excess, not inadequate, basal insulin and the Somogyi effect is disputed
+- `proto:caribbean2000:10312`: 'RTS or ISS' → 'RTS' because the stem asks for physiological parameters and the ISS is anatomical (ISS kept as the close option)
+- `proto:caribbean2000:10512`: cranberry mixed-effects statement → water intake as the best prevention because evidence for cranberry is weak and it contains oxalate
+- `proto:caribbean2000:10685`: moderate TBI → mild TBI because standard GCS grading puts 13 to 15 as mild and the stem gives no focal deficit
+- `proto:caribbean2000:10690`: D (supine position) → bag-valve-mask support of breathing, because supine positioning raises intracranial pressure and respirations 8/min with GCS 8 make breathing the first priority (ABC)
+- `proto:caribbean2000:10861`: B (transfuse only if severe bleeding or platelets <10,000 without fever) → bleeding precautions, because WHO advises against prophylactic platelet transfusion and the threshold text was misworded
+- `proto:caribbean2000:11118`: indirect-sunlight advice → advise against sun exposure and arrange bilirubin testing because current guidance (NICE CG98, WHO) does not recommend sunlight to treat neonatal jaundice
+- `proto:caribbean2000:11304`: old key → new key because uterine artery embolization treats active bleeding and is not preconception advice
+- `proto:caribbean2000:11310`: 'possible legal intervention' → respect competent refusal with blood-free alternatives, because an adult with capacity may refuse
+- `proto:caribbean2000:11497`: removed 'avoid estrogen if very large fibroids' from the key because WHO MEC rates fibroids category 1 for combined hormonal methods
+- `proto:caribbean2000:9637`: <130/80 → <140/90 because the WHO 2021 hypertension guideline sets <140/90 for adults without comorbidities
+- `proto:caribbean2000:9680`: IV furosemide and morphine → IV furosemide because ESC 2021 heart failure guidance no longer recommends routine opiates in acute pulmonary oedema
+- `proto:caribbean2000:9730`: 'allow permissive hypertension unless >220/120' → report and expect cautious ~15% lowering, because AHA/ASA 2019 advise lowering at ≥220/120 without thrombolysis
+- `proto:caribbean2000:9798`: uraemic frost → uraemic pruritus because standard renal nursing texts give pruritus as the most common skin finding and frost as rare
+- `proto:caribbean2000:9886`: 'admission and possible critical care' → 'admission with close monitoring' to remove critical-care content (BTS/NICE still class CURB-65 of 3 as severe needing admission)
+- `proto:caribbean2000:9930`: prepare for platelet transfusion → report and monitor closely because WHO dengue guidance reserves platelets for severe bleeding, not minor mucosal oozing
+- `proto:caribbean2000:9932`: 'avoid vigorous activity 1-2 weeks as plasma leakage recurs with exertion' → gradual return as fatigue persists, because recurrence of leakage in convalescence is not established (WHO dengue guidance)
+- `proto:clinical-skills:9151`: back blows + chest thrusts → back blows + abdominal thrusts because chest thrusts are the infant technique and AHA 2025/ERC use abdominal thrusts for children over 1 year
+- `proto:clinical-skills:9211`: half the deficit over 8 h then 16 h → WHO Plan C (100 mL/kg over 3 h) because the old schedule is too slow for severe cholera
+- `proto:clinical-skills:9217`: 20 mL/kg boluses up to 60 mL/kg → WHO Plan C 100 mL/kg over 6 hours because the stem describes severe dehydration without shock
+- `proto:clinical-skills:9218`: add KCl and continue insulin → hold insulin and notify because ADA guidance holds insulin when K is below 3.3 mEq/L
+- `proto:clinical-skills:9252`: clamp and reconnect → submerge the tube end in sterile water because current guidance avoids clamping with a pneumothorax
+- `proto:clinical-skills:9271`: 0.45% NaCl → 0.9% NaCl because the client has hypovolaemic hypotonicity after D5W and a hypotonic fluid would worsen it
+- `proto:clinical-skills:9319`: platelet-specific filter → standard blood administration set because standard 170 to 260 micron sets are used for platelets
+- `proto:clinical-skills:9321`: slow and give antihistamine → stop, keep the line open with saline and notify because most transfusion protocols stop first for any reaction
+- `proto:clinical-skills:9346`: 0.5 mL → 0.1 mL because 10 units at 100 units/mL is 0.1 mL
+- `proto:maternal-child:6205`: 17-OHPC from 16 to 20 weeks → cervical length surveillance with progesterone or cerclage if short, because the FDA withdrew 17-OHPC in 2023 (PROLONG) and NICE/ACOG recommend surveillance
+- `proto:maternal-child:6265`: infection/hygiene/urine output → monitoring drainage, vital signs and fundal height, because ongoing bleeding is the main risk during balloon tamponade
+- `proto:maternal-child:6448`: feed and recheck → notify provider and prepare IV dextrose, because AAP guidance treats symptomatic hypoglycemia with IV glucose
+- `proto:maternal-child:6508`: cover a skin patch for 30 to 60 minutes → lights off only during the draw and shield the sample, because current guidance does not require skin shielding
+- `proto:maternal-child:6530`: weaning from double to single surface → stop and check rebound bilirubin, because AAP 2022 advises stopping phototherapy outright with a rebound check
+- `proto:maternal-child:6533`: 'acceptable physiologic rise' → likely pathologic, report, because jaundice within 24 hours and a rise above 0.2 mg/dL per hour are standard markers of pathologic jaundice
+- `proto:maternal-child:6534`: phototherapy → continue breastfeeding with recheck, because 18 mg/dL at 10 days in a well term baby is below the AAP 2022 threshold
+- `proto:maternal-child:6579`: failure to thrive → normal growth, because weight tracking steadily on the 10th percentile does not meet FTT criteria (below 3rd percentile or crossing two major lines)
+- `proto:maternal-child:6614`: 'paradoxical hypertension, BP higher in legs' → abdominal pain, distension or vomiting, because postoperative paradoxical hypertension shows as mesenteric arteritis signs parents can see
+- `proto:maternal-child:6677`: cool mist/cool night air → keep child calm and upright because current croup guidance finds humidified air ineffective
+- `proto:maternal-child:6698`: RSV infection → drinking plain water because viral infections, including RSV, do commonly trigger childhood asthma
+- `proto:maternal-child:6741`: obtain neuroimaging → close neurological and vital-sign monitoring because imaging is a physician decision and not routine after complex febrile seizures
+- `proto:maternal-child:6977`: 150 mL over 30 minutes → 150 mL over 1 hour because WHO Plan C gives infants under 12 months 30 mL/kg over 1 hour
+- `proto:maternal-child:6984`: '20 to 40 mEq/L' range → 'not more than 40 mEq/L' because the maximum is a single value and standard paediatric references give 40 mEq/L
+- `proto:nrg-general:5160`: 10 → 9 because withdrawal from pain scores 4 on the GCS motor scale (5 is localising)
+- `proto:nrg-general:5177`: confront privately and report if it continues → report promptly to the nurse manager because falsified vital signs are a patient-safety and misconduct issue
+- `proto:nrg-general:5340`: A (teach self-catheterization and bladder training) → C (urinalysis and post-void residual) because self-catheterization is indicated only for confirmed incomplete emptying and infection must be excluded first (NICE CG148, standard RN texts)
+- `proto:nrg-general:5443`: B (don N95 first) → D (gown, N95, face shield, gloves
+- `proto:nrg-general:5452`: C (anterolateral thigh, 22-gauge 1-inch) → D (vastus lateralis, 25-gauge 5/8-inch) because CDC/WHO advise a 5/8-inch needle for neonates
+- `proto:nrg-rankup:5674`: C (edrophonium test) → D (assess breathing, suction, call for help) because the edrophonium test is obsolete and diagnostic, not treatment
+- `proto:nrg-rankup:5711`: 'Discontinue gentamicin' → 'Hold the next gentamicin dose and report to the physician' because stopping a prescribed drug is the prescriber's decision
+- `proto:nrg-rankup:5760`: 'Slow the transfusion...' → 'Stop the transfusion, sit up, oxygen, notify' because current transfusion-reaction guidance (BSH/SHOT, standard RN texts) is to stop the transfusion for TACO
+- `proto:nrg-rankup:5829`: 'Prepare for urgent echocardiography' → 'Focused neurological assessment and prompt report' because new confusion suggests embolic stroke and echo is a medical decision, not the nursing priority
+- `proto:nrg-rankup:5889`: 'Aggressive pain management' → 'High-concentration oxygen and reassess airway and breathing' because ABC priorities put correcting SpO2 88% first
+- `proto:nrg-rankup:6099`: '0.9% saline or Lactated Ringer's in 1-2 litre boluses' → 'Up to 1 litre warmed isotonic crystalloid, then blood products' because ATLS 10th edition limits crystalloid in hemorrhage
+- `proto:professionalism:7374`: D (oral medication administration) → D (vital signs on a stable client) because whether assistants may give medicines varies by jurisdiction and conflicts with item 7370
+- `proto:professionalism:7793`: all four modes → physiological, self-concept and role function because the stem gives no data on interdependence (support relationships), per Roy's model definitions
+- `proto:professionalism:7803`: assess all four modes → safety (suicide risk) and physiological needs first because a client who refuses food and says there is no reason to live needs immediate risk assessment (standard psychiatric nursing priority)
+- `proto:professionalism:7912`: middle-range theory → grand theory because standard nursing theory texts classify Orem's Self-Care Deficit Theory as a grand theory
+- `proto:renr-batch4:8119`: label facing upward → label held in the palm because standard fundamentals texts teach palming the label so drips do not obscure it
+- `proto:renr-batch4:8217`: rewarm and reassess only → rewarm and report to the physician because a falling temperature with new lethargy and poor intake in an older adult can signal sepsis or another acute illness and needs medical review (standard gerontological nursing teaching)
+- `proto:renr-batch4:8239`: 'should have auscultated before percussion' → 'sequence is correct' because the stem describes inspection, auscultation, percussion, palpation, which is the standard abdominal order
+- `proto:renr-batch4:8259`: Generalized Anxiety Disorder → Ineffective coping because GAD is a medical diagnosis, not a nursing diagnosis, and the client's own words describe failed coping after a situational crisis (NANDA-I)
+- `proto:renr-batch4:8601`: D (nurse complies personally) -> refer to legal counsel/health records because subpoenas are handled through the institution's legal and records process
+- `proto:renr-batch4:8831`: C (sublimation combined with denial) -> denial because humour used to deflect and 'I am fine' fits denial, not sublimation
+- `proto:renr-batch4:8855`: A (three) -> two (Cut down, Guilty) because 'drinking more than intended' is not a CAGE item
+- `proto:renr-batch4:8915`: D (enmeshment and rigid boundaries) -> enmeshment with diffuse boundaries because in Minuchin's theory enmeshment means diffuse boundaries
+- `proto:renr-batch4:8922`: D (disengaged with diffuse boundaries) -> disengaged with rigid boundaries because in Minuchin's theory disengagement means rigid boundaries
+- `proto:renr-batch4:8988`: B (IV proton pump inhibitor) -> type and crossmatch because NICE CG141 advises against PPI before endoscopy and the client remains unstable
+
+## Retired (177)
+
+- `ai:ai-renr-2000-20260918:spec102`: Duplicate of ai:ai-renr-2000-20260918:spec1011, which is kept (both test confirming nasogastric tube placement by aspirate pH before a feed).
+- `ai:ai-renr-2000-20260918:spec123`: Duplicate of ai:ai-renr-2000-20260918:spec1223, which is kept (thyroidectomy assignment to the experienced RN with emergency equipment ready).
+- `ai:ai-renr-2000-20260918:spec1317`: Duplicate of ai:ai-renr-2000-20260918:spec977, which is kept and rewritten as a nursing decision about the first pentavalent dose.
+- `ai:ai-renr-2000-20260918:spec333`: Duplicate of ai:ai-renr-2000-20260918:spec324, which is kept (which task can be delegated to an unregulated nursing assistant).
+- `ai:ai-renr-2000-20260918:spec52`: Duplicate of ai:ai-renr-2000-20260918:spec507, which is kept (Venturi mask for a precise, fixed oxygen concentration).
+- `ai:ai-renr-2000-20260918:spec585`: Duplicate of ai:ai-renr-2000-20260918:spec1721, which is kept (painless third-trimester bleeding, digital vaginal examination contraindicated).
+- `ai:ai-renr-2000-20260918:spec689`: Duplicate of ai:ai-renr-2000-20260918:spec684, which is kept (contact precautions: gown and gloves on before entry, removed before leaving).
+- `ai:ai-renr-2000-20260918:spec699`: Duplicate of ai:ai-renr-2000-20260918:spec1721, which is kept (painless third-trimester bleeding, digital vaginal examination contraindicated).
+- `ai:ai-renr-2000-20260918:spec849`: Duplicate of ai:ai-renr-2000-20260918:spec281 in this batch, which is kept with its key corrected to 6 (same newborn findings at one minute, heart rate over 100).
+- `proto:caribbean2000:10030`: Chest X-ray interpretation (Ghon complex) is radiology/physician work, and the key mislabels a healed primary TB sign as advanced TB; no honest entry-level version.
+- `proto:caribbean2000:10099`: Ventilator strategy for ARDS (tidal volume, plateau pressure) is critical-care physician content with no entry-level RN version.
+- `proto:caribbean2000:10104`: Complications of high-dose vasoconstrictor infusions are intensive-care content; ward sepsis recognition and perfusion monitoring are covered by 10090 and 10096 in this batch.
+- `proto:caribbean2000:10116`: Critical illness-related corticosteroid insufficiency after prolonged shock therapy is critical-care endocrine content with no entry-level RN version.
+- `proto:caribbean2000:10122`: Cytokine pathogenesis of septic shock (TNF-alpha, IL-1) is specialist immunology knowledge with no entry-level nursing decision attached.
+- `proto:caribbean2000:10182`: Ventilator settings and tracheostomy timing for obese ventilated clients are critical-care content with no entry-level RN version.
+- `proto:caribbean2000:10192`: Intra-abdominal pressure measurement and abdominal compartment syndrome are critical-care content with no natural entry-level RN version.
+- `proto:caribbean2000:10283`: Duplicate of 10276, which is kept (salt iodisation as the Caribbean public health strategy).
+- `proto:caribbean2000:10288`: Tests a contested regional mortality statistic (road traffic versus interpersonal violence) rather than a nursing decision; no single defensible key.
+- `proto:caribbean2000:10322`: Duplicate of 10301, which is kept (analgesia, oxygen and breathing support for rib fractures or flail chest).
+- `proto:caribbean2000:10354`: Appendiceal mucocele and mucinous neoplasm is specialist pathology and diagnosis with no entry-level RN version.
+- `proto:caribbean2000:10397`: Surgical management of Mirizzi syndrome is a surgeon-level decision; nursing care around biliary obstruction and ERCP is covered by 10383, 10391 and 10402.
+- `proto:caribbean2000:10478`: Plain abdominal X-ray interpretation (valvulae conniventes versus haustra) is radiology work; nursing care of bowel obstruction is covered by 10468 in this batch.
+- `proto:caribbean2000:10502`: Primary hyperoxaluria type 1 is a rare specialist genetic diagnosis with no entry-level RN version.
+- `proto:caribbean2000:10542`: Compares specialist urological procedures (TUMT, HIFU) and the key mixes two techniques; no honest entry-level RN version.
+- `proto:caribbean2000:10548`: Laser wavelength choice for BPH surgery is surgical knowledge and the stem contradicts the key (532 nm versus 980/1470 nm); post-TURP nursing is covered by 10553.
+- `proto:caribbean2000:10634`: Which immunotherapy is approved for metastatic castration-resistant prostate cancer is oncology drug-approval knowledge with no entry-level RN version.
+- `proto:caribbean2000:10674`: RAS mutation testing to select anti-EGFR therapy is oncologist/pathologist treatment selection with no entry-level RN version.
+- `proto:caribbean2000:10691`: Gold-standard intracranial pressure monitoring (external ventricular drain) is neurocritical care knowledge with no entry-level RN version.
+- `proto:caribbean2000:10708`: Identifying diffuse axonal injury on CT is radiological interpretation with no entry-level RN version.
+- `proto:caribbean2000:10762`: Anion gap and blood gas interpretation in a child is beyond entry-level scope, and the keyed value (AG 44) was wrong.
+- `proto:caribbean2000:10803`: Investigating persistent metabolic acidosis after resuscitation is shock-level physician reasoning with no entry-level RN version.
+- `proto:caribbean2000:10827`: Escalation from high-flow oxygen to CPAP or intubation is a physician decision; the ward escalation point is covered by rescoped 10794.
+- `proto:caribbean2000:10829`: Intensive care admission triage with limited beds is a physician and system-level decision with no entry-level RN version.
+- `proto:caribbean2000:10836`: Ventilator strategy (PEEP, tidal volume, permissive hypercapnia) is critical-care physician content with no entry-level RN version.
+- `proto:caribbean2000:10837`: Health-service planning for paediatric intensive care capacity is outside RN practice; RSV prevention teaching is covered by rescoped 10815.
+- `proto:caribbean2000:10843`: Diagnosing and managing dynamic hyperinflation in a ventilated infant is critical-care content with no entry-level RN version.
+- `proto:caribbean2000:10869`: National dengue outbreak preparedness (stockpiles, blood bank readiness) is public-health planning, not an entry-level RN decision.
+- `proto:caribbean2000:10877`: Duplicate of proto:caribbean2000:10862, which is kept.
+- `proto:caribbean2000:10914`: Catecholamine-resistant septic shock (second vasopressor, hydrocortisone) is critical-care physician management; ward sepsis escalation is covered by rescoped 10900.
+- `proto:caribbean2000:10917`: System design for paediatric sepsis services (telemedicine, transport networks) is health-service planning outside entry-level RN scope.
+- `proto:caribbean2000:10923`: Ionised calcium correction in pressor-refractory shock is critical-care prescriber management with no entry-level RN version.
+- `proto:caribbean2000:10974`: The most common first-week electrolyte disturbance in preterm infants is genuinely contested (hypernatraemia, hyponatraemia, hypocalcaemia) and is specialist neonatal content.
+- `proto:caribbean2000:10994`: Intubation and surfactant for a 26-week infant failing CPAP is specialist neonatal intensive care with no entry-level RN version.
+- `proto:caribbean2000:11001`: Management of grade III to IV intraventricular haemorrhage is specialist neonatal neurosurgical care with no entry-level RN version.
+- `proto:caribbean2000:11015`: Gentle ventilation settings for neonatal RDS are neonatologist and respiratory therapist decisions with no entry-level RN version.
+- `proto:caribbean2000:11022`: Respiratory distress management without surfactant (CPAP, ventilation, referral) is muddled specialist neonatal content; kangaroo care is covered by rescoped 10982.
+- `proto:caribbean2000:11026`: Persistent pulmonary hypertension management (inhaled nitric oxide, high-frequency ventilation) is specialist neonatal care with no entry-level RN version.
+- `proto:caribbean2000:11034`: High-frequency ventilation, nitric oxide and refractory hypoxaemia management are neonatal intensive-care decisions with no honest entry-level RN version.
+- `proto:caribbean2000:11035`: Recognising surfactant-related complications during intubated surfactant dosing is neonatal intensive-care specialist content; no entry-level version without becoming a different question.
+- `proto:caribbean2000:11037`: National surfactant procurement strategy is health-system policy, not an entry-level RN decision.
+- `proto:caribbean2000:11039`: Unit-wide RDS protocol standardisation with surfactant thresholds is clinical governance and physician-led; no entry-level RN version.
+- `proto:caribbean2000:11069`: Choosing a hospital's sepsis diagnostic and empiric antibiotic strategy is clinical governance; the nursing sepsis points are covered by 11053 and 11071 rewrites.
+- `proto:caribbean2000:11076`: Catecholamine-resistant neonatal septic shock is intensive-care management; sepsis recognition and escalation is covered by the 11071 rewrite.
+- `proto:caribbean2000:11077`: Antimicrobial stewardship programme design is hospital policy outside entry-level RN scope.
+- `proto:caribbean2000:11079`: Antibiotic time-out programmes after audit are stewardship policy decisions, not entry-level RN actions.
+- `proto:caribbean2000:11080`: Distinguishing culture-negative sepsis from non-infectious deterioration is specialist neonatology reasoning with no entry-level version.
+- `proto:caribbean2000:11101`: Bilirubin-albumin ratio and exchange transfusion thresholds are physician decisions; no entry-level RN version.
+- `proto:caribbean2000:11102`: Hospital phototherapy resource planning is a management decision and its sunlight key is outdated; the nursing point is covered by the 11118 rewrite.
+- `proto:caribbean2000:11106`: Diagnosing hereditary spherocytosis from a blood smear is specialist interpretation; G6PD nursing teaching is covered by the 11121 rewrite.
+- `proto:caribbean2000:11108`: Selecting and cross-matching blood for exchange transfusion is a physician and blood bank decision with no entry-level version.
+- `proto:caribbean2000:11122`: Managing instability during exchange transfusion is neonatal intensive-care physician management.
+- `proto:caribbean2000:11123`: Crigler-Najjar type I pathophysiology and transplant planning is specialist content beyond entry-level scope.
+- `proto:caribbean2000:11125`: Umbilical arterial blood gas thresholds for asphyxia are specialist neonatal interpretation with no entry-level RN version.
+- `proto:caribbean2000:11134`: Arterial blood gas interpretation in severe birth asphyxia is neonatal intensive-care content.
+- `proto:caribbean2000:11140`: Therapeutic hypothermia target temperatures and rewarming are intensive-care parameters; HIE nursing care is covered by the 11133 rewrite.
+- `proto:caribbean2000:11147`: Nursing care during active therapeutic hypothermia is neonatal intensive-care content beyond entry-level scope.
+- `proto:caribbean2000:11153`: Choosing second-line drugs for refractory neonatal seizures is a prescribing decision; seizure recognition is covered by the 11141 rewrite.
+- `proto:caribbean2000:11154`: Managing coagulopathy during cooling therapy is intensive-care physician decision-making.
+- `proto:caribbean2000:11156`: Interpreting amplitude-integrated EEG patterns is specialist neurophysiology beyond entry-level RN scope.
+- `proto:caribbean2000:11157`: Duplicate of proto:caribbean2000:11142, which is kept.
+- `proto:caribbean2000:11160`: Distinguishing HIE from neurometabolic disorders using cord gas and neuroimaging is specialist interpretation.
+- `proto:caribbean2000:11161`: Inotrope and hydrocortisone choices for cardiogenic shock in HIE are prescribing and critical-care decisions.
+- `proto:caribbean2000:11163`: Choosing sodium bicarbonate for severe neonatal metabolic acidosis is a neonatology decision based on blood gases, with no entry-level RN version.
+- `proto:caribbean2000:11189`: Regional health-system planning for paediatric cardiac surgery is health-service policy, not entry-level nursing practice.
+- `proto:caribbean2000:11196`: Management of neonatal hyperammonaemic crisis (ammonia scavengers, dialysis) is specialist metabolic medicine; an escalation rewrite would be a different, generic question.
+- `proto:caribbean2000:11240`: Distinguishing acute fatty liver of pregnancy from HELLP by laboratory pattern and biopsy is specialist diagnosis with no natural entry-level RN version.
+- `proto:caribbean2000:11306`: Choosing among compression sutures, artery ligation and hysterectomy is a surgeon's decision; the nurse's role in PPH is covered by rewritten items 11293 and 11236.
+- `proto:caribbean2000:11396`: Lung-protective ventilation settings for ARDS are critical-care management with no entry-level RN version.
+- `proto:caribbean2000:11433`: Choosing methotrexate or salpingectomy by hCG threshold for persistent ectopic pregnancy is a physician treatment decision with no natural nursing version.
+- `proto:caribbean2000:11441`: Surgical management of interstitial ectopic pregnancy (cornuostomy, wedge resection) is specialist surgical content beyond entry-level nursing.
+- `proto:caribbean2000:11455`: Duplicate of proto:caribbean2000:11469, which is kept.
+- `proto:caribbean2000:11468`: Selecting the recurrent pregnancy loss laboratory work-up is specialist content and overlaps proto:caribbean2000:11463, which is kept.
+- `proto:caribbean2000:11475`: Diagnosing antiphospholipid syndrome and choosing aspirin plus heparin is specialist physician content with no natural entry-level version.
+- `proto:caribbean2000:11477`: Duplicate of proto:caribbean2000:11462, which is kept.
+- `proto:caribbean2000:11479`: Hysteroscopic metroplasty for septate uterus is specialist gynaecological surgery with no entry-level RN version.
+- `proto:caribbean2000:11483`: Further work-up of unexplained recurrent pregnancy loss (thrombophilia, alloimmune factors) is specialist physician content.
+- `proto:caribbean2000:11499`: Pre-operative GnRH agonist and IV iron regimen before myomectomy is a prescribing and surgical decision with no natural nursing version.
+- `proto:caribbean2000:11508`: Tumour markers for uterine leiomyosarcoma are specialist gynae-oncology laboratory content with no entry-level RN version on the same point.
+- `proto:caribbean2000:11517`: Choosing surgical training investments for gynaecologists is health-system planning with no entry-level nursing decision.
+- `proto:caribbean2000:11534`: Lymph-node spread pathways of cervical cancer are oncology staging knowledge with no natural entry-level RN version.
+- `proto:caribbean2000:11546`: Choosing radical trachelectomy for fertility preservation is a specialist gynae-oncology surgical decision with no entry-level RN version.
+- `proto:caribbean2000:11555`: Managing stage IB1 cervical cancer at 18 weeks of pregnancy is a specialist multidisciplinary decision with no entry-level RN version.
+- `proto:caribbean2000:9760`: Naming brainstem crossed syndromes is specialist neurology classification with ambiguous options (Wallenberg is also crossed); no entry-level RN version.
+- `proto:caribbean2000:9831`: Ventilator strategy in status asthmaticus is critical-care content with no entry-level ward version on the same point.
+- `proto:caribbean2000:9832`: Asthma cytokine biology (IL-5) is immunology detail with no entry-level nursing decision attached.
+- `proto:caribbean2000:9892`: Interpreting pleural fluid chemistry to decide on chest drainage is a physician decision with no entry-level version on the same point.
+- `proto:caribbean2000:9897`: PaO2/FiO2 ratio interpretation and ARDS grading are critical-care content with no entry-level RN version.
+- `proto:caribbean2000:9913`: Recognising the Legionella symptom cluster is specialist diagnostic knowledge with no natural entry-level nursing decision.
+- `proto:clinical-skills:9166`: Choosing the amiodarone dose in cardiac arrest is an ACLS team-leader and prescriber decision with no natural entry-level RN version; the nurse's code roles are covered by rescoped 9168 and 9179 in this batch.
+- `proto:clinical-skills:9171`: Post-arrest blood pressure targets with fluid and drug titration are high-dependency medical management, not entry-level RN content.
+- `proto:clinical-skills:9172`: Targeted temperature management ranges and duration are a specialist post-arrest physician decision with no honest entry-level RN version.
+- `proto:clinical-skills:9175`: Choosing emergent coronary catheterisation after cardiac arrest is a cardiology decision; there is no natural entry-level nursing version of this item.
+- `proto:clinical-skills:9176`: Paediatric cardiac arrest epinephrine dosing is PALS team-leader content; the nursing version would only be a numeric calculation without typed distractors.
+- `proto:clinical-skills:9177`: The role of sodium bicarbonate in cardiac arrest is a physician-level ACLS drug decision with no entry-level RN version.
+- `proto:clinical-skills:9207`: Interpreting urine chloride and Bartter syndrome is specialist diagnostic content; the nursing angle of vomiting and NG suction losses is covered by rescoped 9197 and 9198.
+- `proto:clinical-skills:9216`: The renal acid-base mechanism of refractory hypokalaemia is specialist content; the entry-level angle (NG suction electrolyte loss) is covered by rescoped proto:clinical-skills:9198 in this batch.
+- `proto:clinical-skills:9223`: Calculating the sodium deficit for 3% hypertonic saline is a physician and high-dependency decision, not an entry-level RN task.
+- `proto:clinical-skills:9347`: Vinca alkaloid chemotherapy administration is specialist oncology practice; the high-alert independent double-check point is kept in proto:clinical-skills:9346 in this batch.
+- `proto:maternal-child:6532`: Asks for an exchange-transfusion bilirubin threshold, a neonatologist decision whose value differs between AAP 2004 and 2022 guidance; the nurse's escalation role is covered by the rewrite of proto:maternal-child:6482.
+- `proto:maternal-child:6623`: Care of a newborn with hypoplastic left heart syndrome on a prostaglandin E1 infusion, with readiness for intubation, is neonatal specialist-unit content with no natural entry-level RN version.
+- `proto:maternal-child:6624`: Differentiating tricuspid atresia from other cyanotic defects by S2 quality and ECG axis is specialist cardiology interpretation with no entry-level RN version.
+- `proto:maternal-child:6625`: Explaining staged single-ventricle surgical palliation (Norwood, Glenn, Fontan) is specialist cardiac surgical content outside entry-level RN scope.
+- `proto:maternal-child:6656`: Prostaglandin E1 infusion care for hypoplastic left heart syndrome in a specialist neonatal unit is outside entry-level scope; it also overlaps proto:maternal-child:6623, which is retired for the same reason.
+- `proto:maternal-child:6768`: Levelling and managing a neonatal external ventricular drain is neurosurgical specialist nursing with no honest entry-level RN version.
+- `proto:maternal-child:6783`: Deciding on therapeutic hypothermia for hypoxic-ischaemic encephalopathy is a neonatal specialist treatment decision with no natural entry-level RN version.
+- `proto:maternal-child:6784`: Monitoring a cooled neonate and interpreting expected effects of therapeutic hypothermia is specialist neonatal-unit practice outside entry-level scope.
+- `proto:maternal-child:6785`: Sarnat staging of neonatal encephalopathy is a neonatologist's classification, pure specialist knowledge with no entry-level nursing decision.
+- `proto:maternal-child:6800`: Recognising cerebellar mutism syndrome after posterior fossa surgery is a specialist neurosurgical diagnosis; a nursing recast would be a different question.
+- `proto:maternal-child:6802`: Recognising neuroblastoma with opsoclonus-myoclonus and anticipating its oncology work-up is physician-level diagnosis with no natural entry-level RN version.
+- `proto:maternal-child:6839`: Naming the Ladd procedure and its surgical steps is surgeon-level knowledge; the malrotation topic is kept through the rescoped proto:maternal-child:6838.
+- `proto:maternal-child:7100`: Choosing the key component of a dilated ophthalmologic examination for abusive head trauma is specialist assessment; the topic is kept in proto:maternal-child:7091.
+- `proto:maternal-child:7115`: Interpreting rib-fracture patterns on a skeletal survey is radiologist work with no entry-level nursing decision; the abuse topic is kept in proto:maternal-child:7091.
+- `proto:nrg-general:5243`: Cricoid pressure during rapid sequence intubation is an anaesthesia procedure outside entry-level RN scope, and its routine use is now contested.
+- `proto:nrg-general:5287`: Simultaneous ACLS management of ventricular tachycardia and charge-nurse allocation of nurses between two emergencies is resuscitation-team and management content with no honest entry-level RN version.
+- `proto:nrg-general:5306`: Nurse-manager staffing plan built around clients with ARDS on prone positioning and clients weaned from ventilation is critical-care management content with no entry-level RN version.
+- `proto:nrg-general:5326`: Explaining sedation for intracranial pressure control in severe TBI is neurocritical-care content; an entry-level version would be a different question.
+- `proto:nrg-general:5327`: Brain Trauma Foundation cerebral perfusion pressure targets are critical-care monitoring knowledge with no entry-level RN version.
+- `proto:nrg-general:5392`: Explaining a dialysis unit budget variance in erythropoietin-stimulating agent spending is financial nurse-manager content with no entry-level RN version.
+- `proto:nrg-general:5423`: Charge-nurse staffing plan for an orthopaedic unit is a management task; recasting it would produce a different question.
+- `proto:nrg-general:5431`: Unit-manager negotiation of prosthetist sessions and resource scheduling is management content with no entry-level RN version.
+- `proto:nrg-general:5433`: Designing a care pathway for limb-salvage surgery is nurse-manager service planning with no entry-level RN version on the same point.
+- `proto:nrg-general:5464`: Eligibility rules for the US Oncology Certified Nurse examination are specialty credential knowledge irrelevant to the RENR.
+- `proto:nrg-general:5546`: Identifying the US Certified Nephrology Nurse credential is specialty career knowledge, not entry-level RN content and not Caribbean.
+- `proto:nrg-rankup:5641`: Interpreting CVP, PCWP and SVR profiles in cardiogenic shock is critical-care haemodynamic monitoring with no entry-level RN version.
+- `proto:nrg-rankup:5647`: Perioperative haemodynamic goals for severe aortic stenosis are anaesthesia decisions with no honest entry-level RN version.
+- `proto:nrg-rankup:5656`: ARDS shunt pathophysiology with PCWP and FiO2 data in a ventilated client is critical-care content with no entry-level RN version.
+- `proto:nrg-rankup:5658`: Interpreting a mixed acid-base disorder in salicylate toxicity is specialist interpretation; the entry-level version would be a different question.
+- `proto:nrg-rankup:5659`: Prone positioning physiology for a ventilated client with ARDS is critical-care content with no entry-level RN version.
+- `proto:nrg-rankup:5776`: Managing a failed intubation (supraglottic airway, cricothyroidotomy) is a physician or anaesthetist airway decision with no entry-level RN version; the nurse's intubation-support role is covered by proto:nrg-rankup:6106.
+- `proto:nrg-rankup:5823`: Targeted temperature management after cardiac arrest is critical-care protocol content with no honest entry-level RN version.
+- `proto:nrg-rankup:5832`: Temporary transvenous pacemaker sensing and threshold management is cardiac critical-care content, and the stem data are internally confusing; there is no entry-level RN version.
+- `proto:nrg-rankup:5836`: Lung-protective ventilator settings in ARDS are critical-care ventilator management with no entry-level RN version.
+- `proto:nrg-rankup:5837`: Adjusting PEEP and ventilator settings in ARDS is critical-care ventilator management with no entry-level RN version.
+- `proto:nrg-rankup:5838`: The Berlin diagnostic criteria for ARDS are critical-care medical diagnostic content with no entry-level RN version.
+- `proto:nrg-rankup:5937`: Ventilator-associated pneumonia bundle prioritisation is critical-care and nurse-manager content that depends on ventilated clients; there is no entry-level RN version.
+- `proto:nrg-rankup:5974`: Budget allocation for a clinic diabetes programme is nurse-manager and population-planning content with no entry-level RN decision on the same topic.
+- `proto:nrg-rankup:6008`: Stress ulcer prophylaxis criteria for ventilated or coagulopathic clients are critical-care prescribing content with no entry-level RN version.
+- `proto:nrg-rankup:6109`: Allocating the last ventilator in a disaster is critical-care resource ethics, and the age-based key conflicts with triage frameworks; it has no entry-level RN version without becoming a different question.
+- `proto:professionalism:7248`: Centres on a physician's extubation trial for a ventilated client (critical care), and the stem is garbled; a ward-level version would be a different question about family communication.
+- `proto:professionalism:7497`: Asks to name a critical care or emergency specialty certification; credentialing knowledge with a critical-care key has no honest entry-level RN version.
+- `proto:professionalism:7500`: Defines the clinical nurse specialist role, an advanced-practice topic outside entry-level RN scope with no natural entry-level version.
+- `proto:professionalism:7507`: Asks about the education required for advanced-practice nurses; advanced-practice content outside entry-level RN scope, and the stem is truncated.
+- `proto:professionalism:7509`: Clinical placement agreements between a nursing school and a hospital are institutional leadership decisions, not an entry-level RN action.
+- `proto:professionalism:7512`: Ministry of Health nurse retention strategy is national workforce policy, not an entry-level RN action.
+- `proto:professionalism:7527`: How a Nursing Council should develop its scope of practice document is regulatory policy work, not an entry-level RN action.
+- `proto:professionalism:7542`: Specialist qualitative research-methods content aimed at researchers, beyond entry-level RN scope; no natural entry-level nursing version.
+- `proto:professionalism:7545`: Specialist qualitative research-methods content aimed at researchers, beyond entry-level RN scope; no natural entry-level nursing version.
+- `proto:professionalism:7547`: Specialist qualitative research-methods content aimed at researchers, beyond entry-level RN scope; no natural entry-level nursing version.
+- `proto:professionalism:7550`: Specialist qualitative research-methods content aimed at researchers, beyond entry-level RN scope; no natural entry-level nursing version.
+- `proto:professionalism:7551`: Specialist qualitative research-methods content aimed at researchers, beyond entry-level RN scope; no natural entry-level nursing version.
+- `proto:professionalism:7552`: Specialist qualitative research-methods content aimed at researchers, beyond entry-level RN scope; no natural entry-level nursing version.
+- `proto:professionalism:7553`: Specialist qualitative research-methods content aimed at researchers, beyond entry-level RN scope; no natural entry-level nursing version.
+- `proto:professionalism:7554`: Specialist qualitative research-methods content aimed at researchers, beyond entry-level RN scope; no natural entry-level nursing version.
+- `proto:professionalism:7557`: Specialist qualitative research-methods content aimed at researchers, beyond entry-level RN scope; no natural entry-level nursing version.
+- `proto:professionalism:7558`: Specialist qualitative research-methods content aimed at researchers, beyond entry-level RN scope; no natural entry-level nursing version.
+- `proto:professionalism:7560`: Specialist qualitative research-methods content aimed at researchers, beyond entry-level RN scope; no natural entry-level nursing version.
+- `proto:professionalism:7563`: Specialist qualitative research-methods content aimed at researchers, beyond entry-level RN scope; no natural entry-level nursing version.
+- `proto:professionalism:7564`: Specialist research-methods content (philosophical basis of interpretive phenomenological analysis) aimed at researchers; there is no honest entry-level RN nursing decision on this topic.
+- `proto:professionalism:7565`: Specialist research-methods content (maximum variation sampling in qualitative research) aimed at researchers; there is no honest entry-level RN nursing decision on this topic.
+- `proto:professionalism:7574`: Specialist research-methods content (rationale for cluster randomisation) aimed at researchers; there is no honest entry-level RN nursing decision on this topic.
+- `proto:professionalism:7580`: Specialist research-methods content (factorial trial design) aimed at researchers; there is no honest entry-level RN nursing decision on this topic.
+- `proto:professionalism:7582`: Specialist research-methods content (case-control study measures of association) aimed at researchers; there is no honest entry-level RN nursing decision on this topic.
+- `proto:professionalism:7583`: Specialist research-methods content (choosing a diagnostic accuracy study design) aimed at researchers; there is no honest entry-level RN nursing decision on this topic.
+- `proto:professionalism:7588`: Specialist research-methods content (intention-to-treat analysis) aimed at researchers; there is no honest entry-level RN nursing decision on this topic.
+- `proto:renr-batch4:8128`: Ventilator-associated pneumonia bundle content (subglottic suctioning, circuit changes) is critical-care practice; the ward-level aspiration-prevention point is covered by the rescoped proto:renr-batch4:8123.
+- `proto:renr-batch4:8141`: Duplicate of proto:renr-batch4:8108, which is kept.
+- `proto:renr-batch4:8610`: Defines advanced-practice expanded scope (diagnosing, prescribing); the only entry-level version, the RN declining to prescribe, is already covered by proto:renr-batch4:8604.
