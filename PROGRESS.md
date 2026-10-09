@@ -2208,3 +2208,7 @@ test uses the I/II/III combination format, which bears on the ~15 "needs-jade" c
 - 2026-10-09: V3 s.7.6 "Prohibited stem verb" table received from Ian (Jade's PDF p.11) and built into the case validator
   (`STEM_VERBS`): an avoided verb in a stem fails; a stem with none of the step's verbs is a printed warning. Lithium Q1–Q3 stems
   reworded to the table's verbs (Q2 had used "anticipate", a Generate Solutions verb) in the JSON and on staging.
+- 2026-10-09: For Ian's review, `main` (d93ea05..5a8b1b2) pushed to a separate branch `case-study-review` — **not** to `main`, which
+  would deploy prod against a DB missing the new migrations. Vercel preview on the staging project (Preview env = staging Supabase):
+  https://nrg-platform-staging-git-ca-2ee445-ian-fordes-projects-3dae7f3d.vercel.app (Vercel SSO-protected). The prod project also
+  builds a preview of the branch; it does not change the live site.
