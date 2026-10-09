@@ -22,7 +22,7 @@ export const TAXONOMY_LABEL: Record<string, string> = { KC: "Knowledge/Comprehen
 /** Rationale-view classes (V3 s.11): colour plus a text label, never colour alone. Correct is listed first. */
 export const OPTION_TYPE: Record<string, { label: string; className: string; order: number }> = {
   correct: { label: "Correct", className: "border-green-500 bg-green-50 text-green-900", order: 0 },
-  close: { label: "Close distractor", className: "border-yellow-400 bg-yellow-50 text-yellow-900", order: 1 },
+  close: { label: "Close", className: "border-yellow-400 bg-yellow-50 text-yellow-900", order: 1 },
   priority: { label: "Priority / sequencing", className: "border-orange-400 bg-orange-50 text-orange-900", order: 2 },
   incorrect: { label: "Incorrect", className: "border-red-400 bg-red-50 text-red-900", order: 3 },
   unsafe: { label: "Unsafe", className: "border-red-600 bg-red-100 text-red-950", order: 4 },
