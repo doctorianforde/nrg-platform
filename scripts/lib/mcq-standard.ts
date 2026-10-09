@@ -9,7 +9,7 @@ import { resolve } from "node:path";
 
 export type Pat = { id: string; pattern: string; flags?: string };
 export type Rules = {
-  version: string; forbidden_patterns: Pat[]; visual_flag_patterns: Pat[]; option_types: string[];
+  version: string; forbidden_patterns: Pat[]; visual_flag_patterns: Pat[]; option_types: string[]; negative_stem_types?: string[];
   length_cue: { max_len_ratio: number; max_correct_gap: number; min_option_chars: number; max_option_chars: number; min_rationale_chars: number; max_batch_pct_longest: number; max_batch_pct_any_position: number };
   near_duplicate_jaccard: number; abbreviation_allowlist: string[];
   switches_pending_jade: { block_nursing_diagnosis_items: boolean; drop_difficulty: boolean; regional_wording_not_tt: boolean; enforce_abbreviation_rule: boolean; extra_forbidden_patterns: Pat[] };
@@ -57,8 +57,11 @@ export function checkMcq(raw: any, rules: Rules, opts: { optionsPerItem?: number
   if (!allowSata && /select all that apply/.test(raw.stem.toLowerCase())) return { ok: false, error: "SATA stem when not allowed" };
   const types: Record<string, string> = {};
   for (const [k, v] of Object.entries(raw.option_types ?? {})) types[k.toUpperCase()] = String(v).toLowerCase();
-  if (Object.keys(types).length !== n || Object.values(types).sort().join(",") !== [...rules.option_types].sort().join(","))
-    return { ok: false, error: `option_types must be one each of ${rules.option_types.join("/")}` };
+  // Negative stems ("needs further teaching", NOT/EXCEPT) use their own scheme: the key plus three true statements typed not_asked.
+  const negative = raw.format === "negative";
+  const wantTypes = negative ? (rules.negative_stem_types ?? ["correct", "not_asked", "not_asked", "not_asked"]) : rules.option_types;
+  if (Object.keys(types).length !== n || Object.values(types).sort().join(",") !== [...wantTypes].sort().join(","))
+    return { ok: false, error: negative ? `negative-stem option_types must be ${wantTypes.join("/")}` : `option_types must be one each of ${rules.option_types.join("/")}` };
   if (types[correct[0]] !== "correct") return { ok: false, error: "keyed option is not typed 'correct'" };
   const dr: Record<string, string> = Object.fromEntries(Object.entries(raw.distractor_rationales ?? {}).map(([k, v]) => [k.toUpperCase(), String(v ?? "")]));
   for (const l of expected.filter(x => !correct.includes(x))) if ((dr[l] ?? "").trim().length < 30) return { ok: false, error: `missing/short rationale for option ${l}` };

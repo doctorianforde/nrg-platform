@@ -50,24 +50,27 @@ Keep the clinical point the question tests and its correct answer **unless the k
 8. **No invented gender.** If the original question never says the client is male or female, refer to them as "the client"
    (never he/she/his/her). The check rejects pronouns the original did not use. Keep gender where the scenario states it
    (e.g. a pregnant client, "a 63-year-old woman").
-9. **Stem.** Clinically realistic, complete, and answerable without reading the options. Caribbean context. Keep
+9. **Negative stems** (the question asks which option is wrong, unsafe or to be avoided: NOT, EXCEPT, LEAST, "needs further
+   teaching", "contraindicated"). Keep the format (Ian, 2026-10-08). Set `"format": "negative"`. The keyed option is typed `correct`
+   and the three true statements are typed `not_asked` (shown to students as "Correct statement — not what was asked"). Each
+   distractor rationale says why the statement is true or acceptable, so it isn't the answer. The correct-answer rationale explains
+   what is wrong or unsafe about the keyed option and what the right practice is. Make sure exactly one option is wrong or unsafe;
+   if two could be, rewrite the weaker one into a clearly true statement. The other rules (lengths, plain-text data, units) still apply.
+10. **Stem.** Clinically realistic, complete, and answerable without reading the options. Caribbean context. Keep
    FIRST / NEXT / PRIORITY framing where it is used. Expand an unusual abbreviation on first use (IV, BP, CPR, ECG, HIV are fine).
-10. **Answer position.** You may reorder the options. Across the batch, spread the correct letter roughly evenly over A–D, and keep
+11. **Answer position.** You may reorder the options. Across the batch, spread the correct letter roughly evenly over A–D, and keep
    the correct option from being the strictly longest in more than about a third of items.
 
 Don't change domain, taxonomy or difficulty tags; those decisions are pending with Jade.
 
 ## When to flag instead of fixing (`verdict: "flag"`)
-- **Negative stem** (the question asks which option is wrong, unsafe, to avoid, NOT/EXCEPT/LEAST, or "needs further
-  teaching"): flag it with `flags: ["negative-stem"]`. Its distractors are true statements, so it can't be typed honestly.
-  How these are handled is pending with Ian and Jade. Don't rewrite it to a positive stem yourself. The check enforces this.
 - It depends on an image, chart or table that isn't in the text.
 - It is out of entry-level scope at its core (e.g. ventilator management, prescribing decisions).
 - The clinical content is disputed or you aren't confident of the correct answer.
 - It duplicates another item in the same batch (name its source_id).
 - It needs content only Jade can supply.
 
-Use only these flag names: `clinical-key`, `negative-stem`, `scope`, `duplicate`, `image`, `needs-jade`.
+Use only these flag names: `clinical-key`, `negative-stem` (no longer needed; write the item in the negative format instead), `scope`, `duplicate`, `image`, `needs-jade`.
 A flagged item still needs `flag_note` (one or two sentences: what is wrong and what Jade should decide). If you can also offer
 a compliant rewrite, include the full item fields; otherwise leave `stem` empty. Flagged items are set to `needs_changes` and
 taken out of circulation; their content isn't changed.

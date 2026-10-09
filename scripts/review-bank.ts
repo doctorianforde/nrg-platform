@@ -65,7 +65,7 @@ type OutItem = {
   id: string; source_id: string; verdict: "ok" | "flag";
   stem: string; options: { label: string; text: string }[]; correct: string[];
   rationale_correct: string; option_types: Record<string, string>; distractor_rationales: Record<string, string>;
-  changes: string; flags?: string[]; flag_note?: string;
+  changes: string; flags?: string[]; flag_note?: string; format?: "negative";
 };
 
 async function exportBatch() {
@@ -110,7 +110,7 @@ function check(inPath: string) {
     const before = input?.find(x => x.id === it.id);
     if (before && it.verdict !== "flag") {
       const q = questionSentence(before.stem);
-      if (NEG_CAPS.test(q) || NEG.test(q)) { results.push({ id: it.id, source_id: it.source_id, verdict: it.verdict, ok: false, error: `negative stem ("${q.slice(0, 60)}"): flag it with flags ["negative-stem"] (policy pending)` }); continue; }
+      if ((NEG_CAPS.test(q) || NEG.test(q)) && it.format !== "negative") { results.push({ id: it.id, source_id: it.source_id, verdict: it.verdict, ok: false, error: `negative stem ("${q.slice(0, 60)}"): set "format": "negative" (key typed correct, the three true statements not_asked)` }); continue; }
     }
     // Don't give a client a gender the original question never stated.
     if (before && !GENDERED.test([before.stem, ...before.options.map(o => o.text)].join(" "))) {
@@ -178,9 +178,11 @@ async function apply(inPath: string) {
       }).eq("id", rows![i].id);
       if (error) throw error;
     }
-    const { data: cur } = await db.from("questions").select("review_notes").eq("id", it.id).single();
+    const { data: cur } = await db.from("questions").select("review_notes, review_status").eq("id", it.id).single();
+    // A rewrite resolves an earlier review flag, so the question goes back to the normal approval queue.
+    const status = cur?.review_status === "needs_changes" ? { review_status: "pending" } : {};
     const { error } = await db.from("questions").update({
-      body: it.stem, explanation: it.rationale_correct, review_notes: [cur?.review_notes, notes].filter(Boolean).join("\n"), updated_at: new Date().toISOString(),
+      ...status, body: it.stem, explanation: it.rationale_correct, review_notes: [cur?.review_notes, notes].filter(Boolean).join("\n"), updated_at: new Date().toISOString(),
     }).eq("id", it.id);
     if (error) throw error;
   }

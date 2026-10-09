@@ -19,6 +19,7 @@ TYPES = {
     "close":     ("CLOSE",                 colors.HexColor("#b7950b"), colors.HexColor("#fef9e7")),
     "priority":  ("PRIORITY / SEQUENCING", colors.HexColor("#ca6f1e"), colors.HexColor("#fdf2e9")),
     "incorrect": ("INCORRECT / UNSAFE",    colors.HexColor("#b03a2e"), colors.HexColor("#fdedec")),
+    "not_asked": ("CORRECT STATEMENT, NOT ASKED", colors.HexColor("#4a6785"), colors.HexColor("#eef2f7")),
 }
 ORDER = ["correct", "close", "priority", "incorrect"]
 DOM = {"NP": "Nursing Practice", "CDM": "Clinical Decision Making", "NLM": "Leadership and Management", "PC": "Professional Conduct",
@@ -60,8 +61,9 @@ for it in items:
     by_type = {t: l for l, t in it["option_types"].items()}
     rows, styles = [], [("VALIGN", (0, 0), (-1, -1), "TOP"), ("LEFTPADDING", (0, 0), (-1, -1), 6), ("RIGHTPADDING", (0, 0), (-1, -1), 6),
                         ("TOPPADDING", (0, 0), (-1, -1), 5), ("BOTTOMPADDING", (0, 0), (-1, -1), 6), ("LINEBELOW", (0, 0), (-1, -2), 0.4, colors.white)]
-    for r, t in enumerate(ORDER):
-        l = by_type[t]; name, fg, bg = TYPES[t]
+    order = sorted(it["option_types"], key=lambda l: (ORDER + ["not_asked"]).index(it["option_types"][l]))
+    for r, l in enumerate(order):
+        t = it["option_types"][l]; name, fg, bg = TYPES[t]
         rows.append([Paragraph(name, LBL), Paragraph(f"<b>{l}. {esc(text[l])}</b><br/>{esc(rat[l])}", SM)])
         styles += [("BACKGROUND", (0, r), (0, r), fg), ("BACKGROUND", (1, r), (1, r), bg), ("VALIGN", (0, r), (0, r), "MIDDLE")]
     tb = Table(rows, colWidths=[1.05 * inch, 5.85 * inch]); tb.setStyle(TableStyle(styles))

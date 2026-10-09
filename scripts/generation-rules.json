@@ -17,6 +17,8 @@
   ],
 
   "option_types": ["close", "correct", "incorrect", "priority"],
+  "negative_stem_types": ["correct", "not_asked", "not_asked", "not_asked"],
+  "_negative_stem_note": "Negative-stem items (needs further teaching / NOT / EXCEPT) set \"format\": \"negative\": the key is typed correct and the three true statements not_asked (Ian, 2026-10-08). The generator still writes positive stems only.",
 
   "length_cue": {
     "max_len_ratio": 1.4,

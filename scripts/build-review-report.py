@@ -39,7 +39,8 @@ with open("data/review/flags.csv", "w", newline="") as f:
 
 INK = colors.HexColor("#1f2933"); MUTED = colors.HexColor("#52606d"); ACCENT = colors.HexColor("#0b6e4f"); RULE = colors.HexColor("#d9dee5")
 TYPES = {"correct": ("CORRECT", "#1e8449", "#e9f7ef"), "close": ("CLOSE", "#b7950b", "#fef9e7"),
-         "priority": ("PRIORITY", "#ca6f1e", "#fdf2e9"), "incorrect": ("INCORRECT", "#b03a2e", "#fdedec")}
+         "priority": ("PRIORITY", "#ca6f1e", "#fdf2e9"), "incorrect": ("INCORRECT", "#b03a2e", "#fdedec"),
+         "not_asked": ("TRUE, NOT ASKED", "#4a6785", "#eef2f7")}
 ss = getSampleStyleSheet()
 T = ParagraphStyle("T", parent=ss["Title"], fontName="Helvetica-Bold", fontSize=20, alignment=0, textColor=INK, spaceAfter=4)
 H = ParagraphStyle("H", parent=ss["Heading1"], fontName="Helvetica-Bold", fontSize=14, textColor=ACCENT, spaceBefore=10, spaceAfter=6, keepWithNext=1)

@@ -2174,3 +2174,14 @@ Ian chose: full standard review of every question; staging first, prod only afte
   Dry-run against staging in a rolled-back transaction: 1,939 × (1 question + 4 options) and 61 flags matched exactly. `--apply-prod` refuses
   without CONFIRM_PROD=yes and the distractor_type column. The two staging-only migrations (distractor_type, AI rationale backup) are now
   repo files. Runbook: `docs/phase-1/PROD_PORT_RUNBOOK.md`. Committed to main.
+- **2026-10-08, staging:** 128 questions (18 ai, 110 proto) still showed `needs_changes` from the Oct 4 keyword screen although the review had
+  rewritten them. Reset to `pending` with a note; ids kept in staging table `_reset_to_pending_20261008` (reversible). The 605 left in
+  `needs_changes` are exactly the review flags (61 ai, 544 proto), unchanged and waiting on Ian/Jade decisions. None of the 128 is active.
+- **Negative stems: option 1 adopted (Ian, 2026-10-08).** Keep the format; the key is typed `correct`, the three true statements a new type
+  `not_asked` ("Correct statement — not what was asked"). Staging migration `20261009000911_distractor_type_not_asked` (repo file added; prod
+  pending). Validator: items set `"format": "negative"`; review check now requires that format instead of a flag; `--apply` resets a rewritten
+  `needs_changes` question to `pending`. Re-review of the 58 pure negative-stem flags: 51 rewritten and applied on staging (21 ai, 30 proto),
+  2 ai duplicates (placenta praevia, of spec1721), 1 proto disputed key (6698), 1 proto false positive (10856 asks *why* NSAIDs are avoided —
+  valid positive rewrite in `data/review/neg/proto-n00.out.json`, left flagged because the check matches "be avoided"); Jade's 3 as proposals.
+  `needs_changes` on staging: 605 → 554 (40 ai, 514 proto). Prod port regenerated: 1,960 rewrites + 40 flags, dry-run matched; runbook updated.
+  Still open: numeric dose-calculation policy; the app's rationale view must render `not_asked`.
