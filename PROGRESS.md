@@ -2236,4 +2236,4 @@ test uses the I/II/III combination format, which bears on the ~15 "needs-jade" c
   so far plus bedside glucose; built-in adult library in `src/lib/case/reference.ts`, overridable per lab item with `reference`;
   vitals deliberately excluded), calculator (top right; keyboard works), and timers for the case and the current question from DB
   timestamps (`started_at`, `answered_at`), with per-question and total times on the results page. No migration. Browser-tested
-  end to end against staging (desktop + phone); test attempts deleted.
+  end to end against staging (desktop + phone). The test teacher account's attempts on NRG-MH-001 remain (delete declined); they block `--replace` re-import of that case.
