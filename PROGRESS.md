@@ -2217,3 +2217,8 @@ test uses the I/II/III combination format, which bears on the ~15 "needs-jade" c
   push to `main` no longer touches it (and vice versa). Workflow written into CLAUDE.md. Local `main` still holds unpushed
   commits that need the prod migrations first — do not `git push origin main` until the runbook steps are done.
   Paid test account for Ian on staging: `ian-paid-student@nrg-staging.test` (student, premium).
+- 2026-10-09: **Lithium case flow revised** at Ian's request (details in the case's quality_report). No question is now answered by
+  the screen before it (Q3 asked before the level; standing-order text moved to the opening; Q2 analyses the vomiting cue), and the
+  clinical story is consistent (recent dose increase, coarse tremor + unsteady gait, level timed 12 h post-dose, overnight admission).
+  Staging: old version kept as `NRG-MH-001-v1` (archived; holds Jade's completed attempt, so it was not deleted); revised case
+  imported as NRG-MH-001 (`78560f20-731e-49cc-b671-147e02a5bfdd`), in_review, not validated.

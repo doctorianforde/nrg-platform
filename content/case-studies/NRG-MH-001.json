@@ -1,23 +1,23 @@
 {
   "case_code": "NRG-MH-001",
   "title": "Agitation at the Community Clinic",
-  "objective": "Students recognise lithium toxicity beneath a manic presentation, withhold the drug, escalate, and evaluate the response.",
+  "objective": "Students recognise lithium toxicity beneath a manic presentation, link it to dehydration, withhold the drug, escalate, and evaluate the response.",
   "population": "Adult, 34-year-old woman",
   "setting": "Community mental health clinic, Caribbean",
   "primary_condition": "Lithium toxicity",
-  "endpoint": "Stabilisation, discharge home with next-day follow-up and family education",
+  "endpoint": "Stabilisation after overnight hospital treatment, clinic review, and client and family education",
   "primary_domain": "CDM",
   "difficulty": "moderate",
   "source": "jade+claude",
   "opening": {
     "time_label": "9:15 am",
-    "narrative": "Tanisha, a 34-year-old woman, is brought to the community mental health clinic by her sister after five days of sleeping very little, talking rapidly, and spending a large sum of money at the market. Her sister states, \"She has not been herself. She argues with everyone and will not sit down.\" History includes bipolar disorder, for which she takes lithium carbonate 300 mg twice daily. She has no other prescribed medication and no known drug allergies. She lives with her sister and works at a grocery."
+    "narrative": "Tanisha, a 34-year-old woman, is brought to the community mental health clinic by her sister after five days of sleeping very little, talking rapidly, and spending a large sum of money at the market. Her sister states, \"She has not been herself. She argues with everyone and will not sit down.\" History includes bipolar disorder, treated with lithium carbonate taken at 10 am and 10 pm. Two weeks ago her dose was increased from 300 mg to 450 mg twice daily because she had begun sleeping less. She has no other prescribed medication and no known drug allergies. She lives with her sister and works at a grocery. The clinic's standing orders allow the registered nurse to withhold a prescribed dose and notify the physician when a drug level is markedly abnormal."
   },
   "stages": [
     {
       "key": "assess",
       "time_label": "9:30 am",
-      "narrative": "The nurse completes the initial assessment.",
+      "narrative": "The nurse completes the initial assessment and sends blood for a serum lithium level at 9:40 am.",
       "vitals": [
         {
           "label": "Temperature",
@@ -47,7 +47,7 @@
       "assessment": [
         {
           "system": "CNS",
-          "finding": "Alert and oriented. Fine tremor of both hands."
+          "finding": "Alert and oriented. Coarse tremor of both hands. Walks with an unsteady, wide-based gait."
         },
         {
           "system": "Psychosocial",
@@ -58,12 +58,12 @@
     {
       "key": "history",
       "time_label": "9:45 am",
-      "narrative": "The sister adds that Tanisha has had two days of vomiting and has been drinking very little fluid."
+      "narrative": "The sister adds that Tanisha has had two days of vomiting, has kept little down, and has been drinking very little fluid. She took her 10 pm lithium dose last night."
     },
     {
       "key": "level",
       "time_label": "10:00 am",
-      "narrative": "The serum lithium result is reported. Lithium was last taken this morning.",
+      "narrative": "The serum lithium result is reported. The sample was taken about 12 hours after last night's dose. Tanisha's 10:00 am lithium dose is now due, and the physician is being contacted by telephone.",
       "labs": [
         {
           "category": "Chemistry",
@@ -77,19 +77,14 @@
       ]
     },
     {
-      "key": "orders",
-      "time_label": "10:15 am",
-      "narrative": "Under clinic standing orders, the registered nurse may withhold a prescribed dose and notify the physician when a medication level is markedly abnormal with supporting clinical signs. The physician is being contacted by telephone. Tanisha's midday lithium dose is due."
-    },
-    {
       "key": "transfer",
       "time_label": "10:30 am",
-      "narrative": "The physician confirms that lithium is to be withheld and arranges transfer to the district hospital for intravenous fluids, with urine output and electrolytes monitored. Tanisha is asked to return to the clinic the next morning."
+      "narrative": "The physician confirms that lithium is to be withheld and arranges overnight admission to the district hospital for intravenous fluids, with urine output and electrolytes monitored. A clinic review is booked for the next morning, after discharge from hospital."
     },
     {
       "key": "day2",
       "time_label": "Day 2, 9:00 am",
-      "narrative": "Tanisha returns with her sister as requested. She received intravenous fluids at the district hospital, and lithium was withheld overnight.",
+      "narrative": "Tanisha is discharged from the district hospital early in the morning and attends the clinic review with her sister. She received intravenous fluids overnight, and lithium was withheld.",
       "vitals": [
         {
           "label": "Temperature",
@@ -111,7 +106,7 @@
       "assessment": [
         {
           "system": "CNS",
-          "finding": "Hand tremor much reduced since yesterday."
+          "finding": "Hand tremor much reduced since yesterday. Gait steady."
         },
         {
           "system": "Genitourinary",
@@ -150,7 +145,7 @@
     {
       "key": "discharge",
       "time_label": "Day 2, 10:00 am",
-      "narrative": "Tanisha is stable for discharge home with adjusted medication and follow-up the next day. She asks the nurse, \"What can I do to stop this from happening again?\""
+      "narrative": "The physician restarts lithium at a lower dose, with a repeat level booked in five days. As she prepares to go home, Tanisha asks the nurse, \"What can I do to stop this from happening again?\""
     }
   ],
   "questions": [
@@ -164,11 +159,11 @@
       "options": [
         {
           "label": "A",
-          "text": "Pulse of 104/min"
+          "text": "Pulse of 104/min while seated"
         },
         {
           "label": "B",
-          "text": "Fine tremor of both hands"
+          "text": "Coarse hand tremor with unsteady gait"
         },
         {
           "label": "C",
@@ -188,18 +183,18 @@
         "C": "priority",
         "D": "incorrect"
       },
-      "rationale_correct": "CORRECT: Tanisha takes lithium, a drug with a narrow therapeutic range, and her hands now show a fine tremor. Tremor can occur at usual levels, but in a client on lithium it is also the earliest neurological sign of toxicity, so it needs follow-up now. The rest of the picture (restlessness, rapid speech, reduced sleep) is explained by the mania her sister describes.",
+      "rationale_correct": "CORRECT: Tanisha takes lithium, a drug with a narrow therapeutic range, and her dose was raised two weeks ago. A fine tremor is common at usual levels, but a coarse tremor with an unsteady gait is a neurological sign of a rising lithium level, so it needs follow-up now. The rest of the picture (restlessness, rapid speech, reduced sleep) is explained by the mania her sister describes.",
       "distractor_rationales": {
-        "A": "A pulse of 104/min fits her agitation and constant movement. It should be rechecked, but it does not point to a medication-safety problem the way the tremor does.",
+        "A": "A pulse of 104/min fits her agitation and constant movement. It should be rechecked, but it does not point to a medication-safety problem the way the tremor and gait do.",
         "C": "A blood pressure of 138/88 mm Hg is only slightly raised and fits her agitation. Rechecking it later is reasonable; it is not the finding that needs action first.",
         "D": "Irritability and reduced sleep are the presenting manic picture already reported by her sister at 9:15 am, so they add nothing new requiring immediate follow-up."
       },
-      "self_test": "The pulse of 104/min is explained by agitation, whereas a tremor in a client taking lithium can signal a rising drug level.",
+      "self_test": "The pulse of 104/min is explained by agitation, whereas a coarse tremor with an unsteady gait in a client taking lithium signals a rising drug level.",
       "meta": {
         "topic": "Mental health pharmacology",
         "subtopic": "Lithium monitoring",
         "priority_principle": "Medication safety cue over expected disease features",
-        "prerequisites": "Lithium therapeutic index; signs of mania",
+        "prerequisites": "Lithium therapeutic index; fine versus coarse tremor; signs of mania",
         "suggested_review": "Lithium adverse effects and toxicity signs"
       }
     },
@@ -209,23 +204,23 @@
       "cj_step": "analyze_cues",
       "domain": "CDM",
       "taxonomy": "AP",
-      "stem": "Which investigation would best help the nurse interpret the significance of Tanisha's tremor?",
+      "stem": "How should the nurse interpret the significance of the vomiting and low fluid intake for Tanisha's tremor?",
       "options": [
         {
           "label": "A",
-          "text": "Serum lithium level"
+          "text": "Fluid and sodium loss reduce lithium excretion, so the level rises"
         },
         {
           "label": "B",
-          "text": "Serum electrolytes"
+          "text": "Vomiting has reduced lithium absorption, so the level is likely low"
         },
         {
           "label": "C",
-          "text": "Urinalysis for specific gravity"
+          "text": "Dehydration alone is causing the tremor and needs replacing first"
         },
         {
           "label": "D",
-          "text": "Thyroid function test"
+          "text": "The tremor reflects anxiety about the vomiting, not the medication"
         }
       ],
       "correct": [
@@ -237,28 +232,28 @@
         "C": "priority",
         "D": "incorrect"
       },
-      "rationale_correct": "CORRECT: Vomiting and poor fluid intake reduce lithium clearance, and Tanisha already has a tremor. The serum lithium level is the single result that separates lithium toxicity from a manic relapse and decides whether the next dose is given.",
+      "rationale_correct": "CORRECT: The kidneys reabsorb lithium by the same route as sodium. Two days of vomiting and little fluid have left Tanisha short of fluid and sodium, so her kidneys hold on to sodium and lithium with it. Together with the dose increase two weeks ago, this explains how her level could rise and produce the coarse tremor and unsteady gait.",
       "distractor_rationales": {
-        "B": "Electrolytes matter, because sodium loss from vomiting increases lithium reabsorption, and they will be needed. On their own they do not tell toxicity from relapse the way the lithium level does.",
-        "C": "A urinalysis can support an assessment of hydration, but it does not answer whether the tremor is from a raised lithium level, so it is not the first test.",
-        "D": "Thyroid disease can mimic mania, but it does not explain new tremor appearing with two days of vomiting in a client on lithium."
+        "B": "Vomiting soon after a dose can lose some of it, which is why this is tempting. But two days of poor intake on a recently increased dose make accumulation the danger, and a coarse tremor with an unsteady gait points to a high level, not a low one.",
+        "C": "Dehydration does need correcting, but it is the reason lithium is accumulating, not the cause of the tremor itself. Treating it as the whole explanation misses the drug level.",
+        "D": "Anxiety can cause a fine tremor, but not a coarse tremor with an unsteady gait, and the vomiting and low intake give a clear drug-related explanation."
       },
-      "self_test": "Electrolytes show why lithium might be rising but cannot confirm that it has, which only the lithium level does.",
+      "self_test": "Less lithium absorbed sounds logical, but the kidneys retaining more lithium during fluid and sodium loss is what makes the level rise.",
       "meta": {
         "topic": "Mental health pharmacology",
-        "subtopic": "Therapeutic drug monitoring",
-        "priority_principle": "Choose the test that discriminates the leading hypotheses",
-        "prerequisites": "Renal handling of lithium",
-        "suggested_review": "When to request a lithium level"
+        "subtopic": "Renal handling of lithium",
+        "priority_principle": "Link new cues to the drug's known risks",
+        "prerequisites": "Sodium and lithium reabsorption in the kidney",
+        "suggested_review": "Factors that raise serum lithium"
       }
     },
     {
       "position": 3,
-      "stage": "level",
+      "stage": "history",
       "cj_step": "prioritize_hypotheses",
       "domain": "CDM",
       "taxonomy": "ASE",
-      "stem": "Which condition is most consistent with Tanisha's findings?",
+      "stem": "Before the lithium result is available, which condition is most likely and should be prioritized?",
       "options": [
         {
           "label": "A",
@@ -274,7 +269,7 @@
         },
         {
           "label": "D",
-          "text": "Worsening hypertension"
+          "text": "Overactive thyroid gland"
         }
       ],
       "correct": [
@@ -286,13 +281,13 @@
         "C": "priority",
         "D": "incorrect"
       },
-      "rationale_correct": "CORRECT: A lithium level of 2.0 mmol/L, a new tremor, and two days of vomiting with poor intake form one picture: lithium toxicity. Entry-level knowledge that lithium has a narrow therapeutic range (roughly 0.6 to 1.2 mmol/L for maintenance) makes this the priority, because it can progress to confusion, seizures and kidney injury.",
+      "rationale_correct": "CORRECT: A recently increased lithium dose, two days of vomiting with poor intake, and a coarse tremor with an unsteady gait form one picture: lithium toxicity. It is also the most dangerous possibility, because it can progress to confusion, seizures and kidney injury, so it is prioritized while the level is awaited.",
       "distractor_rationales": {
-        "A": "Her behaviour does support a manic relapse, which is why this is the classic trap. Relapse is real but not immediately dangerous; toxicity is.",
-        "C": "Dehydration from vomiting explains why the level rose, so it is a contributing cause to treat. It does not account for the level and the tremor by itself.",
-        "D": "A blood pressure of 138/88 mm Hg with agitation is not an emergency and does not explain any of the other findings."
+        "A": "Her behaviour does support a manic relapse, which is why this is the classic trap. Relapse does not explain the coarse tremor and unsteady gait, and it is not immediately dangerous; toxicity is.",
+        "C": "Gastroenteritis explains the vomiting and is why the level may have risen, so it is a contributing cause to treat. It does not explain the neurological signs by itself.",
+        "D": "An overactive thyroid can cause tremor, a fast pulse and agitation, but not an unsteady gait with vomiting, and it does not account for the recent lithium dose increase."
       },
-      "self_test": "Manic relapse explains the behaviour but not a lithium level of 2.0 mmol/L with a new tremor.",
+      "self_test": "Manic relapse explains the behaviour but not a coarse tremor and unsteady gait after vomiting on a recently increased lithium dose.",
       "meta": {
         "topic": "Mental health pharmacology",
         "subtopic": "Lithium toxicity",
@@ -323,7 +318,7 @@
         },
         {
           "label": "D",
-          "text": "Withhold lithium and repeat the level in one week"
+          "text": "Activated charcoal to bind the lithium in her stomach"
         }
       ],
       "correct": [
@@ -333,13 +328,13 @@
         "A": "correct",
         "B": "close",
         "C": "unsafe",
-        "D": "priority"
+        "D": "incorrect"
       },
-      "rationale_correct": "CORRECT: Tanisha is volume- and sodium-depleted from vomiting, which is why her kidneys are holding on to lithium. Restoring fluid and sodium intravenously increases lithium excretion, and urine output and electrolytes show whether the plan is working.",
+      "rationale_correct": "CORRECT: A level of 2.0 mmol/L taken 12 hours after a dose is well above the usual maintenance range (roughly 0.6 to 1.2 mmol/L) and matches her neurological signs. She is fluid- and sodium-depleted, which is why her kidneys are holding on to lithium. Restoring fluid and sodium intravenously increases lithium excretion, and urine output and electrolytes show whether the plan is working.",
       "distractor_rationales": {
         "B": "Rehydration is the right idea, but she has been vomiting for two days and has signs of toxicity, so oral fluids at home with a check next week are too little and too late.",
         "C": "Reducing sodium makes the kidneys reabsorb more lithium and would raise the level further. Her blood pressure is not the problem being treated.",
-        "D": "Withholding lithium is right, but a recheck in a week leaves a toxic, dehydrated client without treatment or monitoring in the meantime."
+        "D": "Activated charcoal does not bind lithium, and her last dose was 12 hours ago, so it would not lower the level. Removing lithium depends on the kidneys."
       },
       "self_test": "Oral fluids at home address the dehydration but are too slow and too unmonitored for a level of 2.0 mmol/L with neurological signs.",
       "meta": {
@@ -352,15 +347,15 @@
     },
     {
       "position": 5,
-      "stage": "orders",
+      "stage": "level",
       "cj_step": "take_action",
       "domain": "NP",
       "taxonomy": "AP",
-      "stem": "Which action should the nurse take first?",
+      "stem": "The physician has not yet been reached and the 10:00 am dose is due. Which action should the nurse perform first?",
       "options": [
         {
           "label": "A",
-          "text": "Give the midday dose while awaiting the physician's reply"
+          "text": "Give the 10:00 am dose while awaiting the physician's reply"
         },
         {
           "label": "B",
@@ -368,11 +363,11 @@
         },
         {
           "label": "C",
-          "text": "Withhold the midday dose and report the level and findings"
+          "text": "Hold the 10:00 am dose and report the level and findings"
         },
         {
           "label": "D",
-          "text": "Give half the midday dose while awaiting the physician's reply"
+          "text": "Repeat the lithium level before deciding about the dose"
         }
       ],
       "correct": [
@@ -382,18 +377,18 @@
         "A": "unsafe",
         "B": "incorrect",
         "C": "correct",
-        "D": "unsafe"
+        "D": "priority"
       },
-      "rationale_correct": "CORRECT: The clinic's standing orders allow the nurse to withhold a dose when a level is markedly abnormal with supporting signs. Withholding the midday dose stops more lithium entering a toxic client, and reporting the level, tremor and vomiting gives the physician what is needed to order treatment.",
+      "rationale_correct": "CORRECT: The clinic's standing orders allow the nurse to withhold a dose when a level is markedly abnormal. Holding the 10:00 am dose stops more lithium entering a toxic client, and reporting the level, tremor, gait and vomiting gives the physician what is needed to order treatment.",
       "distractor_rationales": {
         "A": "Giving lithium at a level of 2.0 mmol/L with neurological signs adds to the toxicity and risks seizures. Waiting for the physician is not a reason to give it.",
         "B": "Sending her home with oral fluids delays treatment of a toxic level and leaves the physician uninformed.",
-        "D": "A half dose still adds lithium to a toxic level. The standing order lets the nurse withhold the dose altogether, which is the safe choice."
+        "D": "The level was taken correctly, 12 hours after a dose, and matches her signs. Repeating it delays the decision while the dose is due now; holding the dose and reporting comes first."
       },
-      "self_test": "A half dose feels cautious but still raises a toxic lithium level, while the standing order allows the dose to be withheld completely.",
+      "self_test": "Repeating the level feels careful, but the result already fits her signs and the dose is due now, so holding it and reporting comes first.",
       "meta": {
         "topic": "Medication administration",
-        "subtopic": "Withholding a dose under standing orders",
+        "subtopic": "Holding a dose under standing orders",
         "priority_principle": "Stop the harm, then escalate",
         "prerequisites": "Scope of standing orders",
         "suggested_review": "When a nurse may withhold a prescribed dose"
@@ -547,8 +542,8 @@
       }
     }
   ],
-  "pathophysiology": "## Pathophysiology teaching\n\nLithium is cleared almost entirely by the kidneys. In the proximal tubule it is reabsorbed by the same pathways as sodium, so the body cannot tell the two apart.\n\nWhen Tanisha vomited for two days and drank very little, she lost fluid and sodium. Her kidneys responded by reabsorbing more sodium to protect her circulating volume, and they reabsorbed more lithium with it. Her serum level rose to 2.0 mmol/L even though her dose had not changed.\n\n**Signs.** A fine hand tremor is usually the earliest neurological sign. As the level rises, it can progress to a coarse tremor, unsteady gait, confusion, seizures and coma, and lithium can injure the kidney further, which slows clearance again.\n\n**Why each decision mattered.**\n- Recognising the tremor (Q1) and requesting a level (Q2) separated toxicity from a manic relapse.\n- Withholding lithium (Q5) stopped more drug entering the body; intravenous fluids (Q4) restored sodium and volume so the kidneys could excrete lithium again.\n- Urine output, sodium and potassium on day 2 confirm that the kidneys are clearing lithium and the fluid replacement is adequate.\n- The level and tremor improve within a day; mood settles over days to weeks, which is why mood and sleep are not the measures of toxicity treatment (Q6).\n\n**Prevention.** Steady fluid and salt intake, avoiding NSAIDs and diuretics unless prescribed with monitoring, never doubling a missed dose, and seeking help early when vomiting or diarrhoea stops a client keeping fluids down.",
-  "quality_report": "Revised by Claude (2026-10-08) from Jade's Lithium Toxicity draft, at Ian's request, to meet V3 and the error-prevention addendum: Q4 changed from 'withhold the next dose' (duplicating Q5's key) to anticipating IV fluids with urine-output and electrolyte monitoring; a 10:30 am stage added so the IV fluids evaluated in Q6 are introduced first (V3 s.6); implausible distractors replaced (Q4 'increase the dose', Q5 'arrange transport before informing anyone', Q8 'stop lithium once stable'); Q1 rationale explains why the tremor is the safety cue. Cover, two-answer, cue-sufficiency and hidden-assumption checks were re-run on all eight items. Pending Jade's review and clinical validation (lithium thresholds, standing-order scope, Caribbean facility norms).",
+  "pathophysiology": "## Pathophysiology teaching\n\nLithium is cleared almost entirely by the kidneys. In the proximal tubule it is reabsorbed by the same pathways as sodium, so the body cannot tell the two apart.\n\nTanisha's dose had been increased two weeks earlier, which raised her level towards the top of the range. When she then vomited for two days and drank very little, she lost fluid and sodium. Her kidneys responded by reabsorbing more sodium to protect her circulating volume, and they reabsorbed more lithium with it. Her serum level rose to 2.0 mmol/L.\n\n**Timing the level.** Lithium levels are read about 12 hours after the last dose. A sample taken a few hours after a dose reads falsely high, which is why the case states when the sample was taken.\n\n**Signs.** A fine hand tremor is common at usual levels. As the level rises, it becomes a coarse tremor with an unsteady gait, then confusion, seizures and coma, and lithium can injure the kidney further, which slows clearance again. Mania and toxicity can occur together: the illness that prompted the dose increase has not yet settled, which is why her behaviour hides the drug problem.\n\n**Why each decision mattered.**\n- Recognising the coarse tremor and unsteady gait (Q1) and linking the vomiting to lithium retention (Q2) pointed to the drug, not the illness.\n- Prioritizing toxicity over a manic relapse before the result (Q3) meant the level was read as confirmation, not a surprise.\n- Holding the dose (Q5) stopped more drug entering the body; intravenous fluids (Q4) restored sodium and volume so the kidneys could excrete lithium again.\n- Urine output, sodium and potassium on day 2 confirm that the kidneys are clearing lithium and the fluid replacement is adequate.\n- The level and tremor improve within a day; mood settles over days to weeks, which is why mood and sleep are not the measures of toxicity treatment (Q6).\n\n**Prevention.** Steady fluid and salt intake, avoiding NSAIDs and diuretics unless prescribed with monitoring, never doubling a missed dose, extra level checks after any dose change, and seeking help early when vomiting or diarrhoea stops a client keeping fluids down.",
+  "quality_report": "Revised by Claude (2026-10-08) from Jade's Lithium Toxicity draft, at Ian's request, to meet V3 and the error-prevention addendum: Q4 changed from 'withhold the next dose' (duplicating Q5's key) to anticipating IV fluids with urine-output and electrolyte monitoring; a 10:30 am stage added so the IV fluids evaluated in Q6 are introduced first (V3 s.6); implausible distractors replaced (Q4 'increase the dose', Q5 'arrange transport before informing anyone', Q8 'stop lithium once stable'); Q1 rationale explains why the tremor is the safety cue. Cover, two-answer, cue-sufficiency and hidden-assumption checks were re-run on all eight items. Pending Jade's review and clinical validation (lithium thresholds, standing-order scope, Caribbean facility norms). Flow revision (Claude, 2026-10-09, at Ian's request): stages reordered so no question is answered by the screen before it (Q3 now asked before the lithium result; the standing-order wording moved to the opening; Q2 now analyses the vomiting cue). Clinical consistency: dose increased two weeks earlier explains mania with toxicity; coarse tremor and unsteady gait replace the fine tremor to match a level of 2.0 mmol/L; level timed 12 hours post-dose; overnight hospital admission made explicit; Q4 'withhold and repeat in a week' (half-right, overlapped Q5) replaced with activated charcoal; Q5 'half dose' replaced with 'repeat the level'; Q3 'worsening hypertension' replaced with an overactive thyroid.",
   "validation": {
     "status": "pending"
   }
