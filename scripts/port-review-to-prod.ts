@@ -17,6 +17,7 @@
  *      Guarded: only rows that are still inactive + pending with exactly 4 options are
  *      touched, so nothing live or already approved on prod is overwritten.
  *   3. For each flagged question: sets review_status = needs_changes with the flag note.
+ *      For each retired question (fix pass): sets review_status = rejected, inactive, with the reason.
  *   4. Prints counts so the person applying it can compare with the expected numbers.
  *
  * --apply-prod <file> (separate step, for Ian): applies an already-reviewed SQL file to PROD.
@@ -54,7 +55,7 @@ function lit(v: string | null | undefined): string {
   return `$${tag}$${v}$${tag}$`;
 }
 
-type Verdict = { source_id: string; verdict: "ok" | "flag"; flags?: string[]; flag_note?: string; changes?: string };
+type Verdict = { source_id: string; verdict: "ok" | "flag" | "retire"; retire_reason?: string; flags?: string[]; flag_note?: string; changes?: string };
 
 const PROD_REF = "cdvubijjepwmhhkgppbl";
 async function applyProd(file: string) {
@@ -78,9 +79,10 @@ async function applyProd(file: string) {
 
 async function main() {
   if (flag("apply-prod")) return applyProd(flag("apply-prod")!);
-  // Later passes override earlier verdicts: the main AI review, then the negative-stem pass (data/review/neg/ai-*).
+  // Later passes override earlier verdicts: the main AI review, the negative-stem pass (data/review/neg/ai-*),
+  // then the needs_changes fix pass (data/review/fix/ai-*).
   const verdicts = new Map<string, Verdict>();
-  const sources: [string, (f: string) => boolean][] = [["data/review/ai", f => f.endsWith(".out.json")], ["data/review/neg", f => f.startsWith("ai-") && f.endsWith(".out.json")]];
+  const sources: [string, (f: string) => boolean][] = [["data/review/ai", f => f.endsWith(".out.json")], ["data/review/neg", f => f.startsWith("ai-") && f.endsWith(".out.json")], ["data/review/fix", f => f.startsWith("ai-") && f.endsWith(".out.json")]];
   for (const [dir, want] of sources) {
     if (!existsSync(dir)) continue;
     for (const f of readdirSync(dir).filter(want).sort()) {
@@ -116,11 +118,17 @@ async function main() {
     "ALTER TABLE public._backup_prod_port_options_20261005 ENABLE ROW LEVEL SECURITY;",
     "CREATE TEMP TABLE _port_log (kind text, source_id text, n int) ON COMMIT DROP;",
   ];
-  let rewrites = 0, flags = 0, skipped = 0;
+  let rewrites = 0, flags = 0, retires = 0, skipped = 0;
   for (const q of qs) {
     const v = verdicts.get(q.source_id);
     if (!v) { skipped++; continue; }
     const guard = `q.source_id = ${lit(q.source_id)} AND q.is_active = false AND q.review_status = 'pending' AND (SELECT count(*) FROM public.question_options x WHERE x.question_id = q.id) = 4`;
+    if (v.verdict === "retire") {
+      retires++;
+      const note = `[review-v0.1 ${today}] RETIRED: ${v.retire_reason ?? ""}`;
+      out.push(`WITH u AS (UPDATE public.questions q SET review_status = 'rejected', is_active = false, review_notes = concat_ws(E'\\n', q.review_notes, ${lit(note)}) WHERE ${guard} RETURNING 1) INSERT INTO _port_log SELECT 'retire', ${lit(q.source_id)}, count(*) FROM u;`);
+      continue;
+    }
     if (v.verdict === "flag") {
       flags++;
       const note = `[review-v0.1 ${today}] FLAG (${(v.flags ?? []).join(", ")}): ${v.flag_note ?? ""}`;
@@ -141,13 +149,13 @@ async function main() {
     );
   }
   out.push(
-    "-- Expected: rewrite rows with n = 14 (1 question + 4 options); flag rows with n = 1. Anything with n = 0 was skipped by a guard.",
+    "-- Expected: rewrite rows with n = 14 (1 question + 4 options); flag and retire rows with n = 1. Anything with n = 0 was skipped by a guard.",
     "SELECT kind, n, count(*) FROM _port_log GROUP BY 1, 2 ORDER BY 1, 2;",
     "COMMIT;",
   );
   mkdirSync(dirname(resolve(OUT)), { recursive: true });
   writeFileSync(resolve(OUT), out.join("\n") + "\n");
-  console.log(`Wrote ${OUT}: ${rewrites} rewrites, ${flags} flag updates, ${skipped} AI questions with no verdict.`);
+  console.log(`Wrote ${OUT}: ${rewrites} rewrites, ${flags} flag updates, ${retires} retirements, ${skipped} AI questions with no verdict.`);
 
   if (args.includes("--test-on-staging")) {
     const pw = process.env.SUPABASE_DB_PASSWORD_STAGING;

@@ -6,7 +6,7 @@ Status: **ready, pending Ian's review.** Nothing in this runbook has been run ag
 
 | Pool | On prod today | This port |
 |---|---|---|
-| AI bank (`ai:*`), 2,000 | Original versions, all inactive and pending | **1,960 rewrites** (new stem, options, key unchanged, typed options, a rationale per option; 21 of them negative-stem items in the new format) + **40 flags** set to `needs_changes` |
+| AI bank (`ai:*`), 2,000 | Original versions, all inactive and pending | **1,991 rewrites** (new stem, options, typed options, a rationale per option; negative-stem items in the new format; 7 keys changed in the 2026-10-09 fix pass, see data/review/fix/JADE_CHECKLIST.md) + **9 retirements** (duplicates, set to `rejected`) |
 | Prototype bank (`proto:*`), 4,798 | Not on prod | Not part of this port (separate import decision) |
 | Jade's questions (`jade:*`) | 460 live | **Nothing.** His 461 revisions are proposals awaiting his sign-off. 6 miskeyed soft-launch items are already deactivated (Ian's instruction, 2026-10-05) |
 
@@ -32,14 +32,14 @@ Nothing becomes active. Ported AI questions stay `is_active = false`, `review_st
    ```bash
    npx tsx scripts/port-review-to-prod.ts --out data/review/prod-port/ai-port.sql --test-on-staging
    ```
-   Expected: `{"kind":"flag","n":1,"c":40}, {"kind":"rewrite","n":14,"c":1960}`.
+   Expected: `{"kind":"retire","n":1,"c":9}, {"kind":"rewrite","n":14,"c":1991}`.
 3. **Apply to prod** (one transaction; it snapshots every `ai:*` question and option first):
    ```bash
    read -s SUPABASE_DB_PASSWORD; export SUPABASE_DB_PASSWORD     # prod password, never pasted into chat
    CONFIRM_PROD=yes npx tsx scripts/port-review-to-prod.ts --apply-prod data/review/prod-port/ai-port.sql
    ```
    The same counts should print. A `rewrite` row with `n = 0` means a guard skipped that question: it was live, approved, or no longer had 4 options. Look at those by hand.
-4. **Verify on prod (read-only):** 1,960 AI questions with four typed options, glucose in mg/dL, `is_active` unchanged.
+4. **Verify on prod (read-only):** 1,991 AI questions with four typed options, glucose in mg/dL, `is_active` unchanged.
 
 ## Rollback
 

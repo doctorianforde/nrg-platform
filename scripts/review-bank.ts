@@ -10,6 +10,11 @@
  *   npx tsx scripts/review-bank.ts --check  --in data/review/ai/b0000.out.json
  *   npx tsx scripts/review-bank.ts --apply  --in data/review/ai/b0000.out.json [--commit]
  *   npx tsx scripts/review-bank.ts --status
+ *   npx tsx scripts/review-bank.ts --export --pool proto --status-filter needs_changes --from 0 --count 40 --out data/review/fix/proto-f0000.in.json
+ *
+ * Verdicts: "ok" (rewrite; a needs_changes item goes back to pending), "flag" (needs_changes, for Jade),
+ * "retire" (rejected + inactive, with retire_reason; reversible by a reviewer — used for duplicates, out-of-scope
+ * items with no entry-level version, and unrecoverable text).
  *
  * Pools: ai (ai:*), proto (proto:*), jade (jade:*). Ordered by source_id, so
  * --from/--count windows are stable.
@@ -58,11 +63,11 @@ const writeJson = (p: string, v: unknown) => { mkdirSync(dirname(resolve(p)), { 
 
 type InItem = {
   id: string; source_id: string; pool: string; domain: string | null; cognitive_level: string | null; difficulty: string | null;
-  review_status: string; is_active: boolean; stem: string; explanation: string | null;
+  review_status: string; is_active: boolean; stem: string; explanation: string | null; flag_note?: string | null;
   options: { label: string; text: string; is_correct: boolean; rationale: string | null }[];
 };
 type OutItem = {
-  id: string; source_id: string; verdict: "ok" | "flag";
+  id: string; source_id: string; verdict: "ok" | "flag" | "retire"; retire_reason?: string;
   stem: string; options: { label: string; text: string }[]; correct: string[];
   rationale_correct: string; option_types: Record<string, string>; distractor_rationales: Record<string, string>;
   changes: string; flags?: string[]; flag_note?: string; format?: "negative";
@@ -76,9 +81,11 @@ async function exportBatch() {
   const { data: doms } = await db.from("domains").select("id, code");
   const dom = new Map((doms ?? []).map(d => [d.id as number, d.code as string]));
   const { data: qs, error } = await db.from("questions")
-    .select("id, source_id, domain_id, cognitive_level, difficulty, review_status, is_active, body, explanation")
-    .like("source_id", POOLS[pool]).order("source_id").range(from, from + count - 1);
+    .select("id, source_id, domain_id, cognitive_level, difficulty, review_status, is_active, body, explanation, review_notes")
+    .like("source_id", POOLS[pool]).match(flag("status-filter") ? { review_status: flag("status-filter")! } : {})
+    .order("source_id").range(from, from + count - 1);
   if (error) throw error;
+  if (!qs!.length) { console.log("Nothing to export."); return; }
   const ids = qs!.map(q => q.id);
   const { data: opts, error: oErr } = await db.from("question_options").select("question_id, body, is_correct, rationale, display_order").in("question_id", ids);
   if (oErr) throw oErr;
@@ -86,6 +93,7 @@ async function exportBatch() {
     const o = opts!.filter(x => x.question_id === q.id).sort((a, b) => a.display_order - b.display_order);
     return { id: q.id, source_id: q.source_id, pool, domain: dom.get(q.domain_id) ?? null, cognitive_level: q.cognitive_level, difficulty: q.difficulty,
       review_status: q.review_status, is_active: q.is_active, stem: q.body, explanation: q.explanation,
+      flag_note: (q.review_notes ?? "").split("\n").filter((l: string) => / FLAG \(/.test(l)).pop() ?? null,
       options: o.map((x, i) => ({ label: "ABCDEF"[i], text: x.body, is_correct: x.is_correct, rationale: x.rationale })) };
   });
   writeJson(out, { pool, from, count: items.length, exported_at: new Date().toISOString(), items });
@@ -104,6 +112,10 @@ function check(inPath: string) {
     if (input && !input.some(x => x.id === it.id)) { results.push({ id: it.id, source_id: it.source_id, verdict: it.verdict, ok: false, error: "id not in the exported batch" }); continue; }
     if (it.verdict === "flag" && (!(it.flags ?? []).length || (it.flags ?? []).some(f => !FLAG_NAMES.includes(f)))) { results.push({ id: it.id, source_id: it.source_id, verdict: it.verdict, ok: false, error: `flags must be one or more of ${FLAG_NAMES.join(", ")}` }); continue; }
     if (it.verdict === "flag" && !it.flag_note) { results.push({ id: it.id, source_id: it.source_id, verdict: it.verdict, ok: false, error: "flag without flag_note" }); continue; }
+    if (it.verdict === "retire") {
+      const ok = (it.retire_reason ?? "").trim().length >= 20;
+      results.push({ id: it.id, source_id: it.source_id, verdict: "retire", ok, error: ok ? undefined : "retire needs a retire_reason (20+ chars)" }); continue;
+    }
     if (it.verdict === "flag" && !it.stem) { results.push({ id: it.id, source_id: it.source_id, verdict: "flag", ok: true }); continue; }
     const r = checkMcq(it, rules);
     if (!r.ok) { results.push({ id: it.id, source_id: it.source_id, verdict: it.verdict, ok: false, error: r.error }); continue; }
@@ -147,12 +159,22 @@ async function apply(inPath: string) {
   if (input[0]?.pool === "jade") { console.error("Refusing: Jade's questions are proposals for his sign-off and are never applied by this tool."); process.exit(1); }
   const db = staging();
   const today = new Date().toISOString().slice(0, 10);
-  let applied = 0, flagged = 0;
+  let applied = 0, flagged = 0, retired = 0;
   for (const it of items) {
     const ok = results.find(r => r.id === it.id)!;
     if (!ok.ok) continue;
-    const note = `[${REVIEW_TAG} ${today}] ${it.verdict === "flag" ? `FLAG (${(it.flags ?? []).join(", ")}): ${it.flag_note}` : it.changes}`;
+    const note = `[${REVIEW_TAG} ${today}] ${it.verdict === "flag" ? `FLAG (${(it.flags ?? []).join(", ")}): ${it.flag_note}` : it.verdict === "retire" ? `RETIRED: ${it.retire_reason}` : it.changes}`;
     const notes = note;
+    if (it.verdict === "retire") {
+      retired++;
+      if (!commit) continue;
+      const { data: cur } = await db.from("questions").select("review_notes").eq("id", it.id).single();
+      const { error } = await db.from("questions").update({
+        review_notes: [cur?.review_notes, notes].filter(Boolean).join("\n"), review_status: "rejected", is_active: false, updated_at: new Date().toISOString(),
+      }).eq("id", it.id);
+      if (error) throw error;
+      continue;
+    }
     if (it.verdict === "flag") {
       flagged++;
       if (!commit) continue;
@@ -186,8 +208,8 @@ async function apply(inPath: string) {
     }).eq("id", it.id);
     if (error) throw error;
   }
-  console.log(`${commit ? "APPLIED" : "DRY RUN (add --commit)"}: ${applied} rewritten, ${flagged} flagged needs_changes, on staging.`);
-  if (commit) writeJson(inPath.replace(/\.out\.json$/, ".applied.json"), { applied_at: new Date().toISOString(), applied, flagged });
+  console.log(`${commit ? "APPLIED" : "DRY RUN (add --commit)"}: ${applied} rewritten, ${flagged} flagged needs_changes, ${retired} retired, on staging.`);
+  if (commit) writeJson(inPath.replace(/\.out\.json$/, ".applied.json"), { applied_at: new Date().toISOString(), applied, flagged, retired });
 }
 
 async function status() {

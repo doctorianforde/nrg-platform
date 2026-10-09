@@ -2222,3 +2222,11 @@ test uses the I/II/III combination format, which bears on the ~15 "needs-jade" c
   clinical story is consistent (recent dose increase, coarse tremor + unsteady gait, level timed 12 h post-dose, overnight admission).
   Staging: old version kept as `NRG-MH-001-v1` (archived; holds Jade's completed attempt, so it was not deleted); revised case
   imported as NRG-MH-001 (`78560f20-731e-49cc-b671-147e02a5bfdd`), in_review, not validated.
+- 2026-10-09: **needs_changes pile cleared on staging (554 → 0).** 14 reviewer subagents worked from the new
+  `docs/phase-1/FIX_BRIEF.md` (decide, don't defer: rescope to entry-level RN, fix disputed keys to mainstream guidance, rebuild
+  garbled text, retire duplicates/specialist-only items). Result, verified in the DB: 377 rewritten (back to `pending` for Jade's
+  approval; 71 with `KEY CHANGED:`), 177 retired (`rejected`, inactive, reason in review_notes; reversible), 0 still flagged.
+  `review-bank.ts` gained `--status-filter` and a `retire` verdict; `port-review-to-prod.ts` reads data/review/fix/ai-* and ports
+  retirements. Prod port regenerated: 1,991 rewrites + 9 retirements, staging dry run matched. Jade's list:
+  `data/review/fix/JADE_CHECKLIST.md`. (Correction: an earlier message in this session reported these numbers before the
+  reviewers had finished; the figures here are the verified ones.)
