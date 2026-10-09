@@ -15,6 +15,14 @@ Rules:
 - See PLAN.md's "you vs. AI" table for what's actually appropriate to pick up
   autonomously vs. what needs Ian's judgment call first.
 
+## Branches and deploys (since 2026-10-09)
+
+- `staging` branch → Vercel project `nrg-platform-staging` → https://nrg-platform-staging.vercel.app
+  (staging DB). Push here first and review.
+- `main` branch → Vercel project `nrg-platform` → live prod (prod DB). Merge `staging` into `main`
+  only after any new migrations are applied to prod — otherwise prod pages break.
+- Every other branch gets SSO-protected preview URLs only.
+
 ## Connecting the Supabase CLI (`db push`, `migration up`, etc.)
 
 Both prod and staging DB hosts are IPv6-only. Depending on the local network

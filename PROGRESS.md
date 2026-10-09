@@ -2212,3 +2212,8 @@ test uses the I/II/III combination format, which bears on the ~15 "needs-jade" c
   would deploy prod against a DB missing the new migrations. Vercel preview on the staging project (Preview env = staging Supabase):
   https://nrg-platform-staging-git-ca-2ee445-ian-fordes-projects-3dae7f3d.vercel.app (Vercel SSO-protected). The prod project also
   builds a preview of the branch; it does not change the live site.
+- 2026-10-09: **Separate staging branch.** New git branch `staging` (from main @ the case-study work) is now the production
+  branch of the `nrg-platform-staging` Vercel project, so https://nrg-platform-staging.vercel.app deploys from `staging` and a
+  push to `main` no longer touches it (and vice versa). Workflow written into CLAUDE.md. Local `main` still holds unpushed
+  commits that need the prod migrations first — do not `git push origin main` until the runbook steps are done.
+  Paid test account for Ian on staging: `ian-paid-student@nrg-staging.test` (student, premium).

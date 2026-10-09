@@ -181,10 +181,9 @@ Saunders-derived and verbatim-NCLEX questions at all.
   staging Supabase project. Publicly reachable because it is that project's production
   alias; a preview URL would not have worked, since the org uses Vercel Standard
   Protection and every per-deployment URL 302s to `vercel.com/sso-api` (the account is
-  Hobby, so Jade could not be invited either). Its production branch is `main`, not a
-  separate `staging` branch — Vercel's API will not set the production branch, and
-  tracking `main` is better anyway: current code, staging data, nothing to keep in sync.
-  A push to `main` now updates both sites. Verified black-box that each site talks only
+  Hobby, so Jade could not be invited either). **Since 2026-10-09 its production branch is
+  `staging`** (set via `PATCH /v9/projects/{id}/branch`): push `staging` to update this site,
+  push `main` to update prod. Pushes to `main` only make a (SSO-protected) preview here.
   to its own database; prod env vars untouched. Jade: `jade@nrg-staging.test` (teacher),
   then `/teacher/review` → Source → "Prototype bank (imported)". 7/7 live assertions
   plus a 7-page smoke test. **Owner: Ian** — send Jade the URL and password.
