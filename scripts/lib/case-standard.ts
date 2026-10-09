@@ -56,6 +56,32 @@ export type CaseDoc = {
   validation?: { status: "pending" | "validated"; by?: string; date?: string; note?: string };
 };
 
+/**
+ * V3 s.7.6 "Prohibited stem verb" table (Jade's PDF, page 11): verbs that fit each clinical-judgment step, and verbs that
+ * belong to another step. An avoided verb in the stem is an error (it attaches the right heading to the wrong construct);
+ * a stem with none of the step's verbs is only a warning, since natural wordings such as "requires the nurse's immediate
+ * follow-up" are legitimate.
+ */
+export const STEM_VERBS: Record<(typeof CJ_STEPS)[number], { use: string[]; avoid: string[] }> = {
+  recognize_cues: { use: ["identify", "recognize", "recognise", "notice"], avoid: ["diagnose", "intervene"] },
+  analyze_cues: { use: ["interpret", "compare", "determine significance", "significance"], avoid: ["treat", "administer"] },
+  prioritize_hypotheses: { use: ["prioritize", "prioritise", "most consistent", "most likely"], avoid: ["implement"] },
+  generate_solutions: { use: ["plan", "anticipate", "include", "expected outcome"], avoid: ["do first", "administer now", "clarify now"] },
+  take_action: { use: ["perform", "administer", "hold", "clarify", "escalate", "delegate"], avoid: ["evaluate effectiveness"] },
+  evaluate_outcomes: { use: ["determine response", "response", "improvement", "deterioration", "effective"], avoid: ["plan initial intervention"] },
+};
+const hasPhrase = (stem: string, p: string) => new RegExp(`\\b${p.replace(/ /g, "\\s+")}`, "i").test(stem);
+
+/** Soft checks: printed, never blocking. */
+export function caseWarnings(doc: CaseDoc): string[] {
+  const w: string[] = [];
+  for (const q of doc.questions) {
+    const rule = (STEM_VERBS as Record<string, { use: string[] }>)[q.cj_step];
+    if (rule && !rule.use.some(v => hasPhrase(q.stem, v))) w.push(`Q${q.position}: stem uses none of the ${q.cj_step} verbs (${rule.use.join(", ")}); check it tests that step`);
+  }
+  return w;
+}
+
 const LEN = { maxRatio: 2.0, maxCorrectGap: 12, minOption: 3, maxOption: 220, minRationaleCorrect: 60, minRationale: 30 };
 const FLUID_TRIGGER = /lithium|digoxin|diuretic|furosemide|frusemide|thiazide|renal|kidney|dehydrat|vomit|diarrh|intravenous|\bIV\b/i;
 const FLUID_DATA = /urine output|mL\/h|mL\/hr|sodium|potassium|\bNa\b|\bK\b/i;
@@ -107,6 +133,8 @@ export function validateCase(doc: CaseDoc, rules: Rules = loadRules()): string[]
     if (si === undefined) e.push(`${tag}: stage "${q.stage}" does not exist`);
     else { if (si < lastStage) e.push(`${tag}: stages must not go backwards`); lastStage = si; }
     if (!q.stem?.trim()) e.push(`${tag}: missing stem`);
+    const verbs = (STEM_VERBS as Record<string, { avoid: string[] }>)[q.cj_step];
+    for (const v of verbs?.avoid ?? []) if (hasPhrase(q.stem ?? "", v)) e.push(`${tag}: stem verb "${v}" belongs to another clinical-judgment step (V3 s.7.6)`);
     const labels = (q.options ?? []).map(o => o.label).join("");
     if (labels !== "ABCD") e.push(`${tag}: four options labelled A-D`);
     if (q.correct?.length !== 1) e.push(`${tag}: exactly one correct option`);

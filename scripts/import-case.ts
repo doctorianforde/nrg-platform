@@ -13,7 +13,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { TAXONOMIES, validateCase, type CaseDoc } from "./lib/case-standard";
+import { caseWarnings, TAXONOMIES, validateCase, type CaseDoc } from "./lib/case-standard";
 
 const args = process.argv.slice(2);
 const file = args.find(a => !a.startsWith("--"));
@@ -23,6 +23,7 @@ const doc: CaseDoc = JSON.parse(readFileSync(resolve(file), "utf8"));
 const problems = validateCase(doc);
 if (problems.length) { console.error(`✗ ${doc.case_code ?? file}: ${problems.length} problem(s)`); problems.forEach(p => console.error("  - " + p)); process.exit(1); }
 console.log(`✓ ${doc.case_code}: passes the case standard (${doc.questions.length} questions, ${doc.stages.length} stages)`);
+caseWarnings(doc).forEach(w => console.log("  ! " + w));
 if (args.includes("--check")) process.exit(0);
 
 function loadEnv() {

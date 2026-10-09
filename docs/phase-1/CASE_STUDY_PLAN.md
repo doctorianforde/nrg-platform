@@ -77,7 +77,7 @@ validation before publication (§14).
    Tiers are set by admins today; there is no payment flow yet.
 
 ## Questions for Jade (spec gaps and conflicts)
-1. **Section 7.6 "Prohibited Stem Verb"** is an image that didn't come through. We need the verb list as text to build it into the validator.
+1. ~~Section 7.6 "Prohibited Stem Verb"~~ received 2026-10-09 (V3 PDF p.11) and built into `scripts/lib/case-standard.ts` (`STEM_VERBS`).
 2. **Reference ranges:** the addendum says none unless range recall is being tested; V3 §5.3 allows them "when educationally necessary".
    The bank review added plain-text reference ranges to some standalone questions when it removed "(high)/(low)" labels. Which rule
    applies to standalone questions?
@@ -112,3 +112,17 @@ validation before publication (§14).
 - Known limitation, same as the rest of the app: `case_studies`/`case_stages`/`question_options` are readable by any signed-in user
   through the API, so a determined student could read keys or later stages directly. The UI never sends them early. Tightening RLS
   for case content is a follow-up.
+
+## V3 s.7.6 Prohibited stem verbs (from Jade's PDF, page 11)
+
+| Clinical-judgment step | Appropriate verbs | Avoid (belong elsewhere) |
+|---|---|---|
+| Recognize cues | identify, recognize, notice | diagnose, intervene |
+| Analyze cues | interpret, compare, determine significance | treat, administer |
+| Prioritize hypotheses | prioritize, most consistent, most likely | implement |
+| Generate solutions | plan, anticipate, include, expected outcome | do first, administer now, clarify now |
+| Take action | perform, administer, hold, clarify, escalate, delegate | evaluate effectiveness |
+| Evaluate outcomes | determine response, improvement, deterioration | plan initial intervention |
+
+Purpose (Jade): stops the AI attaching the right heading to the wrong construct. The validator rejects an "avoid" verb in a
+stem and warns when a stem uses none of the step's verbs.

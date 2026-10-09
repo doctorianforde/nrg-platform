@@ -2205,3 +2205,6 @@ free tier); their test attempts remain (delete was declined), which blocks `--re
 **Do not push to main before applying the prod migrations** (see the runbook note): practice/review/mock pages now read `questions.context`.
 Still open: the prohibited-stem-verb list (V3 s.7.6 image) — not in the repo's RENR guide PDF; Ian to send it. The CXC RENR sample
 test uses the I/II/III combination format, which bears on the ~15 "needs-jade" combination-format flags.
+- 2026-10-09: V3 s.7.6 "Prohibited stem verb" table received from Ian (Jade's PDF p.11) and built into the case validator
+  (`STEM_VERBS`): an avoided verb in a stem fails; a stem with none of the step's verbs is a printed warning. Lithium Q1–Q3 stems
+  reworded to the table's verbs (Q2 had used "anticipate", a Generate Solutions verb) in the JSON and on staging.

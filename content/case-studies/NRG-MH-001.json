@@ -19,16 +19,40 @@
       "time_label": "9:30 am",
       "narrative": "The nurse completes the initial assessment.",
       "vitals": [
-        { "label": "Temperature", "value": "37.2°C" },
-        { "label": "Pulse", "value": "104/min" },
-        { "label": "Respirations", "value": "20/min" },
-        { "label": "Blood pressure", "value": "138/88 mm Hg" },
-        { "label": "SpO2", "value": "98% on room air" },
-        { "label": "RBS", "value": "96 mg/dL" }
+        {
+          "label": "Temperature",
+          "value": "37.2°C"
+        },
+        {
+          "label": "Pulse",
+          "value": "104/min"
+        },
+        {
+          "label": "Respirations",
+          "value": "20/min"
+        },
+        {
+          "label": "Blood pressure",
+          "value": "138/88 mm Hg"
+        },
+        {
+          "label": "SpO2",
+          "value": "98% on room air"
+        },
+        {
+          "label": "RBS",
+          "value": "96 mg/dL"
+        }
       ],
       "assessment": [
-        { "system": "CNS", "finding": "Alert and oriented. Fine tremor of both hands." },
-        { "system": "Psychosocial", "finding": "Speech rapid and difficult to interrupt. Moves constantly in the chair." }
+        {
+          "system": "CNS",
+          "finding": "Alert and oriented. Fine tremor of both hands."
+        },
+        {
+          "system": "Psychosocial",
+          "finding": "Speech rapid and difficult to interrupt. Moves constantly in the chair."
+        }
       ]
     },
     {
@@ -40,7 +64,17 @@
       "key": "level",
       "time_label": "10:00 am",
       "narrative": "The serum lithium result is reported. Lithium was last taken this morning.",
-      "labs": [{ "category": "Chemistry", "items": [{ "label": "Serum lithium", "value": "2.0 mmol/L" }] }]
+      "labs": [
+        {
+          "category": "Chemistry",
+          "items": [
+            {
+              "label": "Serum lithium",
+              "value": "2.0 mmol/L"
+            }
+          ]
+        }
+      ]
     },
     {
       "key": "orders",
@@ -57,21 +91,56 @@
       "time_label": "Day 2, 9:00 am",
       "narrative": "Tanisha returns with her sister as requested. She received intravenous fluids at the district hospital, and lithium was withheld overnight.",
       "vitals": [
-        { "label": "Temperature", "value": "36.9°C" },
-        { "label": "Pulse", "value": "88/min" },
-        { "label": "Respirations", "value": "18/min" },
-        { "label": "Blood pressure", "value": "128/80 mm Hg" }
+        {
+          "label": "Temperature",
+          "value": "36.9°C"
+        },
+        {
+          "label": "Pulse",
+          "value": "88/min"
+        },
+        {
+          "label": "Respirations",
+          "value": "18/min"
+        },
+        {
+          "label": "Blood pressure",
+          "value": "128/80 mm Hg"
+        }
       ],
       "assessment": [
-        { "system": "CNS", "finding": "Hand tremor much reduced since yesterday." },
-        { "system": "Genitourinary", "finding": "Urine output since yesterday approximately 50 mL/hr." },
-        { "system": "Psychosocial", "finding": "Slept six hours overnight. Still speaks rapidly but sits calmly during the interview." }
+        {
+          "system": "CNS",
+          "finding": "Hand tremor much reduced since yesterday."
+        },
+        {
+          "system": "Genitourinary",
+          "finding": "Urine output since yesterday approximately 50 mL/hr."
+        },
+        {
+          "system": "Psychosocial",
+          "finding": "Slept six hours overnight. Still speaks rapidly but sits calmly during the interview."
+        }
       ],
-      "labs": [{ "category": "Chemistry", "items": [
-        { "label": "Serum lithium", "value": "1.1 mmol/L" },
-        { "label": "Sodium", "value": "136 mmol/L" },
-        { "label": "Potassium", "value": "4.1 mmol/L" }
-      ] }]
+      "labs": [
+        {
+          "category": "Chemistry",
+          "items": [
+            {
+              "label": "Serum lithium",
+              "value": "1.1 mmol/L"
+            },
+            {
+              "label": "Sodium",
+              "value": "136 mmol/L"
+            },
+            {
+              "label": "Potassium",
+              "value": "4.1 mmol/L"
+            }
+          ]
+        }
+      ]
     },
     {
       "key": "sister",
@@ -86,16 +155,39 @@
   ],
   "questions": [
     {
-      "position": 1, "stage": "assess", "cj_step": "recognize_cues", "domain": "NP", "taxonomy": "AP",
-      "stem": "Which finding requires the nurse's immediate follow-up?",
+      "position": 1,
+      "stage": "assess",
+      "cj_step": "recognize_cues",
+      "domain": "NP",
+      "taxonomy": "AP",
+      "stem": "Which finding should the nurse recognize as requiring immediate follow-up?",
       "options": [
-        { "label": "A", "text": "Pulse of 104/min" },
-        { "label": "B", "text": "Fine tremor of both hands" },
-        { "label": "C", "text": "Blood pressure of 138/88 mm Hg" },
-        { "label": "D", "text": "Irritability with reduced sleep" }
+        {
+          "label": "A",
+          "text": "Pulse of 104/min"
+        },
+        {
+          "label": "B",
+          "text": "Fine tremor of both hands"
+        },
+        {
+          "label": "C",
+          "text": "Blood pressure of 138/88 mm Hg"
+        },
+        {
+          "label": "D",
+          "text": "Irritability with reduced sleep"
+        }
       ],
-      "correct": ["B"],
-      "option_types": { "A": "close", "B": "correct", "C": "priority", "D": "incorrect" },
+      "correct": [
+        "B"
+      ],
+      "option_types": {
+        "A": "close",
+        "B": "correct",
+        "C": "priority",
+        "D": "incorrect"
+      },
       "rationale_correct": "CORRECT: Tanisha takes lithium, a drug with a narrow therapeutic range, and her hands now show a fine tremor. Tremor can occur at usual levels, but in a client on lithium it is also the earliest neurological sign of toxicity, so it needs follow-up now. The rest of the picture (restlessness, rapid speech, reduced sleep) is explained by the mania her sister describes.",
       "distractor_rationales": {
         "A": "A pulse of 104/min fits her agitation and constant movement. It should be rechecked, but it does not point to a medication-safety problem the way the tremor does.",
@@ -103,19 +195,48 @@
         "D": "Irritability and reduced sleep are the presenting manic picture already reported by her sister at 9:15 am, so they add nothing new requiring immediate follow-up."
       },
       "self_test": "The pulse of 104/min is explained by agitation, whereas a tremor in a client taking lithium can signal a rising drug level.",
-      "meta": { "topic": "Mental health pharmacology", "subtopic": "Lithium monitoring", "priority_principle": "Medication safety cue over expected disease features", "prerequisites": "Lithium therapeutic index; signs of mania", "suggested_review": "Lithium adverse effects and toxicity signs" }
+      "meta": {
+        "topic": "Mental health pharmacology",
+        "subtopic": "Lithium monitoring",
+        "priority_principle": "Medication safety cue over expected disease features",
+        "prerequisites": "Lithium therapeutic index; signs of mania",
+        "suggested_review": "Lithium adverse effects and toxicity signs"
+      }
     },
     {
-      "position": 2, "stage": "history", "cj_step": "analyze_cues", "domain": "CDM", "taxonomy": "AP",
-      "stem": "Which investigation should the nurse anticipate first?",
+      "position": 2,
+      "stage": "history",
+      "cj_step": "analyze_cues",
+      "domain": "CDM",
+      "taxonomy": "AP",
+      "stem": "Which investigation would best help the nurse interpret the significance of Tanisha's tremor?",
       "options": [
-        { "label": "A", "text": "Serum lithium level" },
-        { "label": "B", "text": "Serum electrolytes" },
-        { "label": "C", "text": "Urinalysis for specific gravity" },
-        { "label": "D", "text": "Thyroid function test" }
+        {
+          "label": "A",
+          "text": "Serum lithium level"
+        },
+        {
+          "label": "B",
+          "text": "Serum electrolytes"
+        },
+        {
+          "label": "C",
+          "text": "Urinalysis for specific gravity"
+        },
+        {
+          "label": "D",
+          "text": "Thyroid function test"
+        }
       ],
-      "correct": ["A"],
-      "option_types": { "A": "correct", "B": "close", "C": "priority", "D": "incorrect" },
+      "correct": [
+        "A"
+      ],
+      "option_types": {
+        "A": "correct",
+        "B": "close",
+        "C": "priority",
+        "D": "incorrect"
+      },
       "rationale_correct": "CORRECT: Vomiting and poor fluid intake reduce lithium clearance, and Tanisha already has a tremor. The serum lithium level is the single result that separates lithium toxicity from a manic relapse and decides whether the next dose is given.",
       "distractor_rationales": {
         "B": "Electrolytes matter, because sodium loss from vomiting increases lithium reabsorption, and they will be needed. On their own they do not tell toxicity from relapse the way the lithium level does.",
@@ -123,19 +244,48 @@
         "D": "Thyroid disease can mimic mania, but it does not explain new tremor appearing with two days of vomiting in a client on lithium."
       },
       "self_test": "Electrolytes show why lithium might be rising but cannot confirm that it has, which only the lithium level does.",
-      "meta": { "topic": "Mental health pharmacology", "subtopic": "Therapeutic drug monitoring", "priority_principle": "Choose the test that discriminates the leading hypotheses", "prerequisites": "Renal handling of lithium", "suggested_review": "When to request a lithium level" }
+      "meta": {
+        "topic": "Mental health pharmacology",
+        "subtopic": "Therapeutic drug monitoring",
+        "priority_principle": "Choose the test that discriminates the leading hypotheses",
+        "prerequisites": "Renal handling of lithium",
+        "suggested_review": "When to request a lithium level"
+      }
     },
     {
-      "position": 3, "stage": "level", "cj_step": "prioritize_hypotheses", "domain": "CDM", "taxonomy": "ASE",
-      "stem": "Which condition is the nurse most concerned about?",
+      "position": 3,
+      "stage": "level",
+      "cj_step": "prioritize_hypotheses",
+      "domain": "CDM",
+      "taxonomy": "ASE",
+      "stem": "Which condition is most consistent with Tanisha's findings?",
       "options": [
-        { "label": "A", "text": "Relapse of a manic episode" },
-        { "label": "B", "text": "Lithium toxicity" },
-        { "label": "C", "text": "Gastroenteritis with dehydration" },
-        { "label": "D", "text": "Worsening hypertension" }
+        {
+          "label": "A",
+          "text": "Relapse of a manic episode"
+        },
+        {
+          "label": "B",
+          "text": "Lithium toxicity"
+        },
+        {
+          "label": "C",
+          "text": "Gastroenteritis with dehydration"
+        },
+        {
+          "label": "D",
+          "text": "Worsening hypertension"
+        }
       ],
-      "correct": ["B"],
-      "option_types": { "A": "close", "B": "correct", "C": "priority", "D": "incorrect" },
+      "correct": [
+        "B"
+      ],
+      "option_types": {
+        "A": "close",
+        "B": "correct",
+        "C": "priority",
+        "D": "incorrect"
+      },
       "rationale_correct": "CORRECT: A lithium level of 2.0 mmol/L, a new tremor, and two days of vomiting with poor intake form one picture: lithium toxicity. Entry-level knowledge that lithium has a narrow therapeutic range (roughly 0.6 to 1.2 mmol/L for maintenance) makes this the priority, because it can progress to confusion, seizures and kidney injury.",
       "distractor_rationales": {
         "A": "Her behaviour does support a manic relapse, which is why this is the classic trap. Relapse is real but not immediately dangerous; toxicity is.",
@@ -143,19 +293,48 @@
         "D": "A blood pressure of 138/88 mm Hg with agitation is not an emergency and does not explain any of the other findings."
       },
       "self_test": "Manic relapse explains the behaviour but not a lithium level of 2.0 mmol/L with a new tremor.",
-      "meta": { "topic": "Mental health pharmacology", "subtopic": "Lithium toxicity", "priority_principle": "Life-threatening problem before the expected illness", "prerequisites": "Lithium therapeutic range", "suggested_review": "Stages of lithium toxicity" }
+      "meta": {
+        "topic": "Mental health pharmacology",
+        "subtopic": "Lithium toxicity",
+        "priority_principle": "Life-threatening problem before the expected illness",
+        "prerequisites": "Lithium therapeutic range",
+        "suggested_review": "Stages of lithium toxicity"
+      }
     },
     {
-      "position": 4, "stage": "level", "cj_step": "generate_solutions", "domain": "CDM", "taxonomy": "AP",
+      "position": 4,
+      "stage": "level",
+      "cj_step": "generate_solutions",
+      "domain": "CDM",
+      "taxonomy": "AP",
       "stem": "Which intervention should the nurse anticipate in Tanisha's plan of care?",
       "options": [
-        { "label": "A", "text": "IV fluids with monitoring of urine output and electrolytes" },
-        { "label": "B", "text": "Oral fluids at home with a repeat lithium level next week" },
-        { "label": "C", "text": "A low-sodium diet to bring the blood pressure down" },
-        { "label": "D", "text": "Withhold lithium and repeat the level in one week" }
+        {
+          "label": "A",
+          "text": "IV fluids with monitoring of urine output and electrolytes"
+        },
+        {
+          "label": "B",
+          "text": "Oral fluids at home with a repeat lithium level next week"
+        },
+        {
+          "label": "C",
+          "text": "A low-sodium diet to bring the blood pressure down"
+        },
+        {
+          "label": "D",
+          "text": "Withhold lithium and repeat the level in one week"
+        }
       ],
-      "correct": ["A"],
-      "option_types": { "A": "correct", "B": "close", "C": "unsafe", "D": "priority" },
+      "correct": [
+        "A"
+      ],
+      "option_types": {
+        "A": "correct",
+        "B": "close",
+        "C": "unsafe",
+        "D": "priority"
+      },
       "rationale_correct": "CORRECT: Tanisha is volume- and sodium-depleted from vomiting, which is why her kidneys are holding on to lithium. Restoring fluid and sodium intravenously increases lithium excretion, and urine output and electrolytes show whether the plan is working.",
       "distractor_rationales": {
         "B": "Rehydration is the right idea, but she has been vomiting for two days and has signs of toxicity, so oral fluids at home with a check next week are too little and too late.",
@@ -163,19 +342,48 @@
         "D": "Withholding lithium is right, but a recheck in a week leaves a toxic, dehydrated client without treatment or monitoring in the meantime."
       },
       "self_test": "Oral fluids at home address the dehydration but are too slow and too unmonitored for a level of 2.0 mmol/L with neurological signs.",
-      "meta": { "topic": "Mental health pharmacology", "subtopic": "Management of lithium toxicity", "priority_principle": "Correct the cause and monitor the response", "prerequisites": "Sodium-lithium interaction", "suggested_review": "Fluid and electrolyte management in lithium toxicity" }
+      "meta": {
+        "topic": "Mental health pharmacology",
+        "subtopic": "Management of lithium toxicity",
+        "priority_principle": "Correct the cause and monitor the response",
+        "prerequisites": "Sodium-lithium interaction",
+        "suggested_review": "Fluid and electrolyte management in lithium toxicity"
+      }
     },
     {
-      "position": 5, "stage": "orders", "cj_step": "take_action", "domain": "NP", "taxonomy": "AP",
+      "position": 5,
+      "stage": "orders",
+      "cj_step": "take_action",
+      "domain": "NP",
+      "taxonomy": "AP",
       "stem": "Which action should the nurse take first?",
       "options": [
-        { "label": "A", "text": "Give the midday dose while awaiting the physician's reply" },
-        { "label": "B", "text": "Encourage oral fluids at home and reassess in the morning" },
-        { "label": "C", "text": "Withhold the midday dose and report the level and findings" },
-        { "label": "D", "text": "Give half the midday dose while awaiting the physician's reply" }
+        {
+          "label": "A",
+          "text": "Give the midday dose while awaiting the physician's reply"
+        },
+        {
+          "label": "B",
+          "text": "Encourage oral fluids at home and reassess in the morning"
+        },
+        {
+          "label": "C",
+          "text": "Withhold the midday dose and report the level and findings"
+        },
+        {
+          "label": "D",
+          "text": "Give half the midday dose while awaiting the physician's reply"
+        }
       ],
-      "correct": ["C"],
-      "option_types": { "A": "unsafe", "B": "incorrect", "C": "correct", "D": "unsafe" },
+      "correct": [
+        "C"
+      ],
+      "option_types": {
+        "A": "unsafe",
+        "B": "incorrect",
+        "C": "correct",
+        "D": "unsafe"
+      },
       "rationale_correct": "CORRECT: The clinic's standing orders allow the nurse to withhold a dose when a level is markedly abnormal with supporting signs. Withholding the midday dose stops more lithium entering a toxic client, and reporting the level, tremor and vomiting gives the physician what is needed to order treatment.",
       "distractor_rationales": {
         "A": "Giving lithium at a level of 2.0 mmol/L with neurological signs adds to the toxicity and risks seizures. Waiting for the physician is not a reason to give it.",
@@ -183,19 +391,48 @@
         "D": "A half dose still adds lithium to a toxic level. The standing order lets the nurse withhold the dose altogether, which is the safe choice."
       },
       "self_test": "A half dose feels cautious but still raises a toxic lithium level, while the standing order allows the dose to be withheld completely.",
-      "meta": { "topic": "Medication administration", "subtopic": "Withholding a dose under standing orders", "priority_principle": "Stop the harm, then escalate", "prerequisites": "Scope of standing orders", "suggested_review": "When a nurse may withhold a prescribed dose" }
+      "meta": {
+        "topic": "Medication administration",
+        "subtopic": "Withholding a dose under standing orders",
+        "priority_principle": "Stop the harm, then escalate",
+        "prerequisites": "Scope of standing orders",
+        "suggested_review": "When a nurse may withhold a prescribed dose"
+      }
     },
     {
-      "position": 6, "stage": "day2", "cj_step": "evaluate_outcomes", "domain": "CDM", "taxonomy": "ASE",
+      "position": 6,
+      "stage": "day2",
+      "cj_step": "evaluate_outcomes",
+      "domain": "CDM",
+      "taxonomy": "ASE",
       "stem": "Which finding best indicates that management of the primary problem is effective?",
       "options": [
-        { "label": "A", "text": "Falling lithium level with less tremor" },
-        { "label": "B", "text": "Sister reports that Tanisha's mood seems brighter" },
-        { "label": "C", "text": "Sleeping six hours overnight" },
-        { "label": "D", "text": "Blood pressure of 128/80 mm Hg" }
+        {
+          "label": "A",
+          "text": "Falling lithium level with less tremor"
+        },
+        {
+          "label": "B",
+          "text": "Sister reports that Tanisha's mood seems brighter"
+        },
+        {
+          "label": "C",
+          "text": "Sleeping six hours overnight"
+        },
+        {
+          "label": "D",
+          "text": "Blood pressure of 128/80 mm Hg"
+        }
       ],
-      "correct": ["A"],
-      "option_types": { "A": "correct", "B": "close", "C": "close", "D": "incorrect" },
+      "correct": [
+        "A"
+      ],
+      "option_types": {
+        "A": "correct",
+        "B": "close",
+        "C": "close",
+        "D": "incorrect"
+      },
       "rationale_correct": "CORRECT: The problem being treated was lithium toxicity, so the outcome measures are the lithium level and the toxicity sign. The level has fallen from 2.0 to 1.1 mmol/L and the tremor is much reduced after fluids and withholding the drug.",
       "distractor_rationales": {
         "B": "A brighter mood is welcome, but mood changes slowly and reflects the bipolar illness, not whether the toxicity has been treated.",
@@ -203,19 +440,48 @@
         "D": "Her blood pressure was never the problem being managed, so its improvement does not show that the toxicity treatment worked."
       },
       "self_test": "Brighter mood is true but measures the manic illness, not the toxicity that the fluids and withheld doses were treating.",
-      "meta": { "topic": "Mental health pharmacology", "subtopic": "Evaluating treatment of lithium toxicity", "priority_principle": "Evaluate the outcome the intervention targeted", "prerequisites": "Lithium level trends", "suggested_review": "Monitoring after lithium toxicity" }
+      "meta": {
+        "topic": "Mental health pharmacology",
+        "subtopic": "Evaluating treatment of lithium toxicity",
+        "priority_principle": "Evaluate the outcome the intervention targeted",
+        "prerequisites": "Lithium level trends",
+        "suggested_review": "Monitoring after lithium toxicity"
+      }
     },
     {
-      "position": 7, "stage": "sister", "cj_step": "extension", "domain": "COM", "taxonomy": "AP",
+      "position": 7,
+      "stage": "sister",
+      "cj_step": "extension",
+      "domain": "COM",
+      "taxonomy": "AP",
       "stem": "Which response by the nurse is most appropriate?",
       "options": [
-        { "label": "A", "text": "\"That sounds exhausting. Tell me what a typical day has been like at home.\"" },
-        { "label": "B", "text": "\"She will settle once the medication takes effect, so give it a little more time.\"" },
-        { "label": "C", "text": "\"Would it help if we arranged for her to be admitted so you can rest?\"" },
-        { "label": "D", "text": "\"Try to stay positive, because your attitude will influence her recovery.\"" }
+        {
+          "label": "A",
+          "text": "\"That sounds exhausting. Tell me what a typical day has been like at home.\""
+        },
+        {
+          "label": "B",
+          "text": "\"She will settle once the medication takes effect, so give it a little more time.\""
+        },
+        {
+          "label": "C",
+          "text": "\"Would it help if we arranged for her to be admitted so you can rest?\""
+        },
+        {
+          "label": "D",
+          "text": "\"Try to stay positive, because your attitude will influence her recovery.\""
+        }
       ],
-      "correct": ["A"],
-      "option_types": { "A": "correct", "B": "incorrect", "C": "priority", "D": "incorrect" },
+      "correct": [
+        "A"
+      ],
+      "option_types": {
+        "A": "correct",
+        "B": "incorrect",
+        "C": "priority",
+        "D": "incorrect"
+      },
       "rationale_correct": "CORRECT: The sister is telling the nurse she is close to her limit. Acknowledging that feeling and asking what a typical day looks like keeps her talking and shows the nurse what support is needed (sleep, safety, money), which matters in the Caribbean where family is usually the main carer.",
       "distractor_rationales": {
         "B": "This offers reassurance with an uncertain timeline and passes over the strain she has just described.",
@@ -223,19 +489,48 @@
         "D": "This puts the responsibility for Tanisha's recovery on her sister's attitude, which can add guilt to her exhaustion."
       },
       "self_test": "Offering admission may be needed later, but it jumps to a solution before the nurse understands what the sister is struggling with.",
-      "meta": { "topic": "Therapeutic communication", "subtopic": "Supporting family carers", "priority_principle": "Assess before solving", "prerequisites": "Therapeutic communication techniques", "suggested_review": "Carer strain in serious mental illness" }
+      "meta": {
+        "topic": "Therapeutic communication",
+        "subtopic": "Supporting family carers",
+        "priority_principle": "Assess before solving",
+        "prerequisites": "Therapeutic communication techniques",
+        "suggested_review": "Carer strain in serious mental illness"
+      }
     },
     {
-      "position": 8, "stage": "discharge", "cj_step": "extension", "domain": "HPMW", "taxonomy": "AP",
+      "position": 8,
+      "stage": "discharge",
+      "cj_step": "extension",
+      "domain": "HPMW",
+      "taxonomy": "AP",
       "stem": "Which instruction is most important for the nurse to provide?",
       "options": [
-        { "label": "A", "text": "Use ibuprofen rather than paracetamol for aches and pains" },
-        { "label": "B", "text": "Keep your fluid and salt intake consistent every day" },
-        { "label": "C", "text": "If you miss a dose, take two tablets at the next dose time" },
-        { "label": "D", "text": "Choose low-sodium foods to protect your heart long-term" }
+        {
+          "label": "A",
+          "text": "Use ibuprofen rather than paracetamol for aches and pains"
+        },
+        {
+          "label": "B",
+          "text": "Keep your fluid and salt intake consistent every day"
+        },
+        {
+          "label": "C",
+          "text": "If you miss a dose, take two tablets at the next dose time"
+        },
+        {
+          "label": "D",
+          "text": "Choose low-sodium foods to protect your heart long-term"
+        }
       ],
-      "correct": ["B"],
-      "option_types": { "A": "unsafe", "B": "correct", "C": "unsafe", "D": "incorrect" },
+      "correct": [
+        "B"
+      ],
+      "option_types": {
+        "A": "unsafe",
+        "B": "correct",
+        "C": "unsafe",
+        "D": "incorrect"
+      },
       "rationale_correct": "CORRECT: This episode happened because vomiting and poor intake lowered her fluid and sodium, so her kidneys kept more lithium. Keeping fluid and salt intake steady every day is the measure she controls that most directly prevents it happening again.",
       "distractor_rationales": {
         "A": "Ibuprofen and other NSAIDs reduce lithium excretion and can push the level up; paracetamol is the safer choice for minor pain.",
@@ -243,10 +538,18 @@
         "D": "Low-sodium advice sounds healthy, but cutting sodium increases lithium reabsorption, so it would make another episode more likely."
       },
       "self_test": "Low-sodium eating is good general advice, but for a client on lithium it raises the drug level, so it is the wrong teaching here.",
-      "meta": { "topic": "Health promotion", "subtopic": "Lithium self-management", "priority_principle": "Teach the cause the client controls", "prerequisites": "Drug interactions with lithium", "suggested_review": "Client teaching for lithium therapy" }
+      "meta": {
+        "topic": "Health promotion",
+        "subtopic": "Lithium self-management",
+        "priority_principle": "Teach the cause the client controls",
+        "prerequisites": "Drug interactions with lithium",
+        "suggested_review": "Client teaching for lithium therapy"
+      }
     }
   ],
   "pathophysiology": "## Pathophysiology teaching\n\nLithium is cleared almost entirely by the kidneys. In the proximal tubule it is reabsorbed by the same pathways as sodium, so the body cannot tell the two apart.\n\nWhen Tanisha vomited for two days and drank very little, she lost fluid and sodium. Her kidneys responded by reabsorbing more sodium to protect her circulating volume, and they reabsorbed more lithium with it. Her serum level rose to 2.0 mmol/L even though her dose had not changed.\n\n**Signs.** A fine hand tremor is usually the earliest neurological sign. As the level rises, it can progress to a coarse tremor, unsteady gait, confusion, seizures and coma, and lithium can injure the kidney further, which slows clearance again.\n\n**Why each decision mattered.**\n- Recognising the tremor (Q1) and requesting a level (Q2) separated toxicity from a manic relapse.\n- Withholding lithium (Q5) stopped more drug entering the body; intravenous fluids (Q4) restored sodium and volume so the kidneys could excrete lithium again.\n- Urine output, sodium and potassium on day 2 confirm that the kidneys are clearing lithium and the fluid replacement is adequate.\n- The level and tremor improve within a day; mood settles over days to weeks, which is why mood and sleep are not the measures of toxicity treatment (Q6).\n\n**Prevention.** Steady fluid and salt intake, avoiding NSAIDs and diuretics unless prescribed with monitoring, never doubling a missed dose, and seeking help early when vomiting or diarrhoea stops a client keeping fluids down.",
   "quality_report": "Revised by Claude (2026-10-08) from Jade's Lithium Toxicity draft, at Ian's request, to meet V3 and the error-prevention addendum: Q4 changed from 'withhold the next dose' (duplicating Q5's key) to anticipating IV fluids with urine-output and electrolyte monitoring; a 10:30 am stage added so the IV fluids evaluated in Q6 are introduced first (V3 s.6); implausible distractors replaced (Q4 'increase the dose', Q5 'arrange transport before informing anyone', Q8 'stop lithium once stable'); Q1 rationale explains why the tremor is the safety cue. Cover, two-answer, cue-sufficiency and hidden-assumption checks were re-run on all eight items. Pending Jade's review and clinical validation (lithium thresholds, standing-order scope, Caribbean facility norms).",
-  "validation": { "status": "pending" }
+  "validation": {
+    "status": "pending"
+  }
 }
