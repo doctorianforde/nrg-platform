@@ -2185,3 +2185,23 @@ Ian chose: full standard review of every question; staging first, prod only afte
   valid positive rewrite in `data/review/neg/proto-n00.out.json`, left flagged because the check matches "be avoided"); Jade's 3 as proposals.
   `needs_changes` on staging: 605 → 554 (40 ai, 514 proto). Prod port regenerated: 1,960 rewrites + 40 flags, dry-run matched; runbook updated.
   Still open: numeric dose-calculation policy; the app's rationale view must render `not_asked`.
+
+## Case study platform: planned (Claude, 2026-10-08)
+
+Reviewed Jade's V3 case-study standard, the CASE_REQUEST template + error-prevention addendum, and his lithium example. Plan:
+`docs/phase-1/CASE_STUDY_PLAN.md`. Existing `case_studies`/`case_study_questions` tables are empty and the current case page gives
+per-question feedback, which V3 forbids. Ian's decisions: answers lock per stage; feedback only at the end; flexible option types
+including a new `unsafe` type; standard/premium tiers only. Open with Jade: the missing "prohibited stem verb" list (§7.6 image),
+the reference-range conflict (addendum vs §5.3, and the ranges the bank review added), case-bank domain weights, and fixes to the
+lithium example (Q4/Q5 same key, Q6 evaluates an intervention never shown, three implausible distractors).
+
+## Case study platform: steps 1–3 built on staging (Claude, 2026-10-09)
+
+Schema + student runner + teacher review built and tested end to end in a browser against staging; details in
+`docs/phase-1/CASE_STUDY_PLAN.md` ("Built"). Lithium case corrected (Q4 now a planning item; 10:30 am transfer stage added so Q6's
+IV fluids are introduced first; implausible distractors replaced) and imported as `in_review` — **not validated or published**.
+Two staging test accounts created for browser testing (`case-test-teacher@nrg-staging.test`, `case-test-student@nrg-staging.test`,
+free tier); their test attempts remain (delete was declined), which blocks `--replace` re-import of NRG-MH-001 until cleared.
+**Do not push to main before applying the prod migrations** (see the runbook note): practice/review/mock pages now read `questions.context`.
+Still open: the prohibited-stem-verb list (V3 s.7.6 image) — not in the repo's RENR guide PDF; Ian to send it. The CXC RENR sample
+test uses the I/II/III combination format, which bears on the ~15 "needs-jade" combination-format flags.

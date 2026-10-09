@@ -63,6 +63,8 @@ export async function fetchQuizQuestions(filters: QuizFilters): Promise<QuizQues
     .order("id");
 
   if (filters.ids) query = query.in("id", filters.ids);
+  // Case questions only make sense inside their case, so random pools never draw them.
+  else query = query.eq("context", "standalone");
   if (filters.domainId) query = query.eq("domain_id", filters.domainId);
   if (filters.topicId) query = query.eq("topic_id", filters.topicId);
   if (filters.cognitive) query = query.eq("cognitive_level", filters.cognitive);

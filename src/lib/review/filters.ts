@@ -90,6 +90,8 @@ export function filtersToQuery(f: Filters, override: Partial<Filters> = {}): str
 export function applyFilters<T>(query: T, f: Filters): T {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let q: any = query;
+  // Case questions are reviewed with their case (/teacher/case-studies), never one by one here.
+  q = q.eq("context", "standalone");
   // The queue covers the AI bank, the imported prototype bank and student
   // submissions. Jade's own hand-written imports are none of these, so they never
   // appear here.

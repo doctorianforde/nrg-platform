@@ -3,6 +3,8 @@
 // (20260919020000). `supabase gen types` needs Docker, which isn't set up on this machine.
 // Extended by hand for 20260920060000 (exam_groups, exam_group_members, the group/
 // timer columns and the group RPCs).
+// Extended by hand for 20261004181457 / 20261009000911 (question_options.distractor_type) and
+// 20261009003423 (case study platform: case_stages, case_attempts, case_attempt_responses, questions.context, RPCs).
 // Regenerate after every migration (questions review_* columns added by hand for 20260919010000): npx supabase gen types typescript --project-id cdvubijjepwmhhkgppbl > src/lib/supabase/types.ts
 export type Json =
   | string
@@ -55,15 +57,33 @@ export type Database = {
         Relationships: [{ foreignKeyName: "practice_sessions_domain_id_fkey"; columns: ["domain_id"]; isOneToOne: false; referencedRelation: "domains"; referencedColumns: ["id"] }]
       }
       case_studies: {
-        Row: { clinical_scenario: string; created_at: string; domain_id: number | null; id: string; is_active: boolean }
-        Insert: { clinical_scenario: string; created_at?: string; domain_id?: number | null; id?: string; is_active?: boolean }
-        Update: { clinical_scenario?: string; created_at?: string; domain_id?: number | null; id?: string; is_active?: boolean }
+        Row: { case_code: string | null; clinical_scenario: string; created_at: string; created_by: string | null; difficulty: string | null; domain_id: number | null; endpoint: string | null; id: string; is_active: boolean; objective: string | null; pathophysiology: string | null; population: string | null; primary_condition: string | null; quality_report: string | null; setting: string | null; source: string | null; status: string; title: string; updated_at: string; validated_at: string | null; validated_by: string | null; validation_note: string | null; validation_status: string }
+        Insert: { case_code?: string | null; clinical_scenario: string; created_at?: string; created_by?: string | null; difficulty?: string | null; domain_id?: number | null; endpoint?: string | null; id?: string; is_active?: boolean; objective?: string | null; pathophysiology?: string | null; population?: string | null; primary_condition?: string | null; quality_report?: string | null; setting?: string | null; source?: string | null; status?: string; title?: string; updated_at?: string; validated_at?: string | null; validated_by?: string | null; validation_note?: string | null; validation_status?: string }
+        Update: { case_code?: string | null; clinical_scenario?: string; created_at?: string; created_by?: string | null; difficulty?: string | null; domain_id?: number | null; endpoint?: string | null; id?: string; is_active?: boolean; objective?: string | null; pathophysiology?: string | null; population?: string | null; primary_condition?: string | null; quality_report?: string | null; setting?: string | null; source?: string | null; status?: string; title?: string; updated_at?: string; validated_at?: string | null; validated_by?: string | null; validation_note?: string | null; validation_status?: string }
         Relationships: [{ foreignKeyName: "case_studies_domain_id_fkey"; columns: ["domain_id"]; isOneToOne: false; referencedRelation: "domains"; referencedColumns: ["id"] }]
       }
+      case_stages: {
+        Row: { assessment: Json; case_study_id: string; id: string; labs: Json; narrative: string; stage_order: number; time_label: string; vitals: Json }
+        Insert: { assessment?: Json; case_study_id: string; id?: string; labs?: Json; narrative?: string; stage_order: number; time_label: string; vitals?: Json }
+        Update: { assessment?: Json; case_study_id?: string; id?: string; labs?: Json; narrative?: string; stage_order?: number; time_label?: string; vitals?: Json }
+        Relationships: [{ foreignKeyName: "case_stages_case_study_id_fkey"; columns: ["case_study_id"]; isOneToOne: false; referencedRelation: "case_studies"; referencedColumns: ["id"] }]
+      }
+      case_attempts: {
+        Row: { case_study_id: string; completed_at: string | null; correct_count: number | null; id: string; next_position: number; score_pct: number | null; started_at: string; student_id: string; total_questions: number }
+        Insert: { case_study_id: string; completed_at?: string | null; correct_count?: number | null; id?: string; next_position?: number; score_pct?: number | null; started_at?: string; student_id: string; total_questions: number }
+        Update: { case_study_id?: string; completed_at?: string | null; correct_count?: number | null; id?: string; next_position?: number; score_pct?: number | null; started_at?: string; student_id?: string; total_questions?: number }
+        Relationships: [{ foreignKeyName: "case_attempts_case_study_id_fkey"; columns: ["case_study_id"]; isOneToOne: false; referencedRelation: "case_studies"; referencedColumns: ["id"] }]
+      }
+      case_attempt_responses: {
+        Row: { answered_at: string; attempt_id: string; is_correct: boolean; question_id: string; selected_option_id: string }
+        Insert: { answered_at?: string; attempt_id: string; is_correct: boolean; question_id: string; selected_option_id: string }
+        Update: { answered_at?: string; attempt_id?: string; is_correct?: boolean; question_id?: string; selected_option_id?: string }
+        Relationships: [{ foreignKeyName: "case_attempt_responses_attempt_id_fkey"; columns: ["attempt_id"]; isOneToOne: false; referencedRelation: "case_attempts"; referencedColumns: ["id"] }]
+      }
       case_study_questions: {
-        Row: { case_study_id: string; display_order: number; question_id: string }
-        Insert: { case_study_id: string; display_order?: number; question_id: string }
-        Update: { case_study_id?: string; display_order?: number; question_id?: string }
+        Row: { case_study_id: string; cj_step: string | null; display_order: number; meta: Json; question_id: string; stage_id: string | null }
+        Insert: { case_study_id: string; cj_step?: string | null; display_order?: number; meta?: Json; question_id: string; stage_id?: string | null }
+        Update: { case_study_id?: string; cj_step?: string | null; display_order?: number; meta?: Json; question_id?: string; stage_id?: string | null }
         Relationships: [
           { foreignKeyName: "case_study_questions_case_study_id_fkey"; columns: ["case_study_id"]; isOneToOne: false; referencedRelation: "case_studies"; referencedColumns: ["id"] },
           { foreignKeyName: "case_study_questions_question_id_fkey"; columns: ["question_id"]; isOneToOne: false; referencedRelation: "questions"; referencedColumns: ["id"] },
@@ -154,9 +174,9 @@ export type Database = {
         Relationships: []
       }
       question_options: {
-        Row: { body: string; display_order: number; id: string; is_correct: boolean; question_id: string; rationale: string | null }
-        Insert: { body: string; display_order: number; id?: string; is_correct: boolean; question_id: string; rationale?: string | null }
-        Update: { body?: string; display_order?: number; id?: string; is_correct?: boolean; question_id?: string; rationale?: string | null }
+        Row: { body: string; display_order: number; distractor_type: string | null; id: string; is_correct: boolean; question_id: string; rationale: string | null }
+        Insert: { body: string; display_order: number; distractor_type?: string | null; id?: string; is_correct: boolean; question_id: string; rationale?: string | null }
+        Update: { body?: string; display_order?: number; distractor_type?: string | null; id?: string; is_correct?: boolean; question_id?: string; rationale?: string | null }
         Relationships: [{ foreignKeyName: "question_options_question_id_fkey"; columns: ["question_id"]; isOneToOne: false; referencedRelation: "questions"; referencedColumns: ["id"] }]
       }
       question_tags: {
@@ -169,9 +189,9 @@ export type Database = {
         ]
       }
       questions: {
-        Row: { body: string; cognitive_level: string | null; created_at: string; created_by: string | null; difficulty: string | null; domain_id: number; explanation: string | null; fts: unknown; id: string; is_active: boolean; is_ai_generated: boolean; question_type: string; review_notes: string | null; review_status: string; reviewed_at: string | null; reviewed_by: string | null; source: string | null; source_id: string | null; topic_id: number | null; updated_at: string }
-        Insert: { body: string; cognitive_level?: string | null; created_at?: string; created_by?: string | null; difficulty?: string | null; domain_id: number; explanation?: string | null; fts?: unknown; id?: string; is_active?: boolean; is_ai_generated?: boolean; question_type?: string; review_notes?: string | null; review_status?: string; reviewed_at?: string | null; reviewed_by?: string | null; source?: string | null; source_id?: string | null; topic_id?: number | null; updated_at?: string }
-        Update: { body?: string; cognitive_level?: string | null; created_at?: string; created_by?: string | null; difficulty?: string | null; domain_id?: number; explanation?: string | null; fts?: unknown; id?: string; is_active?: boolean; is_ai_generated?: boolean; question_type?: string; review_notes?: string | null; review_status?: string; reviewed_at?: string | null; reviewed_by?: string | null; source?: string | null; source_id?: string | null; topic_id?: number | null; updated_at?: string }
+        Row: { body: string; cognitive_level: string | null; context: string; created_at: string; created_by: string | null; difficulty: string | null; domain_id: number; explanation: string | null; fts: unknown; id: string; is_active: boolean; is_ai_generated: boolean; question_type: string; review_notes: string | null; review_status: string; reviewed_at: string | null; reviewed_by: string | null; source: string | null; source_id: string | null; topic_id: number | null; updated_at: string }
+        Insert: { body: string; cognitive_level?: string | null; context?: string; created_at?: string; created_by?: string | null; difficulty?: string | null; domain_id: number; explanation?: string | null; fts?: unknown; id?: string; is_active?: boolean; is_ai_generated?: boolean; question_type?: string; review_notes?: string | null; review_status?: string; reviewed_at?: string | null; reviewed_by?: string | null; source?: string | null; source_id?: string | null; topic_id?: number | null; updated_at?: string }
+        Update: { body?: string; cognitive_level?: string | null; context?: string; created_at?: string; created_by?: string | null; difficulty?: string | null; domain_id?: number; explanation?: string | null; fts?: unknown; id?: string; is_active?: boolean; is_ai_generated?: boolean; question_type?: string; review_notes?: string | null; review_status?: string; reviewed_at?: string | null; reviewed_by?: string | null; source?: string | null; source_id?: string | null; topic_id?: number | null; updated_at?: string }
         Relationships: [
           { foreignKeyName: "questions_domain_id_fkey"; columns: ["domain_id"]; isOneToOne: false; referencedRelation: "domains"; referencedColumns: ["id"] },
           { foreignKeyName: "questions_topic_id_fkey"; columns: ["topic_id"]; isOneToOne: false; referencedRelation: "topics"; referencedColumns: ["id"] },
@@ -232,6 +252,8 @@ export type Database = {
       is_exam_group_member: { Args: { p_group: string }; Returns: boolean }
       shares_exam_group_with: { Args: { p_other: string }; Returns: boolean }
       session_accepts_answers: { Args: { p_session: string }; Returns: boolean }
+      start_case_attempt: { Args: { p_case_id: string }; Returns: { case_study_id: string; completed_at: string | null; correct_count: number | null; id: string; next_position: number; score_pct: number | null; started_at: string; student_id: string; total_questions: number } }
+      answer_case_question: { Args: { p_attempt_id: string; p_option_id: string }; Returns: { case_study_id: string; completed_at: string | null; correct_count: number | null; id: string; next_position: number; score_pct: number | null; started_at: string; student_id: string; total_questions: number } }
     }
     Enums: { [_ in never]: never }
     CompositeTypes: { [_ in never]: never }

@@ -17,12 +17,17 @@ Nothing becomes active. Ported AI questions stay `is_active = false`, `review_st
 1. Read `data/review/NRG_Bank_Review_Report.pdf` (random before/after sample and flag register) and decide the port is acceptable.
 2. Negative stems are handled (option 1, 2026-10-08). Numeric dose-calculation items are still a policy question; the ones that were flagged stay flagged.
 
+> **Deploy order matters (2026-10-09).** The app code on `main` from commit "case study platform" onward reads
+> `questions.context` (practice, review queue, mock-exam builder) and the case-study tables. Apply every migration below to
+> prod **before** pushing that code, or those pages fail on the live site.
+
 ## Steps
 
 1. **Apply the migrations to prod** (staging already has all three). Follow CLAUDE.md "Connecting the Supabase CLI" and push through the pooler:
    - `20261004181457_add_question_options_distractor_type`: adds the colour column.
    - `20261004194204_backup_ai_option_rationales_20261004`: snapshots prod's current AI rationales.
    - `20261009000911_distractor_type_not_asked`: adds the `not_asked` type used by negative-stem questions.
+   - `20261009003423_case_study_platform`: `questions.context`, the `unsafe` option type, case stages, attempts and the case RPCs.
 2. **Regenerate the port SQL** from the current staging state, with a dry run on staging (it rolls back):
    ```bash
    npx tsx scripts/port-review-to-prod.ts --out data/review/prod-port/ai-port.sql --test-on-staging

@@ -52,6 +52,7 @@ export function QuestionSearch({
         .from("questions")
         .select("id, body, question_type, cognitive_level, difficulty")
         .eq("is_active", true)
+        .eq("context", "standalone")
         .ilike("body", `%${query}%`)
         .limit(20)
         .then(({ data, error: queryError }) => {

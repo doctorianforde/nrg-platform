@@ -80,6 +80,7 @@ export async function addQuestion(
     .select("id")
     .eq("id", questionId)
     .eq("is_active", true)
+    .eq("context", "standalone")
     .maybeSingle();
   if (!question) return { error: "That question is not available (inactive or removed)." };
 
