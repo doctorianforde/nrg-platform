@@ -7,14 +7,15 @@ import { DashboardShell } from "@/components/DashboardShell";
 import { Badge } from "@/components/ui/Badge";
 import { Card, CardTitle } from "@/components/ui/Card";
 import { StageBlock } from "@/components/case/StageBlock";
+import { CaseRunner } from "@/components/case/CaseRunner";
+import { formatDuration } from "@/components/case/time";
+import { rangesFor } from "@/lib/case/reference";
 import { CaseQuestionReview } from "@/components/case/CaseReview";
 import { SimpleMarkdown } from "@/components/case/SimpleMarkdown";
 import { canTakeCases, CJ_LABEL, getCaseHeader, getCaseQuestions, getStages } from "@/lib/case";
 import { answerCase, startCase } from "./actions";
 
 export const dynamic = "force-dynamic";
-
-const LETTERS = "ABCD";
 
 export default async function CaseStudyPage({ params, searchParams }: { params: { id: string }; searchParams: { error?: string } }) {
   const path = `/study/case-studies/${params.id}`;
@@ -71,8 +72,9 @@ export default async function CaseStudyPage({ params, searchParams }: { params: 
         <Card>
           <CardTitle>Before you start</CardTitle>
           <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
-            <li>{qCount} questions, each answered with the information available at that point in the case.</li>
+            <li>{qCount} questions. The case unfolds as slides: step back through earlier slides at any time, but new information only unlocks after you lock in an answer.</li>
             <li>Your answer locks when you continue. You cannot go back and change it.</li>
+            <li>A timer records your time for the whole case and for each question. A calculator and reference ranges for reported lab results are on screen.</li>
             <li>No feedback appears during the case. Answers, rationales and a teaching section follow at the end.</li>
           </ul>
           <form action={startCase} className="mt-4">
@@ -84,48 +86,35 @@ export default async function CaseStudyPage({ params, searchParams }: { params: 
     ));
   }
 
-  // ── In progress ──
+  // ── In progress: a slide show of the stages revealed so far ──
   if (open) {
     const questions = await getCaseQuestions(header.id, { withAnswers: false });
     const current = questions.find((q) => q.position === open.next_position);
     if (!current) notFound();
     const revealed = stages.filter((s) => s.stage_order <= current.stageOrder);
-    const answeredCount = questions.filter((q) => q.position < current.position).length;
-    return shell(`Question ${answeredCount + 1} of ${questions.length}. Your answers so far are locked.`, (
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
-        <div className="space-y-4 lg:order-2">
-          <h2 className="font-heading text-sm font-semibold uppercase tracking-wide text-muted-foreground">Case record</h2>
-          {revealed.map((s) => (
-            <StageBlock key={s.id} stage={s} isOpening={s.stage_order === 0} isLatest={s.stage_order === current.stageOrder && s.stage_order > 0} />
-          ))}
-        </div>
-        <div className="lg:order-1">
-          <Card>
-            <div className="flex items-center gap-2">
-              <CardTitle>Question {current.position}</CardTitle>
-              <Badge tone="gray">{answeredCount} answered</Badge>
-            </div>
-            <p className="mt-3 text-base text-card-foreground">{current.body}</p>
-            <form action={answerCase} className="mt-4 space-y-2">
-              <input type="hidden" name="caseId" value={header.id} />
-              <input type="hidden" name="attemptId" value={open.id} />
-              {current.options.map((o, i) => (
-                <label key={o.id} className="flex cursor-pointer items-start gap-3 rounded-md border border-border bg-card px-4 py-3 text-sm hover:border-primary/50 hover:bg-muted has-[:checked]:border-primary has-[:checked]:bg-brand-50">
-                  <input type="radio" name="optionId" value={o.id} required className="mt-0.5" />
-                  <span className="font-semibold">{LETTERS[i]}.</span>
-                  <span>{o.body}</span>
-                </label>
-              ))}
-              <div className="flex items-center justify-between pt-2">
-                <span className="text-xs text-muted-foreground">Your answer locks when you continue.</span>
-                <button className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-brand-800">
-                  {current.position === questions[questions.length - 1].position ? "Lock in and finish" : "Lock in and continue"}
-                </button>
-              </div>
-            </form>
-          </Card>
-        </div>
-      </div>
+    const { data: answered } = await supabase.from("case_attempt_responses").select("answered_at").eq("attempt_id", open.id);
+    // The question clock starts when the previous answer was locked in (or when the case was started).
+    const questionStartedAt = (answered ?? []).map((r) => r.answered_at).sort().pop() ?? open.started_at;
+    // Open on the first stage this question revealed, so new information is seen before answering.
+    const prev = questions.find((q) => q.position === current.position - 1);
+    const firstNewOrder = prev ? prev.stageOrder + 1 : 0;
+    const firstNewIdx = revealed.findIndex((s) => s.stage_order >= firstNewOrder);
+    return shell(`Work through the case slide by slide. Your answers so far are locked.`, (
+      <CaseRunner
+        key={current.id}
+        caseId={header.id}
+        attemptId={open.id}
+        action={answerCase}
+        slides={revealed}
+        firstNew={firstNewIdx === -1 ? revealed.length - 1 : firstNewIdx}
+        question={{ id: current.id, position: current.position, body: current.body, options: current.options.map((o) => ({ id: o.id, body: o.body })) }}
+        total={questions.length}
+        isLast={current.position === questions[questions.length - 1].position}
+        ranges={rangesFor(revealed)}
+        startedAt={open.started_at}
+        questionStartedAt={questionStartedAt}
+        serverNow={new Date().toISOString()}
+      />
     ));
   }
 
@@ -134,20 +123,34 @@ export default async function CaseStudyPage({ params, searchParams }: { params: 
   const questions = await getCaseQuestions(header.id, { withAnswers: true });
   const { data: responses } = await supabase
     .from("case_attempt_responses")
-    .select("question_id, selected_option_id, is_correct")
+    .select("question_id, selected_option_id, is_correct, answered_at")
     .eq("attempt_id", attempt.id);
   const byQ = new Map((responses ?? []).map((r) => [r.question_id, r]));
-  const steps = questions.map((q) => ({ step: CJ_LABEL[q.cj_step] ?? q.cj_step, position: q.position, ok: byQ.get(q.id)?.is_correct ?? false }));
+  // Time per question: from the previous answer (or the start of the case) to this one.
+  let prevAt = Date.parse(attempt.started_at);
+  const steps = questions.map((q) => {
+    const at = byQ.get(q.id)?.answered_at ? Date.parse(byQ.get(q.id)!.answered_at) : null;
+    const ms = at !== null ? at - prevAt : null;
+    if (at !== null) prevAt = at;
+    return { step: CJ_LABEL[q.cj_step] ?? q.cj_step, position: q.position, ok: byQ.get(q.id)?.is_correct ?? false, ms };
+  });
+  const totalMs = attempt.completed_at ? Date.parse(attempt.completed_at) - Date.parse(attempt.started_at) : null;
 
   return shell(`You scored ${attempt.correct_count}/${attempt.total_questions} (${Math.round(Number(attempt.score_pct ?? 0))}%).`, (
     <div className="space-y-6">
       <Card>
-        <CardTitle>Your clinical-judgment profile</CardTitle>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <CardTitle>Your clinical-judgment profile</CardTitle>
+          {totalMs !== null ? <span className="text-sm text-muted-foreground">Total time <span className="font-mono font-semibold text-card-foreground">{formatDuration(totalMs)}</span></span> : null}
+        </div>
         <ul className="mt-3 grid gap-2 sm:grid-cols-2">
           {steps.map((s) => (
-            <li key={s.position} className="flex items-center justify-between rounded-md border border-border px-3 py-2 text-sm">
+            <li key={s.position} className="flex items-center justify-between gap-2 rounded-md border border-border px-3 py-2 text-sm">
               <span>Q{s.position} · {s.step}</span>
-              <Badge tone={s.ok ? "green" : "red"}>{s.ok ? "Correct" : "Review"}</Badge>
+              <span className="flex items-center gap-2">
+                {s.ms !== null ? <span className="font-mono text-xs text-muted-foreground" title="Time on this question">{formatDuration(s.ms)}</span> : null}
+                <Badge tone={s.ok ? "green" : "red"}>{s.ok ? "Correct" : "Review"}</Badge>
+              </span>
             </li>
           ))}
         </ul>

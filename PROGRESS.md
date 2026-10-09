@@ -2230,3 +2230,10 @@ test uses the I/II/III combination format, which bears on the ~15 "needs-jade" c
   retirements. Prod port regenerated: 1,991 rewrites + 9 retirements, staging dry run matched. Jade's list:
   `docs/phase-1/FIX_JADE_CHECKLIST.md`. (Correction: an earlier message in this session reported these numbers before the
   reviewers had finished; the figures here are the verified ones.)
+- 2026-10-09: **Case player redesigned** (Ian's spec): the case is a slide show — students step back through revealed stages
+  but later stages never reach the browser until the answer is locked; the player opens on the first newly revealed slide and
+  "Lock in" stays disabled until the newest slide has been viewed. Question lower left, reference ranges lower right (labs revealed
+  so far plus bedside glucose; built-in adult library in `src/lib/case/reference.ts`, overridable per lab item with `reference`;
+  vitals deliberately excluded), calculator (top right; keyboard works), and timers for the case and the current question from DB
+  timestamps (`started_at`, `answered_at`), with per-question and total times on the results page. No migration. Browser-tested
+  end to end against staging (desktop + phone); test attempts deleted.

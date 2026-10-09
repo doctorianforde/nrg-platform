@@ -31,7 +31,7 @@ export const OPTION_TYPE: Record<string, { label: string; className: string; ord
 
 export type Vital = { label: string; value: string };
 export type Finding = { system: string; finding: string };
-export type LabGroup = { category: string; items: { label: string; value: string }[] };
+export type LabGroup = { category: string; items: { label: string; value: string; reference?: string }[] };
 export type Stage = { id: string; stage_order: number; time_label: string; narrative: string; vitals: Vital[]; assessment: Finding[]; labs: LabGroup[] };
 
 export type CaseHeader = {

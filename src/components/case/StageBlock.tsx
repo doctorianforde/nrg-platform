@@ -4,13 +4,13 @@ import type { Stage } from "@/lib/case";
  * One stage of an unfolding case. Every value is rendered identically — no colour, weight or labels —
  * so the student decides what is abnormal (V3 s.5).
  */
-export function StageBlock({ stage, isOpening, isLatest }: { stage: Stage; isOpening?: boolean; isLatest?: boolean }) {
+export function StageBlock({ stage, isOpening, isLatest, showNewTag = true }: { stage: Stage; isOpening?: boolean; isLatest?: boolean; showNewTag?: boolean }) {
   const hasData = stage.vitals.length > 0 || stage.assessment.length > 0 || stage.labs.length > 0;
   return (
     <section className={`rounded-xl border bg-card p-5 shadow-sm ${isLatest ? "border-brand-300" : "border-border"}`}>
       <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
         <span className="font-heading text-sm font-semibold text-card-foreground">{stage.time_label}</span>
-        {!isOpening ? <span className="text-xs font-semibold uppercase tracking-wide text-brand-700">New information</span> : null}
+        {!isOpening && showNewTag ? <span className="text-xs font-semibold uppercase tracking-wide text-brand-700">New information</span> : null}
       </div>
       {stage.narrative ? <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-card-foreground">{stage.narrative}</p> : null}
       {hasData ? (

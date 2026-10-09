@@ -19,7 +19,7 @@ export type CaseStage = {
   narrative: string;                 // the NEW INFORMATION text (baseline: the opening scenario)
   vitals?: { label: string; value: string }[];
   assessment?: { system: string; finding: string }[];
-  labs?: { category: string; items: { label: string; value: string }[] }[];
+  labs?: { category: string; items: { label: string; value: string; reference?: string }[] }[];
 };
 export type CaseQuestion = {
   position: number;                  // 1..8
