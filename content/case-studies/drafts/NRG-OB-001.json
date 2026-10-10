@@ -1,0 +1,696 @@
+{
+  "case_code": "NRG-OB-001",
+  "title": "Early-Morning Headache on the Antenatal Ward",
+  "objective": "Students recognise a new headache as a warning sign in a pregnant client with hypertension, interpret new proteinuria, prioritise pre-eclampsia with severe features before laboratory confirmation, anticipate magnesium sulfate for seizure prevention, act on magnesium toxicity under the ward protocol, evaluate the response, communicate with the family, and uphold correct consent practice before a planned delivery.",
+  "population": "Pregnant adult, 27-year-old woman, gravida 1 para 0 at 35 weeks' gestation",
+  "setting": "Antenatal ward, regional general hospital, Trinidad and Tobago",
+  "primary_condition": "Pre-eclampsia with severe features",
+  "endpoint": "Stabilisation on magnesium sulfate and blood pressure control, with caesarean section booked for the same evening",
+  "primary_domain": "CDM",
+  "difficulty": "moderate",
+  "source": "ai:claude",
+  "opening": {
+    "time_label": "6:00 am",
+    "narrative": "Anjali, a 27-year-old woman, gravida 1 para 0 at 35 weeks' gestation, was admitted to the antenatal ward of a regional general hospital yesterday afternoon from the antenatal clinic, after two blood pressure readings of 144/92 and 146/94 mm Hg taken four hours apart. Her urine dipstick on admission showed no protein. She was started on methyldopa 250 mg orally three times daily, with four-hourly blood pressure checks and a daily urine dipstick. Her antenatal care had been uncomplicated until this week. She has no other medical history, takes iron and folic acid tablets, and has no known drug allergies. Her husband, Ravi, went home last night and is due back after work. At 4:30 am the night nurse gave her paracetamol 1 g orally when she complained of a headache."
+  },
+  "stages": [
+    {
+      "key": "assess",
+      "time_label": "6:10 am",
+      "narrative": "The day nurse completes the morning assessment.",
+      "vitals": [
+        {
+          "label": "Temperature",
+          "value": "36.8°C"
+        },
+        {
+          "label": "Pulse",
+          "value": "88/min"
+        },
+        {
+          "label": "Respirations",
+          "value": "18/min"
+        },
+        {
+          "label": "Blood pressure",
+          "value": "146/96 mm Hg"
+        },
+        {
+          "label": "SpO2",
+          "value": "98% on room air"
+        }
+      ],
+      "assessment": [
+        {
+          "system": "CNS",
+          "finding": "Alert and oriented. Reports a frontal headache since about 4:00 am, rated 6/10, unchanged since the paracetamol at 4:30 am."
+        },
+        {
+          "system": "Respiratory",
+          "finding": "Chest clear on both sides. No shortness of breath."
+        },
+        {
+          "system": "Gastrointestinal",
+          "finding": "Ate a light supper. No nausea or vomiting."
+        },
+        {
+          "system": "Genitourinary/Obstetric",
+          "finding": "Fundal height 35 cm. Fetal heart rate 142/min. Reports good fetal movements. Uterus soft and non-tender. No vaginal bleeding or leaking of fluid. Woke twice in the night to pass urine."
+        },
+        {
+          "system": "Integumentary",
+          "finding": "Pitting oedema of both ankles, 1+. No facial swelling."
+        },
+        {
+          "system": "Psychosocial",
+          "finding": "Says she slept poorly on the ward and misses being at home."
+        }
+      ]
+    },
+    {
+      "key": "urine",
+      "time_label": "6:30 am",
+      "narrative": "The nurse tests the morning urine sample with a dipstick and sends a urine protein-to-creatinine ratio to the laboratory.",
+      "labs": [
+        {
+          "category": "Urinalysis (dipstick)",
+          "items": [
+            {
+              "label": "Protein",
+              "value": "3+"
+            },
+            {
+              "label": "Leukocytes",
+              "value": "Negative"
+            },
+            {
+              "label": "Nitrites",
+              "value": "Negative"
+            },
+            {
+              "label": "Glucose",
+              "value": "Negative"
+            },
+            {
+              "label": "Blood",
+              "value": "Negative"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "pain",
+      "time_label": "6:50 am",
+      "narrative": "Anjali rings the bell and points to the area below her breastbone and towards the right. She says, \"Now I have a pain here too, like a bad heartburn.\" She has not vomited. The nurse rechecks her blood pressure twice, 15 minutes apart, sends blood for a full blood count, liver function tests, urea, electrolytes and creatinine, and calls the obstetric registrar, who is on the way.",
+      "vitals": [
+        {
+          "label": "Pulse",
+          "value": "92/min"
+        },
+        {
+          "label": "Respirations",
+          "value": "18/min"
+        },
+        {
+          "label": "Blood pressure (6:50 am)",
+          "value": "164/112 mm Hg"
+        },
+        {
+          "label": "Blood pressure (7:05 am)",
+          "value": "162/110 mm Hg"
+        },
+        {
+          "label": "SpO2",
+          "value": "98% on room air"
+        }
+      ],
+      "assessment": [
+        {
+          "system": "CNS",
+          "finding": "Headache continues, rated 7/10."
+        },
+        {
+          "system": "Gastrointestinal",
+          "finding": "Tender on light palpation in the epigastrium and right upper quadrant. Bowel sounds present."
+        },
+        {
+          "system": "Genitourinary/Obstetric",
+          "finding": "Uterus soft and non-tender between palpations. No contractions felt. No vaginal bleeding. Fetal heart rate 140/min."
+        }
+      ]
+    },
+    {
+      "key": "review",
+      "time_label": "7:40 am",
+      "narrative": "The obstetric registrar reviews Anjali, confirms pre-eclampsia with severe features, and explains that she should be delivered within the next 24 hours once she is stable. The baby is in a breech position. The registrar is now writing the medication orders and asks the nurse to prepare.",
+      "labs": [
+        {
+          "category": "Haematology",
+          "items": [
+            {
+              "label": "Haemoglobin",
+              "value": "12.4 g/dL"
+            },
+            {
+              "label": "Platelets",
+              "value": "136 × 10⁹/L"
+            }
+          ]
+        },
+        {
+          "category": "Chemistry",
+          "items": [
+            {
+              "label": "Sodium",
+              "value": "137 mmol/L"
+            },
+            {
+              "label": "Potassium",
+              "value": "4.0 mmol/L"
+            },
+            {
+              "label": "Urea",
+              "value": "4.8 mmol/L"
+            },
+            {
+              "label": "Creatinine",
+              "value": "84 µmol/L"
+            },
+            {
+              "label": "AST",
+              "value": "58 U/L"
+            },
+            {
+              "label": "ALT",
+              "value": "52 U/L"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "orders",
+      "time_label": "8:30 am",
+      "narrative": "The registrar's orders are in place: magnesium sulfate 4 g IV over 20 minutes, then a maintenance infusion of 1 g/hr by pump; oral nifedipine 10 mg (immediate release), repeated according to blood pressure; an indwelling urinary catheter with hourly urine output; hourly respirations, patellar reflexes and level of consciousness; total IV fluid limited to 80 mL/hr; and caesarean section planned for 6:00 pm. The ward's magnesium sulfate protocol allows the registered nurse to stop the infusion and notify the doctor at once if signs of magnesium toxicity develop. Nifedipine was given at 7:50 am. The loading dose finished at 8:25 am and the maintenance infusion is running. Patellar reflexes are 2+ on both sides."
+    },
+    {
+      "key": "afternoon",
+      "time_label": "1:00 pm",
+      "narrative": "The nurse carries out the hourly observations. The maintenance infusion has run at 1 g/hr since 8:25 am. Anjali says she feels \"heavy and hot all over\".",
+      "vitals": [
+        {
+          "label": "Temperature",
+          "value": "37.0°C"
+        },
+        {
+          "label": "Pulse",
+          "value": "84/min"
+        },
+        {
+          "label": "Respirations",
+          "value": "10/min, shallow"
+        },
+        {
+          "label": "Blood pressure",
+          "value": "142/94 mm Hg"
+        },
+        {
+          "label": "SpO2",
+          "value": "94% on room air"
+        }
+      ],
+      "assessment": [
+        {
+          "system": "CNS",
+          "finding": "Drowsy, opens her eyes to voice and answers slowly. Patellar reflexes absent on both sides (2+ at 10:00 am and 11:00 am, 1+ at noon). Headache now 2/10."
+        },
+        {
+          "system": "Respiratory",
+          "finding": "Chest clear. Shallow breaths."
+        },
+        {
+          "system": "Genitourinary/Obstetric",
+          "finding": "Catheter urine output: 9–10 am 45 mL, 10–11 am 40 mL, 11 am–noon 30 mL, noon–1 pm 15 mL. Fetal heart rate 132/min. No contractions."
+        },
+        {
+          "system": "Integumentary",
+          "finding": "Face flushed, skin warm."
+        }
+      ]
+    },
+    {
+      "key": "response",
+      "time_label": "2:30 pm",
+      "narrative": "The nurse stopped the magnesium sulfate infusion at 1:00 pm. The registrar arrived at 1:10 pm, gave calcium gluconate 1 g IV over 10 minutes, started oxygen at 2 L/min by nasal prongs, and sent blood for a serum magnesium level at 1:15 pm. The infusion remains off.",
+      "vitals": [
+        {
+          "label": "Pulse",
+          "value": "86/min"
+        },
+        {
+          "label": "Respirations",
+          "value": "16/min"
+        },
+        {
+          "label": "Blood pressure",
+          "value": "148/98 mm Hg"
+        },
+        {
+          "label": "SpO2",
+          "value": "98% on 2 L/min nasal oxygen"
+        }
+      ],
+      "assessment": [
+        {
+          "system": "CNS",
+          "finding": "Awake, answers questions promptly. Patellar reflexes 1+ on both sides. Headache 2/10."
+        },
+        {
+          "system": "Genitourinary/Obstetric",
+          "finding": "Catheter urine output: 1–2 pm 20 mL, 2–2:30 pm 15 mL. Fetal heart rate 138/min."
+        }
+      ],
+      "labs": [
+        {
+          "category": "Chemistry",
+          "items": [
+            {
+              "label": "Serum magnesium (1:15 pm sample)",
+              "value": "5.2 mmol/L"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "husband",
+      "time_label": "3:00 pm",
+      "narrative": "The registrar plans to restart magnesium sulfate at a lower rate once a repeat magnesium level is back, then to adjust it by further levels, reflexes and urine output, and keeps the caesarean section booked for 6:00 pm. Anjali is alert. Her husband, Ravi, arrives from work, sees the catheter, the drip and the oxygen, and says loudly at the nurses' station, \"This morning she was talking to me fine, and now they say they cutting her open tonight? Nobody telling me anything. Is she going to die?\""
+    },
+    {
+      "key": "consent",
+      "time_label": "4:00 pm",
+      "narrative": "Anjali is alert and oriented. The repeat magnesium level is back, and the registrar has restarted the infusion at the lower rate. The registrar is called urgently to the labour ward. Before leaving, the registrar hands the nurse the caesarean section consent form and says, \"I'm tied up. Just get her to sign this so theatre isn't delayed. She knows she's having the section.\""
+    }
+  ],
+  "questions": [
+    {
+      "position": 1,
+      "stage": "assess",
+      "cj_step": "recognize_cues",
+      "domain": "NP",
+      "taxonomy": "AP",
+      "stem": "Which finding should the nurse recognize as requiring immediate follow-up?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Pitting oedema of both ankles, 1+"
+        },
+        {
+          "label": "B",
+          "text": "Blood pressure of 146/96 mm Hg"
+        },
+        {
+          "label": "C",
+          "text": "Headache not eased by paracetamol"
+        },
+        {
+          "label": "D",
+          "text": "Waking twice a night to pass urine"
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "option_types": {
+        "A": "incorrect",
+        "B": "close",
+        "C": "correct",
+        "D": "incorrect"
+      },
+      "rationale_correct": "CORRECT: Anjali has hypertension in pregnancy, and a persistent frontal headache that has not eased two hours after paracetamol is a new symptom. In a pregnant woman with raised blood pressure, an unrelenting headache can signal cerebral involvement (a warning sign of worsening disease and of seizures), so it needs follow-up now: a repeat blood pressure, urine protein and a report to the doctor.",
+      "distractor_rationales": {
+        "A": "Mild ankle oedema is common in the third trimester and on its own does not indicate worsening disease. Facial swelling would be more concerning, and she has none.",
+        "B": "A reading of 146/96 mm Hg is close to her admission readings of 144/92 and 146/94 mm Hg, which are already being treated with methyldopa and checked four-hourly. It is the known problem being monitored, not the new cue.",
+        "D": "Passing urine more often at night is expected in late pregnancy as the fetal head presses on the bladder and is not a sign of a complication."
+      },
+      "self_test": "The blood pressure of 146/96 mm Hg is the same picture already being treated, whereas a headache unrelieved by paracetamol is a new symptom that can signal worsening disease.",
+      "meta": {
+        "topic": "Hypertensive disorders of pregnancy",
+        "subtopic": "Warning symptoms in a pregnant client with hypertension",
+        "priority_principle": "A new symptom of end-organ involvement outranks a known, monitored finding",
+        "prerequisites": "Normal physiological changes of late pregnancy; signs of worsening hypertension in pregnancy",
+        "suggested_review": "Danger signs in hypertensive disorders of pregnancy"
+      }
+    },
+    {
+      "position": 2,
+      "stage": "urine",
+      "cj_step": "analyze_cues",
+      "domain": "CDM",
+      "taxonomy": "ASE",
+      "stem": "How should the nurse interpret the significance of the new urine result for Anjali's headache and blood pressure?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Her hypertension now involves her kidneys, so the headache is likely linked"
+        },
+        {
+          "label": "B",
+          "text": "Protein is common near term, so the current plan of care needs no change"
+        },
+        {
+          "label": "C",
+          "text": "The protein suggests a urinary infection, which may also cause headache"
+        },
+        {
+          "label": "D",
+          "text": "The headache is a methyldopa side effect and the urine is concentrated"
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "option_types": {
+        "A": "correct",
+        "B": "incorrect",
+        "C": "close",
+        "D": "incorrect"
+      },
+      "rationale_correct": "CORRECT: Anjali's dipstick showed no protein on admission and now shows 3+, with no leukocytes or nitrites. New, heavy proteinuria in a woman with hypertension after 20 weeks means the disorder is now affecting the kidneys' filtering capillaries, not just her blood pressure. Damage to blood vessel linings in one organ usually means other organs are affected too, so her headache is best read as part of the same process rather than a separate problem.",
+      "distractor_rationales": {
+        "B": "Trace protein can occasionally be seen in pregnancy, but a change from none to 3+ overnight in a hypertensive woman is a significant new finding and must change the plan.",
+        "C": "A urinary infection can cause protein on a dipstick, but the leukocytes and nitrites are negative, and an infection does not explain a rise in blood pressure with a persistent headache.",
+        "D": "Methyldopa can cause headache, which makes this tempting, but blaming the drug ignores the new 3+ protein. A concentrated sample would not change negative protein to 3+."
+      },
+      "self_test": "A urinary infection could explain protein on a dipstick, but negative leukocytes and nitrites make it unlikely and it would not link the protein to her headache and blood pressure.",
+      "meta": {
+        "topic": "Hypertensive disorders of pregnancy",
+        "subtopic": "Proteinuria in a pregnant client with hypertension",
+        "priority_principle": "Link new data to the existing problem before seeking a separate explanation",
+        "prerequisites": "Glomerular filtration; urine dipstick interpretation",
+        "suggested_review": "Distinguishing gestational hypertension from pre-eclampsia"
+      }
+    },
+    {
+      "position": 3,
+      "stage": "pain",
+      "cj_step": "prioritize_hypotheses",
+      "domain": "CDM",
+      "taxonomy": "ASE",
+      "stem": "Before the blood results are available, which condition is most consistent with Anjali's findings?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Concealed placental abruption"
+        },
+        {
+          "label": "B",
+          "text": "Pre-eclampsia without severe features"
+        },
+        {
+          "label": "C",
+          "text": "Reflux (heartburn) of late pregnancy"
+        },
+        {
+          "label": "D",
+          "text": "Pre-eclampsia with severe features"
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "option_types": {
+        "A": "close",
+        "B": "close",
+        "C": "incorrect",
+        "D": "correct"
+      },
+      "rationale_correct": "CORRECT: Anjali has hypertension after 20 weeks with new 3+ proteinuria, which is pre-eclampsia. Her blood pressure is now 164/112 and 162/110 mm Hg on two readings 15 minutes apart, she has a persistent headache, and she has new epigastric and right upper quadrant pain with tenderness. A systolic of 160 or more or a diastolic of 110 or more, a persistent headache, and epigastric or right upper quadrant pain are each severe features, so this is the most consistent condition and the most dangerous, because eclamptic seizures, stroke and liver injury can follow.",
+      "distractor_rationales": {
+        "A": "Abruption is associated with hypertension and causes abdominal pain, so it is worth keeping in mind. But her uterus is soft and non-tender with no contractions, the fetal heart rate is 140/min, and the pain is high in the epigastrium, not over the uterus.",
+        "B": "She does have pre-eclampsia, but this option underestimates it. Blood pressure in the 160/110 range on repeat, persistent headache and epigastric pain all classify the disease as severe.",
+        "C": "Epigastric pain that feels like heartburn is common in late pregnancy and Anjali describes it that way, which is the trap. With severe-range blood pressure and new proteinuria, this pain reflects liver involvement until proven otherwise."
+      },
+      "self_test": "Pre-eclampsia without severe features names the right disorder but ignores that repeat readings of 160/110 or more, persistent headache and epigastric pain each make it severe.",
+      "meta": {
+        "topic": "Hypertensive disorders of pregnancy",
+        "subtopic": "Severe features of pre-eclampsia",
+        "priority_principle": "Prioritize the most dangerous explanation that fits all the data",
+        "prerequisites": "Definitions of gestational hypertension and pre-eclampsia",
+        "suggested_review": "Classification of pre-eclampsia and its severe features"
+      }
+    },
+    {
+      "position": 4,
+      "stage": "review",
+      "cj_step": "generate_solutions",
+      "domain": "CDM",
+      "taxonomy": "AP",
+      "stem": "Which prescription should the nurse anticipate as the main measure to prevent an eclamptic seizure?",
+      "options": [
+        {
+          "label": "A",
+          "text": "IV diazepam given now as a precaution"
+        },
+        {
+          "label": "B",
+          "text": "IV magnesium sulfate loading dose, then infusion"
+        },
+        {
+          "label": "C",
+          "text": "IV hydralazine to lower her blood pressure"
+        },
+        {
+          "label": "D",
+          "text": "IV phenytoin loading dose, then oral doses"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "option_types": {
+        "A": "close",
+        "B": "correct",
+        "C": "priority",
+        "D": "incorrect"
+      },
+      "rationale_correct": "CORRECT: Pre-eclampsia with severe features has now been confirmed, and Anjali's persistent headache shows cerebral irritability. Magnesium sulfate, given as a loading dose followed by a continuous infusion, is the drug of choice for preventing eclamptic seizures; it reduces neuronal excitability and cerebral vasospasm and is more effective than other anticonvulsants for this purpose.",
+      "distractor_rationales": {
+        "A": "Diazepam may be used to stop a seizure that is already happening if magnesium is not available, but it is not the drug used to prevent eclampsia and it sedates both mother and baby.",
+        "C": "Lowering her severe-range blood pressure is also essential, because it protects against stroke, but antihypertensives do not prevent eclamptic seizures. The question asks for seizure prevention.",
+        "D": "Phenytoin is an anticonvulsant, so it seems logical, but trials show it is less effective than magnesium sulfate at preventing eclampsia, so it is not the anticipated first-line order."
+      },
+      "self_test": "An antihypertensive is needed too, but it protects against stroke rather than seizures, and the stem asks what prevents an eclamptic seizure.",
+      "meta": {
+        "topic": "Obstetric pharmacology",
+        "subtopic": "Seizure prophylaxis in pre-eclampsia",
+        "priority_principle": "Prevent the most likely life-threatening complication",
+        "prerequisites": "Action of magnesium sulfate; anticonvulsant drug groups",
+        "suggested_review": "Magnesium sulfate in pre-eclampsia and eclampsia"
+      }
+    },
+    {
+      "position": 5,
+      "stage": "afternoon",
+      "cj_step": "take_action",
+      "domain": "NP",
+      "taxonomy": "ASE",
+      "stem": "Which action should the nurse perform first?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Stop the magnesium infusion and notify the doctor at once"
+        },
+        {
+          "label": "B",
+          "text": "Halve the infusion rate and recheck her reflexes in an hour"
+        },
+        {
+          "label": "C",
+          "text": "Increase the IV fluid rate to raise her urine output"
+        },
+        {
+          "label": "D",
+          "text": "Prepare calcium gluconate, then call the doctor to give it"
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "option_types": {
+        "A": "correct",
+        "B": "close",
+        "C": "unsafe",
+        "D": "priority"
+      },
+      "rationale_correct": "CORRECT: Anjali shows signs of magnesium toxicity: absent patellar reflexes, respirations of 10/min with shallow breathing, drowsiness and flushing. Her urine output has fallen to 15 mL in the last hour, and magnesium is cleared by the kidneys, so it is accumulating. The ward protocol authorises the nurse to stop the infusion, which removes the source of the drug immediately, and the doctor must be told at once so the antidote and a level can be ordered.",
+      "distractor_rationales": {
+        "B": "Reducing the rate still delivers magnesium to a woman who already has respiratory depression and absent reflexes. Waiting an hour risks respiratory arrest; the protocol supports stopping it.",
+        "C": "Low urine output in severe pre-eclampsia reflects reduced kidney perfusion with leaky capillaries; extra fluid risks pulmonary oedema, and her fluids are limited to 80 mL/hr by order. It also does nothing to stop the magnesium still running.",
+        "D": "Calcium gluconate is the antidote and will likely be needed, so having it ready is sensible. But preparing it before stopping the infusion and calling the doctor delays the two steps that matter most while magnesium keeps flowing."
+      },
+      "self_test": "Preparing calcium gluconate is useful, but doing it before stopping the infusion and calling the doctor lets magnesium keep running into a client with respiratory depression.",
+      "meta": {
+        "topic": "Obstetric pharmacology",
+        "subtopic": "Magnesium sulfate toxicity",
+        "priority_principle": "Stop the source of harm, then escalate",
+        "prerequisites": "Renal excretion of magnesium; signs of hypermagnesaemia",
+        "suggested_review": "Nursing monitoring during magnesium sulfate infusion"
+      }
+    },
+    {
+      "position": 6,
+      "stage": "response",
+      "cj_step": "evaluate_outcomes",
+      "domain": "CDM",
+      "taxonomy": "ASE",
+      "stem": "Which finding best indicates that Anjali's response to the management of the magnesium toxicity is effective?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Blood pressure now 148/98 mm Hg"
+        },
+        {
+          "label": "B",
+          "text": "SpO2 98% on 2 L/min nasal oxygen"
+        },
+        {
+          "label": "C",
+          "text": "Respirations 16/min, reflexes present"
+        },
+        {
+          "label": "D",
+          "text": "Serum magnesium of 5.2 mmol/L"
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "option_types": {
+        "A": "incorrect",
+        "B": "close",
+        "C": "correct",
+        "D": "incorrect"
+      },
+      "rationale_correct": "CORRECT: The toxicity showed itself as respirations of 10/min and absent patellar reflexes at 1:00 pm. After the infusion was stopped and calcium gluconate given, her respirations are 16/min, her reflexes have returned at 1+ and she is awake and answering promptly. These are the same signs that defined the problem, so their return is the direct evidence the management worked.",
+      "distractor_rationales": {
+        "A": "Her blood pressure is a separate problem managed with nifedipine; it was not what the toxicity treatment targeted, and it has actually risen slightly since the magnesium was stopped.",
+        "B": "A saturation of 98% is reassuring, but she is now receiving oxygen, which raises saturation even when breathing is still shallow. It does not show that her breathing itself has recovered.",
+        "D": "The level was drawn at 1:15 pm, before she had time to respond, and 5.2 mmol/L is above the range used for seizure prevention. It confirms the toxicity rather than showing recovery."
+      },
+      "self_test": "A saturation of 98% looks reassuring, but it is supported by oxygen, whereas her respiratory rate and reflexes directly show that the magnesium effect is wearing off.",
+      "meta": {
+        "topic": "Obstetric pharmacology",
+        "subtopic": "Evaluating treatment of magnesium toxicity",
+        "priority_principle": "Evaluate the signs that defined the problem",
+        "prerequisites": "Effects of oxygen on SpO2; timing of laboratory samples",
+        "suggested_review": "Reassessment after magnesium toxicity"
+      }
+    },
+    {
+      "position": 7,
+      "stage": "husband",
+      "cj_step": "extension",
+      "domain": "COM",
+      "taxonomy": "AP",
+      "stem": "Which response by the nurse to Ravi is most appropriate?",
+      "options": [
+        {
+          "label": "A",
+          "text": "\"She is in very good hands here, so please try not to worry so much.\""
+        },
+        {
+          "label": "B",
+          "text": "\"I can't discuss her care with you. You will have to ask the doctor.\""
+        },
+        {
+          "label": "C",
+          "text": "\"Her drip caused a reaction, but it's all fixed now, so you can relax.\""
+        },
+        {
+          "label": "D",
+          "text": "\"You sound frightened. Let me check with Anjali, then I'll explain.\""
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "option_types": {
+        "A": "incorrect",
+        "B": "close",
+        "C": "unsafe",
+        "D": "correct"
+      },
+      "rationale_correct": "CORRECT: Ravi is frightened and has missed the day's events. Naming his feeling acknowledges it, and checking with Anjali first respects her right to decide what is shared, since she is now alert. Once she agrees, the nurse can explain, within the nursing role, what is happening and why the baby is being delivered early, and arrange for the registrar to answer medical questions.",
+      "distractor_rationales": {
+        "A": "This is false reassurance. It dismisses his fear and gives him no information, so he is likely to stay distressed.",
+        "B": "Protecting confidentiality is right, but Anjali is awake and can give permission, and the nurse can explain nursing care. Refusing outright shuts down communication when he most needs it.",
+        "C": "This is inaccurate and minimises the situation: she still has severe pre-eclampsia and an operation tonight. It also shares details before checking that Anjali agrees."
+      },
+      "self_test": "Referring him to the doctor protects confidentiality, but Anjali is alert and can consent to sharing, and the nurse can explain nursing care now.",
+      "meta": {
+        "topic": "Therapeutic communication",
+        "subtopic": "Communicating with a distressed partner",
+        "priority_principle": "Acknowledge feelings and respect the client's consent to share information",
+        "prerequisites": "Therapeutic communication techniques; confidentiality",
+        "suggested_review": "Supporting families during obstetric emergencies"
+      }
+    },
+    {
+      "position": 8,
+      "stage": "consent",
+      "cj_step": "extension",
+      "domain": "PC",
+      "taxonomy": "AP",
+      "stem": "Which response by the nurse to the registrar is most appropriate?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Ask Anjali to sign, since she already knows about the operation"
+        },
+        {
+          "label": "B",
+          "text": "State that the doctor must obtain consent, and offer to witness it"
+        },
+        {
+          "label": "C",
+          "text": "Explain the operation and its risks to Anjali, then have her sign"
+        },
+        {
+          "label": "D",
+          "text": "Ask Ravi to sign the form, since Anjali was drowsy earlier today"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "option_types": {
+        "A": "unsafe",
+        "B": "correct",
+        "C": "close",
+        "D": "incorrect"
+      },
+      "rationale_correct": "CORRECT: Informed consent for surgery must be obtained by the doctor who will perform the procedure or one qualified to do it, because only that person can explain the operation, its risks, benefits and alternatives and answer her questions. The nurse's role is to confirm that Anjali understands and to witness her signature. Anjali is now alert and oriented, so she can give her own consent once the registrar has explained it.",
+      "distractor_rationales": {
+        "A": "Knowing she is having a section is not informed consent. She has not had the risks and alternatives explained, so a signature obtained this way is not valid.",
+        "C": "Explaining the procedure is well-intended, but describing surgical risks and obtaining consent belong to the doctor; a nurse who does so is acting outside the nursing role and the consent may not be valid.",
+        "D": "Anjali is alert and oriented now and has capacity, so she must consent for herself. A spouse cannot consent on behalf of a competent adult."
+      },
+      "self_test": "Explaining the operation herself seems helpful, but obtaining surgical consent is the doctor's responsibility, so the nurse would be acting outside the nursing role.",
+      "meta": {
+        "topic": "Professional and legal practice",
+        "subtopic": "Informed consent for surgery",
+        "priority_principle": "Act within the nursing role and protect the client's right to informed consent",
+        "prerequisites": "Elements of informed consent; capacity",
+        "suggested_review": "The nurse's role in informed consent"
+      }
+    }
+  ],
+  "pathophysiology": "## Pathophysiology teaching\n\n**Normal physiology.** In a healthy pregnancy the spiral arteries of the uterus are remodelled into wide, low-resistance vessels that carry a large blood flow to the placenta. Blood pressure usually falls slightly in the second trimester.\n\n**Mechanism.** In pre-eclampsia this remodelling is incomplete. The poorly perfused placenta releases substances into the maternal circulation that damage the endothelium (the lining of blood vessels) throughout the body. Damaged endothelium leads to widespread vasoconstriction, leaky capillaries and small clots. This is why pre-eclampsia is a multi-organ disease and not just high blood pressure:\n- **Brain:** vasospasm and cerebral oedema cause headache, visual disturbance and, at worst, eclamptic seizures and stroke.\n- **Kidneys:** damaged glomerular capillaries leak protein (Anjali's 3+ proteinuria) and filter less, so urine output falls.\n- **Liver:** swelling of the liver stretches its capsule, causing epigastric or right upper quadrant pain and a rise in AST and ALT. If this progresses with haemolysis and falling platelets, it becomes HELLP syndrome; Anjali's platelets of 136 × 10⁹/L and modest enzyme rise show liver involvement without HELLP.\n- **Capillary leak** moves fluid into the tissues, so the woman is oedematous yet her circulating volume is reduced; giving extra IV fluid can cause pulmonary oedema.\n\n**Why each decision mattered.**\n- A headache that does not respond to paracetamol in a pregnant woman with hypertension is a brain warning sign, not a minor complaint (Q1).\n- New 3+ protein tied the headache and blood pressure together as one disease (Q2).\n- Repeat readings of 160/110 or more, persistent headache and epigastric pain are each severe features, so the problem was prioritized as pre-eclampsia with severe features before the blood results returned (Q3). The only cure is delivery of the placenta; at 35 weeks, delivery once she is stable is the plan.\n- Magnesium sulfate stabilises nerve cell membranes and relaxes cerebral vessels, preventing eclamptic seizures better than diazepam or phenytoin (Q4). Antihypertensives such as nifedipine protect against stroke but do not prevent seizures.\n- Magnesium is excreted by the kidneys. As Anjali's urine output fell, magnesium accumulated. Loss of patellar reflexes appears first, then respiratory depression, then cardiac arrest, which is why reflexes, respirations and urine output are checked hourly. Stopping the infusion removes the source (Q5); calcium gluconate antagonises magnesium at the cell membrane.\n- Return of breathing and reflexes, not a supported saturation or a pre-treatment level, showed the toxicity was reversing (Q6).\n- Clear, honest communication with the family (Q7) and valid informed consent obtained by the doctor (Q8) are part of safe care in an obstetric emergency.\n\n**Prevention and early detection.** Regular antenatal blood pressure and urine checks; low-dose aspirin from early pregnancy for women at high risk, as prescribed; teaching every pregnant woman to report headache, visual changes, upper abdominal pain or sudden swelling of the face and hands at once; and, during magnesium therapy, hourly reflexes, respirations and urine output with the antidote available.",
+  "quality_report": "Drafted by Claude (2026-10-10) from CASE_REQUEST NRG-OB-001. Checks run on all eight items: Cover test (each key can be formed before seeing options: Q1 new headache, Q2 kidney involvement, Q3 severe pre-eclampsia, Q4 magnesium sulfate, Q5 stop infusion and notify, Q6 breathing and reflexes, Q7 acknowledge and check consent to share, Q8 doctor obtains consent). Two-answer test: Q1 blood pressure 146/96 kept close to the admission readings so it is the known, monitored finding; Q3 HELLP deliberately left out because no labs exist at that point, and abruption is weakened by a soft, non-tender uterus and normal fetal heart rate; Q4 stem specifies seizure prevention so the antihypertensive cannot also be keyed; Q5 calcium gluconate framed as a sequencing error; Q6 SpO2 made oxygen-supported and the magnesium level timed before the response. Cue sufficiency: Q3 asked before the blood results; the magnesium protocol authority is stated in the 8:30 am stage, before the Q5 stage, not in it; urine output and electrolytes provided (addendum 3). Hidden assumptions: none known; nifedipine was given, so BP is not the Q6 target. Jade to confirm: magnesium regimen (4 g IV over 20 min, then 1 g/hr) and the toxicity thresholds in the local protocol; nifedipine 10 mg immediate release as the local first-line antihypertensive (hydralazine or labetalol may be used instead); serum magnesium of 5.2 mmol/L as a plausible level for absent reflexes with RR 10/min; calcium gluconate 1 g IV over 10 min given by the doctor; creatinine in µmol/L for T&T labs; IV fluid limit of 80 mL/hr; delivery at 35 weeks by caesarean for breech after stabilisation; consent practice (doctor obtains, nurse witnesses) in T&T hospitals. Validator note: the official check (npx tsx scripts/import-case.ts --check) could not be run in the authoring session because the tool permission was denied; the mechanical rules (option lengths and key gap, stem verbs, answer-leak check, forbidden and visual-flag patterns, rationale lengths, self-test wording, title, pathophysiology length, fluid data) were checked by hand and pass. Run the official --check before import. Reviewer (2026-10-10): Clinical check passed on the core regimen: magnesium sulfate 4 g IV over 20 min then 1 g/hr matches WHO/NICE (Zuspan) practice; 5.2 mmol/L (about 12.6 mg/dL) fits absent reflexes with early respiratory depression and sits above the 2–3.5 mmol/L prophylactic range used in the Q6 rationale; the 80 mL/hr total IV fluid limit matches NICE; immediate-release oral nifedipine started within about an hour of the first severe-range reading is acceptable first-line treatment; calcium gluconate 1 g IV over 10 min is standard. Changes: (1) the hourly urine outputs before toxicity were 25 mL at 11 am–noon, below the usual 30 mL/hr reporting threshold, which would have shown the nurse ignoring oliguria an hour before the Q5 action point; changed to 45, 40, 30, 15 mL so the fall becomes reportable in the Q5 hour, and added a 2+ reflex at 11 am so the decline is gradual; (2) the 3:00 pm and 4:00 pm stages now restart magnesium only after a repeat level is back, since restarting on clinical signs alone two hours after a toxic level with ongoing oliguria is not mainstream; (3) Q2 option A reworded from 'her blood pressure now involves her kidneys' to 'her hypertension now involves her kidneys'; (4) option types corrected: Q2 D (methyldopa explanation) and Q6 D (pre-treatment magnesium level) are misinterpretations, not sequencing errors, so retyped incorrect. No keys changed (C, A, D, B, A, C, D, B). Flow checked: Q3 precedes the bloods and the registrar's confirmation; Q4 (anticipate magnesium) and Q5 (stop the infusion and notify) differ; the stop-and-notify authority sits in the 8:30 am stage, before the Q5 stage; calcium gluconate and oxygen are introduced in the 2:30 pm stage that Q6 evaluates, and magnesium is introduced at 8:30 am. Jade to confirm: magnesium toxicity at 1 g/hr is uncommon and here depends on falling urine output with a creatinine of 84 µmol/L (above the usual pregnancy value), so confirm this is believable or prefer a higher creatinine; the local protocol's reportable thresholds (urine under 30 mL/hr or under 100 mL in 4 hours, RR under 12, absent reflexes); whether nifedipine with magnesium is accepted locally (older texts warn of an interaction); and that the RN, not the doctor, may stop the infusion under the ward protocol in T&T hospitals.",
+  "validation": {
+    "status": "pending"
+  }
+}

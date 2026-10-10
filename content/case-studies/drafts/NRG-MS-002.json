@@ -1,0 +1,687 @@
+{
+  "case_code": "NRG-MS-002",
+  "title": "Vomiting and Weakness in a University Student",
+  "objective": "Students recognise severe hyperglycaemia in a young adult with type 1 diabetes who has been vomiting, interpret compensatory breathing, prioritize diabetic ketoacidosis before confirmation, anticipate potassium replacement, follow the ward protocol when glucose falls without stopping insulin, judge resolution by ketones and pH rather than glucose, teach sick-day rules, and delegate safely during the move back to subcutaneous insulin.",
+  "population": "Young adult, 22-year-old man with type 1 diabetes",
+  "setting": "Medical ward, regional hospital, Trinidad and Tobago",
+  "primary_condition": "Diabetic ketoacidosis",
+  "endpoint": "Ketoacidosis resolved and the client transferred back to usual subcutaneous insulin, with sick-day teaching before discharge",
+  "primary_domain": "NP",
+  "difficulty": "low",
+  "source": "ai:claude",
+  "opening": {
+    "time_label": "1:30 pm",
+    "narrative": "Akeem, a 22-year-old university student, is admitted directly to the medical ward from the district health centre. Akeem's mother brought Akeem to the health centre after two days of vomiting, crampy abdominal pain and weakness. The mother says, \"Akeem can't keep anything down, not even water, and has been getting up all night to pass water.\" History includes type 1 diabetes since age 15, treated with NPH and regular insulin by injection before breakfast and before dinner. No known drug allergies. Akeem lives at home with family in Chaguanas. At the health centre an IV cannula was inserted and 0.9% sodium chloride was started; it is still running on arrival."
+  },
+  "stages": [
+    {
+      "key": "assess",
+      "time_label": "1:45 pm",
+      "narrative": "The nurse completes the admission assessment.",
+      "vitals": [
+        {
+          "label": "Temperature (tympanic)",
+          "value": "37.5°C"
+        },
+        {
+          "label": "Pulse",
+          "value": "116/min"
+        },
+        {
+          "label": "Respirations",
+          "value": "22/min"
+        },
+        {
+          "label": "Blood pressure",
+          "value": "104/66 mm Hg"
+        },
+        {
+          "label": "SpO2",
+          "value": "98% on room air"
+        },
+        {
+          "label": "Capillary glucose",
+          "value": "486 mg/dL"
+        }
+      ],
+      "assessment": [
+        {
+          "system": "CNS",
+          "finding": "Alert and oriented to person, place and time. Says, \"I just feel weak and tired.\""
+        },
+        {
+          "system": "Respiratory",
+          "finding": "Chest clear on auscultation bilaterally."
+        },
+        {
+          "system": "Cardiovascular",
+          "finding": "Capillary refill 3 seconds. Radial pulses present and equal."
+        },
+        {
+          "system": "Gastrointestinal",
+          "finding": "Generalised abdominal tenderness, no guarding. Vomited about 100 mL of clear fluid on arrival."
+        },
+        {
+          "system": "Genitourinary",
+          "finding": "Reports passing large amounts of urine for three days."
+        },
+        {
+          "system": "Integumentary",
+          "finding": "Lips and tongue dry. Skin turgor reduced on the forearm."
+        }
+      ]
+    },
+    {
+      "key": "reassess",
+      "time_label": "2:30 pm",
+      "narrative": "On questioning, Akeem tells the nurse, \"I stopped my insulin two days ago because I wasn't eating anything.\" The nurse reassesses. Akeem takes longer to answer questions but remains oriented. A fruity odour is noticed on the breath. The chest remains clear on auscultation. The ward's bedside ketone meter is on loan to the emergency department and has been sent for. The physician, informed by telephone, asks for urgent blood tests, and the nurse sends the samples at 2:40 pm.",
+      "vitals": [
+        {
+          "label": "Pulse",
+          "value": "118/min"
+        },
+        {
+          "label": "Respirations",
+          "value": "30/min, deep and regular"
+        },
+        {
+          "label": "Blood pressure",
+          "value": "102/64 mm Hg"
+        },
+        {
+          "label": "SpO2",
+          "value": "98% on room air"
+        }
+      ]
+    },
+    {
+      "key": "results",
+      "time_label": "3:15 pm",
+      "narrative": "The results are reported and the physician reviews Akeem on the ward and confirms diabetic ketoacidosis. Prescriptions: continue 0.9% sodium chloride IV at the prescribed rate; a fixed-rate IV insulin infusion of 6.4 units/hr (weight 64 kg) to start at 3:30 pm; hourly capillary glucose and blood ketones; electrolytes repeated 2 hours after the insulin starts; strict fluid balance. The ward's physician-signed IV insulin protocol directs the nurse to start 10% dextrose at 125 mL/hr through a second line once capillary glucose falls below 250 mg/dL. Any change to the insulin rate needs a physician's prescription.",
+      "vitals": [
+        {
+          "label": "Capillary glucose (3:00 pm)",
+          "value": "470 mg/dL"
+        }
+      ],
+      "labs": [
+        {
+          "category": "Venous blood gas",
+          "items": [
+            {
+              "label": "pH",
+              "value": "7.16"
+            },
+            {
+              "label": "Bicarbonate",
+              "value": "9 mmol/L"
+            }
+          ]
+        },
+        {
+          "category": "Chemistry",
+          "items": [
+            {
+              "label": "Blood ketones (beta-hydroxybutyrate)",
+              "value": "5.6 mmol/L"
+            },
+            {
+              "label": "Sodium",
+              "value": "131 mmol/L"
+            },
+            {
+              "label": "Potassium",
+              "value": "5.8 mmol/L"
+            },
+            {
+              "label": "Urea",
+              "value": "9.8 mmol/L"
+            },
+            {
+              "label": "Creatinine",
+              "value": "128 µmol/L"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "evening",
+      "time_label": "7:15 pm",
+      "narrative": "The insulin infusion has run at 6.4 units/hr since 3:30 pm. At 5:30 pm the repeat potassium was 4.6 mmol/L, and potassium chloride was added to the 0.9% sodium chloride as prescribed. Akeem has stopped vomiting and has taken sips of water. The 7:00 pm checks are back.",
+      "vitals": [
+        {
+          "label": "Pulse",
+          "value": "98/min"
+        },
+        {
+          "label": "Respirations",
+          "value": "22/min"
+        },
+        {
+          "label": "Blood pressure",
+          "value": "114/70 mm Hg"
+        },
+        {
+          "label": "Capillary glucose (7:00 pm)",
+          "value": "236 mg/dL"
+        }
+      ],
+      "assessment": [
+        {
+          "system": "CNS",
+          "finding": "Alert, answers questions promptly."
+        },
+        {
+          "system": "Genitourinary",
+          "finding": "Urine output 240 mL over the past 3 hours."
+        }
+      ],
+      "labs": [
+        {
+          "category": "Chemistry (7:00 pm)",
+          "items": [
+            {
+              "label": "Blood ketones",
+              "value": "2.4 mmol/L"
+            },
+            {
+              "label": "Potassium",
+              "value": "4.1 mmol/L"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "day2",
+      "time_label": "Day 2, 7:00 am",
+      "narrative": "The insulin infusion, 10% dextrose and 0.9% sodium chloride with potassium ran overnight as prescribed. Akeem slept for most of the night.",
+      "vitals": [
+        {
+          "label": "Temperature (tympanic)",
+          "value": "36.9°C"
+        },
+        {
+          "label": "Pulse",
+          "value": "86/min"
+        },
+        {
+          "label": "Respirations",
+          "value": "16/min"
+        },
+        {
+          "label": "Blood pressure",
+          "value": "118/74 mm Hg"
+        },
+        {
+          "label": "SpO2",
+          "value": "99% on room air"
+        },
+        {
+          "label": "Capillary glucose",
+          "value": "168 mg/dL"
+        }
+      ],
+      "assessment": [
+        {
+          "system": "CNS",
+          "finding": "Alert and oriented, conversing normally."
+        },
+        {
+          "system": "Respiratory",
+          "finding": "Breathing regular. No odour on the breath."
+        },
+        {
+          "system": "Gastrointestinal",
+          "finding": "Abdomen soft and non-tender. Asking for breakfast."
+        },
+        {
+          "system": "Genitourinary",
+          "finding": "Urine output about 70 mL/hr overnight."
+        }
+      ],
+      "labs": [
+        {
+          "category": "Venous blood gas",
+          "items": [
+            {
+              "label": "pH",
+              "value": "7.35"
+            },
+            {
+              "label": "Bicarbonate",
+              "value": "20 mmol/L"
+            }
+          ]
+        },
+        {
+          "category": "Chemistry",
+          "items": [
+            {
+              "label": "Blood ketones",
+              "value": "0.4 mmol/L"
+            },
+            {
+              "label": "Sodium",
+              "value": "138 mmol/L"
+            },
+            {
+              "label": "Potassium",
+              "value": "4.3 mmol/L"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "transition",
+      "time_label": "Day 2, 8:30 am",
+      "narrative": "The physician prescribes Akeem's usual subcutaneous NPH and regular insulin with breakfast, and the insulin infusion to stop one hour after the subcutaneous dose. The nurse gives the dose and Akeem eats breakfast. Akeem says, \"I thought that if I wasn't eating, I shouldn't take my insulin. What am I supposed to do the next time I get sick?\""
+    },
+    {
+      "key": "team",
+      "time_label": "Day 2, 10:00 am",
+      "narrative": "The insulin infusion was stopped at 9:30 am as prescribed. The nurse is responsible for six clients this morning and works with one nursing assistant. Several of Akeem's tasks remain before lunch, and discharge home is planned for Day 3 with a diabetes clinic appointment."
+    }
+  ],
+  "questions": [
+    {
+      "position": 1,
+      "stage": "assess",
+      "cj_step": "recognize_cues",
+      "domain": "NP",
+      "taxonomy": "AP",
+      "stem": "Which finding should the nurse recognize as most important to follow up, given Akeem's history?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Tympanic temperature of 37.5°C"
+        },
+        {
+          "label": "B",
+          "text": "Generalised abdominal tenderness"
+        },
+        {
+          "label": "C",
+          "text": "Capillary glucose of 486 mg/dL"
+        },
+        {
+          "label": "D",
+          "text": "Pulse of 116/min at rest in bed"
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "option_types": {
+        "A": "incorrect",
+        "B": "priority",
+        "C": "correct",
+        "D": "close"
+      },
+      "rationale_correct": "CORRECT: Akeem has type 1 diabetes and has been vomiting for two days. A capillary glucose of 486 mg/dL is not explained by a stomach illness alone; it signals a serious lack of insulin, and in type 1 diabetes that raises the risk of ketone build-up. It needs follow-up now (ketone testing and informing the physician). The fast pulse, dry mouth and poor skin turgor are explained by the vomiting and passing large amounts of urine, and IV fluid is already running for them.",
+      "distractor_rationales": {
+        "A": "A temperature of 37.5°C is only slightly raised and fits a minor infection or dehydration. It is worth rechecking but does not change the immediate plan.",
+        "B": "Generalised tenderness without guarding fits two days of vomiting and is also common when glucose is very high. It needs reassessment, but it is not the finding that points to the dangerous problem.",
+        "D": "A pulse of 116/min with dry mucous membranes and reduced turgor is expected after two days of vomiting and polyuria, and IV fluid is already running. The glucose explains why the fluid loss happened and what else may be developing."
+      },
+      "self_test": "The pulse of 116/min matches the fluid loss already being treated, whereas a glucose of 486 mg/dL in type 1 diabetes signals insulin lack that the fluids alone will not correct.",
+      "meta": {
+        "topic": "Endocrine nursing",
+        "subtopic": "Hyperglycaemia in type 1 diabetes",
+        "priority_principle": "Follow up the cue the presenting illness does not explain",
+        "prerequisites": "Normal blood glucose range; signs of dehydration; insulin action",
+        "suggested_review": "Assessment of the client with diabetes who is unwell"
+      }
+    },
+    {
+      "position": 2,
+      "stage": "reassess",
+      "cj_step": "analyze_cues",
+      "domain": "CDM",
+      "taxonomy": "ASE",
+      "stem": "How should the nurse interpret the significance of the change in Akeem's breathing?",
+      "options": [
+        {
+          "label": "A",
+          "text": "The breathing pattern is removing carbon dioxide to offset acid"
+        },
+        {
+          "label": "B",
+          "text": "The breathing pattern reflects anxiety about vomiting and admission"
+        },
+        {
+          "label": "C",
+          "text": "The breathing pattern suggests vomit was inhaled into the lungs"
+        },
+        {
+          "label": "D",
+          "text": "The breathing pattern shows the IV fluid is overloading the circulation"
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "option_types": {
+        "A": "correct",
+        "B": "close",
+        "C": "priority",
+        "D": "incorrect"
+      },
+      "rationale_correct": "CORRECT: Without insulin, Akeem's body has been breaking down fat for energy for two days, producing acidic ketones (the fruity breath odour). The rise from 22/min to 30/min, deep and regular, with a clear chest and SpO2 of 98%, is the lungs blowing off carbon dioxide to reduce the acid load. Together with the slower responses, it shows the acid build-up is getting worse.",
+      "distractor_rationales": {
+        "B": "Anxiety can speed up breathing, but it is usually shallow and is not accompanied by a fruity breath odour and slower mental responses. Putting it down to anxiety would miss a worsening acid build-up.",
+        "C": "Inhaling vomit is a real risk after repeated vomiting, which is why this is tempting. But the chest is clear and SpO2 is 98%; aspiration would usually bring crackles, cough or falling oxygen saturation.",
+        "D": "Fluid overload is a risk with IV therapy, but Akeem is dehydrated, the blood pressure is still 102/64 mm Hg and the chest is clear, so the breathing change is not from too much fluid."
+      },
+      "self_test": "Anxiety explains fast breathing but not deep breaths with a fruity odour and slower responses after two days without insulin.",
+      "meta": {
+        "topic": "Endocrine nursing",
+        "subtopic": "Respiratory compensation for metabolic acidosis",
+        "priority_principle": "Link new cues to the underlying physiology",
+        "prerequisites": "Acid-base balance; role of the lungs in removing carbon dioxide; ketone production",
+        "suggested_review": "Kussmaul respirations and metabolic acidosis"
+      }
+    },
+    {
+      "position": 3,
+      "stage": "reassess",
+      "cj_step": "prioritize_hypotheses",
+      "domain": "CDM",
+      "taxonomy": "ASE",
+      "stem": "Before the blood results return, which condition is most likely and should be prioritized?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Hyperosmolar hyperglycaemic state"
+        },
+        {
+          "label": "B",
+          "text": "Acute pancreatitis"
+        },
+        {
+          "label": "C",
+          "text": "Gastroenteritis with dehydration"
+        },
+        {
+          "label": "D",
+          "text": "Diabetic ketoacidosis"
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "option_types": {
+        "A": "close",
+        "B": "incorrect",
+        "C": "priority",
+        "D": "correct"
+      },
+      "rationale_correct": "CORRECT: Type 1 diabetes, two days without insulin, a glucose of 486 mg/dL, vomiting, abdominal pain, polyuria, deep rapid breathing, a fruity breath odour and slowing responses form one picture: diabetic ketoacidosis. It is also the most dangerous explanation, because the acidosis and fluid and potassium shifts can become life-threatening within hours, so it is prioritized while the results are awaited.",
+      "distractor_rationales": {
+        "A": "Hyperosmolar hyperglycaemic state also causes very high glucose and dehydration, so it is the closest alternative. It is more typical of older adults with type 2 diabetes, glucose is usually much higher, and there is little ketone production, so it does not explain the deep breathing and fruity odour.",
+        "B": "Pancreatitis causes abdominal pain and vomiting, but the pain is usually severe and epigastric, and it does not explain the deep breathing, fruity odour or the missed insulin. The generalised tenderness here fits ketoacidosis.",
+        "C": "A stomach illness may well have started this episode and explains the vomiting, but on its own it does not explain a glucose of 486 mg/dL, deep rapid breathing and a fruity breath odour."
+      },
+      "self_test": "Hyperosmolar hyperglycaemic state explains the high glucose and dehydration but not the deep breathing and fruity odour that come from ketone production in type 1 diabetes.",
+      "meta": {
+        "topic": "Endocrine nursing",
+        "subtopic": "Diabetic ketoacidosis versus hyperosmolar hyperglycaemic state",
+        "priority_principle": "Prioritize the most dangerous explanation that fits all the cues",
+        "prerequisites": "Type 1 versus type 2 diabetes; ketone formation",
+        "suggested_review": "Hyperglycaemic emergencies: comparison of DKA and HHS"
+      }
+    },
+    {
+      "position": 4,
+      "stage": "results",
+      "cj_step": "generate_solutions",
+      "domain": "NP",
+      "taxonomy": "AP",
+      "stem": "As the insulin infusion begins, which prescription should the nurse anticipate being added to Akeem's plan of care?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Sodium bicarbonate infusion to raise the blood pH"
+        },
+        {
+          "label": "B",
+          "text": "Potassium chloride added to the IV fluid as the level falls"
+        },
+        {
+          "label": "C",
+          "text": "IV fluid rate reduced to prevent fluid overload in the lungs"
+        },
+        {
+          "label": "D",
+          "text": "Hourly insulin boluses until the glucose is near normal"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "option_types": {
+        "A": "close",
+        "B": "correct",
+        "C": "incorrect",
+        "D": "unsafe"
+      },
+      "rationale_correct": "CORRECT: Akeem's potassium of 5.8 mmol/L looks high, but the vomiting and polyuria have drained the body's total potassium; acidosis and lack of insulin keep what is left outside the cells. Once insulin starts, potassium moves back into the cells and the serum level falls quickly, which is why electrolytes are repeated after 2 hours. Potassium added to the IV fluid when the level falls (with adequate urine output) prevents dangerous hypokalaemia and arrhythmias.",
+      "distractor_rationales": {
+        "A": "A pH of 7.16 looks alarming, so bicarbonate is tempting. Fluids and insulin stop ketone production and correct the acidosis; bicarbonate is not routine at this pH and can worsen the potassium fall.",
+        "C": "Akeem is a young adult who is still dehydrated, with a raised urea and creatinine. Fluid replacement remains a core treatment, and the chest is clear, so cutting the fluid would slow recovery.",
+        "D": "The physician has prescribed a fixed-rate infusion. Repeated boluses would drop the glucose and potassium too fast and are not part of the prescription."
+      },
+      "self_test": "Bicarbonate seems to target the low pH, but fluids and insulin correct the acidosis, while the fall in a potassium of 5.8 mmol/L once insulin starts is the predictable danger to plan for.",
+      "meta": {
+        "topic": "Endocrine nursing",
+        "subtopic": "Potassium management in DKA",
+        "priority_principle": "Anticipate the predictable complication of treatment",
+        "prerequisites": "Insulin moves potassium into cells; total body versus serum potassium",
+        "suggested_review": "Fluid, insulin and potassium therapy in DKA"
+      }
+    },
+    {
+      "position": 5,
+      "stage": "evening",
+      "cj_step": "take_action",
+      "domain": "NP",
+      "taxonomy": "AP",
+      "stem": "Which action should the nurse perform now?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Stop the insulin infusion and recheck glucose in one hour"
+        },
+        {
+          "label": "B",
+          "text": "Give the usual subcutaneous insulin and stop the infusion"
+        },
+        {
+          "label": "C",
+          "text": "Start the dextrose infusion and keep insulin at the same rate"
+        },
+        {
+          "label": "D",
+          "text": "Offer sweet juice by mouth and recheck glucose in one hour"
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "option_types": {
+        "A": "unsafe",
+        "B": "priority",
+        "C": "correct",
+        "D": "close"
+      },
+      "rationale_correct": "CORRECT: The capillary glucose is now 236 mg/dL, below the protocol's 250 mg/dL point, so the nurse starts 10% dextrose at 125 mL/hr as the ward protocol directs. Blood ketones are still 2.4 mmol/L, so the ketoacidosis has not resolved, and the insulin must continue at the prescribed rate to switch off ketone production; the dextrose lets it continue without causing hypoglycaemia. Only a physician's prescription can change the insulin rate.",
+      "distractor_rationales": {
+        "A": "Stopping insulin because the glucose has come down is the classic error. Ketones are still 2.4 mmol/L, so ketone production would restart and the acidosis would return; the protocol also does not allow the nurse to change the insulin.",
+        "B": "Returning to subcutaneous insulin is the right step later, once the ketoacidosis has resolved and Akeem is eating. With ketones at 2.4 mmol/L it is too early, and the switch needs a physician's prescription.",
+        "D": "Akeem has only just stopped vomiting and is managing sips, so oral juice is unreliable, and it is not what the protocol directs. Waiting an hour leaves the glucose falling with the insulin still running."
+      },
+      "self_test": "Oral juice tries to protect against a low glucose, but it is unreliable after vomiting, and the protocol's dextrose infusion is what allows insulin to keep clearing ketones safely.",
+      "meta": {
+        "topic": "Medication administration",
+        "subtopic": "IV insulin infusion protocol in DKA",
+        "priority_principle": "Treat the ketosis, not the glucose number",
+        "prerequisites": "Insulin suppresses ketone production; scope of a ward protocol",
+        "suggested_review": "Adding dextrose during IV insulin therapy for DKA"
+      }
+    },
+    {
+      "position": 6,
+      "stage": "day2",
+      "cj_step": "evaluate_outcomes",
+      "domain": "CDM",
+      "taxonomy": "ASE",
+      "stem": "Which finding best indicates that treatment of Akeem's primary problem has been effective?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Blood ketones 0.4 mmol/L with venous pH 7.35"
+        },
+        {
+          "label": "B",
+          "text": "Capillary glucose of 168 mg/dL before breakfast"
+        },
+        {
+          "label": "C",
+          "text": "Urine output of 70 mL/hr through the night"
+        },
+        {
+          "label": "D",
+          "text": "Asking for breakfast, with a soft abdomen"
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "option_types": {
+        "A": "correct",
+        "B": "close",
+        "C": "close",
+        "D": "incorrect"
+      },
+      "rationale_correct": "CORRECT: The primary problem was ketoacidosis, so resolution is judged by the ketones and the acid-base state. Ketones have fallen from 5.6 to 0.4 mmol/L and the pH has risen from 7.16 to 7.35, with bicarbonate 20 mmol/L, after a night of insulin, fluids and potassium. These show that ketone production has stopped and the acidosis has cleared.",
+      "distractor_rationales": {
+        "B": "A lower glucose is welcome, but it fell to the 200s yesterday evening while ketones were still 2.4 mmol/L. Glucose comes down faster than the acidosis, so it cannot show that the ketoacidosis has resolved.",
+        "C": "Good urine output shows that the circulation and kidneys have recovered with fluid replacement, but it does not measure the ketones or the acid that defined the problem.",
+        "D": "Appetite and a soft abdomen are encouraging and matter for restarting subcutaneous insulin, but they are not a measure of whether the acidosis has resolved."
+      },
+      "self_test": "Glucose of 168 mg/dL looks like success, but glucose fell well before the ketones did, so only ketones and pH show that the ketoacidosis has resolved.",
+      "meta": {
+        "topic": "Endocrine nursing",
+        "subtopic": "Evaluating resolution of DKA",
+        "priority_principle": "Evaluate the outcome the treatment targeted",
+        "prerequisites": "Ketones, pH and bicarbonate trends",
+        "suggested_review": "Criteria for resolution of DKA"
+      }
+    },
+    {
+      "position": 7,
+      "stage": "transition",
+      "cj_step": "extension",
+      "domain": "HPMW",
+      "taxonomy": "AP",
+      "stem": "Which instruction is most important for the nurse to include in Akeem's teaching?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Halve each insulin dose on days you are unable to eat"
+        },
+        {
+          "label": "B",
+          "text": "Rest in bed and check your glucose once each morning"
+        },
+        {
+          "label": "C",
+          "text": "Go to the health centre whenever you have a cold or fever"
+        },
+        {
+          "label": "D",
+          "text": "Keep taking insulin and check glucose and ketones every 4 hours"
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "option_types": {
+        "A": "close",
+        "B": "incorrect",
+        "C": "incorrect",
+        "D": "correct"
+      },
+      "rationale_correct": "CORRECT: This episode began when Akeem stopped insulin because of not eating. Illness raises stress hormones, which push glucose up and drive ketone production even without food, so insulin must continue during illness. Checking glucose and ketones about every 4 hours lets Akeem spot rising levels early and seek help before ketoacidosis develops again.",
+      "distractor_rationales": {
+        "A": "Halving the dose sounds like a cautious middle ground, but illness usually raises the insulin requirement. Cutting the dose could start the same ketone build-up that caused this admission.",
+        "B": "Rest is reasonable, but one glucose check a day is far too infrequent during illness, and it does not include ketone testing, which would have shown the problem early.",
+        "C": "Seeking help is important when vomiting persists or ketones rise, but going in for every cold does not teach Akeem to manage illness at home and would not prevent a recurrence."
+      },
+      "self_test": "Halving the dose seems safer when not eating, but illness raises insulin needs, so a reduced dose can start ketone production again.",
+      "meta": {
+        "topic": "Health promotion",
+        "subtopic": "Sick-day rules in type 1 diabetes",
+        "priority_principle": "Teach the behaviour that caused the episode",
+        "prerequisites": "Effect of stress hormones on glucose; insulin and ketone production",
+        "suggested_review": "Sick-day management for clients taking insulin"
+      }
+    },
+    {
+      "position": 8,
+      "stage": "team",
+      "cj_step": "extension",
+      "domain": "NLM",
+      "taxonomy": "ASE",
+      "stem": "Which task for Akeem may the nurse appropriately delegate to the nursing assistant?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Disconnect the stopped insulin infusion from the cannula"
+        },
+        {
+          "label": "B",
+          "text": "Measure and record oral intake and urine output on the chart"
+        },
+        {
+          "label": "C",
+          "text": "Check that Akeem can explain the sick-day plan correctly"
+        },
+        {
+          "label": "D",
+          "text": "Give Akeem a snack whenever Akeem reports feeling shaky"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "option_types": {
+        "A": "incorrect",
+        "B": "correct",
+        "C": "priority",
+        "D": "unsafe"
+      },
+      "rationale_correct": "CORRECT: Measuring and recording intake and output is a routine, predictable task with a standard method, for a client who is now stable on subcutaneous insulin. It is within a nursing assistant's role, and the nurse still reviews the totals and acts on them.",
+      "distractor_rationales": {
+        "A": "Handling an IV line and cannula used for an insulin infusion is IV therapy and remains the registered nurse's responsibility, even when the infusion has stopped.",
+        "C": "Checking whether teaching has been understood is evaluation of learning, which needs the registered nurse's judgement and may lead to re-teaching.",
+        "D": "Giving a snack is something a nursing assistant often does, which is why this is tempting. But shakiness after the insulin infusion stops may signal hypoglycaemia; it needs a glucose check and assessment by the registered nurse first, and a snack alone may be too little or delay treatment."
+      },
+      "self_test": "Checking that Akeem can explain the plan seems simple, but it is evaluation of teaching, which needs the registered nurse's judgement.",
+      "meta": {
+        "topic": "Leadership and management",
+        "subtopic": "Delegation to nursing assistants",
+        "priority_principle": "Delegate stable, routine tasks; keep assessment, teaching evaluation and IV therapy",
+        "prerequisites": "Principles of delegation; role of the nursing assistant",
+        "suggested_review": "The five rights of delegation"
+      }
+    }
+  ],
+  "pathophysiology": "## Pathophysiology teaching\n\n**Normal physiology.** Insulin moves glucose into muscle and fat cells, stops the liver releasing glucose, and stops fat being broken down. In type 1 diabetes the pancreas makes almost no insulin, so these effects depend entirely on injected insulin.\n\n**What happened to Akeem.** An illness with vomiting (probably a stomach upset) stopped Akeem eating, and Akeem then stopped the insulin. Illness also raises stress hormones (glucagon, cortisol, adrenaline), which raise glucose and fat breakdown further. Without insulin:\n- Glucose cannot enter cells and the liver keeps releasing it, so glucose climbed to 486 mg/dL.\n- Glucose spills into the urine and draws water with it (osmotic diuresis), causing polyuria, thirst, dry mucous membranes, tachycardia and a raised urea and creatinine. Vomiting adds to the fluid and electrolyte loss.\n- Fat is broken down and the liver turns the fatty acids into ketones. Ketones are acids, so bicarbonate is used up and the pH falls (7.16, bicarbonate 9 mmol/L). The lungs try to compensate by blowing off carbon dioxide, giving deep, rapid (Kussmaul) breathing, and acetone gives the breath a fruity odour. Acidosis also causes abdominal pain, vomiting and drowsiness.\n- Potassium is lost in urine and vomit, but acidosis and insulin lack keep potassium outside the cells, so the serum level (5.8 mmol/L) hides a low total body potassium.\n\n**Why each decision mattered.**\n- Q1: the glucose was the cue the stomach illness did not explain, and it pointed to insulin lack.\n- Q2: reading the deep breathing as compensation for acid, not anxiety, aspiration or overload, showed the problem was getting worse.\n- Q3: prioritizing diabetic ketoacidosis over hyperosmolar hyperglycaemic state or gastroenteritis before the results meant treatment was ready when they arrived.\n- Q4: insulin drives potassium back into cells, so the serum level falls once the infusion starts; anticipating potassium replacement prevents hypokalaemia and arrhythmias.\n- Q5: glucose falls faster than ketones clear. Adding dextrose lets insulin continue until ketone production is switched off; stopping insulin when glucose falls lets the acidosis return.\n- Q6: resolution is judged by ketones and pH, the markers of the problem treated, not by glucose.\n- Q7 and Q8: sick-day teaching targets the cause of this episode, and delegating only routine, stable tasks keeps assessment, IV therapy and evaluation of teaching with the registered nurse during the move back to subcutaneous insulin, when hypoglycaemia or rebound ketosis can occur.\n\n**Moving back to subcutaneous insulin.** The subcutaneous dose is given with a meal and the infusion is stopped after an overlap (here one hour), because IV insulin acts for only minutes; stopping it before the subcutaneous insulin is absorbed would let ketones rise again.\n\n**Prevention.** Never stop insulin during illness; check glucose and ketones every few hours when unwell; keep up fluids, using sugar-containing drinks if unable to eat; seek help early for persistent vomiting, rising ketones or deep breathing; keep diabetes clinic follow-up.",
+  "quality_report": "Drafted by Claude (ai:claude, 2026-10-10) from CASE_REQUEST NRG-MS-002 (primary domain NP, difficulty low, Q7 HPMW, Q8 NLM). Checks run on all eight items: Cover (each key can be formed before seeing options from the data on screen), Two-Answer (Q1 glucose vs pulse resolved by stem 'given Akeem's history' and the fluid already running; Q5 'reduce insulin' excluded by the stated protocol that insulin-rate changes need a prescription; Q8 options limited so only one task is routine and non-assessment), Cue-Sufficiency (Q3 asked before ketones/gas results; Q4 potassium 5.4 shown before planning; Q5 protocol authority given in the earlier 3:15 pm stage, not the 7:15 pm stage), Hidden-Assumption (protocol, weight, insulin regimen and potassium addition all stated before use; Q6 intervention introduced in the 7:15 pm and Day 2 stages). Disclosure: Kussmaul breathing and the fruity odour withheld until Q2 so Q1 is not pre-assembled. Addendum 3: urine output and electrolytes given at 3:15 pm, 7:15 pm and Day 2. Jade to confirm: (1) local DKA protocol - this case follows a UK JBDS-style fixed-rate infusion (0.1 units/kg/hr, insulin continued and 10% dextrose 125 mL/hr added when glucose falls below 250 mg/dL); ADA practice instead lowers the insulin rate with 5% dextrose, so the Q5 key depends on the protocol stated in the case; (2) potassium thresholds for adding KCl; (3) one-hour IV/subcutaneous overlap; (4) whether direct admission from a district health centre without prior ketone testing is realistic locally; (5) nursing assistant scope in T&T for intake/output recording and disconnecting IV lines; (6) sick-day ketone-check frequency (every 4 hours) and whether home blood or urine ketone testing is accessible to clients locally. Reviewer (2026-10-10): Admission potassium changed from 5.4 to 5.8 mmol/L (Q4 rationale, self-test and teaching section updated), because at 5.4 a JBDS protocol, which this case follows for insulin, would already add 40 mmol/L KCl, contradicting the Q4 key 'as the level falls'; at 5.8 both JBDS (no KCl above 5.5) and ADA (hold above 5.2) withhold KCl until the 5:30 pm repeat of 4.6, as written. Added to the 2:30 pm stage that the ward's ketone meter is on loan and has been sent for: a nurse acting on the Q1 cue would otherwise be expected to check ketones at the bedside before Q3, and the later hourly ketone checks need a meter. Q8 option D reworded from 'Decide whether Akeem needs a snack' (the word 'decide' gave it away) to 'Give Akeem a snack whenever Akeem reports feeling shaky', a more tempting unsafe distractor; rationale updated. Q7 option B retyped priority to incorrect (an incomplete plan, not a sequencing error). Teaching section no longer states the stomach illness as fact. No keys changed. Course checked against JBDS/ADA: 0.1 units/kg/hr; glucose fall about 58 mg/dL/hr and ketone fall about 0.9 mmol/L/hr are in the target range; pH 7.16, bicarbonate 9, ketones 5.6 is moderate, not severe, DKA, so ward care fits; Day 2 values meet resolution criteria. Jade to confirm: whether a urine ketone dipstick would routinely be done on a T&T ward before the blood results (it would weaken the 'before confirmation' design of Q3), plus the author's items (1) to (6).",
+  "validation": {
+    "status": "pending"
+  }
+}

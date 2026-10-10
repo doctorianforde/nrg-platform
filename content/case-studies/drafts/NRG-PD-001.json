@@ -1,0 +1,348 @@
+{
+  "case_code": "NRG-PD-001",
+  "title": "Breathing Hard and Not Finishing the Bottle",
+  "objective": "Students recognise hypoxaemia in a coryzal infant, link fast breathing to falling feed intake, prioritise viral bronchiolitis over competing causes, plan and carry out supportive feeding and airway care, evaluate hydration, and address the nurse's own competence and the family's discharge teaching.",
+  "population": "Infant, 4 months old",
+  "setting": "Paediatric ward, district hospital, Caribbean",
+  "primary_condition": "Bronchiolitis",
+  "endpoint": "Feeding and oxygenation improved; oxygen stopped and discharge home planned with health centre follow-up",
+  "primary_domain": "CDM",
+  "difficulty": "moderate",
+  "source": "ai:claude",
+  "opening": {
+    "time_label": "9:30 am",
+    "narrative": "Amari, a 4-month-old infant, is admitted to the paediatric ward of a district hospital from the Accident and Emergency department, accompanied by Amari's mother. She reports three days of a runny nose and cough that began after Amari's 3-year-old sister brought home a cold from nursery school. She states, \"Since last night Amari breathing hard and only taking a little bit of the bottle.\" The symptoms came on gradually. The cough is wet and frequent; she has noticed no whooping sound and no pauses in breathing. Amari was born at 39 weeks, has had no previous illness, is bottle-fed with formula, and has had all immunisations due for age. No known allergies. The ward's infant respiratory protocol allows the registered nurse to start oxygen by nasal cannula, adjust the flow between 0.5 and 2 L/min to keep oxygen saturation at or above 92%, wean oxygen in steps, and clear the nose with saline drops and gentle suction, notifying the physician of any change."
+  },
+  "stages": [
+    {
+      "key": "assess",
+      "time_label": "9:45 am",
+      "narrative": "The nurse completes the admission assessment. A nasopharyngeal swab has been sent to the laboratory.",
+      "vitals": [
+        { "label": "Temperature", "value": "37.9°C" },
+        { "label": "Pulse", "value": "164/min" },
+        { "label": "Respirations", "value": "62/min" },
+        { "label": "SpO2", "value": "90% on room air" },
+        { "label": "Weight", "value": "6.0 kg" }
+      ],
+      "assessment": [
+        { "system": "CNS", "finding": "Alert. Cries when handled and settles when held by the mother. Anterior fontanelle soft and flat." },
+        { "system": "Respiratory", "finding": "Clear nasal discharge. Frequent wet cough. Nasal flaring with subcostal and intercostal retractions. Fine crackles and expiratory wheeze heard throughout both lungs." },
+        { "system": "Cardiovascular", "finding": "Capillary refill 2 seconds. Skin pink and warm." },
+        { "system": "Gastrointestinal", "finding": "Abdomen soft. Lips slightly dry." }
+      ]
+    },
+    {
+      "key": "feeding",
+      "time_label": "10:30 am",
+      "narrative": "At 10:00 am the nurse started oxygen at 1 L/min by nasal cannula under the ward protocol. Amari's mother adds that Amari usually takes 120 to 150 mL every 3 hours. Since last night each feed has been about 50 mL: Amari sucks for a few seconds, pulls away, coughs and breathes hard, then will not take more. She has changed two wet nappies since 10 pm last night.",
+      "vitals": [
+        { "label": "Temperature", "value": "37.8°C" },
+        { "label": "Pulse", "value": "158/min" },
+        { "label": "Respirations", "value": "64/min, counted over a full minute" },
+        { "label": "SpO2", "value": "94% on 1 L/min by nasal cannula" }
+      ]
+    },
+    {
+      "key": "results",
+      "time_label": "11:30 am",
+      "narrative": "The nasopharyngeal swab is positive for respiratory syncytial virus (RSV), and Amari is moved to the bay with other RSV-positive infants. The physician documents the working diagnosis and will write the feeding prescription on the 1:00 pm ward round. At 11:00 am Amari took 40 mL of a 120 mL feed, stopping repeatedly to breathe.",
+      "vitals": [
+        { "label": "Temperature", "value": "37.8°C" },
+        { "label": "Pulse", "value": "156/min" },
+        { "label": "Respirations", "value": "64/min" },
+        { "label": "SpO2", "value": "94% on 1 L/min by nasal cannula" }
+      ]
+    },
+    {
+      "key": "feedtime",
+      "time_label": "2:00 pm",
+      "narrative": "On the ward round the physician prescribed: oxygen under the ward protocol; 60 mL of formula by bottle every 2 hours, with a nasogastric tube to be passed if Amari cannot finish two feeds in a row; intake and output recorded, with nappies weighed. The 2:00 pm feed is now due and Amari's mother is ready with the bottle. Amari roots for the teat but breaks off after a few sucks, mouth open, to breathe.",
+      "vitals": [
+        { "label": "Pulse", "value": "160/min" },
+        { "label": "Respirations", "value": "66/min" },
+        { "label": "SpO2", "value": "93% on 1 L/min by nasal cannula" }
+      ],
+      "assessment": [
+        { "system": "Respiratory", "finding": "Both nostrils partly blocked with thick, sticky secretions. Snuffly noise with each breath. Subcostal retractions. Nasal cannula correctly positioned." }
+      ]
+    },
+    {
+      "key": "day2",
+      "time_label": "Day 2, 8:00 am",
+      "narrative": "Overnight the nurse cleared Amari's nose with saline drops and gentle bulb suction before feeds whenever the nose was blocked, and feeds continued every 2 hours. No nasogastric tube was needed. Oxygen was reduced to 0.5 L/min at 4:00 am under the protocol.",
+      "vitals": [
+        { "label": "Temperature", "value": "37.3°C" },
+        { "label": "Pulse", "value": "140/min" },
+        { "label": "Respirations", "value": "50/min" },
+        { "label": "SpO2", "value": "95% on 0.5 L/min by nasal cannula" }
+      ],
+      "assessment": [
+        { "system": "CNS", "finding": "Alert when awake. Settles and sleeps between feeds." },
+        { "system": "Respiratory", "finding": "Mild subcostal retractions. No nasal flaring. Scattered wheeze and fine crackles in both lungs. Frequent wet cough." },
+        { "system": "Genitourinary", "finding": "Urine output by nappy weights since midnight: 2 mL/kg/hr." }
+      ]
+    },
+    {
+      "key": "competence",
+      "time_label": "Day 2, 2:00 pm",
+      "narrative": "The nurse caring for Amari qualified six months ago. When reviewing Amari's oxygen this morning, the nurse was unsure how far the protocol allows the flow to be reduced at each step, how long to observe the saturation afterwards and when to try room air, and had to ask a colleague twice. The ward has a clinical nurse educator and a monthly in-service teaching session."
+    },
+    {
+      "key": "discharge",
+      "time_label": "Day 3, 10:00 am",
+      "narrative": "Oxygen was stopped at 8:00 pm on Day 2 under the protocol. Since then Amari's saturation has stayed between 95% and 97% on room air. Amari is taking 120 mL every 3 hours and has had seven wet nappies in the past 24 hours. The physician plans discharge home today with a review at the health centre in two days. The nurse completes discharge teaching with Amari's mother.",
+      "vitals": [
+        { "label": "Temperature", "value": "37.0°C" },
+        { "label": "Pulse", "value": "132/min" },
+        { "label": "Respirations", "value": "44/min" },
+        { "label": "SpO2", "value": "96% on room air" }
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "position": 1,
+      "stage": "assess",
+      "cj_step": "recognize_cues",
+      "domain": "NP",
+      "taxonomy": "AP",
+      "stem": "Which finding should the nurse recognize as requiring immediate follow-up?",
+      "options": [
+        { "label": "A", "text": "Temperature of 37.9°C on admission" },
+        { "label": "B", "text": "Pulse of 164/min on admission" },
+        { "label": "C", "text": "Clear nasal discharge with wet cough" },
+        { "label": "D", "text": "SpO2 of 90% breathing room air" }
+      ],
+      "correct": ["D"],
+      "option_types": { "A": "incorrect", "B": "close", "C": "incorrect", "D": "correct" },
+      "rationale_correct": "CORRECT: A saturation of 90% on room air is below the 92% the ward protocol sets as the minimum, so Amari is not getting enough oxygen despite working hard to breathe (respirations 62/min, flaring, retractions). Oxygenation comes first in the airway-breathing-circulation order, and the nurse can act on it at once under the protocol.",
+      "distractor_rationales": {
+        "A": "A temperature of 37.9°C is a low-grade rise that fits a viral respiratory illness. It is worth rechecking but does not threaten Amari the way low oxygen does.",
+        "B": "A pulse of 164/min is just above the usual infant range, and crying when handled, a raised temperature and the effort of breathing all explain it. It should be rechecked once Amari settles, but it is a response to the problem rather than the problem itself.",
+        "C": "A runny nose and wet cough are the presenting complaint the mother has described for three days. They explain the illness but are not new or unsafe findings that need action now."
+      },
+      "self_test": "A pulse of 164/min is explained by crying, fever and effort, whereas a saturation of 90% means Amari's oxygen is already below the protocol's safe level.",
+      "meta": {
+        "topic": "Paediatric respiratory assessment",
+        "subtopic": "Oxygen saturation in the infant",
+        "priority_principle": "Airway and breathing before other findings",
+        "prerequisites": "Normal infant vital signs; signs of respiratory distress in infants",
+        "suggested_review": "Recognising respiratory distress and hypoxaemia in infants"
+      }
+    },
+    {
+      "position": 2,
+      "stage": "feeding",
+      "cj_step": "analyze_cues",
+      "domain": "CDM",
+      "taxonomy": "ASE",
+      "stem": "How should the nurse interpret the significance of the feeding history in relation to Amari's breathing?",
+      "options": [
+        { "label": "A", "text": "Fast breathing makes sucking tiring, so intake is falling" },
+        { "label": "B", "text": "Reduced intake is expected and will correct itself unaided" },
+        { "label": "C", "text": "Few wet nappies reflect fever losses, not reduced intake" },
+        { "label": "D", "text": "Pulling away from feeds suggests reflux is causing the cough" }
+      ],
+      "correct": ["A"],
+      "option_types": { "A": "correct", "B": "incorrect", "C": "close", "D": "close" },
+      "rationale_correct": "CORRECT: An infant has to pause breathing to swallow. At 64 breaths a minute with retractions, Amari cannot coordinate sucking, swallowing and breathing, so each feed stops at about 50 mL of a usual 120 to 150 mL. Breathing hard also uses energy and fluid. Only two wet nappies since 10 pm and slightly dry lips show that intake is now too low, which links the breathing problem to a hydration problem.",
+      "distractor_rationales": {
+        "B": "Some loss of appetite is common in a viral illness, but Amari is taking about a third of the usual volume and passing little urine. Waiting for this to correct itself risks dehydration while the breathing stays fast.",
+        "C": "A temperature of 37.8°C adds only a small fluid loss. Feeds of about 50 mL against a usual 120 to 150 mL explain the dry nappies far better.",
+        "D": "Reflux can make infants pull away from feeds, but Amari stops to breathe hard after a few sucks, began coughing with a cold three days ago, and has crackles and wheeze. The breathing, not reflux, is limiting the feeds."
+      },
+      "self_test": "Fever does increase fluid loss, but a low-grade temperature cannot account for two wet nappies in 12 hours when Amari is taking only a third of the usual feeds.",
+      "meta": {
+        "topic": "Paediatric respiratory nursing",
+        "subtopic": "Feeding and work of breathing",
+        "priority_principle": "Link new cues to the underlying problem",
+        "prerequisites": "Suck-swallow-breathe coordination; infant fluid requirements",
+        "suggested_review": "Effects of respiratory distress on infant feeding and hydration"
+      }
+    },
+    {
+      "position": 3,
+      "stage": "feeding",
+      "cj_step": "prioritize_hypotheses",
+      "domain": "CDM",
+      "taxonomy": "ASE",
+      "stem": "Before the swab result is available, which condition is most consistent with Amari's findings?",
+      "options": [
+        { "label": "A", "text": "Bacterial pneumonia" },
+        { "label": "B", "text": "Viral bronchiolitis" },
+        { "label": "C", "text": "Pertussis (whooping cough)" },
+        { "label": "D", "text": "Inhaled foreign body" }
+      ],
+      "correct": ["B"],
+      "option_types": { "A": "close", "B": "correct", "C": "incorrect", "D": "incorrect" },
+      "rationale_correct": "CORRECT: A 4-month-old with a sibling's cold at home, three days of runny nose and cough, then fast breathing, retractions, low saturation and feeding difficulty, with a low-grade temperature and fine crackles and wheeze throughout both lungs, fits viral bronchiolitis. Inflammation and mucus in the smallest airways explain the widespread, two-sided findings.",
+      "distractor_rationales": {
+        "A": "Pneumonia also causes fast breathing and crackles, which is why it is tempting. Bacterial pneumonia usually brings a higher fever, a more unwell infant and crackles in one area; widespread wheeze after a cold in the household points to a viral small-airway illness.",
+        "C": "Pertussis causes bouts of coughing that can end in a whoop or pauses in breathing, often with little to hear in the chest. The mother has noticed neither, and the crackles and wheeze do not fit.",
+        "D": "An inhaled object causes sudden choking and coughing, usually with findings on one side. Amari's symptoms came on gradually after a cold and are heard throughout both lungs."
+      },
+      "self_test": "Pneumonia shares fast breathing and crackles, but a low-grade temperature with wheeze throughout both lungs after a household cold fits a viral small-airway illness better.",
+      "meta": {
+        "topic": "Paediatric respiratory conditions",
+        "subtopic": "Bronchiolitis versus other causes of infant respiratory distress",
+        "priority_principle": "Choose the condition that explains all the cues",
+        "prerequisites": "Infant airway anatomy; common infant respiratory infections",
+        "suggested_review": "Clinical features of bronchiolitis, pneumonia and pertussis in infants"
+      }
+    },
+    {
+      "position": 4,
+      "stage": "results",
+      "cj_step": "generate_solutions",
+      "domain": "CDM",
+      "taxonomy": "AP",
+      "stem": "Which feeding plan should the nurse anticipate for Amari?",
+      "options": [
+        { "label": "A", "text": "Usual full feeds every 3 hours to make up the shortfall" },
+        { "label": "B", "text": "Nothing by mouth until the breathing rate is below 40/min" },
+        { "label": "C", "text": "Smaller feeds more often, with intake and nappies recorded" },
+        { "label": "D", "text": "Formula mixed with extra water so it is easier to swallow" }
+      ],
+      "correct": ["C"],
+      "option_types": { "A": "priority", "B": "close", "C": "correct", "D": "unsafe" },
+      "rationale_correct": "CORRECT: Amari tires after about 40 to 50 mL because breathing at 64/min leaves little room to suck and swallow. Smaller volumes offered more often fit within what Amari can manage before tiring, reduce the risk of choking or aspiration, and still build up the day's intake. Recording intake and wet nappies shows whether the plan is keeping Amari hydrated.",
+      "distractor_rationales": {
+        "A": "Making up the shortfall sounds sensible, but larger feeds are what Amari is already failing to finish. They tire the infant further, splint the diaphragm with a full stomach and raise the risk of aspiration.",
+        "B": "Stopping oral feeds is considered when breathing is extremely fast or the infant is too tired to feed safely. Amari can still take some milk, and waiting for a rate below 40/min could take days and lead to dehydration.",
+        "D": "Diluting formula with extra water lowers its calories and sodium and can cause low blood sodium and seizures in an infant. Thin fluids are also harder, not easier, to swallow safely."
+      },
+      "self_test": "Nothing by mouth protects against aspiration, but Amari can still take small amounts, and a target of 40/min could leave the infant without enough fluid for days.",
+      "meta": {
+        "topic": "Paediatric respiratory nursing",
+        "subtopic": "Feeding support in bronchiolitis",
+        "priority_principle": "Match the plan to what the infant can tolerate",
+        "prerequisites": "Infant fluid requirements; aspiration risk",
+        "suggested_review": "Nutrition and hydration in infants with respiratory distress"
+      }
+    },
+    {
+      "position": 5,
+      "stage": "feedtime",
+      "cj_step": "take_action",
+      "domain": "NP",
+      "taxonomy": "ASE",
+      "stem": "Before the 2:00 pm feed, which action should the nurse perform first?",
+      "options": [
+        { "label": "A", "text": "Give the feed now, pausing often to let Amari rest" },
+        { "label": "B", "text": "Clear the nostrils with saline drops and gentle bulb suction" },
+        { "label": "C", "text": "Increase the oxygen flow to 2 L/min before the feed" },
+        { "label": "D", "text": "Pass a suction catheter deep into the throat to clear it" }
+      ],
+      "correct": ["B"],
+      "option_types": { "A": "priority", "B": "correct", "C": "close", "D": "unsafe" },
+      "rationale_correct": "CORRECT: Young infants breathe mainly through the nose, and Amari's nostrils are partly blocked with thick secretions, so Amari has to stop sucking to breathe through the mouth. Clearing the nose with saline and gentle suction, which the ward protocol allows, opens the airway for feeding and lets the nasal cannula deliver oxygen.",
+      "distractor_rationales": {
+        "A": "Pacing the feed is helpful, but starting it while the nose is blocked means Amari will keep breaking off to breathe and may tire or aspirate. Clearing the nose comes first.",
+        "C": "The saturation is 93%, above the protocol's 92% target, so a higher flow is not needed. Blocked nostrils also stop the cannula working well, so more flow would not solve the problem.",
+        "D": "Deep suction into the throat is not needed for nasal secretions. It can injure and swell the airway lining and trigger a slow heart rate or vomiting, which makes breathing and feeding worse."
+      },
+      "self_test": "Turning up the oxygen seems protective, but the saturation already meets the 92% target and the blocked nose, not the flow, is what stops Amari feeding.",
+      "meta": {
+        "topic": "Paediatric respiratory nursing",
+        "subtopic": "Nasal suction before feeds",
+        "priority_principle": "Clear the airway before feeding",
+        "prerequisites": "Infants as nose breathers; suction safety",
+        "suggested_review": "Nasal suctioning of infants: technique and indications"
+      }
+    },
+    {
+      "position": 6,
+      "stage": "day2",
+      "cj_step": "evaluate_outcomes",
+      "domain": "CDM",
+      "taxonomy": "ASE",
+      "stem": "Which finding best indicates that the feeding plan has been effective?",
+      "options": [
+        { "label": "A", "text": "Urine output of 2 mL/kg/hr by nappy weights" },
+        { "label": "B", "text": "A temperature of 37.3°C this morning" },
+        { "label": "C", "text": "Settles and sleeps between each feed" },
+        { "label": "D", "text": "Saturation of 95% on 0.5 L/min of oxygen" }
+      ],
+      "correct": ["A"],
+      "option_types": { "A": "correct", "B": "incorrect", "C": "close", "D": "priority" },
+      "rationale_correct": "CORRECT: The feeding plan was meant to keep Amari hydrated while breathing was fast. On admission Amari had only two wet nappies in 12 hours; a urine output of 2 mL/kg/hr since midnight, measured by nappy weights, shows that the small, frequent feeds and nose clearing are now giving enough fluid. Infants are usually expected to pass at least 1 mL/kg/hr.",
+      "distractor_rationales": {
+        "B": "The lower temperature is welcome, but fever settles as the viral illness runs its course. It does not show whether Amari is taking enough fluid.",
+        "C": "Settling between feeds can mean comfort, but it can also mean tiredness. It is not a measure of intake or hydration.",
+        "D": "A saturation of 95% on less oxygen shows that oxygenation is improving, which matters, but it measures the oxygen plan, not whether the feeding plan is meeting Amari's fluid needs."
+      },
+      "self_test": "The saturation on less oxygen is a real improvement, but it measures oxygenation, while the question asks whether the feeds are meeting Amari's fluid needs.",
+      "meta": {
+        "topic": "Paediatric fluid balance",
+        "subtopic": "Evaluating hydration in infants",
+        "priority_principle": "Evaluate the outcome the intervention targeted",
+        "prerequisites": "Expected infant urine output; weighing nappies",
+        "suggested_review": "Monitoring intake and output in infants"
+      }
+    },
+    {
+      "position": 7,
+      "stage": "competence",
+      "cj_step": "extension",
+      "domain": "PD",
+      "taxonomy": "AP",
+      "stem": "Which action best reflects the nurse's responsibility for maintaining professional competence?",
+      "options": [
+        { "label": "A", "text": "Keep asking an experienced colleague whenever weaning arises" },
+        { "label": "B", "text": "Ask to be assigned only infants who are not on oxygen for now" },
+        { "label": "C", "text": "Read a summary of oxygen weaning on a parenting website" },
+        { "label": "D", "text": "Review the protocol and arrange supervised practice with the educator" }
+      ],
+      "correct": ["D"],
+      "option_types": { "A": "close", "B": "incorrect", "C": "incorrect", "D": "correct" },
+      "rationale_correct": "CORRECT: The nurse has identified a specific learning need: the weaning steps and the observation period in the ward's own protocol. Each registered nurse is accountable for recognising gaps in their competence and closing them. Studying the protocol that governs practice on this ward and practising under the clinical nurse educator's supervision closes the gap with an authoritative source and a check on performance.",
+      "distractor_rationales": {
+        "A": "Asking a colleague was the safe choice in the moment, but relying on it each time leaves the gap in place and depends on whoever is on duty. It does not build the nurse's own competence.",
+        "B": "Avoiding infants on oxygen removes the chance to learn and shifts the workload to others. The gap would still be there the next time the nurse is needed.",
+        "C": "A parenting website is not written for nurses and may not match the ward's protocol, which is what governs practice here. The source must be reliable and local."
+      },
+      "self_test": "Asking a colleague kept Amari safe this morning, but repeating it does not close the nurse's own learning gap the way studying the protocol under supervision does.",
+      "meta": {
+        "topic": "Professional development",
+        "subtopic": "Identifying and meeting learning needs",
+        "priority_principle": "Accountability for one's own competence",
+        "prerequisites": "Reflective practice; sources of reliable clinical guidance",
+        "suggested_review": "Continuing competence and reflective practice for new graduates"
+      }
+    },
+    {
+      "position": 8,
+      "stage": "discharge",
+      "cj_step": "extension",
+      "domain": "HPMW",
+      "taxonomy": "AP",
+      "stem": "Which statement by Amari's mother indicates that the discharge teaching has been understood?",
+      "options": [
+        { "label": "A", "text": "\"The cough should be gone a day or two after we get home.\"" },
+        { "label": "B", "text": "\"If the cough is still there next week, I'll ask for antibiotics.\"" },
+        { "label": "C", "text": "\"I'll bring Amari back if feeds drop to half or nappies stay dry.\"" },
+        { "label": "D", "text": "\"I'll give a little bush tea between feeds to clear the chest.\"" }
+      ],
+      "correct": ["C"],
+      "option_types": { "A": "close", "B": "incorrect", "C": "correct", "D": "unsafe" },
+      "rationale_correct": "CORRECT: Amari's admission was driven by poor feeding and low oxygen. Taking half or less of the usual feeds, or fewer wet nappies, are early signs that the illness is worsening and the infant is becoming dehydrated, so the mother knowing to return for them is the most important point of safety teaching for home.",
+      "distractor_rationales": {
+        "A": "The cough after this kind of viral infection often lasts two to four weeks. Expecting it to stop within days may cause needless worry or repeated visits, so the mother has not understood this point.",
+        "B": "The illness is caused by a virus, which antibiotics do not treat. A lingering cough alone is expected; it is the feeding, breathing and nappies that need watching.",
+        "D": "An infant under 6 months should have only milk. Bush tea fills the stomach without nutrition, may contain harmful substances and can reduce the milk Amari takes."
+      },
+      "self_test": "Expecting the cough to clear quickly sounds hopeful, but it usually lasts weeks, and the danger signs to act on are feeding, breathing and wet nappies.",
+      "meta": {
+        "topic": "Health promotion",
+        "subtopic": "Discharge teaching after infant respiratory illness",
+        "priority_principle": "Teach the warning signs that prompt return",
+        "prerequisites": "Course of viral respiratory illness in infants",
+        "suggested_review": "Parent teaching for infants recovering from bronchiolitis"
+      }
+    }
+  ],
+  "pathophysiology": "## Pathophysiology teaching\n\n**Normal structure.** An infant's bronchioles are only a few millimetres wide, so a small amount of swelling or mucus narrows them a great deal (resistance rises steeply as the airway narrows). Young infants also breathe mainly through the nose, have a soft chest wall that pulls in under effort, and depend on the diaphragm for breathing.\n\n**Mechanism.** Respiratory syncytial virus (RSV), the commonest cause of bronchiolitis, spreads by droplets and contaminated hands, here from an older sibling with a cold. It first infects the nose (runny nose, cough), then spreads to the lining of the bronchioles over two to three days. Infected cells die and slough, the lining swells and produces mucus, and plugs of debris block some small airways. Air is trapped behind partly blocked airways (hyperinflation, wheeze) while fully blocked areas collapse (fine crackles). Blood keeps flowing past these poorly ventilated areas without picking up oxygen, so oxygen saturation falls.\n\n**Findings.** Fast breathing, nasal flaring and subcostal and intercostal retractions are the infant's effort to move air through narrowed airways. The fast pulse reflects effort, low oxygen and the low-grade temperature. Because an infant must pause breathing to swallow, a breathing rate above about 60/min makes feeding difficult, and blocked nostrils make it harder still. Fast breathing also increases water loss, so intake falls just as needs rise.\n\n**Why each decision mattered.**\n- A saturation of 90% on room air (Q1) was the cue that needed action: oxygen comes first and the protocol allowed it.\n- Linking the short feeds and few wet nappies to the fast breathing (Q2) showed that the respiratory problem had become a hydration problem.\n- Bronchiolitis (Q3) explained every cue: age, a household cold, a gradual start, a low-grade temperature and two-sided crackles and wheeze. Pneumonia, pertussis and an inhaled object each leave some cues unexplained.\n- Small, frequent feeds with intake and output recorded (Q4) fit what a breathless infant can manage. Treatment is supportive: oxygen, clearing the nose and keeping up fluids. Antibiotics do not treat the virus, and bronchodilators, steroids, chest physiotherapy and a routine chest X-ray are not recommended; the diagnosis is made at the bedside.\n- Clearing the blocked nose before the feed (Q5) restored nasal breathing for a nose-breathing infant and let the cannula deliver oxygen; deep suction would have injured the airway.\n- Urine output by nappy weights (Q6) measured whether the feeding plan was meeting fluid needs, separate from the oxygen trend.\n\n**Course and prevention.** Bronchiolitis usually worsens over the first two to three days of breathing difficulty and then improves, though the cough can last weeks. The nurse closes their own competence gaps with the ward protocol and supervised practice (Q7). At home, parents watch feeding, breathing effort, colour and wet nappies (Q8). Handwashing, keeping infants away from people with colds, avoiding tobacco smoke and continuing milk feeds lower the risk of infection and of a severe course.",
+  "quality_report": "Draft by Claude (ai:claude), 2026-10-10. Keys: Q1 D, Q2 A, Q3 B, Q4 C, Q5 B, Q6 A, Q7 D, Q8 C. Taxonomy: ASE for Q2, Q3, Q5, Q6; AP for Q1, Q4, Q7, Q8; no KC. Authority: the ward's infant respiratory protocol (oxygen start, 0.5-2 L/min titration to keep saturation at or above 92%, weaning, saline and gentle nasal suction) is stated in the opening, so no later stage hands over Q5's key. Cover test: each stem can be answered before the options are read (Q1 oxygenation below the stated target; Q2 effort limits feeding; Q3 a named condition; Q4 a feeding plan; Q5 clear the blocked nose; Q6 a hydration measure; Q7 a structured way to close a named gap; Q8 the return-for-danger-signs statement). Two-answer test: Q1 respiratory rate and retractions are kept out of the options so only one breathing cue is offered; Q3 pneumonia is answered by the low-grade temperature and two-sided wheeze after a household cold; Q5 the oxygen increase is ruled out because saturation (93%) already meets the 92% target; Q6 the stem names the feeding plan, so saturation on less oxygen measures a different plan, and 'finished feeds' is not offered as an option. Cue sufficiency: the usual feed volume, the short feeds and the wet-nappy count are given before Q2; the swab and X-ray are only sent before Q3 and reported after it; nostril secretions are shown before Q5; urine output by nappy weights is given before Q6 (addendum 3). Hidden-assumption test: no answer depends on an unstated allergy, drug or local custom; the nose-clearing and oxygen authority is written in the case. Jade should confirm: the 92% saturation target (some guidelines use 90%); whether T&T paediatric wards weigh nappies and whether infant bottle volumes are charted in mL or oz; that nasopharyngeal RSV swabs and chest X-rays are realistic at a district hospital (both can be dropped without changing any key); the prescribed 60 mL every 2 hours for a 6 kg infant (about 120 mL/kg/day, a reduced volume as many bronchiolitis guidelines suggest); the expected urine output of at least 1 mL/kg/hr for an infant; and that 'bush tea' is the right local wording for the Q8 distractor. Reviewer (2026-10-10): No key changed (Q1 D, Q2 A, Q3 B, Q4 C, Q5 B, Q6 A, Q7 D, Q8 C). Removed the chest X-ray (requested at 9:45 am, reported at 11:30 am) because NICE NG9 and AAP advise against routine chest X-ray in typical bronchiolitis, so the case should not model it; the Q3 stem and the teaching section were updated to match, and the teaching section now says diagnosis is clinical and steroids are not used. The swab is kept as the confirming result after Q3 and is now given a realistic purpose (cohorting RSV-positive infants). Day 2 nose clearing changed from 'before each feed' to 'before feeds whenever the nose was blocked', since routine suction is not advised and frequent suction swells the nasal lining. The competence stage said the nurse was asked 'this morning' to wean oxygen, which clashed with weaning at 4:00 am and oxygen stopping at 8:00 pm; it now describes reviewing the oxygen this morning. Flow, one-best-answer, scope and standard checks found no other faults: Q3 precedes the swab, Q4 and Q5 keys differ, the nose clearing and feeding plan evaluated in Q6 are shown first, 4 ASE items, no flags or ranges, Amari is never gendered. Note that the opening's 92% target makes Q1 easier; it is kept because Q5's oxygen distractor depends on it. Jade must confirm: whether an RSV swab is realistic at a T&T district hospital (if not, the physician's clinical diagnosis can replace it after Q3); that a trial of small frequent bottle feeds with NG backup is local practice when intake is about a third of normal (NICE would move to NG feeds below 50%); and the author's earlier points (92% target, 60 mL every 2 hours, nappy weights, 'bush tea').",
+  "validation": { "status": "pending" }
+}

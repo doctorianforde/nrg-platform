@@ -1,0 +1,675 @@
+{
+  "case_code": "NRG-MS-001",
+  "title": "New Confusion After Hip Surgery",
+  "objective": "Students recognise acute confusion as an early sign of infection in an older post-operative client with an indwelling catheter, link it to the urinary tract, prioritise sepsis over competing explanations, anticipate fluid resuscitation, sequence cultures before antibiotics, recognise failure to respond and escalate, delegate safely while awaiting transfer, and report a missed catheter-removal order.",
+  "population": "Older adult, 78-year-old woman",
+  "setting": "Surgical ward of a regional general hospital, Trinidad",
+  "primary_condition": "Urosepsis after surgery",
+  "endpoint": "Escalation: transfer to the high dependency unit after hypotension persists despite initial fluid resuscitation, followed by incident reporting of the missed catheter removal",
+  "primary_domain": "NP",
+  "difficulty": "high",
+  "source": "ai:claude",
+  "opening": {
+    "time_label": "Post-operative day 3, 6:00 am",
+    "narrative": "Kamla, a 78-year-old woman, is on the surgical ward of a regional general hospital on the third day after a right hip hemiarthroplasty for a fractured hip sustained in a fall at home. History includes type 2 diabetes treated with metformin (withheld since admission, with blood glucose checked before meals) and hypertension treated with amlodipine. Pre-operative blood pressure was 148/84 mm Hg. Pain is managed with regular oral paracetamol and oral tramadol 50 mg as needed; the last tramadol dose was given at 10:00 pm. No known drug allergies. Weight 54 kg. Kamla lives with a daughter in Chaguanas and, before the fall, did the household shopping and bank visits without help. At handover the night nurse reports, \"Miss Kamla didn't sleep much. Called out a few times in the night.\" Ward policy allows registered nurses trained in venepuncture, including the day nurse, to collect blood cultures."
+  },
+  "stages": [
+    {
+      "key": "assess",
+      "time_label": "6:30 am",
+      "narrative": "The day nurse completes the first assessment of the shift.",
+      "vitals": [
+        {
+          "label": "Temperature",
+          "value": "37.6°C"
+        },
+        {
+          "label": "Pulse",
+          "value": "102/min"
+        },
+        {
+          "label": "Respirations",
+          "value": "20/min"
+        },
+        {
+          "label": "Blood pressure",
+          "value": "124/70 mm Hg"
+        },
+        {
+          "label": "SpO2",
+          "value": "96% on room air"
+        },
+        {
+          "label": "RBS",
+          "value": "198 mg/dL"
+        },
+        {
+          "label": "Pain",
+          "value": "4/10 in the right hip on moving"
+        }
+      ],
+      "assessment": [
+        {
+          "system": "CNS",
+          "finding": "Knows own name. Cannot name the hospital or the day. Loses track mid-sentence and picks at the bedsheet."
+        },
+        {
+          "system": "Respiratory",
+          "finding": "Chest clear on auscultation, breath sounds equal on both sides."
+        },
+        {
+          "system": "Cardiovascular",
+          "finding": "Radial pulse regular. Hands warm."
+        },
+        {
+          "system": "Gastrointestinal",
+          "finding": "Abdomen soft. Passing flatus. Took a few sips of tea overnight."
+        },
+        {
+          "system": "Integumentary",
+          "finding": "Right hip dressing dry and intact."
+        },
+        {
+          "system": "Musculoskeletal",
+          "finding": "Abduction pillow between the legs. Right foot warm, pedal pulse present."
+        }
+      ]
+    },
+    {
+      "key": "urinary",
+      "time_label": "7:00 am",
+      "narrative": "The nurse checks the urinary catheter, which was inserted in theatre on the day of surgery and is still in place. The urine in the tubing and bag is cloudy and dark amber with a strong odour. Kamla winces and pushes the nurse's hand away when the lower abdomen just above the pubic bone is pressed.",
+      "assessment": [
+        {
+          "system": "Genitourinary",
+          "finding": "Urine output over the last 8 hours: 200 mL. Oral intake over the same period: 150 mL."
+        }
+      ]
+    },
+    {
+      "key": "worse",
+      "time_label": "7:45 am",
+      "narrative": "Kamla has become harder to rouse. The nurse informs the surgical house officer, who will attend within 15 minutes and asks for a urine specimen. The nurse collects one from the catheter sampling port for dipstick testing and culture.",
+      "vitals": [
+        {
+          "label": "Temperature",
+          "value": "38.7°C"
+        },
+        {
+          "label": "Pulse",
+          "value": "118/min"
+        },
+        {
+          "label": "Respirations",
+          "value": "26/min"
+        },
+        {
+          "label": "Blood pressure",
+          "value": "92/54 mm Hg"
+        },
+        {
+          "label": "SpO2",
+          "value": "94% on room air"
+        }
+      ],
+      "assessment": [
+        {
+          "system": "CNS",
+          "finding": "Opens eyes to voice. Mutters words that do not fit the question."
+        },
+        {
+          "system": "Respiratory",
+          "finding": "Chest clear on auscultation. No cough."
+        },
+        {
+          "system": "Cardiovascular",
+          "finding": "Capillary refill 3 seconds. Skin warm and flushed."
+        },
+        {
+          "system": "Genitourinary",
+          "finding": "Urine output in the last hour: 12 mL."
+        },
+        {
+          "system": "Integumentary",
+          "finding": "Right hip dressing dry. No redness or swelling at the wound edges."
+        }
+      ]
+    },
+    {
+      "key": "review",
+      "time_label": "8:05 am",
+      "narrative": "The house officer examines Kamla and documents a working diagnosis of sepsis with a probable urinary source. Bedside results are available, blood is sent for a full blood count, urea, electrolytes and creatinine, and the house officer begins writing prescriptions. The most recent haemoglobin, from post-operative day 1, was 11.0 g/dL.",
+      "labs": [
+        {
+          "category": "Urinalysis (dipstick)",
+          "items": [
+            {
+              "label": "Leucocytes",
+              "value": "3+"
+            },
+            {
+              "label": "Nitrite",
+              "value": "Positive"
+            }
+          ]
+        },
+        {
+          "category": "Bedside chemistry",
+          "items": [
+            {
+              "label": "Venous lactate",
+              "value": "3.6 mmol/L"
+            },
+            {
+              "label": "RBS",
+              "value": "236 mg/dL"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "orders",
+      "time_label": "8:15 am",
+      "narrative": "Prescriptions: 0.9% sodium chloride 500 mL intravenously over 15 minutes, repeated up to 1,500 mL in total with reassessment after each bolus; ceftriaxone intravenously, first dose within the hour; two sets of blood cultures; oxygen by nasal prongs to keep SpO2 at 94% or above; intravenous paracetamol for fever in place of the regular oral paracetamol (last oral dose at 2:00 am); hourly urine output. The nurse starts the first fluid bolus at 8:20 am. At 8:30 am the ceftriaxone arrives from pharmacy. The house officer has been called away to A&E, and no blood has yet been drawn for culture."
+    },
+    {
+      "key": "reassess",
+      "time_label": "9:20 am",
+      "narrative": "Kamla has received three 500 mL boluses of 0.9% sodium chloride (1,500 mL in total) since 8:20 am; the third finished at 9:15 am. Blood cultures were collected at 8:35 am, ceftriaxone was given at 8:40 am, and intravenous paracetamol at 8:45 am. Oxygen is running at 2 L/min by nasal prongs. The morning blood results are reported.",
+      "vitals": [
+        {
+          "label": "Temperature",
+          "value": "38.1°C"
+        },
+        {
+          "label": "Pulse",
+          "value": "114/min"
+        },
+        {
+          "label": "Respirations",
+          "value": "26/min"
+        },
+        {
+          "label": "Blood pressure",
+          "value": "86/50 mm Hg"
+        },
+        {
+          "label": "SpO2",
+          "value": "95% on 2 L/min"
+        },
+        {
+          "label": "RBS",
+          "value": "226 mg/dL"
+        }
+      ],
+      "assessment": [
+        {
+          "system": "CNS",
+          "finding": "Opens eyes to voice. Cannot name the hospital when asked."
+        },
+        {
+          "system": "Respiratory",
+          "finding": "Chest clear on auscultation. No added sounds."
+        },
+        {
+          "system": "Cardiovascular",
+          "finding": "Capillary refill 3 seconds."
+        },
+        {
+          "system": "Genitourinary",
+          "finding": "Urine output from 8:15 to 9:15 am: 10 mL."
+        }
+      ],
+      "labs": [
+        {
+          "category": "Haematology",
+          "items": [
+            {
+              "label": "White cell count",
+              "value": "18.9 × 10^9/L"
+            },
+            {
+              "label": "Haemoglobin",
+              "value": "10.8 g/dL"
+            },
+            {
+              "label": "Platelets",
+              "value": "196 × 10^9/L"
+            }
+          ]
+        },
+        {
+          "category": "Chemistry",
+          "items": [
+            {
+              "label": "Sodium",
+              "value": "137 mmol/L"
+            },
+            {
+              "label": "Potassium",
+              "value": "4.8 mmol/L"
+            },
+            {
+              "label": "Urea",
+              "value": "12.6 mmol/L"
+            },
+            {
+              "label": "Creatinine",
+              "value": "164 µmol/L (pre-operative: 86 µmol/L)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "escalate",
+      "time_label": "9:30 am",
+      "narrative": "The nurse reports to the surgical registrar using a structured handover. The registrar reviews Kamla and arranges transfer to the high dependency unit for closer monitoring and further circulatory support; a bed will be ready in about an hour. Until then the registrar asks for observations every 15 minutes and hourly urine output, and prescribes a further 500 mL of 0.9% sodium chloride intravenously over 30 minutes, which the nurse starts. The nurse is working with a nursing assistant and has three other clients."
+    },
+    {
+      "key": "chart",
+      "time_label": "11:15 am",
+      "narrative": "Kamla was transferred to the high dependency unit at 10:40 am. While completing the ward documentation, the nurse finds the surgeon's post-operative order written on the day of surgery: \"Remove urinary catheter on post-operative day 1.\" There is no record that the catheter was taken out or of any reason for keeping it in."
+    }
+  ],
+  "questions": [
+    {
+      "position": 1,
+      "stage": "assess",
+      "cj_step": "recognize_cues",
+      "domain": "NP",
+      "taxonomy": "ASE",
+      "stem": "Which finding should the nurse recognize as requiring prompt follow-up?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Pain of 4/10 in the right hip on moving"
+        },
+        {
+          "label": "B",
+          "text": "Temperature of 37.6°C on the third day"
+        },
+        {
+          "label": "C",
+          "text": "Unable to name the hospital or the day"
+        },
+        {
+          "label": "D",
+          "text": "Blood glucose of 198 mg/dL before breakfast"
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "option_types": {
+        "A": "incorrect",
+        "B": "close",
+        "C": "correct",
+        "D": "priority"
+      },
+      "rationale_correct": "CORRECT: Before the fall Kamla did the shopping and bank visits without help, so disorientation with poor attention (losing track mid-sentence, picking at the sheet) is a new, acute change in mental status. In an older post-operative client, acute confusion is often the first sign of infection, hypoxia or drug toxicity, before fever or hypotension appear, so its cause must be looked for now rather than put down to age or a poor night.",
+      "distractor_rationales": {
+        "A": "Pain of 4/10 when moving a hip three days after hemiarthroplasty is expected and is being managed with paracetamol and tramadol as needed. It needs reassessment at the next round, not prompt follow-up.",
+        "B": "A temperature of 37.6°C is worth rechecking, but on its own it is a minor rise that can follow surgery. The new confusion is the stronger signal that something is wrong and the one that needs follow-up first.",
+        "D": "A glucose of 198 mg/dL fits a client with type 2 diabetes whose metformin is withheld and who is under surgical stress. It needs monitoring and reporting, but it does not explain acute disorientation at this level."
+      },
+      "self_test": "A temperature of 37.6°C can follow surgery and is a small change, whereas sudden disorientation in a client who managed independently before the fall is an acute change in function that needs a cause found.",
+      "meta": {
+        "topic": "Post-operative care",
+        "subtopic": "Acute confusion (delirium) in the older adult",
+        "priority_principle": "An acute change in mental status is a sign of physiological deterioration until proven otherwise",
+        "prerequisites": "Normal post-operative course after hip surgery; features of delirium; atypical presentation of illness in older adults",
+        "suggested_review": "Recognising delirium and its causes in older surgical clients"
+      }
+    },
+    {
+      "position": 2,
+      "stage": "urinary",
+      "cj_step": "analyze_cues",
+      "domain": "CDM",
+      "taxonomy": "ASE",
+      "stem": "How should the nurse interpret the significance of the urinary findings for Kamla's new confusion?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Cloudy urine is common with a catheter; the confusion has another cause"
+        },
+        {
+          "label": "B",
+          "text": "The confusion may be an early sign of infection arising in the urinary tract"
+        },
+        {
+          "label": "C",
+          "text": "The low output with poor intake shows dehydration alone explains the confusion"
+        },
+        {
+          "label": "D",
+          "text": "The confusion reflects tramadol, and the urine is concentrated from low intake"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "option_types": {
+        "A": "close",
+        "B": "correct",
+        "C": "incorrect",
+        "D": "incorrect"
+      },
+      "rationale_correct": "CORRECT: Kamla has had a catheter in place for three days, the urine is cloudy, dark and strong-smelling, and pressing just above the pubic bone causes pain. Cloudy urine alone would not prove infection, but together with suprapubic tenderness and a new acute confusion it points to a urinary tract infection that is already affecting Kamla's brain function. Older adults often show infection as confusion before a high fever.",
+      "distractor_rationales": {
+        "A": "It is true that catheterised clients often have bacteria in the urine without illness, which makes this tempting. Here, though, the cloudy urine comes with suprapubic tenderness and a new confusion, so it can no longer be treated as an unrelated finding.",
+        "C": "An output of 200 mL in 8 hours with only 150 mL taken in does show a fluid deficit that needs attention. Calling it the whole explanation ignores the cloudy, foul urine and the suprapubic tenderness, which point to infection as well.",
+        "D": "Tramadol can cause confusion in older adults and is worth reviewing, but one dose at 10:00 pm does not explain cloudy, strong-smelling urine with suprapubic tenderness, so this misses the urinary source."
+      },
+      "self_test": "Bacteria in catheter urine can be harmless, but cloudy foul urine together with suprapubic tenderness and a new confusion makes a symptomatic urinary infection the explanation to act on.",
+      "meta": {
+        "topic": "Infection",
+        "subtopic": "Catheter-associated urinary tract infection",
+        "priority_principle": "Link new findings to the most dangerous explanation they support",
+        "prerequisites": "Signs of urinary tract infection; asymptomatic bacteriuria in catheterised clients; atypical presentation in older adults",
+        "suggested_review": "Catheter-associated urinary tract infection: signs and risk factors"
+      }
+    },
+    {
+      "position": 3,
+      "stage": "worse",
+      "cj_step": "prioritize_hypotheses",
+      "domain": "CDM",
+      "taxonomy": "ASE",
+      "stem": "Which condition is most likely and should be prioritized?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Urinary tract infection confined to the bladder"
+        },
+        {
+          "label": "B",
+          "text": "Hypovolaemia from bleeding at the operative site"
+        },
+        {
+          "label": "C",
+          "text": "Delirium caused by the tramadol given overnight"
+        },
+        {
+          "label": "D",
+          "text": "Sepsis arising from a urinary tract source"
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "option_types": {
+        "A": "priority",
+        "B": "close",
+        "C": "incorrect",
+        "D": "correct"
+      },
+      "rationale_correct": "CORRECT: The urinary source is already suggested, and Kamla now has a temperature of 38.7°C, pulse 118/min, respirations 26/min, a blood pressure of 92/54 mm Hg against a pre-operative 148/84, reduced consciousness, slow capillary refill and only 12 mL of urine in an hour. A rapid breathing rate, low blood pressure and altered mental state together mean infection is affecting the whole body and organ perfusion, which is sepsis and must be treated as an emergency.",
+      "distractor_rationales": {
+        "A": "The infection probably began in the bladder, but a localised bladder infection does not cause hypotension, a falling level of consciousness and an output of 12 mL/hr. Treating it as local would underestimate how ill Kamla is.",
+        "B": "Low blood pressure, a fast pulse and low urine output do fit blood loss, which makes this tempting after hip surgery. But the dressing is dry, the wound is not swollen, and Kamla is febrile, warm and flushed, which fits infection rather than bleeding.",
+        "C": "Tramadol can cause confusion in older adults, but it does not cause a temperature of 38.7°C, hypotension or a urine output of 12 mL/hr, and the last dose was nearly 10 hours ago."
+      },
+      "self_test": "A bladder infection fits the urine findings, but hypotension, rapid breathing and reduced consciousness show the infection is now affecting the whole body, which is sepsis.",
+      "meta": {
+        "topic": "Infection",
+        "subtopic": "Recognising sepsis on the ward",
+        "priority_principle": "Prioritise the life-threatening explanation that accounts for all the findings",
+        "prerequisites": "Systemic response to infection; signs of hypovolaemia versus sepsis; early warning scores",
+        "suggested_review": "Early recognition of sepsis in adults"
+      }
+    },
+    {
+      "position": 4,
+      "stage": "review",
+      "cj_step": "generate_solutions",
+      "domain": "NP",
+      "taxonomy": "AP",
+      "stem": "Which prescription should the nurse anticipate as part of Kamla's initial plan of care?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Rapid intravenous boluses of 0.9% sodium chloride"
+        },
+        {
+          "label": "B",
+          "text": "Intravenous furosemide to restore the urine output"
+        },
+        {
+          "label": "C",
+          "text": "Oral fluids of two litres encouraged over the day"
+        },
+        {
+          "label": "D",
+          "text": "Transfusion of packed red cells for blood loss"
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "option_types": {
+        "A": "correct",
+        "B": "unsafe",
+        "C": "priority",
+        "D": "close"
+      },
+      "rationale_correct": "CORRECT: Kamla's blood pressure of 92/54 mm Hg, capillary refill of 3 seconds, urine output of 12 mL/hr and lactate of 3.6 mmol/L show poor tissue perfusion from sepsis, in which blood vessels dilate and leak fluid. Rapid boluses of isotonic crystalloid, with reassessment after each one, restore circulating volume and are one of the first measures expected alongside cultures and an antibiotic.",
+      "distractor_rationales": {
+        "B": "The output is low because the kidneys are poorly perfused, not because fluid is being retained. A diuretic would lower Kamla's circulating volume and blood pressure further and worsen kidney injury.",
+        "C": "Kamla does need more fluid, but a drowsy client with a blood pressure of 92/54 mm Hg cannot drink safely or quickly enough, and oral fluid over a whole day does not correct shock-level hypoperfusion.",
+        "D": "Hypotension after hip surgery makes blood loss a fair thought, but the dressing is dry, the wound is not swollen and the last haemoglobin was 11.0 g/dL. The picture is distributive (sepsis), so the volume needed is crystalloid, not blood."
+      },
+      "self_test": "Blood loss can lower blood pressure after hip surgery, but with a dry wound, a haemoglobin of 11.0 g/dL and a septic picture, crystalloid rather than blood is the expected first fluid.",
+      "meta": {
+        "topic": "Infection",
+        "subtopic": "Initial management of sepsis",
+        "priority_principle": "Restore perfusion early in sepsis",
+        "prerequisites": "Isotonic crystalloids; mechanism of hypotension in sepsis; action of diuretics",
+        "suggested_review": "Fluid resuscitation in sepsis and the first-hour priorities"
+      }
+    },
+    {
+      "position": 5,
+      "stage": "orders",
+      "cj_step": "take_action",
+      "domain": "NP",
+      "taxonomy": "AP",
+      "stem": "Which action should the nurse perform next?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Give the ceftriaxone now and draw the blood cultures afterwards"
+        },
+        {
+          "label": "B",
+          "text": "Draw two sets of blood cultures, then give the ceftriaxone"
+        },
+        {
+          "label": "C",
+          "text": "Hold the ceftriaxone until the urine culture result is known"
+        },
+        {
+          "label": "D",
+          "text": "Give the paracetamol first to bring the temperature down"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "option_types": {
+        "A": "priority",
+        "B": "correct",
+        "C": "unsafe",
+        "D": "incorrect"
+      },
+      "rationale_correct": "CORRECT: Blood cultures taken after an antibiotic may grow nothing, which leaves the team unable to identify the organism or narrow treatment. Ward policy allows the trained nurse to collect them, the fluid bolus is already running, and drawing two sets takes only minutes, so collecting cultures first and then giving the ceftriaxone keeps the antibiotic well within the first hour without losing the diagnostic samples.",
+      "distractor_rationales": {
+        "A": "Speed with the antibiotic matters in sepsis, which makes this tempting. But cultures can be drawn in minutes by the nurse here, and once the antibiotic is in, the cultures may be falsely negative. Cultures first does not meaningfully delay treatment.",
+        "C": "A urine culture takes one to two days. Waiting for it in a client with hypotension and a lactate of 3.6 mmol/L would delay a time-critical antibiotic and raise the risk of death.",
+        "D": "Paracetamol will help comfort and lower the temperature, but it does not treat the infection, and fever is not the threat here. It can be given after the cultures and antibiotic without harm."
+      },
+      "self_test": "Giving the antibiotic first seems faster, but the nurse can draw cultures in minutes, and cultures taken after the antibiotic may not identify the organism.",
+      "meta": {
+        "topic": "Infection",
+        "subtopic": "Blood cultures and first-dose antibiotics",
+        "priority_principle": "Correct sequencing: obtain cultures before antibiotics without delaying treatment",
+        "prerequisites": "Purpose of blood cultures; effect of antibiotics on culture results",
+        "suggested_review": "Collecting blood cultures and timing of antibiotics in sepsis"
+      }
+    },
+    {
+      "position": 6,
+      "stage": "reassess",
+      "cj_step": "evaluate_outcomes",
+      "domain": "CDM",
+      "taxonomy": "ASE",
+      "stem": "Which finding best indicates an inadequate response to the treatment given so far?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Temperature of 38.1°C half an hour after paracetamol"
+        },
+        {
+          "label": "B",
+          "text": "Blood glucose of 226 mg/dL during the infection"
+        },
+        {
+          "label": "C",
+          "text": "Pulse of 114/min compared with 118/min earlier"
+        },
+        {
+          "label": "D",
+          "text": "Blood pressure of 86/50 mm Hg after 1,500 mL of fluid"
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "option_types": {
+        "A": "priority",
+        "B": "incorrect",
+        "C": "close",
+        "D": "correct"
+      },
+      "rationale_correct": "CORRECT: The fluid boluses were given to restore Kamla's circulation. After 1,500 mL the blood pressure has fallen further, from 92/54 to 86/50 mm Hg, and urine output is still about 10 mL/hr. Hypotension that persists despite fluid resuscitation means the circulation has not responded and points to septic shock, which needs escalation to a higher level of care.",
+      "distractor_rationales": {
+        "A": "The temperature has come down a little and will take time to settle; fever reflects the infection, not whether the circulation has been restored, so it is not the measure that shows this treatment has failed.",
+        "B": "A glucose of 226 mg/dL is expected from stress hormones during infection in a client with diabetes whose metformin is withheld. It needs monitoring and reporting but is not the sign that resuscitation has failed.",
+        "C": "A pulse still above 110/min is a concern, but it has not worsened. The blood pressure, the target of the fluid boluses, has fallen despite them, which is the clearer sign of failure."
+      },
+      "self_test": "A pulse of 114/min is still fast, but it has eased slightly, whereas a falling blood pressure after 1,500 mL of fluid shows the circulation has not responded.",
+      "meta": {
+        "topic": "Infection",
+        "subtopic": "Evaluating response to sepsis treatment",
+        "priority_principle": "Judge the intervention by the outcome it was given to achieve",
+        "prerequisites": "Targets of fluid resuscitation; signs of septic shock; urine output as a marker of perfusion",
+        "suggested_review": "Reassessment after fluid boluses and when to escalate care"
+      }
+    },
+    {
+      "position": 7,
+      "stage": "escalate",
+      "cj_step": "extension",
+      "domain": "NLM",
+      "taxonomy": "AP",
+      "stem": "Which task is most appropriate for the nurse to delegate to the nursing assistant until Kamla is transferred?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Measure the urine in the catheter bag each hour and record it"
+        },
+        {
+          "label": "B",
+          "text": "Take the 15-minute observations and decide when to report them"
+        },
+        {
+          "label": "C",
+          "text": "Check Kamla's orientation each hour and chart any change"
+        },
+        {
+          "label": "D",
+          "text": "Adjust the drip rate if the fluid seems to be running slowly"
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "option_types": {
+        "A": "correct",
+        "B": "close",
+        "C": "incorrect",
+        "D": "unsafe"
+      },
+      "rationale_correct": "CORRECT: Measuring and recording a urine volume is a routine, standardised task with a predictable method that a nursing assistant is trained to do. The nurse keeps responsibility for reviewing each hourly figure, which matters because Kamla's output is about 10 mL/hr, and the nursing assistant reports each reading to the nurse.",
+      "distractor_rationales": {
+        "B": "Recording observations can be shared, but this option also hands over the decision about when to report. In a client this unstable, interpreting each set of observations and deciding when to act stays with the registered nurse.",
+        "C": "Checking orientation is a neurological assessment that needs interpretation, and Kamla's level of consciousness is already changing. Assessment of an unstable client is not delegated.",
+        "D": "Adjusting an intravenous infusion rate is a registered nurse's responsibility, and in a client receiving fluid for hypotension an incorrect rate could cause harm."
+      },
+      "self_test": "Recording observations is often delegated, but deciding when abnormal observations in an unstable client need reporting is interpretation that the registered nurse keeps.",
+      "meta": {
+        "topic": "Leadership and management",
+        "subtopic": "Delegation to nursing assistants",
+        "priority_principle": "Delegate tasks, not assessment, interpretation or judgment, for an unstable client",
+        "prerequisites": "Principles of delegation; scope of the nursing assistant",
+        "suggested_review": "Delegation and supervision on the ward"
+      }
+    },
+    {
+      "position": 8,
+      "stage": "chart",
+      "cj_step": "extension",
+      "domain": "PC",
+      "taxonomy": "AP",
+      "stem": "Which action by the nurse is most appropriate?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Write in Kamla's record that an incident report has been filed"
+        },
+        {
+          "label": "B",
+          "text": "Ask the night nurse to add a late entry giving a reason for the delay"
+        },
+        {
+          "label": "C",
+          "text": "Complete an incident report stating the facts of the missed removal"
+        },
+        {
+          "label": "D",
+          "text": "Leave the matter for the infection control team's next ward audit"
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "option_types": {
+        "A": "close",
+        "B": "incorrect",
+        "C": "correct",
+        "D": "priority"
+      },
+      "rationale_correct": "CORRECT: A prescribed catheter removal was missed for two days, and a catheter left in longer than needed raises the risk of the urinary infection Kamla went on to develop. The nurse who discovers the omission is accountable for reporting it promptly and factually through the incident reporting system, so the event can be reviewed and ward practice improved, without assigning blame.",
+      "distractor_rationales": {
+        "A": "The clinical record should contain the facts of Kamla's care, but incident reports are internal quality documents and are generally not referred to in the client's record. Writing that one was filed is a common error.",
+        "B": "A late entry can only record what the writer actually did or observed at the time. Asking a colleague to supply a reason after the event risks an inaccurate or misleading record and does not report the omission.",
+        "D": "Audits find patterns over time, but waiting for one delays the report of a known event. The nurse who finds the omission is responsible for reporting it now."
+      },
+      "self_test": "Writing a note in the record seems transparent, but incident reports are internal quality documents that are reported through the reporting system and generally not referenced in the client's chart.",
+      "meta": {
+        "topic": "Professional conduct",
+        "subtopic": "Accountability and incident reporting",
+        "priority_principle": "Report errors and omissions promptly, factually and through the proper channel",
+        "prerequisites": "Purpose of incident reporting; documentation standards; late entries",
+        "suggested_review": "Incident reporting and accurate documentation"
+      }
+    }
+  ],
+  "pathophysiology": "## Pathophysiology teaching\n\n**Normal defences.** Urine is normally sterile above the urethra. Regular emptying of the bladder flushes out bacteria, and the urethral lining and sphincter keep organisms from climbing up.\n\n**How the catheter caused the infection.** An indwelling catheter bypasses these defences. Within days, bacteria (often bowel organisms such as *E. coli*) form a biofilm on the catheter surface and climb along it into the bladder. The risk rises with every day the catheter stays in, which is why Kamla's catheter, due out on post-operative day 1 but still in on day 3, mattered. Older age, diabetes, immobility after a fractured hip and low fluid intake all added to the risk.\n\n**From bladder infection to sepsis.** When bacteria and their toxins enter the bloodstream, the immune system releases inflammatory mediators throughout the body. Blood vessels dilate and become leaky, so blood pressure falls (92/54, then 86/50 mm Hg, against a pre-operative 148/84) and the heart speeds up to compensate. Poor perfusion of the kidneys reduces urine output (12 mL/hr, then about 10 mL/hr) and raises the creatinine from 86 to 164 µmol/L (acute kidney injury). Tissues short of oxygen switch to anaerobic metabolism and produce lactate (3.6 mmol/L). Stress hormones raise the blood glucose (198 to 236 mg/dL). The brain is sensitive to poor perfusion and inflammation, which is why confusion was the first sign.\n\n**Why each decision mattered.**\n- Q1: in older adults, acute confusion often comes before a high fever. Recognising it as new, rather than as age or a poor night, started the search for a cause.\n- Q2: cloudy urine in a catheter can be harmless, but with suprapubic tenderness and new confusion it pointed to a symptomatic urinary infection.\n- Q3: hypotension, rapid breathing and reduced consciousness showed the infection had become systemic; blood loss and tramadol could not explain the fever.\n- Q4: in sepsis the low blood pressure is distributive, so isotonic crystalloid boluses restore volume; a diuretic would worsen it.\n- Q5: blood cultures drawn before the antibiotic identify the organism, and taking them takes minutes, so treatment is not delayed.\n- Q6: the fluid was given to restore blood pressure and perfusion. A blood pressure that falls despite 1,500 mL, with persisting oliguria, signals septic shock and the need for a higher level of care.\n- Q7: while awaiting transfer, the nurse delegated a routine measurement but kept assessment and interpretation of an unstable client.\n- Q8: the missed removal order is a system failure; reporting it lets the ward prevent the next one.\n\n**Source control.** Once a catheter-associated infection is suspected, the team decides whether the catheter can be removed or should be replaced, because the biofilm on the old catheter keeps seeding bacteria.\n\n**Prevention.** Insert a catheter only when needed, using aseptic technique; review the need for it every day and remove it as soon as ordered or no longer indicated; keep a closed drainage system with the bag below the bladder and off the floor; give daily catheter care; encourage fluids and early mobilisation; and use routine observations and an early warning score so that changes such as new confusion are acted on early.",
+  "quality_report": "Drafted by Claude (ai:claude, 2026-10-10) from plan-2026-10-10 request NRG-MS-001. Story: older client, day 3 after hip hemiarthroplasty, catheter left in past its removal order; new confusion (Q1) -> catheter findings (Q2) -> systemic signs before any lab confirms the diagnosis (Q3) -> house officer review with dipstick and lactate (Q4) -> prescriptions, cultures not yet drawn (Q5) -> no response to 1,500 mL (Q6) -> transfer to the high dependency unit (Q7) -> missed order found (Q8). Checks run on all eight items: Cover (each stem can be answered before reading the options: new confusion; infection as cause; sepsis; crystalloid boluses; cultures before antibiotic; persistent hypotension; hourly urine measurement; incident report). Two-answer: Q4 has no antibiotic option so fluids are the single anticipated prescription among the four; Q6 leaves urine output out of the options so blood pressure is the single best marker; Q7 option B was worded to include 'decide when to report' so it fails on interpretation, not on recording. Cue sufficiency: baseline function (independent shopping and banking) given in the opening for Q1; pre-operative blood pressure given for Q3/Q6; day-1 haemoglobin given for Q4 option D; blood-culture authority stated in the opening (addendum 4). Hidden assumptions: no allergies stated before ceftriaxone; tramadol timing given; urine output, sodium, potassium and creatinine given (addendum 3). Jade to confirm: (1) whether T&T ward nurses collect blood cultures under a policy like the one stated, or whether the house officer would; (2) Q7: whether nursing assistants on local surgical wards record 15-minute observations and measure hourly urine output, and that the delegation key matches local scope; (3) Q8: local RHA practice on not referencing incident reports in the clinical record; (4) fluid bolus regimen (500 mL over 15 minutes to 1,500 mL in a 54 kg 78-year-old) and the absence of an antibiotic dose (deliberately not stated); (5) availability of bedside venous lactate on a regional hospital ward; (6) the term 'high dependency unit' for local practice. Reviewer (2026-10-10): Clinical course, flow (Q3 before the dipstick and lactate; Q4 fluids and Q5 cultures-then-antibiotic are different keys; fluids, ceftriaxone and paracetamol shown before Q6), one-best-answer, scope and standard checks re-run; no key changed. Fixes: (1) the IV paracetamol order now states it replaces the regular oral paracetamol, with the last oral dose at 2:00 am, so the case no longer implies a duplicate paracetamol dose in a 54 kg 78-year-old; (2) timeline tightened so escalation follows the failed fluid challenge promptly: the third bolus ends at 9:15 am, reassessment moves from 9:45 to 9:20 am, the registrar handover from 10:00 to 9:30 am, and the transfer from 11:15 to 10:40 am (chart stage now 11:15 am) to match 'a bed in about an hour'; Q6 option A reworded to 'half an hour after paracetamol'; reassessment urine output given as one hourly measurement (8:15 to 9:15 am, 10 mL) instead of overlapping periods; (3) the escalation stage said fluid 'continues as prescribed' although the prescribed 1,500 mL was finished, so the registrar now prescribes a further 500 mL over 30 minutes (needed for Q7 option D); (4) option types retyped to match the self-tests: Q2 C priority to incorrect (it is a misinterpretation, not a sequencing error); Q6 C (pulse, the best distractor) priority to close and A (temperature) close to priority; (5) teaching section adds source control (removing or replacing the infected catheter). Jade to confirm, in addition to the author's list: the further 500 mL bolus after 1,500 mL in a 54 kg older client with no signs of fluid overload; that the 7:45 am picture (likely NEWS2 about 12) would in local practice bring a doctor within 15 minutes rather than an emergency/rapid response call; and IV paracetamol dosing for a client of 54 kg.",
+  "validation": {
+    "status": "pending"
+  }
+}

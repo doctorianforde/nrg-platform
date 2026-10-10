@@ -2237,3 +2237,12 @@ test uses the I/II/III combination format, which bears on the ~15 "needs-jade" c
   vitals deliberately excluded), calculator (top right; keyboard works), and timers for the case and the current question from DB
   timestamps (`started_at`, `answered_at`), with per-question and total times on the results page. No migration. Browser-tested
   end to end against staging (desktop + phone). The test teacher account's attempts on NRG-MH-001 remain (delete declined); they block `--replace` re-import of that case.
+- 2026-10-10: **Case generator built; pilot of 5 AI cases on staging (in_review, not validated).** Pipeline: `scripts/plan-cases.ts`
+  (balanced CASE_REQUESTs from `content/case-studies/catalog.json`; `--report` tallies the bank vs V3 targets) → one author agent
+  per case (`docs/phase-1/CASE_GEN_BRIEF.md`, V3 + addendum + lithium example) → one adversarial reviewer agent per case
+  (`CASE_REVIEW_BRIEF.md`) → `import-case.ts`. Validator gained an answer-leak warning. Jade's V3 standard and CASE_REQUEST copied
+  to `docs/phase-1/case-standard/`. Pilot: NRG-MS-001 urosepsis, NRG-PD-001 bronchiolitis, NRG-MS-002 DKA, NRG-OB-001
+  pre-eclampsia, NRG-CH-001 hypertension. All passed review as "ready for Jade" with no key changes; reviewers fixed clinical
+  consistency (e.g. no routine CXR in bronchiolitis, DKA potassium vs JBDS, duplicate paracetamol, urine-output trend before Mg
+  toxicity). Each case's quality_report lists what Jade must confirm. Bank now 6 cases: NP 33 / CDM 42 / ASE 46%.
+  Open: Ian/Jade to decide on the reference-range panel vs addendum #2.

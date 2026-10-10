@@ -1,6 +1,6 @@
 # Case study platform: plan
 
-Status: **steps 1–3 built on staging (2026-10-09)**: schema, student runner + end-of-case review, teacher review/validate/publish, JSON import. Step 4 (generator) next. Not on prod. Source documents: `NRG_RENR_Case_Study_Question_Prompt_Format_V3_2_1.md` (Jade's
+Status: **steps 1–4 built on staging (2026-10-10)**: schema, student runner + end-of-case review, teacher review/validate/publish, JSON import, and the generator (`scripts/plan-cases.ts` + `CASE_GEN_BRIEF.md` + `CASE_REVIEW_BRIEF.md`; pilot of 5 AI cases imported as in_review). Not on prod. Source documents: `NRG_RENR_Case_Study_Question_Prompt_Format_V3_2_1.md` (Jade's
 standard, "V3"), `CASE_REQUEST.md` (request template + error-prevention addendum), `RENR_Case_Study_Lithium_Toxicity_Revised_1.md`
 (Jade's worked example).
 

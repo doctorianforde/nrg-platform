@@ -1,0 +1,626 @@
+{
+  "case_code": "NRG-CH-001",
+  "title": "Headache at the Three-Month Review",
+  "objective": "Students recognise a severely raised blood pressure in an older adult, interpret symptom-driven pill-taking, separate severe hypertension without organ damage from an emergency, prevent a duplicate dose, and evaluate an agreed adherence plan.",
+  "population": "Older adult, 71-year-old man with hypertension and type 2 diabetes",
+  "setting": "Chronic disease clinic, district health centre, Trinidad",
+  "primary_condition": "Uncontrolled hypertension with nonadherence",
+  "endpoint": "Adherence plan agreed, improvement at the one-week review, and home blood pressure monitoring with ongoing clinic follow-up",
+  "primary_domain": "NP",
+  "difficulty": "high",
+  "source": "ai:claude",
+  "opening": {
+    "time_label": "8:30 am",
+    "narrative": "Rawle, a 71-year-old man and retired maxi-taxi driver, attends the chronic disease clinic at the district health centre for a scheduled three-month review, accompanied by a daughter. Rawle says, \"I have a little headache since I wake up this morning, but is nothing serious.\" History includes hypertension for 12 years and type 2 diabetes for 6 years. Prescribed medicines are amlodipine 10 mg once daily, hydrochlorothiazide 25 mg once daily and metformin 500 mg twice daily, collected free each month from the health centre pharmacy under the Chronic Disease Assistance Programme. No known drug allergies. Rawle lives alone and goes to the market by maxi-taxi three mornings a week; the daughter visits at weekends. Breakfast was at 6:30 am. The district medical officer (DMO) is running the clinic this morning."
+  },
+  "stages": [
+    {
+      "key": "assess",
+      "time_label": "8:45 am",
+      "narrative": "The nurse completes the initial assessment.",
+      "vitals": [
+        {
+          "label": "Temperature",
+          "value": "36.8°C"
+        },
+        {
+          "label": "Pulse",
+          "value": "86/min, regular"
+        },
+        {
+          "label": "Respirations",
+          "value": "18/min"
+        },
+        {
+          "label": "Blood pressure",
+          "value": "186/112 mm Hg (seated, left arm)"
+        },
+        {
+          "label": "SpO2",
+          "value": "98% on room air"
+        },
+        {
+          "label": "RBS",
+          "value": "168 mg/dL"
+        },
+        {
+          "label": "Weight",
+          "value": "84 kg"
+        },
+        {
+          "label": "Pain score",
+          "value": "3/10, frontal headache"
+        }
+      ],
+      "assessment": [
+        {
+          "system": "CNS",
+          "finding": "Alert and oriented to person, place and time. Speech clear. Pupils equal and reactive to light. Hand grips equal."
+        },
+        {
+          "system": "Respiratory",
+          "finding": "Chest clear on auscultation."
+        },
+        {
+          "system": "Cardiovascular",
+          "finding": "Heart sounds regular. Capillary refill under 2 seconds. Pedal pulses palpable."
+        },
+        {
+          "system": "Genitourinary",
+          "finding": "Reports passing urine without difficulty."
+        },
+        {
+          "system": "Integumentary",
+          "finding": "Thick callus under the right big toe joint. Skin intact, no redness or drainage."
+        },
+        {
+          "system": "Psychosocial",
+          "finding": "Rawle says, \"The pressure always up when I come here. Is the clinic that does do it.\""
+        }
+      ]
+    },
+    {
+      "key": "history",
+      "time_label": "9:00 am",
+      "narrative": "After 15 minutes' rest, the nurse repeats the blood pressure: 182/110 mm Hg. Asked how the tablets are taken, Rawle says, \"I does take them when I feel the pressure up. This morning when the headache start, I take one of each pressure tablet with my breakfast.\" The daughter adds, \"Daddy say the water tablet have him running to the toilet, so he leave it off when he going to market.\""
+    },
+    {
+      "key": "screen",
+      "time_label": "9:10 am",
+      "narrative": "On focused questioning, Rawle denies chest pain, shortness of breath, weakness or numbness of the face or limbs, and any change in vision. The headache is unchanged. The DMO will examine Rawle next and has asked for an ECG and a urine dipstick."
+    },
+    {
+      "key": "dmo",
+      "time_label": "9:40 am",
+      "narrative": "The DMO examines Rawle. Fundoscopy shows no haemorrhages and no swelling of the optic discs. The DMO documents no evidence of acute organ damage. Blood results from the last visit, three months ago, are on the record.",
+      "labs": [
+        {
+          "category": "Chemistry (three months ago)",
+          "items": [
+            {
+              "label": "Sodium",
+              "value": "139 mmol/L"
+            },
+            {
+              "label": "Potassium",
+              "value": "4.0 mmol/L"
+            },
+            {
+              "label": "Creatinine",
+              "value": "94 µmol/L"
+            }
+          ]
+        },
+        {
+          "category": "ECG",
+          "items": [
+            {
+              "label": "Rhythm",
+              "value": "Sinus rhythm, 84/min"
+            }
+          ]
+        },
+        {
+          "category": "Urinalysis (dipstick)",
+          "items": [
+            {
+              "label": "Protein",
+              "value": "Negative"
+            },
+            {
+              "label": "Glucose",
+              "value": "Negative"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "stat",
+      "time_label": "10:00 am",
+      "narrative": "The DMO tells Rawle and the daughter that both pressure tablets will continue at the same doses, with a nurse review in one week. The DMO then writes on the treatment sheet: \"Amlodipine 10 mg orally, stat, from clinic stock. Recheck blood pressure before the client leaves,\" and moves on to the next client. The nurse takes the tablet from stock and goes to Rawle."
+    },
+    {
+      "key": "plan",
+      "time_label": "10:15 am",
+      "narrative": "After speaking with the nurse, the DMO cancels the stat amlodipine because Rawle took the usual morning dose at 6:30 am. The nurse, Rawle and the daughter then agree an adherence plan, and the DMO approves the change in dose timing: the daughter fills a weekly pill organiser every Sunday; both pressure tablets are taken each morning, and on market days the hydrochlorothiazide is taken on returning home, no later than 2 pm; the nurse will telephone midweek. At 11:00 am the blood pressure is 168/102 mm Hg and Rawle reports no new symptoms. Rawle goes home with advice to attend A&E for a severe headache, chest pain, weakness or change in vision, to have blood taken at the health centre on day 5, and to return in one week for review."
+    },
+    {
+      "key": "day8",
+      "time_label": "Day 8, 9:00 am",
+      "narrative": "Rawle returns for the one-week review with the daughter, who brings the pill organiser. When the nurse telephoned midweek, Rawle said all was well.",
+      "vitals": [
+        {
+          "label": "Temperature",
+          "value": "36.7°C"
+        },
+        {
+          "label": "Pulse",
+          "value": "78/min, regular"
+        },
+        {
+          "label": "Respirations",
+          "value": "16/min"
+        },
+        {
+          "label": "Blood pressure",
+          "value": "144/88 mm Hg (seated, left arm, after 5 minutes' rest)"
+        },
+        {
+          "label": "SpO2",
+          "value": "98% on room air"
+        },
+        {
+          "label": "RBS",
+          "value": "132 mg/dL"
+        }
+      ],
+      "assessment": [
+        {
+          "system": "CNS",
+          "finding": "Alert and oriented. Reports no headache since the last visit."
+        },
+        {
+          "system": "Genitourinary",
+          "finding": "Reports passing more urine in the mornings than before. Not waking at night to pass urine."
+        },
+        {
+          "system": "Integumentary",
+          "finding": "Callus under the right big toe joint unchanged. Skin intact."
+        },
+        {
+          "system": "Psychosocial",
+          "finding": "Every compartment of the pill organiser for the past seven days is empty. The daughter says the Sunday filling \"takes five minutes\"."
+        }
+      ],
+      "labs": [
+        {
+          "category": "Chemistry (blood taken on day 5)",
+          "items": [
+            {
+              "label": "Sodium",
+              "value": "137 mmol/L"
+            },
+            {
+              "label": "Potassium",
+              "value": "3.8 mmol/L"
+            },
+            {
+              "label": "Creatinine",
+              "value": "97 µmol/L"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "records",
+      "time_label": "Day 8, 9:30 am",
+      "narrative": "While updating Rawle's record, the nurse rereads their own notes from the last three clinic visits. Each records a raised blood pressure and \"advised to take medication regularly\", with nothing about whether doses were being missed or why."
+    },
+    {
+      "key": "monitor",
+      "time_label": "Day 8, 9:45 am",
+      "narrative": "The daughter has bought an automatic upper-arm blood pressure monitor for Rawle to use at home. Rawle says, \"Good. Now I could check it when I feel the pressure going up.\" The next clinic review is booked for four weeks' time."
+    }
+  ],
+  "questions": [
+    {
+      "position": 1,
+      "stage": "assess",
+      "cj_step": "recognize_cues",
+      "domain": "NP",
+      "taxonomy": "AP",
+      "stem": "Which finding should the nurse recognize as requiring immediate follow-up?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Random blood glucose of 168 mg/dL"
+        },
+        {
+          "label": "B",
+          "text": "Callus under the right big toe joint"
+        },
+        {
+          "label": "C",
+          "text": "Blood pressure of 186/112 mm Hg"
+        },
+        {
+          "label": "D",
+          "text": "Says the clinic visit makes the reading rise"
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "option_types": {
+        "A": "close",
+        "B": "priority",
+        "C": "correct",
+        "D": "incorrect"
+      },
+      "rationale_correct": "CORRECT: A reading of 186/112 mm Hg is at or above 180/110 mm Hg, the severe range, in a 71-year-old who also has diabetes and a headache since waking. A reading this high needs follow-up now: a repeat after rest, a check for signs of acute organ damage (brain, heart, eyes, kidneys) and a report to the DMO. The other findings matter at this visit but carry no immediate risk.",
+      "distractor_rationales": {
+        "A": "Rawle has diabetes and ate about two hours ago, so a random glucose of 168 mg/dL is within what is expected after a meal. It belongs in the review of diabetes control, not in immediate follow-up.",
+        "B": "A callus on the foot of a client with diabetes is a real risk for ulceration and needs foot-care teaching or referral at this visit. The skin is intact, so it can wait until the blood pressure has been dealt with.",
+        "D": "The clinic can raise a reading a little, but a client's explanation cannot be assumed to account for 186/112 mm Hg. The reading must be repeated and acted on, not explained away."
+      },
+      "self_test": "The callus needs attention at this visit, but intact skin is not an immediate threat, whereas a pressure above 180/110 mm Hg with a headache could be.",
+      "meta": {
+        "topic": "Cardiovascular nursing",
+        "subtopic": "Recognising severe hypertension",
+        "priority_principle": "Act on the finding with immediate risk before chronic-care findings",
+        "prerequisites": "Blood pressure categories in adults; diabetic foot risk; expected post-meal glucose",
+        "suggested_review": "Blood pressure measurement and severe-range readings in primary care"
+      }
+    },
+    {
+      "position": 2,
+      "stage": "history",
+      "cj_step": "analyze_cues",
+      "domain": "NP",
+      "taxonomy": "ASE",
+      "stem": "How should the nurse interpret the significance of Rawle's account of taking the tablets?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Doses depend on symptoms, so many days pass untreated"
+        },
+        {
+          "label": "B",
+          "text": "The diuretic's side effect means it should be stopped"
+        },
+        {
+          "label": "C",
+          "text": "The morning doses should soon bring the reading down"
+        },
+        {
+          "label": "D",
+          "text": "The two medicines are no longer strong enough for Rawle"
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "option_types": {
+        "A": "correct",
+        "B": "priority",
+        "C": "incorrect",
+        "D": "close"
+      },
+      "rationale_correct": "CORRECT: Rawle takes the tablets only when the pressure is \"felt\", and leaves out the hydrochlorothiazide on market days. Hypertension usually causes no symptoms, so on most days nothing tells Rawle to take a dose and the pressure goes untreated. That explains a reading still at 182/110 mm Hg after rest, and it rests on a belief the nurse can work with.",
+      "distractor_rationales": {
+        "B": "Passing more urine is an expected effect of hydrochlorothiazide, not a harmful reaction. It is a real barrier, but the answer is better timing of the dose, not stopping a drug that is needed.",
+        "C": "Amlodipine takes hours to reach its peak and about a week of regular doses to give its full effect, and a thiazide also lowers pressure over days to weeks. One catch-up dose at 6:30 am will not control the pressure by mid-morning.",
+        "D": "Drugs cannot be judged to have failed when they are not being taken regularly. Rawle's account points to missed doses, so the regimen has not yet been tested."
+      },
+      "self_test": "Treatment failure is tempting because the reading is high on two drugs, but Rawle's account shows the drugs are taken only on some days, so they have not had a fair test.",
+      "meta": {
+        "topic": "Medication adherence",
+        "subtopic": "Health beliefs and symptom-driven dosing",
+        "priority_principle": "Establish adherence before judging treatment response",
+        "prerequisites": "Asymptomatic nature of hypertension; onset of amlodipine and thiazides",
+        "suggested_review": "Assessing medication adherence and its barriers"
+      }
+    },
+    {
+      "position": 3,
+      "stage": "screen",
+      "cj_step": "prioritize_hypotheses",
+      "domain": "CDM",
+      "taxonomy": "ASE",
+      "stem": "Before the DMO's examination, which condition is most consistent with Rawle's findings?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Hypertensive emergency affecting the brain"
+        },
+        {
+          "label": "B",
+          "text": "Severe hypertension without acute organ damage"
+        },
+        {
+          "label": "C",
+          "text": "Early stroke presenting as a headache"
+        },
+        {
+          "label": "D",
+          "text": "Raised readings caused by anxiety at the clinic"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "option_types": {
+        "A": "close",
+        "B": "correct",
+        "C": "incorrect",
+        "D": "incorrect"
+      },
+      "rationale_correct": "CORRECT: The pressure stays above 180/110 mm Hg after rest, but Rawle is alert and oriented with clear speech, equal grips and equal pupils, a mild headache of 3/10, and no chest pain, breathlessness, weakness, numbness or change in vision. A severe reading without signs that the brain, heart, eyes or kidneys are being injured is managed differently from an emergency, so this is the most consistent explanation while the examination is awaited.",
+      "distractor_rationales": {
+        "A": "A hypertensive emergency involving the brain would be expected to bring a severe headache with confusion, vomiting, visual change or seizures. Rawle's headache is mild and the neurological findings are intact, so the severe reading alone does not make this an emergency.",
+        "C": "A stroke would usually show new weakness, facial droop, speech change or visual loss. Rawle has equal grips, clear speech and no visual change, and a headache by itself does not point to a stroke.",
+        "D": "Anxiety in the clinic can add a few points, but the reading stayed at 182/110 mm Hg after 15 minutes' rest, and Rawle has described missing doses, which gives a better explanation."
+      },
+      "self_test": "An emergency is tempting because the pressure is above 180/110 mm Hg, but the absence of confusion, visual change, chest pain or neurological signs means there is no sign of acute organ damage.",
+      "meta": {
+        "topic": "Cardiovascular nursing",
+        "subtopic": "Severe hypertension versus hypertensive emergency",
+        "priority_principle": "Look for target-organ damage before labelling an emergency",
+        "prerequisites": "Target organs of hypertension; signs of stroke and hypertensive encephalopathy",
+        "suggested_review": "Hypertensive emergency and severe hypertension without organ damage"
+      }
+    },
+    {
+      "position": 4,
+      "stage": "dmo",
+      "cj_step": "generate_solutions",
+      "domain": "CDM",
+      "taxonomy": "AP",
+      "stem": "Which plan of care should the nurse anticipate for Rawle?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Transfer by ambulance to A&E for intravenous treatment"
+        },
+        {
+          "label": "B",
+          "text": "Sublingual nifedipine to lower the pressure within the hour"
+        },
+        {
+          "label": "C",
+          "text": "A third tablet added because the current two have failed"
+        },
+        {
+          "label": "D",
+          "text": "Usual tablets taken daily, with a nurse recheck within a week"
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "option_types": {
+        "A": "priority",
+        "B": "unsafe",
+        "C": "close",
+        "D": "correct"
+      },
+      "rationale_correct": "CORRECT: Fundoscopy, the ECG and the urine dipstick show no acute organ damage, and the history shows the tablets are not being taken every day. Severe hypertension without organ damage is managed in primary care by bringing the pressure down gradually with oral treatment over days, so the expected plan is the usual tablets taken daily with an early review to check the response.",
+      "distractor_rationales": {
+        "A": "Transfer for intravenous treatment is for a hypertensive emergency with organ damage. The DMO has documented none, so transfer would over-treat and lower the pressure faster than is safe.",
+        "B": "Sublingual nifedipine was once common, but it can drop the pressure suddenly and unpredictably. In an older adult whose brain is used to a high pressure, that can cause a stroke or heart attack.",
+        "C": "Adding a third drug treats a failure that has not been shown. Once Rawle starts taking both tablets every day, an extra drug could push the pressure too low and cause dizziness and falls."
+      },
+      "self_test": "A third drug is tempting because the pressure is high on two, but the two have never been taken daily, so adding one now risks hypotension once adherence improves.",
+      "meta": {
+        "topic": "Cardiovascular nursing",
+        "subtopic": "Managing severe hypertension in primary care",
+        "priority_principle": "Lower blood pressure gradually when there is no organ damage",
+        "prerequisites": "Cerebral autoregulation in chronic hypertension; oral antihypertensive onset",
+        "suggested_review": "Primary-care management of severe hypertension"
+      }
+    },
+    {
+      "position": 5,
+      "stage": "stat",
+      "cj_step": "take_action",
+      "domain": "NP",
+      "taxonomy": "ASE",
+      "stem": "Which action should the nurse perform first?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Give the amlodipine now and recheck the pressure before discharge"
+        },
+        {
+          "label": "B",
+          "text": "Hold the amlodipine and clarify the order with the DMO"
+        },
+        {
+          "label": "C",
+          "text": "Recheck the pressure now and give the tablet if still high"
+        },
+        {
+          "label": "D",
+          "text": "Give half the amlodipine dose and record the reason"
+        }
+      ],
+      "correct": [
+        "B"
+      ],
+      "option_types": {
+        "A": "unsafe",
+        "B": "correct",
+        "C": "priority",
+        "D": "incorrect"
+      },
+      "rationale_correct": "CORRECT: At 9:00 am Rawle said one of each pressure tablet was taken with breakfast at 6:30 am, and the stat order makes no allowance for that dose. A second 10 mg of amlodipine today would make 20 mg in one day, twice the usual maximum daily dose of a long-acting drug, in a 71-year-old, risking low blood pressure and falls. The nurse holds the tablet and tells the DMO about the morning dose so the order can be reviewed.",
+      "distractor_rationales": {
+        "A": "This follows the written order, but the nurse knows a dose was already taken this morning. Giving it would double the day's amlodipine, and recognising a duplicate dose is part of the nurse's responsibility.",
+        "C": "The pressure is expected to stay high this morning, because the 6:30 am dose has not reached its peak. Making the dose depend on the reading still gives a duplicate dose without the prescriber knowing about it.",
+        "D": "Changing the dose is a prescribing decision, not a nursing one. Half a tablet still adds to the morning dose and leaves the prescriber unaware of the reason."
+      },
+      "self_test": "Rechecking the pressure first feels careful, but the problem is a dose already taken at 6:30 am, which a reading cannot answer, so the order needs clarifying.",
+      "meta": {
+        "topic": "Medication administration",
+        "subtopic": "Clarifying a duplicate dose",
+        "priority_principle": "Prevent medication harm, then communicate with the prescriber",
+        "prerequisites": "Rights of medication administration; amlodipine duration of action",
+        "suggested_review": "When and how the nurse questions a medication order"
+      }
+    },
+    {
+      "position": 6,
+      "stage": "day8",
+      "cj_step": "evaluate_outcomes",
+      "domain": "NP",
+      "taxonomy": "ASE",
+      "stem": "Which finding best indicates improvement in response to the adherence plan?",
+      "options": [
+        {
+          "label": "A",
+          "text": "No headache reported during the past week"
+        },
+        {
+          "label": "B",
+          "text": "Potassium of 3.8 mmol/L on the day 5 blood test"
+        },
+        {
+          "label": "C",
+          "text": "Blood pressure of 144/88 mm Hg with every dose taken"
+        },
+        {
+          "label": "D",
+          "text": "Passing more urine in the mornings than before"
+        }
+      ],
+      "correct": [
+        "C"
+      ],
+      "option_types": {
+        "A": "close",
+        "B": "incorrect",
+        "C": "correct",
+        "D": "priority"
+      },
+      "rationale_correct": "CORRECT: The adherence plan aimed to get both tablets taken every day so the pressure would come down. The empty organiser shows every dose was taken, and the seated pressure has fallen from 182/110 to 144/88 mm Hg. It is not yet at target, but it shows the plan is working and the drugs work when taken.",
+      "distractor_rationales": {
+        "A": "Losing the headache is welcome, but it repeats Rawle's belief that the pressure can be felt. Symptoms are a poor guide to blood pressure; the measured reading is the outcome.",
+        "B": "A potassium of 3.8 mmol/L shows that taking the thiazide daily is safe so far. It is a safety check, not evidence that the pressure has come down.",
+        "D": "More urine in the mornings shows the hydrochlorothiazide is now being taken, but it measures taking the drug, not the pressure response the plan was aiming for."
+      },
+      "self_test": "No headache feels like a good sign, but symptoms do not track blood pressure, so only the measured pressure with doses taken shows the plan is working.",
+      "meta": {
+        "topic": "Medication adherence",
+        "subtopic": "Evaluating an adherence plan",
+        "priority_principle": "Evaluate the outcome the intervention targeted",
+        "prerequisites": "Blood pressure targets; thiazide monitoring",
+        "suggested_review": "Follow-up of hypertension after a treatment change"
+      }
+    },
+    {
+      "position": 7,
+      "stage": "records",
+      "cj_step": "extension",
+      "domain": "PD",
+      "taxonomy": "AP",
+      "stem": "Which action best demonstrates the nurse's professional development?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Reflect on the missed cues and set a learning goal on adherence"
+        },
+        {
+          "label": "B",
+          "text": "Complete an incident report about the earlier clinic notes"
+        },
+        {
+          "label": "C",
+          "text": "Ask the DMO to do adherence counselling for older clients"
+        },
+        {
+          "label": "D",
+          "text": "Enrol in a pharmacology update on newer pressure drugs"
+        }
+      ],
+      "correct": [
+        "A"
+      ],
+      "option_types": {
+        "A": "correct",
+        "B": "incorrect",
+        "C": "priority",
+        "D": "close"
+      },
+      "rationale_correct": "CORRECT: The nurse's own notes from three visits recorded a raised pressure and advice to take the tablets, but nobody asked whether or why doses were missed. Reflecting on what was missed, using a structured model, and setting a learning goal on assessing adherence targets the exact gap this case exposed, which is how a nurse maintains and builds competence.",
+      "distractor_rationales": {
+        "B": "No harmful event occurred that an incident report is meant to capture. The issue is an assessment gap in the nurse's own practice, which calls for reflection and learning.",
+        "C": "Adherence assessment is core nursing work. Passing it to the DMO avoids the gap instead of closing it, and the DMO's time is limited.",
+        "D": "Continuing education is part of professional development, but the gap here was asking about missed doses, not knowledge of drugs. A pharmacology update would not change what went wrong."
+      },
+      "self_test": "A pharmacology update is real professional development, but the gap shown in the notes was assessing adherence, which drug knowledge does not fix.",
+      "meta": {
+        "topic": "Professional development",
+        "subtopic": "Reflective practice and learning needs",
+        "priority_principle": "Target learning at the identified practice gap",
+        "prerequisites": "Reflective models (for example Gibbs); continuing competence",
+        "suggested_review": "Reflective practice for registered nurses"
+      }
+    },
+    {
+      "position": 8,
+      "stage": "monitor",
+      "cj_step": "extension",
+      "domain": "HPMW",
+      "taxonomy": "AP",
+      "stem": "Which instruction is most important for the nurse to give Rawle?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Check it whenever you get a headache or feel unwell"
+        },
+        {
+          "label": "B",
+          "text": "If a reading is high, take an extra tablet and check again"
+        },
+        {
+          "label": "C",
+          "text": "Check it soon after your morning walk to see your active level"
+        },
+        {
+          "label": "D",
+          "text": "Check at the same times each day and write down every reading"
+        }
+      ],
+      "correct": [
+        "D"
+      ],
+      "option_types": {
+        "A": "close",
+        "B": "unsafe",
+        "C": "incorrect",
+        "D": "correct"
+      },
+      "rationale_correct": "CORRECT: Rawle still plans to check the pressure only when it is \"felt\", the same belief that led to missed doses. Checking at set times every day, whatever Rawle feels, and recording each reading gives a true picture for the four-week review and reinforces that blood pressure is treated every day, not by symptoms.",
+      "distractor_rationales": {
+        "A": "This is what Rawle suggested, and it keeps the belief that symptoms show the pressure. Readings taken only when unwell miss the days the pressure is high without symptoms.",
+        "B": "Self-adjusting the dose risks low blood pressure and falls, and it repeats the symptom-driven dosing that caused the problem. Changes to doses come from the prescriber.",
+        "C": "Exercise briefly raises the pressure, so a reading straight after a walk is misleading. Readings should be taken after five minutes of quiet rest."
+      },
+      "self_test": "Checking when unwell sounds sensible, but it keeps Rawle's belief that the pressure can be felt and misses silent high readings.",
+      "meta": {
+        "topic": "Health promotion",
+        "subtopic": "Home blood pressure monitoring",
+        "priority_principle": "Teach to the client's specific misconception",
+        "prerequisites": "Home blood pressure technique",
+        "suggested_review": "Client teaching for home blood pressure monitoring"
+      }
+    }
+  ],
+  "pathophysiology": "## Pathophysiology teaching\n\n**Normal regulation.** Blood pressure is cardiac output multiplied by peripheral resistance. Baroreceptors adjust it from moment to moment, and the kidneys, through the renin-angiotensin-aldosterone system and sodium and water balance, set it over the long term.\n\n**Chronic hypertension.** Years of raised pressure thicken the walls of small arteries and narrow their lumen, which raises resistance further. The brain protects its blood flow by autoregulation, and in long-standing hypertension that range shifts upwards: the brain becomes used to a high pressure. Diabetes speeds up the same small-vessel damage, so Rawle carries a higher risk to the heart, brain, eyes and kidneys.\n\n**Severe hypertension with and without organ damage.** A reading of 180/110 mm Hg or higher is severe (grade 3 in ESH/ISH terms; the AHA uses 180/120 mm Hg for a hypertensive crisis, and NICE a systolic of 180 or a diastolic of 120). It becomes an emergency when organs are being injured now: encephalopathy (severe headache, confusion, vomiting, seizures), stroke, chest pain or heart failure, retinal haemorrhages or papilloedema, or acute kidney injury. Rawle had a mild headache with an intact neurological examination, a clear fundoscopy, a normal ECG rhythm and no protein in the urine, so this was severe hypertension without acute organ damage (Q3). Because the brain's autoregulation has shifted, a rapid fall in pressure can starve it of blood. That is why, without organ damage, the pressure is lowered gradually with oral tablets over days to weeks (even in a true emergency, specialists aim for a fall of no more than about 25% in the first hour), and why sublingual nifedipine and transfer for intravenous drugs were wrong (Q4).\n\n**Why it was high: the drugs, taken irregularly.** Amlodipine is a calcium channel blocker that relaxes arterial smooth muscle. It peaks 6 to 12 hours after a dose and has a long half-life, so it reaches a steady effect after about a week of daily doses. Hydrochlorothiazide causes a diuresis within hours, which is why Rawle avoided it before a maxi-taxi ride, and lowers resistance over days to weeks. Taken only when a headache appears, neither drug ever reaches a steady effect (Q2). Hypertension is usually silent, so a symptom-driven routine leaves most days untreated.\n\n**Why each decision mattered.**\n- Recognising the severe reading instead of accepting the explanation that the clinic causes it (Q1) started the right checks.\n- Interpreting the account of pill-taking as symptom-driven dosing (Q2) separated nonadherence from treatment failure.\n- Prioritizing severe hypertension without organ damage over an emergency or stroke (Q3) matched the intact neurological findings, and the DMO's examination then confirmed it.\n- Anticipating daily oral treatment with an early recheck (Q4) lowered the pressure safely and avoided adding a drug that had not yet been tested.\n- Holding the stat amlodipine (Q5) prevented a second long-acting dose on the same morning in an older adult at risk of hypotension and falls.\n- At one week the empty organiser and the fall to 144/88 mm Hg showed the drugs work when taken (Q6). Sodium and potassium were checked because a thiazide taken daily can lower both.\n- Reflecting on three visits of \"advised to take medication\" (Q7) and teaching scheduled home readings (Q8) address the belief behind the problem.\n\n**Prevention.** Daily dosing whatever the client feels; tailoring dose timing to daily life (a diuretic after the market trip, before mid-afternoon); pill organisers and family support; asking at every visit whether and why doses are missed; home readings at set times; less salt from saltfish, smoked herring, pigtail and stock cubes; weight control, activity and limited alcohol; and regular review of glucose, kidneys and feet.",
+  "quality_report": "Drafted by Claude (2026-10-10) from CASE_REQUEST NRG-CH-001. Checks run on all eight items. Cover: each stem can be answered before the options are seen (Q1 the severe reading; Q2 symptom-driven dosing; Q3 severe hypertension without organ damage; Q4 daily oral tablets with an early recheck; Q5 hold and clarify a duplicate dose; Q6 the measured pressure with doses taken; Q7 reflection aimed at the gap; Q8 readings at set times). Two-answer: Q1 the callus is a real diabetic-foot concern, but intact skin makes it non-urgent; Q2 'treatment failure' is ruled out because the drugs are not taken daily; Q4 'add a third drug' is ruled out for the same reason; Q6 the headache and the morning urine are deliberate distractors for the belief and for drug-taking rather than response. Cue sufficiency: the 6:30 am dose that Q5 depends on is given in the 9:00 am stage, before the stat order, and is not repeated in the Q5 stage, so Q5 tests recall and integration (hence ASE). Hidden assumption: no standing order is needed; holding and clarifying a duplicate dose is within the registered nurse's scope. The Q5 stage does not mention the morning dose; the plan stage that follows reveals it. Taxonomy: 4 ASE (Q2, Q3, Q5, Q6), 4 AP, no KC. Keys A2 B2 C2 D2. For Jade to confirm: the 180/110 mm Hg severe threshold; whether a DMO in a Trinidad health centre would order a stat dose of the client's usual oral drug in severe hypertension without organ damage; the advice to take hydrochlorothiazide by 2 pm on market days; the A&E return advice; the Chronic Disease Assistance Programme wording; dialect in the client and daughter quotes; and whether a one-week review with sodium and potassium matches local practice. Reviewer (2026-10-10): Clinical and flow review against CASE_REVIEW_BRIEF; no key changed (keys remain C, A, B, D, B, C, A, D). Changes: the DMO's stat order now says 'recheck before the client leaves' instead of 'in one hour', so the case no longer implies an oral amlodipine dose is meant to lower the pressure within the hour, which contradicted Q2C and Q4B (gradual lowering, peak 6-12 h); Q5 option A reworded to match. Q5 rationale now states that a second 10 mg would make 20 mg, twice the usual maximum daily dose, which removes any argument that the DMO intended an extra dose. The plan stage now records that the DMO approves the later hydrochlorothiazide time on market days, so the nurse is not altering administration timing alone (scope). Day 8 bloods are now taken on day 5, since same-morning chemistry is unrealistic for a district health centre lab; the Q6B option and the stage label were updated. The midweek call now comes from the nurse, matching the plan. The opening now states Rawle is a man, matching the population and the daughter's 'Daddy'. Q1 rationale and the teaching section now give the severe threshold as 'at or above 180/110' and note that AHA (180/120) and NICE (180 systolic or 120 diastolic) thresholds differ; the teaching section adds the no-more-than-25% first-hour limit for emergencies. Checked and left as is: Q3 is asked before fundoscopy, ECG and dipstick; Q4 (daily oral tablets, recheck within a week) and Q5 (hold and clarify) differ; Q5's cue (one of each pressure tablet with the 6:30 am breakfast) is on screen from the 9:00 am stage and echoed in Q2 option C, so it is fair recall rather than a hidden fact, and holding and clarifying is within RN scope without a standing order; nurse-performed ECG and dipstick and the one-week nurse recheck are in RN scope. Jade to confirm: which severe threshold the RENR expects (180/110 vs 180/120); that a DMO would order a stat dose of the usual oral drug in this situation; DMO sign-off for the diuretic timing; and day-5 blood timing at the health centre.",
+  "validation": {
+    "status": "pending"
+  }
+}
