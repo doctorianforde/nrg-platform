@@ -1,0 +1,70 @@
+{
+  "created_at": "2026-10-10T18:55:35.352Z",
+  "requests": [
+    {
+      "case_code": "NRG-MS-001",
+      "objective": "",
+      "patient_setting": "Older adult, Post-operative surgical ward, Caribbean",
+      "primary_condition": "Urosepsis after surgery",
+      "endpoint": "Escalation to a higher level of care",
+      "primary_domain": "NP",
+      "target_taxonomy": "ASE for Q3 and Q6; AP or ASE elsewhere; at most one KC item",
+      "q7_domain": "NLM",
+      "q8_domain": "PC",
+      "difficulty": "high",
+      "draft_path": "content/case-studies/drafts/NRG-MS-001.json"
+    },
+    {
+      "case_code": "NRG-PD-001",
+      "objective": "",
+      "patient_setting": "Infant, Paediatric ward, Caribbean",
+      "primary_condition": "Bronchiolitis",
+      "endpoint": "Feeding and oxygenation improved",
+      "primary_domain": "CDM",
+      "target_taxonomy": "ASE for Q3 and Q6; AP or ASE elsewhere; at most one KC item",
+      "q7_domain": "PD",
+      "q8_domain": "HPMW",
+      "difficulty": "moderate",
+      "draft_path": "content/case-studies/drafts/NRG-PD-001.json"
+    },
+    {
+      "case_code": "NRG-MS-002",
+      "objective": "",
+      "patient_setting": "Young adult, Medical ward, Caribbean",
+      "primary_condition": "Diabetic ketoacidosis",
+      "endpoint": "Resolution and transition to subcutaneous insulin",
+      "primary_domain": "NP",
+      "target_taxonomy": "ASE for Q3 and Q6; AP or ASE elsewhere; at most one KC item",
+      "q7_domain": "HPMW",
+      "q8_domain": "NLM",
+      "difficulty": "low",
+      "draft_path": "content/case-studies/drafts/NRG-MS-002.json"
+    },
+    {
+      "case_code": "NRG-OB-001",
+      "objective": "",
+      "patient_setting": "Pregnant client, Antenatal ward, Caribbean",
+      "primary_condition": "Pre-eclampsia with severe features",
+      "endpoint": "Stabilisation and planned delivery",
+      "primary_domain": "CDM",
+      "target_taxonomy": "ASE for Q3 and Q6; AP or ASE elsewhere; at most one KC item",
+      "q7_domain": "COM",
+      "q8_domain": "PC",
+      "difficulty": "moderate",
+      "draft_path": "content/case-studies/drafts/NRG-OB-001.json"
+    },
+    {
+      "case_code": "NRG-CH-001",
+      "objective": "",
+      "patient_setting": "Older adult, Health centre, Caribbean",
+      "primary_condition": "Uncontrolled hypertension with nonadherence",
+      "endpoint": "Adherence plan and follow-up",
+      "primary_domain": "NP",
+      "target_taxonomy": "ASE for Q3 and Q6; AP or ASE elsewhere; at most one KC item",
+      "q7_domain": "PD",
+      "q8_domain": "HPMW",
+      "difficulty": "high",
+      "draft_path": "content/case-studies/drafts/NRG-CH-001.json"
+    }
+  ]
+}

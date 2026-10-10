@@ -5,7 +5,7 @@
  * Mechanical rules only. Judgement checks (cover test, two-answer test, cue sufficiency, hidden
  * assumptions) belong to the reviewer pass and Jade's validation, recorded in quality_report.
  */
-import { forbiddenPatterns, loadRules, type Rules } from "./mcq-standard";
+import { forbiddenPatterns, loadRules, tok, type Rules } from "./mcq-standard";
 
 export const CJ_STEPS = ["recognize_cues", "analyze_cues", "prioritize_hypotheses", "generate_solutions", "take_action", "evaluate_outcomes"] as const;
 export type CjStep = (typeof CJ_STEPS)[number] | "extension";
@@ -78,6 +78,15 @@ export function caseWarnings(doc: CaseDoc): string[] {
   for (const q of doc.questions) {
     const rule = (STEM_VERBS as Record<string, { use: string[] }>)[q.cj_step];
     if (rule && !rule.use.some(v => hasPhrase(q.stem, v))) w.push(`Q${q.position}: stem uses none of the ${q.cj_step} verbs (${rule.use.join(", ")}); check it tests that step`);
+    // Answer leak: most of the key's words already appear in the new information shown just before the question.
+    const stage = doc.stages.find(s => s.key === q.stage);
+    const keyText = q.options.find(o => o.label === q.correct?.[0])?.text ?? "";
+    const keyWords = [...tok(keyText)].filter(x => x.length > 3);
+    if (stage && keyWords.length >= 3) {
+      const seen = tok(stage.narrative);
+      const shared = keyWords.filter(x => seen.has(x));
+      if (shared.length / keyWords.length >= 0.6) w.push(`Q${q.position}: the key repeats the stage's own text (${shared.join(", ")}); check the stage doesn't give the answer away`);
+    }
   }
   return w;
 }
