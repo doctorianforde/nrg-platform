@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { getSession } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 import { COGNITIVE_LEVELS, DIFFICULTIES } from "@/lib/review/filters";
+import type { PracticeAnswer } from "@/components/questions/TutorSession";
 
 export type SubmitState = { error: string } | { ok: string } | null;
 
@@ -112,5 +113,22 @@ export async function recordPracticeSession(
     p_correct: Math.round(correct),
     p_domain: domainId ?? undefined,
   });
+  revalidatePath("/study/profile");
+}
+
+/**
+ * Ranking v2: record a finished practice run as the questions shown and the options chosen. The server grades each
+ * answer against the key, stores it in question_attempts and decides the XP, so nothing the browser reports about
+ * correctness is trusted. Only called when the ranking-v2 flag is on (the database function exists on staging only).
+ */
+export async function recordPracticeAnswers(answers: PracticeAnswer[], domainId?: number | null): Promise<void> {
+  const session = await getSession();
+  if (!session?.profile || answers.length === 0) return;
+
+  const { error } = await createClient().rpc("record_practice_answers", {
+    p_answers: answers.map((a) => ({ question_id: a.question_id, option_ids: a.option_ids })),
+    p_domain: domainId ?? undefined,
+  });
+  if (error) console.error("record_practice_answers failed:", error.message);
   revalidatePath("/study/profile");
 }

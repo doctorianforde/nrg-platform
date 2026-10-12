@@ -2260,3 +2260,53 @@ test uses the I/II/III combination format, which bears on the ~15 "needs-jade" c
   deficient fluid volume (lithium, DKA), ineffective tissue perfusion (urosepsis), risk for maternal injury (pre-eclampsia),
   ineffective airway clearance (bronchiolitis), ineffective health self-management (hypertension). Q4 is monitoring in two
   cases (lithium, urosepsis) where it is clinically the best answer; Jade to confirm each priority choice (quality_reports).
+
+## Ranking system and subscription plans (Claude, 2026-10-12) — plans only, no code, nothing run
+
+**Ranking, streaks, promotion quiz.** From the Oct meeting notes (Ian: daily streak; Jade: extra XP for weak/new topics,
+less for repeats and mastered). Plan = Claude Doc "NRG Ranking: Streaks and Weakness XP Build Plan"
+(https://claude.ai/code/artifact/222d637d-cb65-4e19-ba13-f5995e4bf503); execution prompt = `NRG_Ranking_Build_Prompt.md`.
+- Finding: practice answers are not stored per question (only tallies in `practice_sessions`), so mastery and repeats cannot
+  be computed. Phase 1 adds `question_attempts` and server-side grading, with XP unchanged.
+- Confirmed by Jade/Ian: new = fewer than 10 answers from that student in the topic; weak <=30%, mastered >=75% (last 30
+  answers); multipliers 1.5 / 1.0 / 0.5, repeat factor 0.25 (14 days, proposed); 200 XP mastery milestone; streak counts in
+  Trinidad time and pays 10 XP x length, capped at 70 a day; mock exams pay full XP on mastered topics; students see only
+  their rank, no multiplier breakdown; promotion is by quiz (25 questions, 90 s each, server-enforced), not automatic.
+- **Proposed by me, unconfirmed:** pass mark 17/25, 24 h retake wait with fresh questions, no XP for passing, a quiz for all
+  24 promotions, 300 XP daily practice cap, 14-day repeat window. Open: does rank-only also hide topic states and the Next Best
+  Action card; do retaken mock sets pay less.
+- Phases: 0 decide, 1 record answers, 2 rules engine (shadow-compare), 3 screens, 4 prod (not authorised yet).
+- **Risk:** a push to main deploys BOTH Vercel projects while prod's database lacks the new schema. New behaviour must be
+  behind a feature flag (e.g. `NEXT_PUBLIC_RANKING_V2`, set on staging Vercel only; Ian to add it) with the old paths intact.
+
+**Subscription service.** Plan = Claude Doc "NRG Subscription Service: Build Plan"
+(https://claude.ai/code/artifact/0872ed90-73ec-410c-9e96-2d756b5fb7da). Funds go to Jade's personal international Schwab
+account; subscribers Caribbean-wide, USD. Schwab is a destination, not a processor.
+- WiPay: public sources do not say whether it supports recurring billing; needs its dashboard docs or support (ask: stored-card
+  recurring, tokenization API, webhooks, USD settlement, payout to a US bank, fees, 3-D Secure on renewals).
+- PayPal Subscriptions is a real recurring product, but T&T merchant eligibility and payout to Schwab are unconfirmed; about 5%
+  fee and possible 30-day holds on new accounts; withdrawal in T&T is via Visa card.
+- Fallback that works with any processor: fixed-term passes (3/6/12 months) with access grants.
+- Nothing is built until Phase 0 closes (written answers on Schwab payouts, merchant and tax status, processor, prices).
+
+
+## Ranking v2 (streaks, weakness XP, promotion quiz): Phase 1 done on staging (Claude, 2026-10-12)
+
+Spec: Ian's "NRG Ranking: Streaks and Weakness XP Build Plan" + build prompt. Decisions from Ian this session: promotion pass
+mark **17/25**; at go-live **everyone starts at level 0** (no grandfathering); retaken mock sets pay **less** (confirmed).
+Deploy rule adapted: work goes to the `staging` branch (not `main`, which now deploys prod only and holds unpushed
+case-study work needing prod migrations); new app behaviour is still behind `NEXT_PUBLIC_RANKING_V2` (set to 1 on the
+`nrg-platform-staging` Vercel project only; absent on `nrg-platform`).
+- Migration `20261012150000_question_attempts` (staging; applied via the CLI through the pooler because the Supabase MCP
+  `apply_migration` call returned "declined" twice): `question_attempts` (RLS: own or teaching staff read; no write policies)
+  and `record_practice_answers(p_answers jsonb, p_domain)`, which grades chosen options against the key (SATA = exact set),
+  rejects unknown/inactive/non-standalone questions, foreign options, duplicates and empty sessions, writes attempts, and pays
+  exactly today's banded XP. `record_practice_session` kept for the flag-off path.
+- App: `TutorSession` keeps each question's chosen options; the practice page sends them via `recordPracticeAnswers` when the
+  flag is on, else the old tally. `src/lib/flags.ts` holds the flag. Types updated by hand.
+- Gate: `node scripts/test-ranking-phase1.mjs` 19/19 PASS on staging (grading, XP unchanged, no direct
+  insert/update/delete, privacy, forged is_correct/user_id ignored, rejections, cleanup). tsc, lint and `next build` clean.
+- Known limitation (unchanged by this phase): tutor mode sends the answer key to the browser for instant feedback, so a
+  student could read it before answering. Server grading stops forged tallies, not peeking; fixing it means fetching
+  rationales after each answer.
+- Next: Phase 2 (rules engine, promotion quiz, shadow mode) awaits Ian's go.

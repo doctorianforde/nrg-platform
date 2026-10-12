@@ -9,6 +9,9 @@ import { QuestionMetaBadges } from "@/components/questions/QuestionMetaBadges";
 import { RationalePanel } from "@/components/questions/RationalePanel";
 import { Badge } from "@/components/ui/Badge";
 
+/** One answered question as sent to the server, which grades it against the key. */
+export type PracticeAnswer = { question_id: string; option_ids: string[] };
+
 function playSound(kind: "correct" | "wrong") {
   try {
     const audio = new Audio(`/sounds/${kind}-answer.mp3`);
@@ -36,9 +39,9 @@ export function TutorSession({
   intro?: string;
   backHref?: string;
   backLabel?: string;
-  /** Called once when a run finishes, so practice can be recorded and XP awarded.
-   *  Case studies leave it unset and record nothing. */
-  onComplete?: (total: number, correct: number) => void | Promise<void>;
+  /** Called once when a run finishes, so practice can be recorded and XP awarded. `answers` holds what was chosen
+   *  for each question, for the server to grade (ranking v2). Case studies leave it unset and record nothing. */
+  onComplete?: (total: number, correct: number, answers: PracticeAnswer[]) => void | Promise<void>;
 }) {
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<string[]>([]);
@@ -47,6 +50,7 @@ export function TutorSession({
   const [finished, setFinished] = useState(false);
   const played = useRef(false);
   const reported = useRef(false);
+  const answers = useRef<PracticeAnswer[]>([]);
 
   // Report once per run. The tally is state, so this waits for it to settle rather
   // than firing inside the click handler with a stale count.
@@ -55,7 +59,7 @@ export function TutorSession({
     const total = tally.correct + tally.wrong;
     if (total === 0) return;
     reported.current = true;
-    void onComplete(total, tally.correct);
+    void onComplete(total, tally.correct, answers.current);
   }, [finished, tally, onComplete]);
 
   if (questions.length === 0) {
@@ -89,6 +93,7 @@ export function TutorSession({
               setRevealed(false);
               setTally({ correct: 0, wrong: 0 });
               setFinished(false);
+              answers.current = [];
               reported.current = false;
               played.current = false;
             }}
@@ -136,6 +141,7 @@ export function TutorSession({
   const next = () => {
     if (!played.current) playSound(isCorrect ? "correct" : "wrong");
     setTally((t) => (isCorrect ? { ...t, correct: t.correct + 1 } : { ...t, wrong: t.wrong + 1 }));
+    answers.current = [...answers.current.filter((a) => a.question_id !== q.id), { question_id: q.id, option_ids: selected }];
     if (index + 1 >= questions.length) {
       setFinished(true);
     } else {

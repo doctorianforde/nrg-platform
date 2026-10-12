@@ -2,7 +2,8 @@ import { requireRole } from "@/lib/auth/session";
 import { DashboardShell } from "@/components/DashboardShell";
 import { fetchQuizQuestions } from "@/lib/quiz/fetch";
 import { TutorSession } from "@/components/questions/TutorSession";
-import { recordPracticeSession } from "@/lib/xp/actions";
+import { recordPracticeAnswers, recordPracticeSession } from "@/lib/xp/actions";
+import { flags } from "@/lib/flags";
 
 export const dynamic = "force-dynamic";
 
@@ -50,9 +51,11 @@ export default async function PracticeSessionPage({
         title={scope > 0 ? "Filtered practice" : "Mixed practice"}
         backHref="/study/practice"
         backLabel="Change filters"
-        onComplete={async (total, correct) => {
+        onComplete={async (total, correct, answers) => {
           "use server";
-          await recordPracticeSession(total, correct, int(sp.domain));
+          // Ranking v2 sends the choices for the server to grade; with the flag off, the original tally path runs.
+          if (flags.rankingV2) await recordPracticeAnswers(answers, int(sp.domain));
+          else await recordPracticeSession(total, correct, int(sp.domain));
         }}
       />
     </DashboardShell>

@@ -5,7 +5,7 @@
 // timer columns and the group RPCs).
 // Extended by hand for 20261004181457 / 20261009000911 (question_options.distractor_type) and
 // 20261009003423 (case study platform: case_stages, case_attempts, case_attempt_responses, questions.context, RPCs),
-// 20261012124123 (case_stages.medications).
+// 20261012124123 (case_stages.medications), 20261012150000 (question_attempts, record_practice_answers).
 // Regenerate after every migration (questions review_* columns added by hand for 20260919010000): npx supabase gen types typescript --project-id cdvubijjepwmhhkgppbl > src/lib/supabase/types.ts
 export type Json =
   | string
@@ -49,6 +49,12 @@ export type Database = {
         Row: { amount: number; created_at: string; id: string; reason: string; source_id: string | null; user_id: string }
         Insert: { amount: number; created_at?: string; id?: string; reason: string; source_id?: string | null; user_id: string }
         Update: { amount?: number; created_at?: string; id?: string; reason?: string; source_id?: string | null; user_id?: string }
+        Relationships: []
+      }
+      question_attempts: {
+        Row: { answered_at: string; domain_id: number | null; id: string; is_correct: boolean; option_ids: string[]; question_id: string; session_id: string | null; source: string; user_id: string }
+        Insert: { answered_at?: string; domain_id?: number | null; id?: string; is_correct: boolean; option_ids: string[]; question_id: string; session_id?: string | null; source: string; user_id: string }
+        Update: { answered_at?: string; domain_id?: number | null; id?: string; is_correct?: boolean; option_ids?: string[]; question_id?: string; session_id?: string | null; source?: string; user_id?: string }
         Relationships: []
       }
       practice_sessions: {
@@ -237,6 +243,10 @@ export type Database = {
         Returns: { created_at: string; decided_at: string | null; decided_by: string | null; id: string; note: string | null; requested_role: string; status: string; user_id: string }
       }
       mark_thread_read: { Args: { p_thread_id: string }; Returns: undefined }
+      record_practice_answers: {
+        Args: { p_answers: Json; p_domain?: number }
+        Returns: { correct_count: number; domain_id: number | null; finished_at: string; id: string; student_id: string; total_answered: number }
+      }
       record_practice_session: {
         Args: { p_total: number; p_correct: number; p_domain?: number }
         Returns: { correct_count: number; domain_id: number | null; finished_at: string; id: string; student_id: string; total_answered: number }
