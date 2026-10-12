@@ -5,7 +5,8 @@
 // timer columns and the group RPCs).
 // Extended by hand for 20261004181457 / 20261009000911 (question_options.distractor_type) and
 // 20261009003423 (case study platform: case_stages, case_attempts, case_attempt_responses, questions.context, RPCs),
-// 20261012124123 (case_stages.medications), 20261012150000 (question_attempts, record_practice_answers).
+// 20261012124123 (case_stages.medications), 20261012150000 (question_attempts, record_practice_answers),
+// 20261012160000–160600 (ranking v2: config, shadow, rules, mock attempts, promotion quiz).
 // Regenerate after every migration (questions review_* columns added by hand for 20260919010000): npx supabase gen types typescript --project-id cdvubijjepwmhhkgppbl > src/lib/supabase/types.ts
 export type Json =
   | string
@@ -49,6 +50,30 @@ export type Database = {
         Row: { amount: number; created_at: string; id: string; reason: string; source_id: string | null; user_id: string }
         Insert: { amount: number; created_at?: string; id?: string; reason: string; source_id?: string | null; user_id: string }
         Update: { amount?: number; created_at?: string; id?: string; reason?: string; source_id?: string | null; user_id?: string }
+        Relationships: []
+      }
+      promotion_attempts: {
+        Row: { finished_at: string | null; id: string; passed: boolean | null; question_count: number; score: number | null; started_at: string; target_level: number; user_id: string }
+        Insert: { finished_at?: string | null; id?: string; passed?: boolean | null; question_count: number; score?: number | null; started_at?: string; target_level: number; user_id: string }
+        Update: { finished_at?: string | null; id?: string; passed?: boolean | null; question_count?: number; score?: number | null; started_at?: string; target_level?: number; user_id?: string }
+        Relationships: []
+      }
+      rank_levels: {
+        Row: { level: number; min_xp: number; name: string }
+        Insert: { level: number; min_xp: number; name: string }
+        Update: { level?: number; min_xp?: number; name?: string }
+        Relationships: []
+      }
+      ranking_config: {
+        Row: { confirmed: boolean; key: string; note: string; updated_at: string; value: number }
+        Insert: { confirmed: boolean; key: string; note: string; updated_at?: string; value: number }
+        Update: { confirmed?: boolean; key?: string; note?: string; updated_at?: string; value?: number }
+        Relationships: []
+      }
+      xp_shadow: {
+        Row: { created_at: string; detail: Json | null; id: string; kind: string; new_amount: number; old_amount: number; source_id: string; user_id: string }
+        Insert: { created_at?: string; detail?: Json | null; id?: string; kind: string; new_amount: number; old_amount: number; source_id: string; user_id: string }
+        Update: { created_at?: string; detail?: Json | null; id?: string; kind?: string; new_amount?: number; old_amount?: number; source_id?: string; user_id?: string }
         Relationships: []
       }
       question_attempts: {
@@ -252,6 +277,13 @@ export type Database = {
         Returns: { correct_count: number; domain_id: number | null; finished_at: string; id: string; student_id: string; total_answered: number }
       }
       study_streak: { Args: { p_user: string }; Returns: number }
+      study_streak_v2: { Args: { p_user: string }; Returns: number }
+      xp_level: { Args: { p_xp: number }; Returns: number }
+      promotion_status: { Args: { p_user?: string }; Returns: Json }
+      start_promotion_quiz: { Args: Record<PropertyKey, never>; Returns: string }
+      promotion_current: { Args: { p_attempt: string }; Returns: Json }
+      promotion_answer: { Args: { p_attempt: string; p_position: number; p_option_ids: string[] }; Returns: Json }
+      xp_event_details: { Args: { p_user: string }; Returns: { id: string; amount: number; reason: string; source_id: string | null; detail: Json; created_at: string }[] }
       xp_total: { Args: { p_user: string }; Returns: number }
       user_role: { Args: never; Returns: string }
       create_exam_group: { Args: { p_set_id: string; p_name?: string | null; p_max_members?: number }; Returns: { created_at: string; created_by: string; expires_at: string | null; finished_at: string | null; id: string; join_code: string; max_members: number; name: string | null; set_id: string; started_at: string | null; status: string; updated_at: string } }

@@ -2310,3 +2310,26 @@ case-study work needing prod migrations); new app behaviour is still behind `NEX
   student could read it before answering. Server grading stops forged tallies, not peeking; fixing it means fetching
   rationales after each answer.
 - Next: Phase 2 (rules engine, promotion quiz, shadow mode) awaits Ian's go.
+
+### Ranking v2 Phase 2 done on staging (Claude, 2026-10-12) — rules engine in SHADOW mode, promotion quiz backend
+Migrations (staging, via CLI/pooler): `20261012160000_ranking_config` (all tunables in `ranking_config`, read with `rcfg()`;
+`confirmed` marks Jade/Ian values vs proposals; `rank_levels` mirrors the 25-level ladder), `…160100_xp_detail_and_shadow`
+(reasons `streak_day`/`topic_mastered`; `xp_events.detail` and `question_attempts.xp_weight` hidden from students by column
+grants; `xp_shadow` log; staff `xp_event_details()`), `…160200_ranking_rules` (`topic_state`, weights, repeats, daily cap,
+Weak→Mastered milestone via `topic_weak_marks`, streak bonus, Trinidad-time `local_date`, `study_streak_v2`; legacy
+`study_streak` now Trinidad time too; `record_practice_answers` weighs answers and pays old/logs new in shadow, new in live),
+`…160300_mock_attempts_and_repeat` (mock answers → attempts; retaken set within 14 days pays ×0.25 — size unconfirmed),
+`…160400_promotion_quiz` (`promotion_attempts`, staff-only `promotion_questions`, `promotion_status`, `start_promotion_quiz`,
+`promotion_current`, `promotion_answer`; server-side 90 s clock from served_at + 5 s grace, blueprint apportionment by largest
+remainder, 14-day exclusion, pass 17/25, 24 h retake wait, rank = min(highest passed, XP level), everyone starts at 0),
+`…160500_practice_xp_round_down`, `…160600_promotion_status_fix`.
+`rules_live = 0` on staging: students are paid exactly as before; the new amounts go to `xp_shadow` for comparison.
+Gate: `node scripts/test-ranking-phase2.mjs` **47/47 PASS** (worked examples, shadow vs paid, repeats/mastered grinding, cap,
+tiny sessions, milestone once, streak 7 → 70 and once a day, privacy of weights/detail/config, mock retake, live path with
+rules_live flipped for seconds and restored, promotion eligibility, blueprint mix, no key in payload, no look-ahead, timer
+tampering, no going back, pass/fail, retake wait, cleanup); Phase 1 suite still 19/19; tsc/lint/build clean.
+**Spec corrections for Ian/Jade:** (1) the plan's worked example is 112 XP, not 115 — (15×1.5 + 5×1.0 + 5×0.125)/25 = 1.125;
+session XP rounds down (needed for the plan's 12.5 → 12). (2) Open: `question_options.is_correct` is readable by every signed-in
+user (tutor mode needs it), so a student could look up promotion-quiz keys via the API during the 90 s — proposed fix in Phase 3.
+Unconfirmed values live in ranking_config with confirmed=false: mock_repeat_factor 0.25, promo grace 5 s, retake 24 h,
+14-day exclusion. Next: Phase 3 (screens) awaits Ian's go.
