@@ -60,6 +60,9 @@ medical diagnosis.
      before anything settles the picture.
    - **Q4 Generate solutions** is a **nursing intervention for that priority problem**: something the nurse does or
      initiates, which can include carrying out a protocol. It is not "which prescription will be ordered".
+     **Name the diagnosis in Q4's stem** (e.g. "For Kamla's ineffective tissue perfusion, which intervention…"), never
+     just "the priority problem". Students get no feedback until the end, so a student who chose another Q3 option
+     must still meet a Q4 with one best answer. Q3 is locked by then, so naming it gives nothing away.
    - **Q5 Take action** is what the nurse does now. Q4 and Q5 have **different keys**; don't key the same action twice.
    - **Q6 Evaluate.** Measures the expected outcome for the nursing diagnosis (e.g. deficient fluid volume → urine output,
      mucous membranes, pulse), using data from after the intervention, and that intervention was shown earlier.

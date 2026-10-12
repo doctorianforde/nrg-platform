@@ -23,6 +23,8 @@ has mistakes and find them. Read the same sources as the author (`CASE_GEN_BRIEF
    - Q3 is the priority **nursing diagnosis** in V3 s.13 form (CASE_GEN_BRIEF "Nursing focus"). Is the key truly the
      first priority by ABC/safety, and is each distractor a supported but lower-priority diagnosis?
    - Do Q4 and Q5 treat the presentation with nursing actions rather than ask for the medical treatment?
+   - Does Q4's stem name the priority diagnosis rather than say "the priority problem"? Q4 must stand on its own for a
+     student who answered Q3 differently.
 5. **Standard.**
    - Stem verbs fit each clinical-judgment step.
    - Taxonomy labels match the construct; aim for 4–5 ASE questions.
