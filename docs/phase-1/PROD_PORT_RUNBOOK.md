@@ -23,11 +23,12 @@ Nothing becomes active. Ported AI questions stay `is_active = false`, `review_st
 
 ## Steps
 
-1. **Apply the migrations to prod** (staging already has all three). Follow CLAUDE.md "Connecting the Supabase CLI" and push through the pooler:
+1. **Apply the migrations to prod** (staging already has all of them). Follow CLAUDE.md "Connecting the Supabase CLI" and push through the pooler:
    - `20261004181457_add_question_options_distractor_type`: adds the colour column.
    - `20261004194204_backup_ai_option_rationales_20261004`: snapshots prod's current AI rationales.
    - `20261009000911_distractor_type_not_asked`: adds the `not_asked` type used by negative-stem questions.
    - `20261009003423_case_study_platform`: `questions.context`, the `unsafe` option type, case stages, attempts and the case RPCs.
+   - `20261012124123_case_stage_medications`: the medications block on case stages.
 2. **Regenerate the port SQL** from the current staging state, with a dry run on staging (it rolls back):
    ```bash
    npx tsx scripts/port-review-to-prod.ts --out data/review/prod-port/ai-port.sql --test-on-staging
