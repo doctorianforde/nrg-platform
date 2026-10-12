@@ -2252,3 +2252,11 @@ test uses the I/II/III combination format, which bears on the ~15 "needs-jade" c
   the question that tests them. Validator enforces 1–2 and medication shape, warns on chart-status answer leaks and exam order.
   Briefs updated; `CASE_REVISION_BRIEF.md` added. All 6 cases revised by agents (no keys changed) and re-imported to staging
   in_review. NRG-MH-001 v2 and NRG-PD-001 v1 archived because they held attempts (test teacher; Ian's two runs).
+- 2026-10-12: **Nursing focus** (Ian): Q3 is now the priority **nursing diagnosis** (V3 s.7.3/s.13 form, enforced by the
+  validator); Q4 is a nursing intervention for it and its stem names the diagnosis (students get no feedback until the end, so
+  Q4 must stand alone); Q6 measures the nursing-diagnosis outcome; the medical diagnosis stays in the story and teaching. Briefs
+  updated, including "don't let a pattern become the answer". `import-case.ts --archive-existing` keeps attempted versions as
+  `-vN`. All 6 cases revised + adversarially reviewed ("ready for Jade") and re-imported to staging in_review. Q3 keys:
+  deficient fluid volume (lithium, DKA), ineffective tissue perfusion (urosepsis), risk for maternal injury (pre-eclampsia),
+  ineffective airway clearance (bronchiolitis), ineffective health self-management (hypertension). Q4 is monitoring in two
+  cases (lithium, urosepsis) where it is clinically the best answer; Jade to confirm each priority choice (quality_reports).
