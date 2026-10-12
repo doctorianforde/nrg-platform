@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { adminClient } from "@/lib/supabase/admin";
 import type { Profile } from "@/lib/auth/session";
 import { hasAtLeast } from "@/lib/auth/roles";
 
@@ -70,14 +71,17 @@ export async function getStages(caseId: string): Promise<Stage[]> {
 }
 
 /**
- * Case questions in order. With `withAnswers: false` the key, rationales and option types are stripped
- * on the server, so nothing that could cue the answer reaches the browser before the case is complete.
+ * Case questions in order. With `withAnswers: false` only the stem and option text are loaded, with the student's own
+ * token (which cannot read keys at all). `withAnswers: true` reads keys, rationales, types and metadata through the
+ * server-only service client: callers must first establish the viewer is staff or has finished the case.
  */
 export async function getCaseQuestions(caseId: string, { withAnswers }: { withAnswers: boolean }): Promise<CaseQuestion[]> {
-  const supabase = createClient();
-  const { data } = await supabase
+  const db = withAnswers ? adminClient : createClient();
+  const { data } = await db
     .from("case_study_questions")
-    .select("display_order, cj_step, meta, case_stages(stage_order), questions(id, body, explanation, question_options(id, body, display_order, is_correct, rationale, distractor_type))")
+    .select(withAnswers
+      ? "display_order, cj_step, meta, case_stages(stage_order), questions(id, body, explanation, question_options(id, body, display_order, is_correct, rationale, distractor_type))"
+      : "display_order, cj_step, case_stages(stage_order), questions(id, body, question_options(id, body, display_order))")
     .eq("case_study_id", caseId)
     .order("display_order");
   type Row = {

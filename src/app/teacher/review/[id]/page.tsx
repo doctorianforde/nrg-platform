@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { requireRole } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
+import { adminClient } from "@/lib/supabase/admin";
 import { DashboardShell } from "@/components/DashboardShell";
 import { filtersToQuery, parseFilters, STATUS_BADGE, STATUS_LABEL, STUDENT_SOURCE, type ReviewStatus } from "@/lib/review/filters";
 import { findNextId, findPosition } from "@/lib/review/queue";
@@ -23,7 +24,9 @@ export default async function ReviewQuestionPage({
 
   if (!/^[0-9a-f-]{36}$/i.test(params.id)) notFound();
 
-  const { data: q } = await supabase
+  // Keys and explanations are not readable with a user token (migration 20261012170000); staff read them here, after
+  // requireRole("teacher") above, through the server-only service client.
+  const { data: q } = await adminClient
     .from("questions")
     .select(
       `id, body, explanation, cognitive_level, difficulty, question_type, review_status, review_notes, reviewed_at, reviewed_by, is_active, is_ai_generated, source, source_id, updated_at, domains(code, name), topics(name, topic_clusters(name)), question_options(id, body, is_correct, rationale, display_order)`

@@ -58,6 +58,12 @@ export type Database = {
         Update: { finished_at?: string | null; id?: string; passed?: boolean | null; question_count?: number; score?: number | null; started_at?: string; target_level?: number; user_id?: string }
         Relationships: []
       }
+      promotion_questions: {
+        Row: { answered_at: string | null; attempt_id: string; is_correct: boolean | null; option_ids: string[] | null; position: number; question_id: string; served_at: string | null; timed_out: boolean }
+        Insert: { answered_at?: string | null; attempt_id: string; is_correct?: boolean | null; option_ids?: string[] | null; position: number; question_id: string; served_at?: string | null; timed_out?: boolean }
+        Update: { answered_at?: string | null; attempt_id?: string; is_correct?: boolean | null; option_ids?: string[] | null; position?: number; question_id?: string; served_at?: string | null; timed_out?: boolean }
+        Relationships: []
+      }
       rank_levels: {
         Row: { level: number; min_xp: number; name: string }
         Insert: { level: number; min_xp: number; name: string }

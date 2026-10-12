@@ -189,7 +189,10 @@ export function ResultsView({
                   })}
                 </div>
                 {rationaleReleased ? (
-                  <RationalePanel explanation={q.explanation} options={q.options} />
+                  <RationalePanel
+                    explanation={q.explanation ?? null}
+                    options={q.options.map((o) => ({ ...o, is_correct: Boolean(o.is_correct), rationale: o.rationale ?? null }))}
+                  />
                 ) : null}
               </li>
             );

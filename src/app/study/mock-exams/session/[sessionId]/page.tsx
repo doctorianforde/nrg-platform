@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { requireRole } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 import { DashboardShell } from "@/components/DashboardShell";
-import { fetchQuizQuestions } from "@/lib/quiz/fetch";
+import { attachKeys, fetchQuizQuestions } from "@/lib/quiz/fetch";
 import { ExamRunner } from "./ExamRunner";
 import { ResultsView } from "./ResultsView";
 import { GroupStandings, type Standing } from "@/components/exam/GroupStandings";
@@ -83,6 +83,9 @@ export default async function MockExamSessionPage({
   }
 
   if (session.completed_at) {
+    // Finished: the key may be shown. Explanations and rationales only once the teacher has released them, and they
+    // are left out on the server otherwise, not just hidden in the browser.
+    const reviewed = await attachKeys(questions, { rationales: set.rationale_released_at != null });
     return (
       <DashboardShell
         profile={profile}
@@ -103,7 +106,7 @@ export default async function MockExamSessionPage({
         <ResultsView
           setTitle={set.title}
           session={session}
-          questions={questions}
+          questions={reviewed}
           responses={(responses ?? []) as Array<{
             question_id: string;
             selected_option_ids: string[];

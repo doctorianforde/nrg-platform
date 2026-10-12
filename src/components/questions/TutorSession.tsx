@@ -8,6 +8,7 @@ import { OptionRow, type OptionState } from "@/components/questions/OptionRow";
 import { QuestionMetaBadges } from "@/components/questions/QuestionMetaBadges";
 import { RationalePanel } from "@/components/questions/RationalePanel";
 import { Badge } from "@/components/ui/Badge";
+import { revealPracticeAnswer, type RevealedAnswer } from "@/lib/quiz/actions";
 
 /** One answered question as sent to the server, which grades it against the key. */
 export type PracticeAnswer = { question_id: string; option_ids: string[] };
@@ -51,6 +52,10 @@ export function TutorSession({
   const played = useRef(false);
   const reported = useRef(false);
   const answers = useRef<PracticeAnswer[]>([]);
+  // The key arrives from the server only after "Check answer"; the browser never holds it beforehand.
+  const [key, setKey] = useState<RevealedAnswer | null>(null);
+  const [checking, setChecking] = useState(false);
+  const [checkError, setCheckError] = useState<string | null>(null);
 
   // Report once per run. The tally is state, so this waits for it to settle rather
   // than firing inside the click handler with a stale count.
@@ -93,6 +98,7 @@ export function TutorSession({
               setRevealed(false);
               setTally({ correct: 0, wrong: 0 });
               setFinished(false);
+              setKey(null);
               answers.current = [];
               reported.current = false;
               played.current = false;
@@ -114,7 +120,7 @@ export function TutorSession({
 
   const q = questions[index];
   const isSata = q.question_type === "sata";
-  const correctIds = q.options.filter((o) => o.is_correct).map((o) => o.id);
+  const correctIds = key?.correctIds ?? [];
   const isCorrect =
     selected.length > 0 &&
     selected.length === correctIds.length &&
@@ -131,10 +137,20 @@ export function TutorSession({
     );
   };
 
-  const reveal = () => {
-    if (selected.length === 0 || revealed) return;
+  const reveal = async () => {
+    if (selected.length === 0 || revealed || checking) return;
+    setChecking(true);
+    setCheckError(null);
+    const r = await revealPracticeAnswer(q.id);
+    setChecking(false);
+    if ("error" in r) {
+      setCheckError(r.error);
+      return;
+    }
+    const right = selected.length === r.correctIds.length && r.correctIds.every((id) => selected.includes(id));
+    setKey(r);
     setRevealed(true);
-    playSound(isCorrect ? "correct" : "wrong");
+    playSound(right ? "correct" : "wrong");
     played.current = true;
   };
 
@@ -148,14 +164,14 @@ export function TutorSession({
       setIndex(index + 1);
       setSelected([]);
       setRevealed(false);
+      setKey(null);
       played.current = false;
     }
   };
 
   const optionState = (optionId: string): OptionState => {
     if (!revealed) return selected.includes(optionId) ? "selected" : "idle";
-    const opt = q.options.find((o) => o.id === optionId);
-    if (opt?.is_correct) return selected.includes(optionId) ? "correct" : "missed";
+    if (correctIds.includes(optionId)) return selected.includes(optionId) ? "correct" : "missed";
     if (selected.includes(optionId)) return "wrong";
     return "dimmed";
   };
@@ -201,7 +217,13 @@ export function TutorSession({
           ))}
         </div>
 
-        {revealed ? <RationalePanel explanation={q.explanation} options={q.options} /> : null}
+        {revealed && key ? (
+          <RationalePanel
+            explanation={key.explanation}
+            options={q.options.map((o) => ({ ...o, is_correct: correctIds.includes(o.id), rationale: key.rationales[o.id] ?? null }))}
+          />
+        ) : null}
+        {checkError ? <p className="mt-3 text-sm text-red-700">{checkError}</p> : null}
 
         <div className="mt-6 flex items-center justify-between">
           <span className="text-xs text-muted-foreground">
@@ -219,15 +241,15 @@ export function TutorSession({
             <button
               type="button"
               onClick={reveal}
-              disabled={selected.length === 0}
+              disabled={selected.length === 0 || checking}
               className={cn(
                 "rounded-md px-5 py-2 text-sm font-medium",
-                selected.length === 0
+                selected.length === 0 || checking
                   ? "cursor-not-allowed bg-muted text-muted-foreground"
                   : "bg-primary text-primary-foreground hover:bg-brand-800"
               )}
             >
-              Check answer
+              {checking ? "Checking…" : "Check answer"}
             </button>
           )}
         </div>
