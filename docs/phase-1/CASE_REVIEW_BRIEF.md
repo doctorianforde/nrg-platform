@@ -19,7 +19,10 @@ has mistakes and find them. Read the same sources as the author (`CASE_GEN_BRIEF
    - Two-answer test: is any distractor defensible as best?
    - Hidden assumptions: does the key rely on anything unstated?
    - Is each distractor plausible, and does each typed label (close/priority/incorrect/unsafe) fit?
-4. **Scope.** Entry-level RN actions only. Any authority the key depends on is stated.
+4. **Scope and nursing focus.** Entry-level RN actions only. Any authority the key depends on is stated.
+   - Q3 is the priority **nursing diagnosis** in V3 s.13 form (CASE_GEN_BRIEF "Nursing focus"). Is the key truly the
+     first priority by ABC/safety, and is each distractor a supported but lower-priority diagnosis?
+   - Do Q4 and Q5 treat the presentation with nursing actions rather than ask for the medical treatment?
 5. **Standard.**
    - Stem verbs fit each clinical-judgment step.
    - Taxonomy labels match the construct; aim for 4–5 ASE questions.

@@ -17,6 +17,28 @@ decision is an **entry-level registered nurse's**. Caribbean setting: district h
 and foods. Blood glucose in **mg/dL**. Electrolytes in mmol/L. No critical-care management, no advanced-practice or
 physician decisions as the nursing answer. Any authority the key depends on (a standing order, a protocol) is stated in the case.
 
+## Nursing focus (Ian, 2026-10-12)
+The cases teach nursing judgement: **prioritise the nursing diagnosis and treat the presentation**, rather than naming the
+medical diagnosis.
+- **Q3 options are four nursing diagnoses** in V3 s.13 form:
+  - Actual: "Problem related to cause, as evidenced by findings".
+  - Risk: "Risk for problem related to risk factor", with no "as evidenced by".
+  - Write the etiology as a cause the nurse can act on (e.g. "related to fluid loss from vomiting"), not a bare medical
+    label, where possible.
+  - Every option is supported by some cues.
+  - The key is the one to address first: airway/breathing/circulation, then safety, an actual problem before a risk one
+    unless the risk is the more immediately dangerous.
+  - Use a "Problem" term that a Caribbean RN would recognise (NANDA-I style), and keep the four options parallel in
+    length (the validator checks).
+- The stem asks for the priority **nursing diagnosis** (or "patient problem"); the validator rejects a Q3 that asks for a
+  medical condition.
+- The medical diagnosis can be named in the story (for example, the doctor's working diagnosis after Q3), discussed in
+  Q2's analysis, and taught in the pathophysiology section. No question's key is the medical diagnosis.
+- Q4, Q5 and Q7–Q8 keys are nursing actions on the presentation: positioning, oxygen per protocol, monitoring and
+  escalation, holding a dose, fluid and nutrition, safety, teaching, delegation, communication. A collaborative order is
+  fine as a key only when the question is about the nurse carrying it out safely.
+- The teaching section names the priority nursing diagnosis and links each intervention to it.
+
 ## How to build it (V3 s.17, in this order)
 1. **Story first.** Write the whole clinical course in your head, from the opening to the endpoint: what is really happening,
    which findings appear when, what is done, and how the client responds. Every value must fit the pathophysiology and its
@@ -27,10 +49,13 @@ physician decisions as the nursing answer. Any authority the key depends on (a s
      presenting picture.
    - **Q2 Analyze.** New information arrives. The question asks what it **means** for the findings already seen. It is not
      "which test would you order".
-   - **Q3 Prioritize.** Asked **before** anything confirms the diagnosis. A lab result that settles it comes *after* Q3.
-   - **Q4 Generate solutions** and **Q5 Take action** have **different keys**. Q4 is a plan or expected order; Q5 is what the
-     nurse does now. Don't key the same action twice.
-   - **Q6 Evaluate.** Uses data from after the intervention, and that intervention was shown earlier.
+   - **Q3 Prioritize.** The **priority nursing diagnosis**, not the medical condition (see "Nursing focus" below). Ask it
+     before anything settles the picture.
+   - **Q4 Generate solutions** is a **nursing intervention for that priority problem**: something the nurse does or
+     initiates, which can include carrying out a protocol. It is not "which prescription will be ordered".
+   - **Q5 Take action** is what the nurse does now. Q4 and Q5 have **different keys**; don't key the same action twice.
+   - **Q6 Evaluate.** Measures the expected outcome for the nursing diagnosis (e.g. deficient fluid volume → urine output,
+     mucous membranes, pulse), using data from after the intervention, and that intervention was shown earlier.
    - **Q7–Q8** (extensions): use the request's `q7_domain` and `q8_domain`, each testing that domain for real (delegation,
      communication with family, teaching, ethics, professional conduct).
 3. **Never let a stage answer its own question.** If a stage says "the nurse may withhold the dose under standing orders",

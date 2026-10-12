@@ -7,7 +7,8 @@
  * The case lands as status=in_review, inactive, validation pending: a teacher reviews it at
  * /teacher/case-studies and it can only be published after clinical validation (V3 s.14).
  * Case questions are stored with context='case' and is_active=false, so they never enter
- * practice or mock-exam pools. --replace re-imports a case that has no student attempts.
+ * practice or mock-exam pools. --replace re-imports a case that has no student attempts; add --archive-existing to keep
+ * an attempted version as an archived NRG-XX-NNN-vN and import the new one alongside it.
  * Staging only; prod gets cases through a reviewed port, like the question bank.
  */
 import { createClient } from "@supabase/supabase-js";
@@ -49,10 +50,22 @@ async function main() {
   if (existing) {
     if (!args.includes("--replace")) throw new Error(`${doc.case_code} already exists; pass --replace to re-import it`);
     const { count } = await db.from("case_attempts").select("id", { count: "exact", head: true }).eq("case_study_id", existing.id);
-    if (count) throw new Error(`${doc.case_code} has ${count} student attempt(s); refusing to replace it`);
-    const links = must(await db.from("case_study_questions").select("question_id").eq("case_study_id", existing.id), "links") as { question_id: string }[];
-    must(await db.from("case_studies").delete().eq("id", existing.id), "delete case");
-    if (links.length) must(await db.from("questions").delete().in("id", links.map(l => l.question_id)), "delete case questions");
+    if (count && !args.includes("--archive-existing")) throw new Error(`${doc.case_code} has ${count} student attempt(s); refusing to replace it (pass --archive-existing to keep it as an archived version)`);
+    if (count) {
+      // Keep the attempted version, renamed to the next free -vN and archived, and import the new one alongside it.
+      const { data: olds } = await db.from("case_studies").select("case_code").like("case_code", `${doc.case_code}-v%`);
+      const n = Math.max(0, ...(olds ?? []).map(o => Number(String(o.case_code).split("-v").pop()) || 0)) + 1;
+      const code = `${doc.case_code}-v${n}`;
+      const old = must(await db.from("case_studies").select("title").eq("id", existing.id).single(), "old title") as { title: string };
+      const links = must(await db.from("case_study_questions").select("question_id, display_order").eq("case_study_id", existing.id), "links") as { question_id: string; display_order: number }[];
+      for (const l of links) must(await db.from("questions").update({ source_id: `case:${code}:q${l.display_order}` }).eq("id", l.question_id), "rename question");
+      must(await db.from("case_studies").update({ case_code: code, status: "archived", is_active: false, title: `${old.title} (v${n}, archived)` }).eq("id", existing.id), "archive");
+      console.log(`Archived the attempted version as ${code}.`);
+    } else {
+      const links = must(await db.from("case_study_questions").select("question_id").eq("case_study_id", existing.id), "links") as { question_id: string }[];
+      must(await db.from("case_studies").delete().eq("id", existing.id), "delete case");
+      if (links.length) must(await db.from("questions").delete().in("id", links.map(l => l.question_id)), "delete case questions");
+    }
   }
 
   const cs = must(await db.from("case_studies").insert({

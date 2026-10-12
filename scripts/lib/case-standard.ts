@@ -83,6 +83,8 @@ export function caseWarnings(doc: CaseDoc): string[] {
     if (order.some((v, i) => i > 0 && v < order[i - 1])) w.push(`stage ${s.key}: examination is not in body-systems order (${BODY_SYSTEMS.map(b => b.name).join(", ")})`);
   }
   if (!doc.stages.some(s => s.medications?.length) && !doc.opening?.medications?.length) w.push("no stage charts any medications; add home medications and those ordered in the case");
+  const q4 = doc.questions.find(q => q.cj_step === "generate_solutions");
+  if (q4 && /\b(prescription|prescribe|order|medication|drug)s?\b/i.test(q4.stem)) w.push(`Q${q4.position}: Q4 should ask for a nursing intervention for the priority problem, not which prescription to expect (nursing focus)`);
   for (const q of doc.questions) {
     const rule = (STEM_VERBS as Record<string, { use: string[] }>)[q.cj_step];
     if (rule && !rule.use.some(v => hasPhrase(q.stem, v))) w.push(`Q${q.position}: stem uses none of the ${q.cj_step} verbs (${rule.use.join(", ")}); check it tests that step`);
@@ -225,6 +227,15 @@ export function validateCase(doc: CaseDoc, rules: Rules = loadRules()): string[]
     if (!q.self_test?.trim()) e.push(`${tag}: missing self-test sentence (addendum #5)`);
     else if (/\b(obviously|clearly)\b/i.test(q.self_test)) e.push(`${tag}: self-test uses "obviously/clearly"; rewrite the distractor (addendum #5)`);
     if (!q.meta?.topic || !q.meta?.subtopic) e.push(`${tag}: metadata needs topic and subtopic (V3 s.16)`);
+    // Ian, 2026-10-12: nursing focus. Q3 asks for the priority nursing diagnosis (V3 s.7.3 "priority patient problem"),
+    // written to V3 s.13: "Problem related to etiology (as evidenced by ...)", risk diagnoses without "as evidenced by".
+    if (q.cj_step === "prioritize_hypotheses") {
+      if (!/nursing diagnos|patient problem|priority problem/i.test(q.stem ?? "")) e.push(`${tag}: Q3 asks for the priority nursing diagnosis or patient problem, not a medical condition (nursing focus)`);
+      for (const o of q.options ?? []) {
+        if (!/\brelated to\b/i.test(o.text)) e.push(`${tag}${o.label}: write each option as a nursing diagnosis, "Problem related to cause" (V3 s.13)`);
+        if (/^risk for\b/i.test(o.text.trim()) && /as evidenced by/i.test(o.text)) e.push(`${tag}${o.label}: a risk diagnosis has no "as evidenced by" (V3 s.13)`);
+      }
+    }
   });
   return e;
 }
