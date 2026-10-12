@@ -63,8 +63,8 @@ async function main() {
   }).select("id").single(), "insert case") as { id: string };
 
   // Stage 0 is the opening scenario; doc.stages follow from 1.
-  const stageRows = [{ case_study_id: cs.id, stage_order: 0, time_label: doc.opening.time_label, narrative: doc.opening.narrative, vitals: [], assessment: [], labs: [] },
-    ...doc.stages.map((s, i) => ({ case_study_id: cs.id, stage_order: i + 1, time_label: s.time_label, narrative: s.narrative, vitals: s.vitals ?? [], assessment: s.assessment ?? [], labs: s.labs ?? [] }))];
+  const stageRows = [{ case_study_id: cs.id, stage_order: 0, time_label: doc.opening.time_label, narrative: doc.opening.narrative, vitals: [], assessment: [], labs: [], medications: doc.opening.medications ?? [] },
+    ...doc.stages.map((s, i) => ({ case_study_id: cs.id, stage_order: i + 1, time_label: s.time_label, narrative: s.narrative, vitals: s.vitals ?? [], assessment: s.assessment ?? [], labs: s.labs ?? [], medications: s.medications ?? [] }))];
   const stages = must(await db.from("case_stages").insert(stageRows).select("id, stage_order"), "insert stages") as { id: string; stage_order: number }[];
   const stageId = (key: string) => stages.find(s => s.stage_order === doc.stages.findIndex(x => x.key === key) + 1)!.id;
 

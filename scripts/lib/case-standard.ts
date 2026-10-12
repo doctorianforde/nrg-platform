@@ -20,7 +20,10 @@ export type CaseStage = {
   vitals?: { label: string; value: string }[];
   assessment?: { system: string; finding: string }[];
   labs?: { category: string; items: { label: string; value: string; reference?: string }[] }[];
+  medications?: CaseMedication[];    // as charted when this stage is revealed (Ian, 2026-10-12)
 };
+/** e.g. { name: "Lithium carbonate", dose: "450 mg", route: "oral", frequency: "twice daily (10 am, 10 pm)", status: "last dose 10 pm yesterday" } */
+export type CaseMedication = { name: string; dose: string; route: string; frequency: string; status?: string };
 export type CaseQuestion = {
   position: number;                  // 1..8
   stage: string;                     // key of the last stage revealed before this question
@@ -48,7 +51,7 @@ export type CaseDoc = {
   primary_domain: (typeof DOMAIN_CODES)[number];
   difficulty: "low" | "moderate" | "high";
   source: string;                    // "jade", "jade+claude", "ai:<model>"
-  opening: { time_label: string; narrative: string };
+  opening: { time_label: string; narrative: string; medications?: CaseMedication[] };
   stages: CaseStage[];               // in order; stage 0 is shown with the opening
   questions: CaseQuestion[];
   pathophysiology: string;           // markdown
@@ -75,11 +78,23 @@ const hasPhrase = (stem: string, p: string) => new RegExp(`\\b${p.replace(/ /g, 
 /** Soft checks: printed, never blocking. */
 export function caseWarnings(doc: CaseDoc): string[] {
   const w: string[] = [];
+  for (const s of doc.stages) {
+    const order = (s.assessment ?? []).map(a => BODY_SYSTEMS.findIndex(b => b.re.test(a.system))).filter(i => i >= 0);
+    if (order.some((v, i) => i > 0 && v < order[i - 1])) w.push(`stage ${s.key}: examination is not in body-systems order (${BODY_SYSTEMS.map(b => b.name).join(", ")})`);
+  }
+  if (!doc.stages.some(s => s.medications?.length) && !doc.opening?.medications?.length) w.push("no stage charts any medications; add home medications and those ordered in the case");
   for (const q of doc.questions) {
     const rule = (STEM_VERBS as Record<string, { use: string[] }>)[q.cj_step];
     if (rule && !rule.use.some(v => hasPhrase(q.stem, v))) w.push(`Q${q.position}: stem uses none of the ${q.cj_step} verbs (${rule.use.join(", ")}); check it tests that step`);
     // Answer leak: most of the key's words already appear in the new information shown just before the question.
     const stage = doc.stages.find(s => s.key === q.stage);
+    // A medication charted as held/given/stopped in the question's own stage, named in the key, may give the action away.
+    for (const m of stage?.medications ?? []) {
+      const drug = m.name.toLowerCase().split(/\s+/)[0];
+      const keyLower = (q.options.find(o => o.label === q.correct?.[0])?.text ?? "").toLowerCase();
+      if (MED_STATUS_LEAK.test(m.status ?? "") && drug.length > 3 && keyLower.includes(drug))
+        w.push(`Q${q.position}: ${m.name} is charted "${m.status}" in this question's stage and the key names it; check the chart doesn't give the answer away`);
+    }
     const keyText = q.options.find(o => o.label === q.correct?.[0])?.text ?? "";
     const keyWords = [...tok(keyText)].filter(x => x.length > 3);
     if (stage && keyWords.length >= 3) {
@@ -90,6 +105,30 @@ export function caseWarnings(doc: CaseDoc): string[] {
   }
   return w;
 }
+
+/**
+ * Ian, 2026-10-12: every examination covers every body system, in body-systems order, and every set of vital signs is
+ * complete. Matched by system/label name so authors can use usual wording ("CNS", "Skin", "Heart rate").
+ */
+export const BODY_SYSTEMS: { name: string; re: RegExp }[] = [
+  { name: "Neurological", re: /neuro|\bcns\b|central nervous/i },
+  { name: "Cardiovascular", re: /cardio|\bcvs\b|circulat/i },
+  { name: "Respiratory", re: /respir|pulmon/i },
+  { name: "Gastrointestinal", re: /gastro|\bgi\b|abdom/i },
+  { name: "Genitourinary", re: /genito|urin|renal|\bgu\b/i },
+  { name: "Musculoskeletal", re: /musculo|\bmsk\b|skeletal/i },
+  { name: "Integumentary", re: /integ|skin/i },
+  { name: "Psychosocial", re: /psych|mental|behavio|social/i },
+];
+export const REQUIRED_VITALS: { name: string; re: RegExp }[] = [
+  { name: "Temperature", re: /temp/i },
+  { name: "Pulse", re: /pulse|heart rate|\bhr\b/i },
+  { name: "Respirations", re: /resp/i },
+  { name: "Blood pressure", re: /blood pressure|\bbp\b/i },
+  { name: "SpO2", re: /spo2|sp02|saturation|oxygen sat/i },
+  { name: "Pain", re: /pain/i },
+];
+const MED_STATUS_LEAK = /\b(held|withheld|withhold|stopped|discontinued|given|administered|started|commenced)\b/i;
 
 const LEN = { maxRatio: 2.0, maxCorrectGap: 12, minOption: 3, maxOption: 220, minRationaleCorrect: 60, minRationale: 30 };
 const FLUID_TRIGGER = /lithium|digoxin|diuretic|furosemide|frusemide|thiazide|renal|kidney|dehydrat|vomit|diarrh|intravenous|\bIV\b/i;
@@ -110,7 +149,8 @@ export function validateCase(doc: CaseDoc, rules: Rules = loadRules()): string[]
   const visual = rules.visual_flag_patterns.map(p => ({ id: p.id, re: new RegExp(p.pattern, p.flags ?? "i") }));
   const stageText = (s: { narrative: string } & Partial<CaseStage>) => [s.narrative,
     ...(s.vitals ?? []).map(v => `${v.label} ${v.value}`), ...(s.assessment ?? []).map(a => `${a.system} ${a.finding}`),
-    ...(s.labs ?? []).flatMap(l => l.items.map(i => `${i.label} ${i.value}`))].join("\n");
+    ...(s.labs ?? []).flatMap(l => l.items.map(i => `${i.label} ${i.value}`)),
+    ...(s.medications ?? []).map(m => `${m.name} ${m.dose} ${m.route} ${m.frequency} ${m.status ?? ""}`)].join("\n");
   const allStudentText = [doc.title, doc.opening?.narrative ?? "", ...doc.stages.map(stageText), ...doc.questions.flatMap(q => [q.stem, ...q.options.map(o => o.text)])].join("\n");
   for (const f of forbidden) if (f.re.test(allStudentText + "\n" + doc.questions.map(q => q.rationale_correct + Object.values(q.distractor_rationales).join(" ")).join("\n"))) e.push(`forbidden:${f.id}`);
   for (const v of visual) if (v.re.test(allStudentText)) e.push(`visual-flag:${v.id} (V3 s.5: never label or highlight values)`);
@@ -126,6 +166,24 @@ export function validateCase(doc: CaseDoc, rules: Rules = loadRules()): string[]
   const stageIdx = new Map(doc.stages.map((s, i) => [s.key, i]));
   if (stageIdx.size !== doc.stages.length) e.push("stage keys must be unique");
   doc.stages.forEach((s, i) => { if (!s.time_label || !s.narrative) e.push(`stage ${i} (${s.key}) needs a time label and narrative`); });
+
+  // Full vitals and a full body-systems examination (Ian, 2026-10-12); the first stage is the baseline and has both.
+  const first = doc.stages[0];
+  if (first && (!first.vitals?.length || !first.assessment?.length)) e.push(`stage ${first.key}: the baseline stage needs full vital signs and a full examination`);
+  for (const s of doc.stages) {
+    if (s.vitals?.length) {
+      const missing = REQUIRED_VITALS.filter(v => !s.vitals!.some(x => v.re.test(x.label))).map(v => v.name);
+      if (missing.length) e.push(`stage ${s.key}: vital signs must be complete; missing ${missing.join(", ")}`);
+    }
+    if (s.assessment?.length) {
+      const missing = BODY_SYSTEMS.filter(b => !s.assessment!.some(a => b.re.test(a.system))).map(b => b.name);
+      if (missing.length) e.push(`stage ${s.key}: the examination must cover every body system; missing ${missing.join(", ")}`);
+    }
+    for (const m of [...(s.medications ?? [])]) if (!m.name?.trim() || !m.dose?.trim() || !m.route?.trim() || !m.frequency?.trim())
+      e.push(`stage ${s.key}: medication "${m.name ?? "?"}" needs name, dose, route and frequency`);
+  }
+  for (const m of doc.opening?.medications ?? []) if (!m.name?.trim() || !m.dose?.trim() || !m.route?.trim() || !m.frequency?.trim())
+    e.push(`opening: medication "${m.name ?? "?"}" needs name, dose, route and frequency`);
 
   // Questions: 6 core in fixed CJ order, optional Q7-Q8 extensions
   const qs = [...doc.questions].sort((a, b) => a.position - b.position);

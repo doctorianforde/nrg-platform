@@ -55,9 +55,24 @@ physician decisions as the nursing answer. Any authority the key depends on (a s
    - the mechanism;
    - why each decision mattered (cite Q numbers);
    - prevention.
-9. **Data presentation.** Raw values, no flags or labels such as high or low, no reference ranges in the case text.
-   Assessment follows body-systems order. Addendum 3: give urine output or electrolytes when fluids, kidneys or
-   electrolyte-active drugs are involved.
+9. **Data presentation** (Ian, 2026-10-12; the validator enforces the first three):
+   - **Full vital signs** every time vitals are given: temperature, pulse, respirations, blood pressure, SpO2 (with the
+     oxygen delivery, e.g. "94% on room air"), and pain score (0–10, or FLACC for infants). Add blood glucose (mg/dL) where
+     relevant. A single repeated reading, such as hourly glucose or a drug level, goes under `labs` ("Bedside tests"), not `vitals`.
+   - **Full body-systems examination** every time an examination is given, in this order: Neurological, Cardiovascular,
+     Respiratory, Gastrointestinal, Genitourinary, Musculoskeletal, Integumentary, Psychosocial. Add Obstetric or Newborn
+     findings where they apply. Normal systems are written as plain normal findings, e.g. "Abdomen soft, non-tender, bowel
+     sounds present". The relevant cue sits among the normals, not alone, with nothing marking it out.
+   - The first stage is the baseline: it has both full vitals and a full examination.
+   - **Medications** (`medications` on a stage, and on `opening` for home medications). Each row has drug, dose, route,
+     frequency, and an optional status (e.g. "last dose 10 pm yesterday", "due 10:00 am", "started 9:30 am"):
+     - Chart the client's home or current medications at the start.
+     - Chart each medication ordered in the case **on the stage where it is ordered**, never earlier.
+     - A status that is the answer to a question ("held", "given", "stopped") appears only **after** that question, in a
+       later stage.
+     - Include the drugs the management of the condition really uses, with realistic adult or weight-based doses.
+   - Raw values only: no flags, no labels such as high or low, no reference ranges in the case text.
+   - Addendum 3: give urine output or electrolytes when fluids, kidneys or electrolyte-active drugs are involved.
 10. **Gender.** Use the client's name and say "the client". Use he or she only when the scenario needs a sex (pregnancy,
     for example), and then stay consistent.
 

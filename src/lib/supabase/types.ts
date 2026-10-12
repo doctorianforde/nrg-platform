@@ -4,7 +4,8 @@
 // Extended by hand for 20260920060000 (exam_groups, exam_group_members, the group/
 // timer columns and the group RPCs).
 // Extended by hand for 20261004181457 / 20261009000911 (question_options.distractor_type) and
-// 20261009003423 (case study platform: case_stages, case_attempts, case_attempt_responses, questions.context, RPCs).
+// 20261009003423 (case study platform: case_stages, case_attempts, case_attempt_responses, questions.context, RPCs),
+// 20261012124123 (case_stages.medications).
 // Regenerate after every migration (questions review_* columns added by hand for 20260919010000): npx supabase gen types typescript --project-id cdvubijjepwmhhkgppbl > src/lib/supabase/types.ts
 export type Json =
   | string
@@ -63,9 +64,9 @@ export type Database = {
         Relationships: [{ foreignKeyName: "case_studies_domain_id_fkey"; columns: ["domain_id"]; isOneToOne: false; referencedRelation: "domains"; referencedColumns: ["id"] }]
       }
       case_stages: {
-        Row: { assessment: Json; case_study_id: string; id: string; labs: Json; narrative: string; stage_order: number; time_label: string; vitals: Json }
-        Insert: { assessment?: Json; case_study_id: string; id?: string; labs?: Json; narrative?: string; stage_order: number; time_label: string; vitals?: Json }
-        Update: { assessment?: Json; case_study_id?: string; id?: string; labs?: Json; narrative?: string; stage_order?: number; time_label?: string; vitals?: Json }
+        Row: { assessment: Json; case_study_id: string; id: string; labs: Json; medications: Json; narrative: string; stage_order: number; time_label: string; vitals: Json }
+        Insert: { assessment?: Json; case_study_id: string; id?: string; labs?: Json; medications?: Json; narrative?: string; stage_order: number; time_label: string; vitals?: Json }
+        Update: { assessment?: Json; case_study_id?: string; id?: string; labs?: Json; medications?: Json; narrative?: string; stage_order?: number; time_label?: string; vitals?: Json }
         Relationships: [{ foreignKeyName: "case_stages_case_study_id_fkey"; columns: ["case_study_id"]; isOneToOne: false; referencedRelation: "case_studies"; referencedColumns: ["id"] }]
       }
       case_attempts: {

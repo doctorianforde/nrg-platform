@@ -26,6 +26,11 @@ has mistakes and find them. Read the same sources as the author (`CASE_GEN_BRIEF
    - Q7 and Q8 really test their domains.
    - The title doesn't reveal the condition.
    - No flags or reference ranges in the case text.
+   - Every vitals block is complete, and every examination covers all body systems in order (CASE_GEN_BRIEF item 9).
+     Are the "normal" findings really consistent with the condition at that moment?
+   - Medications: home medications are charted at the start, and each order appears on the stage where it is made. Doses,
+     routes and frequencies are correct for the client (weight-based for children). No chart status gives away an answer
+     before its question.
    - Glucose is in mg/dL.
    - The client's gender is used consistently.
 6. **Teaching section.** Accurate, and it cites the questions.

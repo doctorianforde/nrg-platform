@@ -32,7 +32,9 @@ export const OPTION_TYPE: Record<string, { label: string; className: string; ord
 export type Vital = { label: string; value: string };
 export type Finding = { system: string; finding: string };
 export type LabGroup = { category: string; items: { label: string; value: string; reference?: string }[] };
-export type Stage = { id: string; stage_order: number; time_label: string; narrative: string; vitals: Vital[]; assessment: Finding[]; labs: LabGroup[] };
+/** A medication as charted at that point in the case: e.g. "Lithium carbonate", "450 mg", "oral", "twice daily (10 am, 10 pm)", "last dose 10 pm yesterday". */
+export type Medication = { name: string; dose: string; route: string; frequency: string; status?: string };
+export type Stage = { id: string; stage_order: number; time_label: string; narrative: string; vitals: Vital[]; assessment: Finding[]; labs: LabGroup[]; medications: Medication[] };
 
 export type CaseHeader = {
   id: string; case_code: string | null; title: string; objective: string | null; population: string | null; setting: string | null;
@@ -64,7 +66,7 @@ export async function getCaseHeader(id: string): Promise<CaseHeader | null> {
 export async function getStages(caseId: string): Promise<Stage[]> {
   const supabase = createClient();
   const { data } = await supabase.from("case_stages").select("*").eq("case_study_id", caseId).order("stage_order");
-  return (data ?? []).map((s) => ({ ...s, vitals: (s.vitals ?? []) as Vital[], assessment: (s.assessment ?? []) as Finding[], labs: (s.labs ?? []) as LabGroup[] }));
+  return (data ?? []).map((s) => ({ ...s, vitals: (s.vitals ?? []) as Vital[], assessment: (s.assessment ?? []) as Finding[], labs: (s.labs ?? []) as LabGroup[], medications: (s.medications ?? []) as Medication[] }));
 }
 
 /**
