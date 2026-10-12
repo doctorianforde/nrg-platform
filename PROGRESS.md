@@ -2246,3 +2246,9 @@ test uses the I/II/III combination format, which bears on the ~15 "needs-jade" c
   consistency (e.g. no routine CXR in bronchiolitis, DKA potassium vs JBDS, duplicate paracetamol, urine-output trend before Mg
   toxicity). Each case's quality_report lists what Jade must confirm. Bank now 6 cases: NP 33 / CDM 42 / ASE 46%.
   Open: Ian/Jade to decide on the reference-range panel vs addendum #2.
+- 2026-10-12: **Ian's case feedback built in:** (1) every examination covers all body systems in order, (2) every vitals set is
+  complete (T, P, R, BP, SpO2 with O2 delivery, pain), (3) medications charted per stage (new `case_stages.medications`,
+  migration `20261012124123`, staging; added to the prod runbook), revealed when ordered, with held/given statuses only after
+  the question that tests them. Validator enforces 1–2 and medication shape, warns on chart-status answer leaks and exam order.
+  Briefs updated; `CASE_REVISION_BRIEF.md` added. All 6 cases revised by agents (no keys changed) and re-imported to staging
+  in_review. NRG-MH-001 v2 and NRG-PD-001 v1 archived because they held attempts (test teacher; Ian's two runs).

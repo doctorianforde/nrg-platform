@@ -11,7 +11,7 @@
   "source": "ai:claude",
   "opening": {
     "time_label": "9:30 am",
-    "narrative": "Amari, a 4-month-old infant, is admitted to the paediatric ward of a district hospital from the Accident and Emergency department, accompanied by Amari's mother. She reports three days of a runny nose and cough that began after Amari's 3-year-old sister brought home a cold from nursery school. She states, \"Since last night Amari breathing hard and only taking a little bit of the bottle.\" The symptoms came on gradually. The cough is wet and frequent; she has noticed no whooping sound and no pauses in breathing. Amari was born at 39 weeks, has had no previous illness, is bottle-fed with formula, and has had all immunisations due for age. No known allergies. The ward's infant respiratory protocol allows the registered nurse to start oxygen by nasal cannula, adjust the flow between 0.5 and 2 L/min to keep oxygen saturation at or above 92%, wean oxygen in steps, and clear the nose with saline drops and gentle suction, notifying the physician of any change."
+    "narrative": "Amari, a 4-month-old infant, is admitted to the paediatric ward of a district hospital from the Accident and Emergency department, accompanied by Amari's mother. She reports three days of a runny nose and cough that began after Amari's 3-year-old sister brought home a cold from nursery school. She states, \"Since last night Amari breathing hard and only taking a little bit of the bottle.\" The symptoms came on gradually. The cough is wet and frequent; she has noticed no whooping sound and no pauses in breathing. Amari was born at 39 weeks, has had no previous illness, is bottle-fed with formula, has had all immunisations due for age and takes no regular medicines. No known allergies. The ward's infant respiratory protocol allows the registered nurse to start oxygen by nasal cannula, adjust the flow between 0.5 and 2 L/min to keep oxygen saturation at or above 92%, wean oxygen in steps, and clear the nose with saline drops and gentle suction, notifying the physician of any change."
   },
   "stages": [
     {
@@ -22,14 +22,20 @@
         { "label": "Temperature", "value": "37.9°C" },
         { "label": "Pulse", "value": "164/min" },
         { "label": "Respirations", "value": "62/min" },
+        { "label": "Blood pressure", "value": "86/52 mmHg" },
         { "label": "SpO2", "value": "90% on room air" },
+        { "label": "Pain (FLACC)", "value": "1/10 while held by the mother" },
         { "label": "Weight", "value": "6.0 kg" }
       ],
       "assessment": [
-        { "system": "CNS", "finding": "Alert. Cries when handled and settles when held by the mother. Anterior fontanelle soft and flat." },
+        { "system": "Neurological", "finding": "Alert. Cries when handled and settles when held by the mother. Anterior fontanelle soft and flat. Moves all limbs to stimulation." },
+        { "system": "Cardiovascular", "finding": "Heart sounds regular, no murmur. Femoral and brachial pulses strong. Capillary refill 2 seconds." },
         { "system": "Respiratory", "finding": "Clear nasal discharge. Frequent wet cough. Nasal flaring with subcostal and intercostal retractions. Fine crackles and expiratory wheeze heard throughout both lungs." },
-        { "system": "Cardiovascular", "finding": "Capillary refill 2 seconds. Skin pink and warm." },
-        { "system": "Gastrointestinal", "finding": "Abdomen soft. Lips slightly dry." }
+        { "system": "Gastrointestinal", "finding": "Abdomen soft, not distended, no masses. Bowel sounds present. Lips slightly dry." },
+        { "system": "Genitourinary", "finding": "External genitalia normal for age. No nappy rash." },
+        { "system": "Musculoskeletal", "finding": "Good tone. Moves all four limbs equally. Head control appropriate for age." },
+        { "system": "Integumentary", "finding": "Skin pink, warm and intact. No rash, no bruising, no cyanosis." },
+        { "system": "Psychosocial", "finding": "Mother calm and attentive, comforts Amari well. Lives with both parents and the 3-year-old sister; no smokers in the home." }
       ]
     },
     {
@@ -40,7 +46,12 @@
         { "label": "Temperature", "value": "37.8°C" },
         { "label": "Pulse", "value": "158/min" },
         { "label": "Respirations", "value": "64/min, counted over a full minute" },
-        { "label": "SpO2", "value": "94% on 1 L/min by nasal cannula" }
+        { "label": "Blood pressure", "value": "88/54 mmHg" },
+        { "label": "SpO2", "value": "94% on 1 L/min by nasal cannula" },
+        { "label": "Pain (FLACC)", "value": "0/10 while held by the mother" }
+      ],
+      "medications": [
+        { "name": "Oxygen", "dose": "1 L/min", "route": "Nasal cannula", "frequency": "Continuous, 0.5 to 2 L/min under the ward protocol", "status": "Started 10:00 am" }
       ]
     },
     {
@@ -51,20 +62,36 @@
         { "label": "Temperature", "value": "37.8°C" },
         { "label": "Pulse", "value": "156/min" },
         { "label": "Respirations", "value": "64/min" },
-        { "label": "SpO2", "value": "94% on 1 L/min by nasal cannula" }
+        { "label": "Blood pressure", "value": "86/50 mmHg" },
+        { "label": "SpO2", "value": "94% on 1 L/min by nasal cannula" },
+        { "label": "Pain (FLACC)", "value": "0/10 while held by the mother" }
       ]
     },
     {
       "key": "feedtime",
       "time_label": "2:00 pm",
-      "narrative": "On the ward round the physician prescribed: oxygen under the ward protocol; 60 mL of formula by bottle every 2 hours, with a nasogastric tube to be passed if Amari cannot finish two feeds in a row; intake and output recorded, with nappies weighed. The 2:00 pm feed is now due and Amari's mother is ready with the bottle. Amari roots for the teat but breaks off after a few sucks, mouth open, to breathe.",
+      "narrative": "On the ward round the physician prescribed: oxygen under the ward protocol; 60 mL of formula by bottle every 2 hours, with a nasogastric tube to be passed if Amari cannot finish two feeds in a row; intake and output recorded, with nappies weighed; and paracetamol 90 mg by mouth every 6 hours if needed for fever or discomfort. The 2:00 pm feed is now due and Amari's mother is ready with the bottle. Amari roots for the teat but breaks off after a few sucks, mouth open, to breathe.",
       "vitals": [
+        { "label": "Temperature", "value": "37.7°C" },
         { "label": "Pulse", "value": "160/min" },
         { "label": "Respirations", "value": "66/min" },
-        { "label": "SpO2", "value": "93% on 1 L/min by nasal cannula" }
+        { "label": "Blood pressure", "value": "88/52 mmHg" },
+        { "label": "SpO2", "value": "93% on 1 L/min by nasal cannula" },
+        { "label": "Pain (FLACC)", "value": "1/10" }
       ],
       "assessment": [
-        { "system": "Respiratory", "finding": "Both nostrils partly blocked with thick, sticky secretions. Snuffly noise with each breath. Subcostal retractions. Nasal cannula correctly positioned." }
+        { "system": "Neurological", "finding": "Alert and rooting. Anterior fontanelle soft and flat." },
+        { "system": "Cardiovascular", "finding": "Heart sounds regular. Brachial pulses strong. Capillary refill 2 seconds." },
+        { "system": "Respiratory", "finding": "Both nostrils partly blocked with thick, sticky secretions. Snuffly noise with each breath. Subcostal retractions. Fine crackles and wheeze in both lungs. Nasal cannula correctly positioned." },
+        { "system": "Gastrointestinal", "finding": "Abdomen soft, not distended. Bowel sounds present. Lips slightly dry." },
+        { "system": "Genitourinary", "finding": "One wet nappy since admission, weighed and recorded." },
+        { "system": "Musculoskeletal", "finding": "Good tone. Moves all four limbs equally." },
+        { "system": "Integumentary", "finding": "Skin pink and warm. Skin under the cannula tape intact." },
+        { "system": "Psychosocial", "finding": "Mother staying at the bedside and keen to help with feeds." }
+      ],
+      "medications": [
+        { "name": "Oxygen", "dose": "1 L/min", "route": "Nasal cannula", "frequency": "Continuous, 0.5 to 2 L/min under the ward protocol", "status": "Running since 10:00 am" },
+        { "name": "Paracetamol oral suspension (120 mg/5 mL)", "dose": "90 mg (3.75 mL; 15 mg/kg)", "route": "Oral", "frequency": "Every 6 hours as needed, maximum 4 doses in 24 hours", "status": "Prescribed 1:00 pm; no dose given" }
       ]
     },
     {
@@ -75,12 +102,24 @@
         { "label": "Temperature", "value": "37.3°C" },
         { "label": "Pulse", "value": "140/min" },
         { "label": "Respirations", "value": "50/min" },
-        { "label": "SpO2", "value": "95% on 0.5 L/min by nasal cannula" }
+        { "label": "Blood pressure", "value": "90/54 mmHg" },
+        { "label": "SpO2", "value": "95% on 0.5 L/min by nasal cannula" },
+        { "label": "Pain (FLACC)", "value": "0/10" }
       ],
       "assessment": [
-        { "system": "CNS", "finding": "Alert when awake. Settles and sleeps between feeds." },
+        { "system": "Neurological", "finding": "Alert when awake. Settles and sleeps between feeds. Anterior fontanelle soft and flat." },
+        { "system": "Cardiovascular", "finding": "Heart sounds regular. Brachial pulses strong. Capillary refill 2 seconds." },
         { "system": "Respiratory", "finding": "Mild subcostal retractions. No nasal flaring. Scattered wheeze and fine crackles in both lungs. Frequent wet cough." },
-        { "system": "Genitourinary", "finding": "Urine output by nappy weights since midnight: 2 mL/kg/hr." }
+        { "system": "Gastrointestinal", "finding": "Abdomen soft, not distended. Bowel sounds present. No vomiting overnight." },
+        { "system": "Genitourinary", "finding": "Urine output by nappy weights since midnight: 2 mL/kg/hr." },
+        { "system": "Musculoskeletal", "finding": "Good tone. Moves all four limbs equally." },
+        { "system": "Integumentary", "finding": "Skin pink and warm. Skin around the nostrils and under the cannula tape intact." },
+        { "system": "Psychosocial", "finding": "Mother slept at the bedside and is doing some of the feeds with the nurse." }
+      ],
+      "medications": [
+        { "name": "Oxygen", "dose": "0.5 L/min", "route": "Nasal cannula", "frequency": "Continuous, 0.5 to 2 L/min under the ward protocol", "status": "Reduced from 1 L/min at 4:00 am" },
+        { "name": "Sodium chloride 0.9% nasal drops", "dose": "1 to 2 drops each nostril", "route": "Nasal", "frequency": "Before feeds when the nose is blocked, under the ward protocol", "status": "Used 4 times overnight" },
+        { "name": "Paracetamol oral suspension (120 mg/5 mL)", "dose": "90 mg (3.75 mL; 15 mg/kg)", "route": "Oral", "frequency": "Every 6 hours as needed, maximum 4 doses in 24 hours", "status": "No dose needed" }
       ]
     },
     {
@@ -96,7 +135,13 @@
         { "label": "Temperature", "value": "37.0°C" },
         { "label": "Pulse", "value": "132/min" },
         { "label": "Respirations", "value": "44/min" },
-        { "label": "SpO2", "value": "96% on room air" }
+        { "label": "Blood pressure", "value": "90/56 mmHg" },
+        { "label": "SpO2", "value": "96% on room air" },
+        { "label": "Pain (FLACC)", "value": "0/10" }
+      ],
+      "medications": [
+        { "name": "Oxygen", "dose": "0.5 L/min", "route": "Nasal cannula", "frequency": "Continuous under the ward protocol", "status": "Stopped 8:00 pm Day 2" },
+        { "name": "Sodium chloride 0.9% nasal drops", "dose": "1 to 2 drops each nostril", "route": "Nasal", "frequency": "Before feeds when the nose is blocked", "status": "To continue at home" }
       ]
     }
   ],
@@ -343,6 +388,6 @@
     }
   ],
   "pathophysiology": "## Pathophysiology teaching\n\n**Normal structure.** An infant's bronchioles are only a few millimetres wide, so a small amount of swelling or mucus narrows them a great deal (resistance rises steeply as the airway narrows). Young infants also breathe mainly through the nose, have a soft chest wall that pulls in under effort, and depend on the diaphragm for breathing.\n\n**Mechanism.** Respiratory syncytial virus (RSV), the commonest cause of bronchiolitis, spreads by droplets and contaminated hands, here from an older sibling with a cold. It first infects the nose (runny nose, cough), then spreads to the lining of the bronchioles over two to three days. Infected cells die and slough, the lining swells and produces mucus, and plugs of debris block some small airways. Air is trapped behind partly blocked airways (hyperinflation, wheeze) while fully blocked areas collapse (fine crackles). Blood keeps flowing past these poorly ventilated areas without picking up oxygen, so oxygen saturation falls.\n\n**Findings.** Fast breathing, nasal flaring and subcostal and intercostal retractions are the infant's effort to move air through narrowed airways. The fast pulse reflects effort, low oxygen and the low-grade temperature. Because an infant must pause breathing to swallow, a breathing rate above about 60/min makes feeding difficult, and blocked nostrils make it harder still. Fast breathing also increases water loss, so intake falls just as needs rise.\n\n**Why each decision mattered.**\n- A saturation of 90% on room air (Q1) was the cue that needed action: oxygen comes first and the protocol allowed it.\n- Linking the short feeds and few wet nappies to the fast breathing (Q2) showed that the respiratory problem had become a hydration problem.\n- Bronchiolitis (Q3) explained every cue: age, a household cold, a gradual start, a low-grade temperature and two-sided crackles and wheeze. Pneumonia, pertussis and an inhaled object each leave some cues unexplained.\n- Small, frequent feeds with intake and output recorded (Q4) fit what a breathless infant can manage. Treatment is supportive: oxygen, clearing the nose and keeping up fluids. Antibiotics do not treat the virus, and bronchodilators, steroids, chest physiotherapy and a routine chest X-ray are not recommended; the diagnosis is made at the bedside.\n- Clearing the blocked nose before the feed (Q5) restored nasal breathing for a nose-breathing infant and let the cannula deliver oxygen; deep suction would have injured the airway.\n- Urine output by nappy weights (Q6) measured whether the feeding plan was meeting fluid needs, separate from the oxygen trend.\n\n**Course and prevention.** Bronchiolitis usually worsens over the first two to three days of breathing difficulty and then improves, though the cough can last weeks. The nurse closes their own competence gaps with the ward protocol and supervised practice (Q7). At home, parents watch feeding, breathing effort, colour and wet nappies (Q8). Handwashing, keeping infants away from people with colds, avoiding tobacco smoke and continuing milk feeds lower the risk of infection and of a severe course.",
-  "quality_report": "Draft by Claude (ai:claude), 2026-10-10. Keys: Q1 D, Q2 A, Q3 B, Q4 C, Q5 B, Q6 A, Q7 D, Q8 C. Taxonomy: ASE for Q2, Q3, Q5, Q6; AP for Q1, Q4, Q7, Q8; no KC. Authority: the ward's infant respiratory protocol (oxygen start, 0.5-2 L/min titration to keep saturation at or above 92%, weaning, saline and gentle nasal suction) is stated in the opening, so no later stage hands over Q5's key. Cover test: each stem can be answered before the options are read (Q1 oxygenation below the stated target; Q2 effort limits feeding; Q3 a named condition; Q4 a feeding plan; Q5 clear the blocked nose; Q6 a hydration measure; Q7 a structured way to close a named gap; Q8 the return-for-danger-signs statement). Two-answer test: Q1 respiratory rate and retractions are kept out of the options so only one breathing cue is offered; Q3 pneumonia is answered by the low-grade temperature and two-sided wheeze after a household cold; Q5 the oxygen increase is ruled out because saturation (93%) already meets the 92% target; Q6 the stem names the feeding plan, so saturation on less oxygen measures a different plan, and 'finished feeds' is not offered as an option. Cue sufficiency: the usual feed volume, the short feeds and the wet-nappy count are given before Q2; the swab and X-ray are only sent before Q3 and reported after it; nostril secretions are shown before Q5; urine output by nappy weights is given before Q6 (addendum 3). Hidden-assumption test: no answer depends on an unstated allergy, drug or local custom; the nose-clearing and oxygen authority is written in the case. Jade should confirm: the 92% saturation target (some guidelines use 90%); whether T&T paediatric wards weigh nappies and whether infant bottle volumes are charted in mL or oz; that nasopharyngeal RSV swabs and chest X-rays are realistic at a district hospital (both can be dropped without changing any key); the prescribed 60 mL every 2 hours for a 6 kg infant (about 120 mL/kg/day, a reduced volume as many bronchiolitis guidelines suggest); the expected urine output of at least 1 mL/kg/hr for an infant; and that 'bush tea' is the right local wording for the Q8 distractor. Reviewer (2026-10-10): No key changed (Q1 D, Q2 A, Q3 B, Q4 C, Q5 B, Q6 A, Q7 D, Q8 C). Removed the chest X-ray (requested at 9:45 am, reported at 11:30 am) because NICE NG9 and AAP advise against routine chest X-ray in typical bronchiolitis, so the case should not model it; the Q3 stem and the teaching section were updated to match, and the teaching section now says diagnosis is clinical and steroids are not used. The swab is kept as the confirming result after Q3 and is now given a realistic purpose (cohorting RSV-positive infants). Day 2 nose clearing changed from 'before each feed' to 'before feeds whenever the nose was blocked', since routine suction is not advised and frequent suction swells the nasal lining. The competence stage said the nurse was asked 'this morning' to wean oxygen, which clashed with weaning at 4:00 am and oxygen stopping at 8:00 pm; it now describes reviewing the oxygen this morning. Flow, one-best-answer, scope and standard checks found no other faults: Q3 precedes the swab, Q4 and Q5 keys differ, the nose clearing and feeding plan evaluated in Q6 are shown first, 4 ASE items, no flags or ranges, Amari is never gendered. Note that the opening's 92% target makes Q1 easier; it is kept because Q5's oxygen distractor depends on it. Jade must confirm: whether an RSV swab is realistic at a T&T district hospital (if not, the physician's clinical diagnosis can replace it after Q3); that a trial of small frequent bottle feeds with NG backup is local practice when intake is about a third of normal (NICE would move to NG feeds below 50%); and the author's earlier points (92% target, 60 mL every 2 hours, nappy weights, 'bush tea').",
+  "quality_report": "Draft by Claude (ai:claude), 2026-10-10. Keys: Q1 D, Q2 A, Q3 B, Q4 C, Q5 B, Q6 A, Q7 D, Q8 C. Taxonomy: ASE for Q2, Q3, Q5, Q6; AP for Q1, Q4, Q7, Q8; no KC. Authority: the ward's infant respiratory protocol (oxygen start, 0.5-2 L/min titration to keep saturation at or above 92%, weaning, saline and gentle nasal suction) is stated in the opening, so no later stage hands over Q5's key. Cover test: each stem can be answered before the options are read (Q1 oxygenation below the stated target; Q2 effort limits feeding; Q3 a named condition; Q4 a feeding plan; Q5 clear the blocked nose; Q6 a hydration measure; Q7 a structured way to close a named gap; Q8 the return-for-danger-signs statement). Two-answer test: Q1 respiratory rate and retractions are kept out of the options so only one breathing cue is offered; Q3 pneumonia is answered by the low-grade temperature and two-sided wheeze after a household cold; Q5 the oxygen increase is ruled out because saturation (93%) already meets the 92% target; Q6 the stem names the feeding plan, so saturation on less oxygen measures a different plan, and 'finished feeds' is not offered as an option. Cue sufficiency: the usual feed volume, the short feeds and the wet-nappy count are given before Q2; the swab and X-ray are only sent before Q3 and reported after it; nostril secretions are shown before Q5; urine output by nappy weights is given before Q6 (addendum 3). Hidden-assumption test: no answer depends on an unstated allergy, drug or local custom; the nose-clearing and oxygen authority is written in the case. Jade should confirm: the 92% saturation target (some guidelines use 90%); whether T&T paediatric wards weigh nappies and whether infant bottle volumes are charted in mL or oz; that nasopharyngeal RSV swabs and chest X-rays are realistic at a district hospital (both can be dropped without changing any key); the prescribed 60 mL every 2 hours for a 6 kg infant (about 120 mL/kg/day, a reduced volume as many bronchiolitis guidelines suggest); the expected urine output of at least 1 mL/kg/hr for an infant; and that 'bush tea' is the right local wording for the Q8 distractor. Reviewer (2026-10-10): No key changed (Q1 D, Q2 A, Q3 B, Q4 C, Q5 B, Q6 A, Q7 D, Q8 C). Removed the chest X-ray (requested at 9:45 am, reported at 11:30 am) because NICE NG9 and AAP advise against routine chest X-ray in typical bronchiolitis, so the case should not model it; the Q3 stem and the teaching section were updated to match, and the teaching section now says diagnosis is clinical and steroids are not used. The swab is kept as the confirming result after Q3 and is now given a realistic purpose (cohorting RSV-positive infants). Day 2 nose clearing changed from 'before each feed' to 'before feeds whenever the nose was blocked', since routine suction is not advised and frequent suction swells the nasal lining. The competence stage said the nurse was asked 'this morning' to wean oxygen, which clashed with weaning at 4:00 am and oxygen stopping at 8:00 pm; it now describes reviewing the oxygen this morning. Flow, one-best-answer, scope and standard checks found no other faults: Q3 precedes the swab, Q4 and Q5 keys differ, the nose clearing and feeding plan evaluated in Q6 are shown first, 4 ASE items, no flags or ranges, Amari is never gendered. Note that the opening's 92% target makes Q1 easier; it is kept because Q5's oxygen distractor depends on it. Jade must confirm: whether an RSV swab is realistic at a T&T district hospital (if not, the physician's clinical diagnosis can replace it after Q3); that a trial of small frequent bottle feeds with NG backup is local practice when intake is about a third of normal (NICE would move to NG feeds below 50%); and the author's earlier points (92% target, 60 mL every 2 hours, nappy weights, 'bush tea'). Revision (2026-10-12): Added blood pressure and FLACC pain score to every vitals set, and temperature at 2:00 pm. Completed the body-systems examination in order at 9:45 am, 2:00 pm and Day 2 with findings consistent with a 4-month-old with bronchiolitis (normal cardiovascular, musculoskeletal and skin findings, no cyanosis); CNS relabelled Neurological. Charted medications: no home medicines (opening now says so); oxygen at 10:30 am (started 10:00 am under the protocol); oxygen and paracetamol 90 mg (15 mg/kg) oral every 6 hours as needed at 2:00 pm, with paracetamol added to the physician's 1:00 pm prescription in the narrative; saline nasal drops charted only from Day 2 (after Q5, which tests nose clearing) with oxygen reduced; oxygen stopped and saline drops for home at discharge. No stem, option or key changed. Flow re-checked: no added finding cues Q1 (BP and FLACC unremarkable), the 2:00 pm exam keeps the blocked nostrils among normal findings with no saline row charted, and the Day 2 additions add no hydration measure to compete with Q6's key. Jade should check: paracetamol 15 mg/kg (90 mg) every 6 hours as needed and whether T&T wards prescribe it in bronchiolitis; infant BP values 86-90/50-56 mmHg; FLACC as the ward's infant pain tool; charting oxygen and saline drops on the medication chart.",
   "validation": { "status": "pending" }
 }

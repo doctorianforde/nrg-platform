@@ -11,7 +11,16 @@
   "source": "jade+claude",
   "opening": {
     "time_label": "9:15 am",
-    "narrative": "Tanisha, a 34-year-old woman, is brought to the community mental health clinic by her sister after five days of sleeping very little, talking rapidly, and spending a large sum of money at the market. Her sister states, \"She has not been herself. She argues with everyone and will not sit down.\" History includes bipolar disorder, treated with lithium carbonate taken at 10 am and 10 pm. Two weeks ago her dose was increased from 300 mg to 450 mg twice daily because she had begun sleeping less. She has no other prescribed medication and no known drug allergies. She lives with her sister and works at a grocery. The clinic's standing orders allow the registered nurse to withhold a prescribed dose and notify the physician when a drug level is markedly abnormal."
+    "narrative": "Tanisha, a 34-year-old woman, is brought to the community mental health clinic by her sister after five days of sleeping very little, talking rapidly, and spending a large sum of money at the market. Her sister states, \"She has not been herself. She argues with everyone and will not sit down.\" History includes bipolar disorder, treated with lithium carbonate taken at 10 am and 10 pm. Two weeks ago her dose was increased from 300 mg to 450 mg twice daily because she had begun sleeping less. She has no other prescribed medication and no known drug allergies. She lives with her sister and works at a grocery. The clinic's standing orders allow the registered nurse to withhold a prescribed dose and notify the physician when a drug level is markedly abnormal.",
+    "medications": [
+      {
+        "name": "Lithium carbonate",
+        "dose": "450 mg",
+        "route": "Oral",
+        "frequency": "Twice daily (10 am and 10 pm)",
+        "status": "Dose increased from 300 mg two weeks ago; last dose 10 pm yesterday; next due 10:00 am"
+      }
+    ]
   },
   "stages": [
     {
@@ -40,14 +49,42 @@
           "value": "98% on room air"
         },
         {
+          "label": "Pain score",
+          "value": "0/10"
+        },
+        {
           "label": "RBS",
           "value": "96 mg/dL"
         }
       ],
       "assessment": [
         {
-          "system": "CNS",
-          "finding": "Alert and oriented. Coarse tremor of both hands. Walks with an unsteady, wide-based gait."
+          "system": "Neurological",
+          "finding": "Alert and oriented. Pupils equal and reactive to light. Coarse tremor of both hands. Walks with an unsteady, wide-based gait."
+        },
+        {
+          "system": "Cardiovascular",
+          "finding": "Heart sounds regular, no murmur. Peripheral pulses present. Capillary refill 2 seconds."
+        },
+        {
+          "system": "Respiratory",
+          "finding": "Chest clear with equal air entry bilaterally. No shortness of breath."
+        },
+        {
+          "system": "Gastrointestinal",
+          "finding": "Abdomen soft, non-tender, bowel sounds present."
+        },
+        {
+          "system": "Genitourinary",
+          "finding": "Voided once early this morning. No pain on passing urine."
+        },
+        {
+          "system": "Musculoskeletal",
+          "finding": "Full range of movement in all limbs. No joint swelling or muscle tenderness."
+        },
+        {
+          "system": "Integumentary",
+          "finding": "Skin warm and intact. Lips and oral mucosa slightly dry."
         },
         {
           "system": "Psychosocial",
@@ -74,12 +111,37 @@
             }
           ]
         }
+      ],
+      "medications": [
+        {
+          "name": "Lithium carbonate",
+          "dose": "450 mg",
+          "route": "Oral",
+          "frequency": "Twice daily (10 am and 10 pm)",
+          "status": "Last dose 10 pm yesterday; 10:00 am dose due now"
+        }
       ]
     },
     {
       "key": "transfer",
       "time_label": "10:30 am",
-      "narrative": "The physician confirms that lithium is to be withheld and arranges overnight admission to the district hospital for intravenous fluids, with urine output and electrolytes monitored. A clinic review is booked for the next morning, after discharge from hospital."
+      "narrative": "The physician confirms that lithium is to be withheld and arranges overnight admission to the district hospital for intravenous fluids, with urine output and electrolytes monitored. A clinic review is booked for the next morning, after discharge from hospital.",
+      "medications": [
+        {
+          "name": "Lithium carbonate",
+          "dose": "450 mg",
+          "route": "Oral",
+          "frequency": "Twice daily (10 am and 10 pm)",
+          "status": "10:00 am dose held; withheld on the physician's order"
+        },
+        {
+          "name": "Sodium chloride 0.9%",
+          "dose": "1,000 mL",
+          "route": "Intravenous",
+          "frequency": "Over 4 hours, then rate as ordered by the admitting team",
+          "status": "Ordered; to start on admission to the district hospital"
+        }
+      ]
     },
     {
       "key": "day2",
@@ -101,16 +163,44 @@
         {
           "label": "Blood pressure",
           "value": "128/80 mm Hg"
+        },
+        {
+          "label": "SpO2",
+          "value": "98% on room air"
+        },
+        {
+          "label": "Pain score",
+          "value": "0/10"
         }
       ],
       "assessment": [
         {
-          "system": "CNS",
-          "finding": "Hand tremor much reduced since yesterday. Gait steady."
+          "system": "Neurological",
+          "finding": "Alert and oriented. Hand tremor much reduced since yesterday. Gait steady."
+        },
+        {
+          "system": "Cardiovascular",
+          "finding": "Heart sounds regular, no murmur. Peripheral pulses present. Capillary refill under 2 seconds."
+        },
+        {
+          "system": "Respiratory",
+          "finding": "Chest clear with equal air entry bilaterally. No shortness of breath."
+        },
+        {
+          "system": "Gastrointestinal",
+          "finding": "Abdomen soft, non-tender, bowel sounds present. No vomiting overnight; ate breakfast."
         },
         {
           "system": "Genitourinary",
           "finding": "Urine output since yesterday approximately 50 mL/hr."
+        },
+        {
+          "system": "Musculoskeletal",
+          "finding": "Full range of movement in all limbs. No joint swelling or muscle tenderness."
+        },
+        {
+          "system": "Integumentary",
+          "finding": "Skin warm and intact. Oral mucosa moist."
         },
         {
           "system": "Psychosocial",
@@ -135,6 +225,22 @@
             }
           ]
         }
+      ],
+      "medications": [
+        {
+          "name": "Lithium carbonate",
+          "dose": "450 mg",
+          "route": "Oral",
+          "frequency": "Twice daily (10 am and 10 pm)",
+          "status": "On hold since 10:00 am yesterday; no doses taken in hospital"
+        },
+        {
+          "name": "Sodium chloride 0.9%",
+          "dose": "As ordered",
+          "route": "Intravenous",
+          "frequency": "Continuous infusion overnight",
+          "status": "Completed; cannula removed before discharge"
+        }
       ]
     },
     {
@@ -145,7 +251,16 @@
     {
       "key": "discharge",
       "time_label": "Day 2, 10:00 am",
-      "narrative": "The physician restarts lithium at a lower dose, with a repeat level booked in five days. As she prepares to go home, Tanisha asks the nurse, \"What can I do to stop this from happening again?\""
+      "narrative": "The physician restarts lithium at a lower dose, with a repeat level booked in five days. As she prepares to go home, Tanisha asks the nurse, \"What can I do to stop this from happening again?\"",
+      "medications": [
+        {
+          "name": "Lithium carbonate",
+          "dose": "300 mg",
+          "route": "Oral",
+          "frequency": "Twice daily (10 am and 10 pm)",
+          "status": "New dose ordered today; first dose 10 pm tonight; repeat lithium level in five days"
+        }
+      ]
     }
   ],
   "questions": [
@@ -543,7 +658,7 @@
     }
   ],
   "pathophysiology": "## Pathophysiology teaching\n\nLithium is cleared almost entirely by the kidneys. In the proximal tubule it is reabsorbed by the same pathways as sodium, so the body cannot tell the two apart.\n\nTanisha's dose had been increased two weeks earlier, which raised her level towards the top of the range. When she then vomited for two days and drank very little, she lost fluid and sodium. Her kidneys responded by reabsorbing more sodium to protect her circulating volume, and they reabsorbed more lithium with it. Her serum level rose to 2.0 mmol/L.\n\n**Timing the level.** Lithium levels are read about 12 hours after the last dose. A sample taken a few hours after a dose reads falsely high, which is why the case states when the sample was taken.\n\n**Signs.** A fine hand tremor is common at usual levels. As the level rises, it becomes a coarse tremor with an unsteady gait, then confusion, seizures and coma, and lithium can injure the kidney further, which slows clearance again. Mania and toxicity can occur together: the illness that prompted the dose increase has not yet settled, which is why her behaviour hides the drug problem.\n\n**Why each decision mattered.**\n- Recognising the coarse tremor and unsteady gait (Q1) and linking the vomiting to lithium retention (Q2) pointed to the drug, not the illness.\n- Prioritizing toxicity over a manic relapse before the result (Q3) meant the level was read as confirmation, not a surprise.\n- Holding the dose (Q5) stopped more drug entering the body; intravenous fluids (Q4) restored sodium and volume so the kidneys could excrete lithium again.\n- Urine output, sodium and potassium on day 2 confirm that the kidneys are clearing lithium and the fluid replacement is adequate.\n- The level and tremor improve within a day; mood settles over days to weeks, which is why mood and sleep are not the measures of toxicity treatment (Q6).\n\n**Prevention.** Steady fluid and salt intake, avoiding NSAIDs and diuretics unless prescribed with monitoring, never doubling a missed dose, extra level checks after any dose change, and seeking help early when vomiting or diarrhoea stops a client keeping fluids down.",
-  "quality_report": "Revised by Claude (2026-10-08) from Jade's Lithium Toxicity draft, at Ian's request, to meet V3 and the error-prevention addendum: Q4 changed from 'withhold the next dose' (duplicating Q5's key) to anticipating IV fluids with urine-output and electrolyte monitoring; a 10:30 am stage added so the IV fluids evaluated in Q6 are introduced first (V3 s.6); implausible distractors replaced (Q4 'increase the dose', Q5 'arrange transport before informing anyone', Q8 'stop lithium once stable'); Q1 rationale explains why the tremor is the safety cue. Cover, two-answer, cue-sufficiency and hidden-assumption checks were re-run on all eight items. Pending Jade's review and clinical validation (lithium thresholds, standing-order scope, Caribbean facility norms). Flow revision (Claude, 2026-10-09, at Ian's request): stages reordered so no question is answered by the screen before it (Q3 now asked before the lithium result; the standing-order wording moved to the opening; Q2 now analyses the vomiting cue). Clinical consistency: dose increased two weeks earlier explains mania with toxicity; coarse tremor and unsteady gait replace the fine tremor to match a level of 2.0 mmol/L; level timed 12 hours post-dose; overnight hospital admission made explicit; Q4 'withhold and repeat in a week' (half-right, overlapped Q5) replaced with activated charcoal; Q5 'half dose' replaced with 'repeat the level'; Q3 'worsening hypertension' replaced with an overactive thyroid.",
+  "quality_report": "Revised by Claude (2026-10-08) from Jade's Lithium Toxicity draft, at Ian's request, to meet V3 and the error-prevention addendum: Q4 changed from 'withhold the next dose' (duplicating Q5's key) to anticipating IV fluids with urine-output and electrolyte monitoring; a 10:30 am stage added so the IV fluids evaluated in Q6 are introduced first (V3 s.6); implausible distractors replaced (Q4 'increase the dose', Q5 'arrange transport before informing anyone', Q8 'stop lithium once stable'); Q1 rationale explains why the tremor is the safety cue. Cover, two-answer, cue-sufficiency and hidden-assumption checks were re-run on all eight items. Pending Jade's review and clinical validation (lithium thresholds, standing-order scope, Caribbean facility norms). Flow revision (Claude, 2026-10-09, at Ian's request): stages reordered so no question is answered by the screen before it (Q3 now asked before the lithium result; the standing-order wording moved to the opening; Q2 now analyses the vomiting cue). Clinical consistency: dose increased two weeks earlier explains mania with toxicity; coarse tremor and unsteady gait replace the fine tremor to match a level of 2.0 mmol/L; level timed 12 hours post-dose; overnight hospital admission made explicit; Q4 'withhold and repeat in a week' (half-right, overlapped Q5) replaced with activated charcoal; Q5 'half dose' replaced with 'repeat the level'; Q3 'worsening hypertension' replaced with an overactive thyroid. Revision (2026-10-12): added pain score to both vitals sets and SpO2 to day 2; expanded both examinations to all eight body systems in order (assess: normal cardiovascular, respiratory, abdominal, musculoskeletal findings, voided once this morning, lips and oral mucosa slightly dry to fit two days of vomiting; day 2: no vomiting overnight, oral mucosa moist); 'CNS' relabelled 'Neurological'. Medications charted: lithium carbonate 450 mg twice daily on the opening and as due at the level stage; 'held' status and the 0.9% sodium chloride order only at the transfer stage, after Q4 and Q5; day 2 shows lithium on hold and fluids completed; lithium 300 mg twice daily from 10 pm at discharge. No stems, options or keys changed. Jade to confirm: IV fluid regimen (1 L 0.9% sodium chloride over 4 hours then as ordered), the 300 mg twice-daily restart dose, and whether an antiemetic should be charted for the hospital stay (none added).",
   "validation": {
     "status": "pending"
   }

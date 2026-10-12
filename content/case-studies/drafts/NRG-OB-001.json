@@ -11,7 +11,35 @@
   "source": "ai:claude",
   "opening": {
     "time_label": "6:00 am",
-    "narrative": "Anjali, a 27-year-old woman, gravida 1 para 0 at 35 weeks' gestation, was admitted to the antenatal ward of a regional general hospital yesterday afternoon from the antenatal clinic, after two blood pressure readings of 144/92 and 146/94 mm Hg taken four hours apart. Her urine dipstick on admission showed no protein. She was started on methyldopa 250 mg orally three times daily, with four-hourly blood pressure checks and a daily urine dipstick. Her antenatal care had been uncomplicated until this week. She has no other medical history, takes iron and folic acid tablets, and has no known drug allergies. Her husband, Ravi, went home last night and is due back after work. At 4:30 am the night nurse gave her paracetamol 1 g orally when she complained of a headache."
+    "narrative": "Anjali, a 27-year-old woman, gravida 1 para 0 at 35 weeks' gestation, was admitted to the antenatal ward of a regional general hospital yesterday afternoon from the antenatal clinic, after two blood pressure readings of 144/92 and 146/94 mm Hg taken four hours apart. Her urine dipstick on admission showed no protein. She was started on methyldopa 250 mg orally three times daily, with four-hourly blood pressure checks and a daily urine dipstick. Her antenatal care had been uncomplicated until this week. She has no other medical history, takes iron and folic acid tablets, and has no known drug allergies. Her husband, Ravi, went home last night and is due back after work. At 4:30 am the night nurse gave her paracetamol 1 g orally when she complained of a headache.",
+    "medications": [
+      {
+        "name": "Methyldopa",
+        "dose": "250 mg",
+        "route": "Oral",
+        "frequency": "Three times daily (8 am, 2 pm, 10 pm)",
+        "status": "last dose 10:00 pm yesterday; next due 8:00 am"
+      },
+      {
+        "name": "Ferrous sulfate",
+        "dose": "200 mg",
+        "route": "Oral",
+        "frequency": "Once daily"
+      },
+      {
+        "name": "Folic acid",
+        "dose": "400 micrograms",
+        "route": "Oral",
+        "frequency": "Once daily"
+      },
+      {
+        "name": "Paracetamol",
+        "dose": "1 g",
+        "route": "Oral",
+        "frequency": "Every 6 hours as needed for pain (maximum 4 g in 24 hours)",
+        "status": "given 4:30 am"
+      }
+    ]
   },
   "stages": [
     {
@@ -38,12 +66,20 @@
         {
           "label": "SpO2",
           "value": "98% on room air"
+        },
+        {
+          "label": "Pain",
+          "value": "6/10 (headache)"
         }
       ],
       "assessment": [
         {
-          "system": "CNS",
-          "finding": "Alert and oriented. Reports a frontal headache since about 4:00 am, rated 6/10, unchanged since the paracetamol at 4:30 am."
+          "system": "Neurological",
+          "finding": "Alert and oriented. Reports a frontal headache since about 4:00 am, rated 6/10, unchanged since the paracetamol at 4:30 am. Pupils equal and reactive. Patellar reflexes 2+ on both sides."
+        },
+        {
+          "system": "Cardiovascular",
+          "finding": "Heart sounds normal. Peripheral pulses present. Capillary refill under 2 seconds."
         },
         {
           "system": "Respiratory",
@@ -51,19 +87,27 @@
         },
         {
           "system": "Gastrointestinal",
-          "finding": "Ate a light supper. No nausea or vomiting."
+          "finding": "Ate a light supper. No nausea or vomiting. Upper abdomen soft and non-tender. Bowel sounds present."
         },
         {
-          "system": "Genitourinary/Obstetric",
-          "finding": "Fundal height 35 cm. Fetal heart rate 142/min. Reports good fetal movements. Uterus soft and non-tender. No vaginal bleeding or leaking of fluid. Woke twice in the night to pass urine."
+          "system": "Genitourinary",
+          "finding": "Woke twice in the night to pass urine. No pain on passing urine."
+        },
+        {
+          "system": "Musculoskeletal",
+          "finding": "Moves all limbs freely. No calf tenderness."
         },
         {
           "system": "Integumentary",
-          "finding": "Pitting oedema of both ankles, 1+. No facial swelling."
+          "finding": "Pitting oedema of both ankles, 1+. No facial swelling. Skin warm and dry."
         },
         {
           "system": "Psychosocial",
           "finding": "Says she slept poorly on the ward and misses being at home."
+        },
+        {
+          "system": "Obstetric",
+          "finding": "Fundal height 35 cm. Fetal heart rate 142/min. Reports good fetal movements. Uterus soft and non-tender. No vaginal bleeding or leaking of fluid."
         }
       ]
     },
@@ -105,6 +149,10 @@
       "narrative": "Anjali rings the bell and points to the area below her breastbone and towards the right. She says, \"Now I have a pain here too, like a bad heartburn.\" She has not vomited. The nurse rechecks her blood pressure twice, 15 minutes apart, sends blood for a full blood count, liver function tests, urea, electrolytes and creatinine, and calls the obstetric registrar, who is on the way.",
       "vitals": [
         {
+          "label": "Temperature",
+          "value": "36.9°C"
+        },
+        {
           "label": "Pulse",
           "value": "92/min"
         },
@@ -123,19 +171,47 @@
         {
           "label": "SpO2",
           "value": "98% on room air"
+        },
+        {
+          "label": "Pain",
+          "value": "Headache 7/10; upper abdominal pain 6/10"
         }
       ],
       "assessment": [
         {
-          "system": "CNS",
-          "finding": "Headache continues, rated 7/10."
+          "system": "Neurological",
+          "finding": "Alert and oriented. Headache continues, rated 7/10. Pupils equal and reactive. Patellar reflexes 2+ on both sides."
+        },
+        {
+          "system": "Cardiovascular",
+          "finding": "Heart sounds normal. Capillary refill under 2 seconds."
+        },
+        {
+          "system": "Respiratory",
+          "finding": "Chest clear on both sides. No shortness of breath."
         },
         {
           "system": "Gastrointestinal",
           "finding": "Tender on light palpation in the epigastrium and right upper quadrant. Bowel sounds present."
         },
         {
-          "system": "Genitourinary/Obstetric",
+          "system": "Genitourinary",
+          "finding": "Last passed urine at 6:30 am."
+        },
+        {
+          "system": "Musculoskeletal",
+          "finding": "Moves all limbs freely."
+        },
+        {
+          "system": "Integumentary",
+          "finding": "Pitting oedema of both ankles, 1+, unchanged. No facial swelling. Skin warm and dry."
+        },
+        {
+          "system": "Psychosocial",
+          "finding": "Anxious about the new pain and asks whether the baby is all right."
+        },
+        {
+          "system": "Obstetric",
           "finding": "Uterus soft and non-tender between palpations. No contractions felt. No vaginal bleeding. Fetal heart rate 140/min."
         }
       ]
@@ -192,7 +268,56 @@
     {
       "key": "orders",
       "time_label": "8:30 am",
-      "narrative": "The registrar's orders are in place: magnesium sulfate 4 g IV over 20 minutes, then a maintenance infusion of 1 g/hr by pump; oral nifedipine 10 mg (immediate release), repeated according to blood pressure; an indwelling urinary catheter with hourly urine output; hourly respirations, patellar reflexes and level of consciousness; total IV fluid limited to 80 mL/hr; and caesarean section planned for 6:00 pm. The ward's magnesium sulfate protocol allows the registered nurse to stop the infusion and notify the doctor at once if signs of magnesium toxicity develop. Nifedipine was given at 7:50 am. The loading dose finished at 8:25 am and the maintenance infusion is running. Patellar reflexes are 2+ on both sides."
+      "narrative": "The registrar's orders are in place: magnesium sulfate 4 g IV over 20 minutes, then a maintenance infusion of 1 g/hr by pump; oral nifedipine 10 mg (immediate release), repeated according to blood pressure; an indwelling urinary catheter with hourly urine output; hourly respirations, patellar reflexes and level of consciousness; total IV fluid limited to 80 mL/hr; and caesarean section planned for 6:00 pm. The ward's magnesium sulfate protocol allows the registered nurse to stop the infusion and notify the doctor at once if signs of magnesium toxicity develop. Nifedipine was given at 7:50 am. The loading dose finished at 8:25 am and the maintenance infusion is running. Patellar reflexes are 2+ on both sides.",
+      "medications": [
+        {
+          "name": "Magnesium sulfate (loading dose)",
+          "dose": "4 g",
+          "route": "IV",
+          "frequency": "Once, over 20 minutes",
+          "status": "given 8:05 to 8:25 am"
+        },
+        {
+          "name": "Magnesium sulfate (maintenance infusion)",
+          "dose": "1 g/hr",
+          "route": "IV by infusion pump",
+          "frequency": "Continuous",
+          "status": "running since 8:25 am"
+        },
+        {
+          "name": "Nifedipine (immediate release)",
+          "dose": "10 mg",
+          "route": "Oral",
+          "frequency": "Repeat according to blood pressure, as ordered",
+          "status": "given 7:50 am"
+        },
+        {
+          "name": "Methyldopa",
+          "dose": "250 mg",
+          "route": "Oral",
+          "frequency": "Three times daily (8 am, 2 pm, 10 pm)",
+          "status": "given 8:00 am"
+        },
+        {
+          "name": "Ferrous sulfate",
+          "dose": "200 mg",
+          "route": "Oral",
+          "frequency": "Once daily"
+        },
+        {
+          "name": "Folic acid",
+          "dose": "400 micrograms",
+          "route": "Oral",
+          "frequency": "Once daily"
+        },
+        {
+          "name": "Paracetamol",
+          "dose": "1 g",
+          "route": "Oral",
+          "frequency": "Every 6 hours as needed for pain (maximum 4 g in 24 hours)",
+          "status": "last given 4:30 am"
+        }
+      ]
     },
     {
       "key": "afternoon",
@@ -218,24 +343,48 @@
         {
           "label": "SpO2",
           "value": "94% on room air"
+        },
+        {
+          "label": "Pain",
+          "value": "Headache 2/10"
         }
       ],
       "assessment": [
         {
-          "system": "CNS",
+          "system": "Neurological",
           "finding": "Drowsy, opens her eyes to voice and answers slowly. Patellar reflexes absent on both sides (2+ at 10:00 am and 11:00 am, 1+ at noon). Headache now 2/10."
+        },
+        {
+          "system": "Cardiovascular",
+          "finding": "Heart sounds normal. Capillary refill under 2 seconds."
         },
         {
           "system": "Respiratory",
           "finding": "Chest clear. Shallow breaths."
         },
         {
-          "system": "Genitourinary/Obstetric",
-          "finding": "Catheter urine output: 9–10 am 45 mL, 10–11 am 40 mL, 11 am–noon 30 mL, noon–1 pm 15 mL. Fetal heart rate 132/min. No contractions."
+          "system": "Gastrointestinal",
+          "finding": "Abdomen soft, mild epigastric tenderness. Bowel sounds present. No vomiting."
+        },
+        {
+          "system": "Genitourinary",
+          "finding": "Catheter urine output: 9–10 am 45 mL, 10–11 am 40 mL, 11 am–noon 30 mL, noon–1 pm 15 mL."
+        },
+        {
+          "system": "Musculoskeletal",
+          "finding": "Says her arms and legs feel heavy. Moves all limbs when asked."
         },
         {
           "system": "Integumentary",
-          "finding": "Face flushed, skin warm."
+          "finding": "Face flushed, skin warm. Ankle oedema 1+."
+        },
+        {
+          "system": "Psychosocial",
+          "finding": "Too drowsy to talk for long."
+        },
+        {
+          "system": "Obstetric",
+          "finding": "Fetal heart rate 132/min. No contractions."
         }
       ]
     },
@@ -244,6 +393,10 @@
       "time_label": "2:30 pm",
       "narrative": "The nurse stopped the magnesium sulfate infusion at 1:00 pm. The registrar arrived at 1:10 pm, gave calcium gluconate 1 g IV over 10 minutes, started oxygen at 2 L/min by nasal prongs, and sent blood for a serum magnesium level at 1:15 pm. The infusion remains off.",
       "vitals": [
+        {
+          "label": "Temperature",
+          "value": "36.9°C"
+        },
         {
           "label": "Pulse",
           "value": "86/min"
@@ -259,16 +412,48 @@
         {
           "label": "SpO2",
           "value": "98% on 2 L/min nasal oxygen"
+        },
+        {
+          "label": "Pain",
+          "value": "Headache 2/10"
         }
       ],
       "assessment": [
         {
-          "system": "CNS",
+          "system": "Neurological",
           "finding": "Awake, answers questions promptly. Patellar reflexes 1+ on both sides. Headache 2/10."
         },
         {
-          "system": "Genitourinary/Obstetric",
-          "finding": "Catheter urine output: 1–2 pm 20 mL, 2–2:30 pm 15 mL. Fetal heart rate 138/min."
+          "system": "Cardiovascular",
+          "finding": "Heart sounds normal. Capillary refill under 2 seconds."
+        },
+        {
+          "system": "Respiratory",
+          "finding": "Chest clear on both sides."
+        },
+        {
+          "system": "Gastrointestinal",
+          "finding": "Abdomen soft, mild epigastric tenderness. No nausea or vomiting."
+        },
+        {
+          "system": "Genitourinary",
+          "finding": "Catheter urine output: 1–2 pm 20 mL, 2–2:30 pm 15 mL."
+        },
+        {
+          "system": "Musculoskeletal",
+          "finding": "Moves all limbs. Says the heaviness in her limbs is easing."
+        },
+        {
+          "system": "Integumentary",
+          "finding": "Flushing has faded. Skin warm and dry. Ankle oedema 1+."
+        },
+        {
+          "system": "Psychosocial",
+          "finding": "Says the morning frightened her and asks whether the baby is all right."
+        },
+        {
+          "system": "Obstetric",
+          "finding": "Fetal heart rate 138/min. No contractions."
         }
       ],
       "labs": [
@@ -281,6 +466,62 @@
             }
           ]
         }
+      ],
+      "medications": [
+        {
+          "name": "Magnesium sulfate (maintenance infusion)",
+          "dose": "1 g/hr",
+          "route": "IV by infusion pump",
+          "frequency": "Continuous",
+          "status": "stopped 1:00 pm"
+        },
+        {
+          "name": "Calcium gluconate 10%",
+          "dose": "1 g (10 mL)",
+          "route": "IV",
+          "frequency": "Once, over 10 minutes",
+          "status": "given 1:10 pm by the registrar"
+        },
+        {
+          "name": "Oxygen",
+          "dose": "2 L/min",
+          "route": "Nasal prongs",
+          "frequency": "Continuous",
+          "status": "started 1:10 pm"
+        },
+        {
+          "name": "Nifedipine (immediate release)",
+          "dose": "10 mg",
+          "route": "Oral",
+          "frequency": "Repeat according to blood pressure, as ordered",
+          "status": "given 7:50 am"
+        },
+        {
+          "name": "Methyldopa",
+          "dose": "250 mg",
+          "route": "Oral",
+          "frequency": "Three times daily (8 am, 2 pm, 10 pm)",
+          "status": "given 8:00 am; 2:00 pm dose deferred by the registrar until she is fully alert"
+        },
+        {
+          "name": "Ferrous sulfate",
+          "dose": "200 mg",
+          "route": "Oral",
+          "frequency": "Once daily"
+        },
+        {
+          "name": "Folic acid",
+          "dose": "400 micrograms",
+          "route": "Oral",
+          "frequency": "Once daily"
+        },
+        {
+          "name": "Paracetamol",
+          "dose": "1 g",
+          "route": "Oral",
+          "frequency": "Every 6 hours as needed for pain (maximum 4 g in 24 hours)",
+          "status": "last given 4:30 am"
+        }
       ]
     },
     {
@@ -291,7 +532,56 @@
     {
       "key": "consent",
       "time_label": "4:00 pm",
-      "narrative": "Anjali is alert and oriented. The repeat magnesium level is back, and the registrar has restarted the infusion at the lower rate. The registrar is called urgently to the labour ward. Before leaving, the registrar hands the nurse the caesarean section consent form and says, \"I'm tied up. Just get her to sign this so theatre isn't delayed. She knows she's having the section.\""
+      "narrative": "Anjali is alert and oriented. The repeat magnesium level is back, and the registrar has restarted the infusion at the lower rate. The registrar is called urgently to the labour ward. Before leaving, the registrar hands the nurse the caesarean section consent form and says, \"I'm tied up. Just get her to sign this so theatre isn't delayed. She knows she's having the section.\"",
+      "medications": [
+        {
+          "name": "Magnesium sulfate (maintenance infusion)",
+          "dose": "0.5 g/hr",
+          "route": "IV by infusion pump",
+          "frequency": "Continuous",
+          "status": "restarted at the lower rate 3:45 pm"
+        },
+        {
+          "name": "Oxygen",
+          "dose": "2 L/min",
+          "route": "Nasal prongs",
+          "frequency": "Continuous",
+          "status": "running since 1:10 pm"
+        },
+        {
+          "name": "Nifedipine (immediate release)",
+          "dose": "10 mg",
+          "route": "Oral",
+          "frequency": "Repeat according to blood pressure, as ordered",
+          "status": "given 7:50 am"
+        },
+        {
+          "name": "Methyldopa",
+          "dose": "250 mg",
+          "route": "Oral",
+          "frequency": "Three times daily (8 am, 2 pm, 10 pm)",
+          "status": "given 8:00 am and 3:00 pm"
+        },
+        {
+          "name": "Ferrous sulfate",
+          "dose": "200 mg",
+          "route": "Oral",
+          "frequency": "Once daily"
+        },
+        {
+          "name": "Folic acid",
+          "dose": "400 micrograms",
+          "route": "Oral",
+          "frequency": "Once daily"
+        },
+        {
+          "name": "Paracetamol",
+          "dose": "1 g",
+          "route": "Oral",
+          "frequency": "Every 6 hours as needed for pain (maximum 4 g in 24 hours)",
+          "status": "last given 4:30 am"
+        }
+      ]
     }
   ],
   "questions": [
@@ -689,7 +979,7 @@
     }
   ],
   "pathophysiology": "## Pathophysiology teaching\n\n**Normal physiology.** In a healthy pregnancy the spiral arteries of the uterus are remodelled into wide, low-resistance vessels that carry a large blood flow to the placenta. Blood pressure usually falls slightly in the second trimester.\n\n**Mechanism.** In pre-eclampsia this remodelling is incomplete. The poorly perfused placenta releases substances into the maternal circulation that damage the endothelium (the lining of blood vessels) throughout the body. Damaged endothelium leads to widespread vasoconstriction, leaky capillaries and small clots. This is why pre-eclampsia is a multi-organ disease and not just high blood pressure:\n- **Brain:** vasospasm and cerebral oedema cause headache, visual disturbance and, at worst, eclamptic seizures and stroke.\n- **Kidneys:** damaged glomerular capillaries leak protein (Anjali's 3+ proteinuria) and filter less, so urine output falls.\n- **Liver:** swelling of the liver stretches its capsule, causing epigastric or right upper quadrant pain and a rise in AST and ALT. If this progresses with haemolysis and falling platelets, it becomes HELLP syndrome; Anjali's platelets of 136 × 10⁹/L and modest enzyme rise show liver involvement without HELLP.\n- **Capillary leak** moves fluid into the tissues, so the woman is oedematous yet her circulating volume is reduced; giving extra IV fluid can cause pulmonary oedema.\n\n**Why each decision mattered.**\n- A headache that does not respond to paracetamol in a pregnant woman with hypertension is a brain warning sign, not a minor complaint (Q1).\n- New 3+ protein tied the headache and blood pressure together as one disease (Q2).\n- Repeat readings of 160/110 or more, persistent headache and epigastric pain are each severe features, so the problem was prioritized as pre-eclampsia with severe features before the blood results returned (Q3). The only cure is delivery of the placenta; at 35 weeks, delivery once she is stable is the plan.\n- Magnesium sulfate stabilises nerve cell membranes and relaxes cerebral vessels, preventing eclamptic seizures better than diazepam or phenytoin (Q4). Antihypertensives such as nifedipine protect against stroke but do not prevent seizures.\n- Magnesium is excreted by the kidneys. As Anjali's urine output fell, magnesium accumulated. Loss of patellar reflexes appears first, then respiratory depression, then cardiac arrest, which is why reflexes, respirations and urine output are checked hourly. Stopping the infusion removes the source (Q5); calcium gluconate antagonises magnesium at the cell membrane.\n- Return of breathing and reflexes, not a supported saturation or a pre-treatment level, showed the toxicity was reversing (Q6).\n- Clear, honest communication with the family (Q7) and valid informed consent obtained by the doctor (Q8) are part of safe care in an obstetric emergency.\n\n**Prevention and early detection.** Regular antenatal blood pressure and urine checks; low-dose aspirin from early pregnancy for women at high risk, as prescribed; teaching every pregnant woman to report headache, visual changes, upper abdominal pain or sudden swelling of the face and hands at once; and, during magnesium therapy, hourly reflexes, respirations and urine output with the antidote available.",
-  "quality_report": "Drafted by Claude (2026-10-10) from CASE_REQUEST NRG-OB-001. Checks run on all eight items: Cover test (each key can be formed before seeing options: Q1 new headache, Q2 kidney involvement, Q3 severe pre-eclampsia, Q4 magnesium sulfate, Q5 stop infusion and notify, Q6 breathing and reflexes, Q7 acknowledge and check consent to share, Q8 doctor obtains consent). Two-answer test: Q1 blood pressure 146/96 kept close to the admission readings so it is the known, monitored finding; Q3 HELLP deliberately left out because no labs exist at that point, and abruption is weakened by a soft, non-tender uterus and normal fetal heart rate; Q4 stem specifies seizure prevention so the antihypertensive cannot also be keyed; Q5 calcium gluconate framed as a sequencing error; Q6 SpO2 made oxygen-supported and the magnesium level timed before the response. Cue sufficiency: Q3 asked before the blood results; the magnesium protocol authority is stated in the 8:30 am stage, before the Q5 stage, not in it; urine output and electrolytes provided (addendum 3). Hidden assumptions: none known; nifedipine was given, so BP is not the Q6 target. Jade to confirm: magnesium regimen (4 g IV over 20 min, then 1 g/hr) and the toxicity thresholds in the local protocol; nifedipine 10 mg immediate release as the local first-line antihypertensive (hydralazine or labetalol may be used instead); serum magnesium of 5.2 mmol/L as a plausible level for absent reflexes with RR 10/min; calcium gluconate 1 g IV over 10 min given by the doctor; creatinine in µmol/L for T&T labs; IV fluid limit of 80 mL/hr; delivery at 35 weeks by caesarean for breech after stabilisation; consent practice (doctor obtains, nurse witnesses) in T&T hospitals. Validator note: the official check (npx tsx scripts/import-case.ts --check) could not be run in the authoring session because the tool permission was denied; the mechanical rules (option lengths and key gap, stem verbs, answer-leak check, forbidden and visual-flag patterns, rationale lengths, self-test wording, title, pathophysiology length, fluid data) were checked by hand and pass. Run the official --check before import. Reviewer (2026-10-10): Clinical check passed on the core regimen: magnesium sulfate 4 g IV over 20 min then 1 g/hr matches WHO/NICE (Zuspan) practice; 5.2 mmol/L (about 12.6 mg/dL) fits absent reflexes with early respiratory depression and sits above the 2–3.5 mmol/L prophylactic range used in the Q6 rationale; the 80 mL/hr total IV fluid limit matches NICE; immediate-release oral nifedipine started within about an hour of the first severe-range reading is acceptable first-line treatment; calcium gluconate 1 g IV over 10 min is standard. Changes: (1) the hourly urine outputs before toxicity were 25 mL at 11 am–noon, below the usual 30 mL/hr reporting threshold, which would have shown the nurse ignoring oliguria an hour before the Q5 action point; changed to 45, 40, 30, 15 mL so the fall becomes reportable in the Q5 hour, and added a 2+ reflex at 11 am so the decline is gradual; (2) the 3:00 pm and 4:00 pm stages now restart magnesium only after a repeat level is back, since restarting on clinical signs alone two hours after a toxic level with ongoing oliguria is not mainstream; (3) Q2 option A reworded from 'her blood pressure now involves her kidneys' to 'her hypertension now involves her kidneys'; (4) option types corrected: Q2 D (methyldopa explanation) and Q6 D (pre-treatment magnesium level) are misinterpretations, not sequencing errors, so retyped incorrect. No keys changed (C, A, D, B, A, C, D, B). Flow checked: Q3 precedes the bloods and the registrar's confirmation; Q4 (anticipate magnesium) and Q5 (stop the infusion and notify) differ; the stop-and-notify authority sits in the 8:30 am stage, before the Q5 stage; calcium gluconate and oxygen are introduced in the 2:30 pm stage that Q6 evaluates, and magnesium is introduced at 8:30 am. Jade to confirm: magnesium toxicity at 1 g/hr is uncommon and here depends on falling urine output with a creatinine of 84 µmol/L (above the usual pregnancy value), so confirm this is believable or prefer a higher creatinine; the local protocol's reportable thresholds (urine under 30 mL/hr or under 100 mL in 4 hours, RR under 12, absent reflexes); whether nifedipine with magnesium is accepted locally (older texts warn of an interaction); and that the RN, not the doctor, may stop the infusion under the ward protocol in T&T hospitals.",
+  "quality_report": "Drafted by Claude (2026-10-10) from CASE_REQUEST NRG-OB-001. Checks run on all eight items: Cover test (each key can be formed before seeing options: Q1 new headache, Q2 kidney involvement, Q3 severe pre-eclampsia, Q4 magnesium sulfate, Q5 stop infusion and notify, Q6 breathing and reflexes, Q7 acknowledge and check consent to share, Q8 doctor obtains consent). Two-answer test: Q1 blood pressure 146/96 kept close to the admission readings so it is the known, monitored finding; Q3 HELLP deliberately left out because no labs exist at that point, and abruption is weakened by a soft, non-tender uterus and normal fetal heart rate; Q4 stem specifies seizure prevention so the antihypertensive cannot also be keyed; Q5 calcium gluconate framed as a sequencing error; Q6 SpO2 made oxygen-supported and the magnesium level timed before the response. Cue sufficiency: Q3 asked before the blood results; the magnesium protocol authority is stated in the 8:30 am stage, before the Q5 stage, not in it; urine output and electrolytes provided (addendum 3). Hidden assumptions: none known; nifedipine was given, so BP is not the Q6 target. Jade to confirm: magnesium regimen (4 g IV over 20 min, then 1 g/hr) and the toxicity thresholds in the local protocol; nifedipine 10 mg immediate release as the local first-line antihypertensive (hydralazine or labetalol may be used instead); serum magnesium of 5.2 mmol/L as a plausible level for absent reflexes with RR 10/min; calcium gluconate 1 g IV over 10 min given by the doctor; creatinine in µmol/L for T&T labs; IV fluid limit of 80 mL/hr; delivery at 35 weeks by caesarean for breech after stabilisation; consent practice (doctor obtains, nurse witnesses) in T&T hospitals. Validator note: the official check (npx tsx scripts/import-case.ts --check) could not be run in the authoring session because the tool permission was denied; the mechanical rules (option lengths and key gap, stem verbs, answer-leak check, forbidden and visual-flag patterns, rationale lengths, self-test wording, title, pathophysiology length, fluid data) were checked by hand and pass. Run the official --check before import. Reviewer (2026-10-10): Clinical check passed on the core regimen: magnesium sulfate 4 g IV over 20 min then 1 g/hr matches WHO/NICE (Zuspan) practice; 5.2 mmol/L (about 12.6 mg/dL) fits absent reflexes with early respiratory depression and sits above the 2–3.5 mmol/L prophylactic range used in the Q6 rationale; the 80 mL/hr total IV fluid limit matches NICE; immediate-release oral nifedipine started within about an hour of the first severe-range reading is acceptable first-line treatment; calcium gluconate 1 g IV over 10 min is standard. Changes: (1) the hourly urine outputs before toxicity were 25 mL at 11 am–noon, below the usual 30 mL/hr reporting threshold, which would have shown the nurse ignoring oliguria an hour before the Q5 action point; changed to 45, 40, 30, 15 mL so the fall becomes reportable in the Q5 hour, and added a 2+ reflex at 11 am so the decline is gradual; (2) the 3:00 pm and 4:00 pm stages now restart magnesium only after a repeat level is back, since restarting on clinical signs alone two hours after a toxic level with ongoing oliguria is not mainstream; (3) Q2 option A reworded from 'her blood pressure now involves her kidneys' to 'her hypertension now involves her kidneys'; (4) option types corrected: Q2 D (methyldopa explanation) and Q6 D (pre-treatment magnesium level) are misinterpretations, not sequencing errors, so retyped incorrect. No keys changed (C, A, D, B, A, C, D, B). Flow checked: Q3 precedes the bloods and the registrar's confirmation; Q4 (anticipate magnesium) and Q5 (stop the infusion and notify) differ; the stop-and-notify authority sits in the 8:30 am stage, before the Q5 stage; calcium gluconate and oxygen are introduced in the 2:30 pm stage that Q6 evaluates, and magnesium is introduced at 8:30 am. Jade to confirm: magnesium toxicity at 1 g/hr is uncommon and here depends on falling urine output with a creatinine of 84 µmol/L (above the usual pregnancy value), so confirm this is believable or prefer a higher creatinine; the local protocol's reportable thresholds (urine under 30 mL/hr or under 100 mL in 4 hours, RR under 12, absent reflexes); whether nifedipine with magnesium is accepted locally (older texts warn of an interaction); and that the RN, not the doctor, may stop the infusion under the ward protocol in T&T hospitals. Revision (2026-10-12): Brought the case up to the full-vitals, full-examination and charted-medication rules. Added pain scores to every vitals set and temperature at 6:50 am and 2:30 pm. Each examination (6:10 am, 6:50 am, 1:00 pm, 2:30 pm) now covers all eight body systems in order, plus Obstetric; the former 'Genitourinary/Obstetric' row is split into Genitourinary and Obstetric, and 'CNS' renamed Neurological, with no existing finding reworded. Added findings are normal or consistent with the moment: baseline reflexes 2+ and soft non-tender upper abdomen at 6:10 am (before the epigastric pain); limb heaviness, flushing and drowsiness during magnesium toxicity at 1:00 pm, easing at 2:30 pm; no visual disturbance or clonus was added, so Q3 still rests on the severe-range BP, headache and RUQ pain. Medications: home methyldopa, ferrous sulfate, folic acid and PRN paracetamol on opening; magnesium sulfate loading and maintenance, nifedipine and methyldopa (8 am dose) first charted at 8:30 am, the stage where the orders appear (after Q4); 'stopped 1:00 pm', calcium gluconate and oxygen first charted at 2:30 pm (after Q5); the lower restart rate at 4:00 pm. No stem, option or key changed (C, A, D, B, A, C, D, B); flow rechecked. Jade to confirm: ferrous sulfate 200 mg daily and folic acid 400 micrograms daily (or the local 5 mg); methyldopa 8 am/2 pm/10 pm timing and continuing it alongside nifedipine; the 2:00 pm methyldopa dose deferred to 3:00 pm while she recovered from the toxicity; the restart rate of 0.5 g/hr; oxygen charted as a medication.",
   "validation": {
     "status": "pending"
   }

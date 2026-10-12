@@ -11,7 +11,44 @@
   "source": "ai:claude",
   "opening": {
     "time_label": "Post-operative day 3, 6:00 am",
-    "narrative": "Kamla, a 78-year-old woman, is on the surgical ward of a regional general hospital on the third day after a right hip hemiarthroplasty for a fractured hip sustained in a fall at home. History includes type 2 diabetes treated with metformin (withheld since admission, with blood glucose checked before meals) and hypertension treated with amlodipine. Pre-operative blood pressure was 148/84 mm Hg. Pain is managed with regular oral paracetamol and oral tramadol 50 mg as needed; the last tramadol dose was given at 10:00 pm. No known drug allergies. Weight 54 kg. Kamla lives with a daughter in Chaguanas and, before the fall, did the household shopping and bank visits without help. At handover the night nurse reports, \"Miss Kamla didn't sleep much. Called out a few times in the night.\" Ward policy allows registered nurses trained in venepuncture, including the day nurse, to collect blood cultures."
+    "narrative": "Kamla, a 78-year-old woman, is on the surgical ward of a regional general hospital on the third day after a right hip hemiarthroplasty for a fractured hip sustained in a fall at home. History includes type 2 diabetes treated with metformin (withheld since admission, with blood glucose checked before meals) and hypertension treated with amlodipine. Pre-operative blood pressure was 148/84 mm Hg. Pain is managed with regular oral paracetamol and oral tramadol 50 mg as needed; the last tramadol dose was given at 10:00 pm. No known drug allergies. Weight 54 kg. Kamla lives with a daughter in Chaguanas and, before the fall, did the household shopping and bank visits without help. At handover the night nurse reports, \"Miss Kamla didn't sleep much. Called out a few times in the night.\" Ward policy allows registered nurses trained in venepuncture, including the day nurse, to collect blood cultures.",
+    "medications": [
+      {
+        "name": "Paracetamol",
+        "dose": "1 g",
+        "route": "Oral",
+        "frequency": "Every 6 hours",
+        "status": "Last dose 2:00 am"
+      },
+      {
+        "name": "Tramadol",
+        "dose": "50 mg",
+        "route": "Oral",
+        "frequency": "Every 6 hours as needed for pain",
+        "status": "Last dose 10:00 pm"
+      },
+      {
+        "name": "Enoxaparin",
+        "dose": "40 mg",
+        "route": "Subcutaneous",
+        "frequency": "Once daily, 6:00 pm",
+        "status": "Last dose 6:00 pm yesterday"
+      },
+      {
+        "name": "Amlodipine",
+        "dose": "5 mg",
+        "route": "Oral",
+        "frequency": "Once daily, 10:00 am",
+        "status": "Last dose 10:00 am yesterday"
+      },
+      {
+        "name": "Metformin",
+        "dose": "500 mg",
+        "route": "Oral",
+        "frequency": "Twice daily with meals",
+        "status": "Withheld since admission (surgeon's order)"
+      }
+    ]
   },
   "stages": [
     {
@@ -51,40 +88,42 @@
       "assessment": [
         {
           "system": "CNS",
-          "finding": "Knows own name. Cannot name the hospital or the day. Loses track mid-sentence and picks at the bedsheet."
+          "finding": "Knows own name. Cannot name the hospital or the day. Loses track mid-sentence and picks at the bedsheet. Moves all four limbs."
+        },
+        {
+          "system": "Cardiovascular",
+          "finding": "Radial pulse regular. Hands warm. Capillary refill 2 seconds."
         },
         {
           "system": "Respiratory",
           "finding": "Chest clear on auscultation, breath sounds equal on both sides."
         },
         {
-          "system": "Cardiovascular",
-          "finding": "Radial pulse regular. Hands warm."
-        },
-        {
           "system": "Gastrointestinal",
-          "finding": "Abdomen soft. Passing flatus. Took a few sips of tea overnight."
+          "finding": "Abdomen soft, not distended, bowel sounds present. Passing flatus. Took a few sips of tea overnight."
         },
         {
-          "system": "Integumentary",
-          "finding": "Right hip dressing dry and intact."
+          "system": "Genitourinary",
+          "finding": "Indwelling urinary catheter in place, draining into a bag hung below the bladder."
         },
         {
           "system": "Musculoskeletal",
           "finding": "Abduction pillow between the legs. Right foot warm, pedal pulse present."
+        },
+        {
+          "system": "Integumentary",
+          "finding": "Right hip dressing dry and intact. Skin over the sacrum and heels intact."
+        },
+        {
+          "system": "Psychosocial",
+          "finding": "Daughter visits each evening and plans to care for Kamla at home after discharge."
         }
       ]
     },
     {
       "key": "urinary",
       "time_label": "7:00 am",
-      "narrative": "The nurse checks the urinary catheter, which was inserted in theatre on the day of surgery and is still in place. The urine in the tubing and bag is cloudy and dark amber with a strong odour. Kamla winces and pushes the nurse's hand away when the lower abdomen just above the pubic bone is pressed.",
-      "assessment": [
-        {
-          "system": "Genitourinary",
-          "finding": "Urine output over the last 8 hours: 200 mL. Oral intake over the same period: 150 mL."
-        }
-      ]
+      "narrative": "The nurse checks the urinary catheter, which was inserted in theatre on the day of surgery and is still in place. The urine in the tubing and bag is cloudy and dark amber with a strong odour. Kamla winces and pushes the nurse's hand away when the lower abdomen just above the pubic bone is pressed. Urine output over the last 8 hours: 200 mL. Oral intake over the same period: 150 mL."
     },
     {
       "key": "worse",
@@ -110,6 +149,10 @@
         {
           "label": "SpO2",
           "value": "94% on room air"
+        },
+        {
+          "label": "Pain (PAINAD, 0-10)",
+          "value": "2/10; grimaces when the right hip is moved"
         }
       ],
       "assessment": [
@@ -118,20 +161,32 @@
           "finding": "Opens eyes to voice. Mutters words that do not fit the question."
         },
         {
+          "system": "Cardiovascular",
+          "finding": "Radial pulse regular. Capillary refill 3 seconds. Skin warm and flushed."
+        },
+        {
           "system": "Respiratory",
           "finding": "Chest clear on auscultation. No cough."
         },
         {
-          "system": "Cardiovascular",
-          "finding": "Capillary refill 3 seconds. Skin warm and flushed."
+          "system": "Gastrointestinal",
+          "finding": "Abdomen soft, not distended, bowel sounds present. Not taking oral fluids."
         },
         {
           "system": "Genitourinary",
           "finding": "Urine output in the last hour: 12 mL."
         },
         {
+          "system": "Musculoskeletal",
+          "finding": "Abduction pillow in place. Right foot warm, pedal pulse present."
+        },
+        {
           "system": "Integumentary",
-          "finding": "Right hip dressing dry. No redness or swelling at the wound edges."
+          "finding": "Right hip dressing dry. No redness or swelling at the wound edges. Sacrum and heels intact."
+        },
+        {
+          "system": "Psychosocial",
+          "finding": "Daughter telephoned at 7:30 am to ask how Kamla slept and plans to visit after work."
         }
       ]
     },
@@ -171,7 +226,43 @@
     {
       "key": "orders",
       "time_label": "8:15 am",
-      "narrative": "Prescriptions: 0.9% sodium chloride 500 mL intravenously over 15 minutes, repeated up to 1,500 mL in total with reassessment after each bolus; ceftriaxone intravenously, first dose within the hour; two sets of blood cultures; oxygen by nasal prongs to keep SpO2 at 94% or above; intravenous paracetamol for fever in place of the regular oral paracetamol (last oral dose at 2:00 am); hourly urine output. The nurse starts the first fluid bolus at 8:20 am. At 8:30 am the ceftriaxone arrives from pharmacy. The house officer has been called away to A&E, and no blood has yet been drawn for culture."
+      "narrative": "Prescriptions: 0.9% sodium chloride 500 mL intravenously over 15 minutes, repeated up to 1,500 mL in total with reassessment after each bolus; ceftriaxone intravenously, first dose within the hour; two sets of blood cultures; oxygen by nasal prongs to keep SpO2 at 94% or above; intravenous paracetamol for fever in place of the regular oral paracetamol (last oral dose at 2:00 am); hourly urine output. The nurse starts the first fluid bolus at 8:20 am. At 8:30 am the ceftriaxone arrives from pharmacy. The house officer has been called away to A&E, and no blood has yet been drawn for culture.",
+      "medications": [
+        {
+          "name": "0.9% sodium chloride",
+          "dose": "500 mL",
+          "route": "Intravenous",
+          "frequency": "Over 15 minutes; repeat to 1,500 mL in total, reassessing after each bolus",
+          "status": "First bolus started 8:20 am"
+        },
+        {
+          "name": "Ceftriaxone",
+          "dose": "2 g",
+          "route": "Intravenous",
+          "frequency": "Once daily; first dose within the hour",
+          "status": "Received from pharmacy 8:30 am"
+        },
+        {
+          "name": "Paracetamol",
+          "dose": "1 g",
+          "route": "Intravenous",
+          "frequency": "Every 6 hours as needed for temperature above 38°C (maximum 4 g in 24 hours)",
+          "status": "Replaces the regular oral paracetamol"
+        },
+        {
+          "name": "Paracetamol",
+          "dose": "1 g",
+          "route": "Oral",
+          "frequency": "Every 6 hours",
+          "status": "Discontinued 8:15 am (replaced by intravenous); last dose 2:00 am"
+        },
+        {
+          "name": "Oxygen",
+          "dose": "2-4 L/min",
+          "route": "Nasal prongs",
+          "frequency": "Continuous, to keep SpO2 at 94% or above"
+        }
+      ]
     },
     {
       "key": "reassess",
@@ -199,6 +290,10 @@
           "value": "95% on 2 L/min"
         },
         {
+          "label": "Pain (PAINAD, 0-10)",
+          "value": "1/10; settled at rest"
+        },
+        {
           "label": "RBS",
           "value": "226 mg/dL"
         }
@@ -209,16 +304,32 @@
           "finding": "Opens eyes to voice. Cannot name the hospital when asked."
         },
         {
+          "system": "Cardiovascular",
+          "finding": "Radial pulse regular. Capillary refill 3 seconds. No ankle or sacral oedema."
+        },
+        {
           "system": "Respiratory",
           "finding": "Chest clear on auscultation. No added sounds."
         },
         {
-          "system": "Cardiovascular",
-          "finding": "Capillary refill 3 seconds."
+          "system": "Gastrointestinal",
+          "finding": "Abdomen soft, not distended, bowel sounds present."
         },
         {
           "system": "Genitourinary",
           "finding": "Urine output from 8:15 to 9:15 am: 10 mL."
+        },
+        {
+          "system": "Musculoskeletal",
+          "finding": "Abduction pillow in place. Right foot warm, pedal pulse present."
+        },
+        {
+          "system": "Integumentary",
+          "finding": "Skin warm. Right hip dressing dry and intact. Cannula site in the left forearm clean, no swelling."
+        },
+        {
+          "system": "Psychosocial",
+          "finding": "Daughter has been telephoned and is on her way to the hospital."
         }
       ],
       "labs": [
@@ -260,12 +371,58 @@
             }
           ]
         }
+      ],
+      "medications": [
+        {
+          "name": "0.9% sodium chloride",
+          "dose": "500 mL",
+          "route": "Intravenous",
+          "frequency": "Over 15 minutes; repeat to 1,500 mL in total",
+          "status": "Three boluses given, 1,500 mL; last finished 9:15 am"
+        },
+        {
+          "name": "Ceftriaxone",
+          "dose": "2 g",
+          "route": "Intravenous",
+          "frequency": "Once daily",
+          "status": "Given 8:40 am (after blood cultures at 8:35 am)"
+        },
+        {
+          "name": "Paracetamol",
+          "dose": "1 g",
+          "route": "Intravenous",
+          "frequency": "Every 6 hours as needed for temperature above 38°C",
+          "status": "Given 8:45 am"
+        },
+        {
+          "name": "Oxygen",
+          "dose": "2 L/min",
+          "route": "Nasal prongs",
+          "frequency": "Continuous, to keep SpO2 at 94% or above",
+          "status": "Running"
+        }
       ]
     },
     {
       "key": "escalate",
       "time_label": "9:30 am",
-      "narrative": "The nurse reports to the surgical registrar using a structured handover. The registrar reviews Kamla and arranges transfer to the high dependency unit for closer monitoring and further circulatory support; a bed will be ready in about an hour. Until then the registrar asks for observations every 15 minutes and hourly urine output, and prescribes a further 500 mL of 0.9% sodium chloride intravenously over 30 minutes, which the nurse starts. The nurse is working with a nursing assistant and has three other clients."
+      "narrative": "The nurse reports to the surgical registrar using a structured handover. The registrar reviews Kamla and arranges transfer to the high dependency unit for closer monitoring and further circulatory support; a bed will be ready in about an hour. Until then the registrar asks for observations every 15 minutes and hourly urine output, and prescribes a further 500 mL of 0.9% sodium chloride intravenously over 30 minutes, which the nurse starts, and asks for the 10:00 am amlodipine to be withheld. The nurse is working with a nursing assistant and has three other clients.",
+      "medications": [
+        {
+          "name": "0.9% sodium chloride",
+          "dose": "500 mL",
+          "route": "Intravenous",
+          "frequency": "Over 30 minutes, once",
+          "status": "Started 9:30 am"
+        },
+        {
+          "name": "Amlodipine",
+          "dose": "5 mg",
+          "route": "Oral",
+          "frequency": "Once daily, 10:00 am",
+          "status": "Withheld on the registrar's instruction"
+        }
+      ]
     },
     {
       "key": "chart",
@@ -409,7 +566,7 @@
       "rationale_correct": "CORRECT: The urinary source is already suggested, and Kamla now has a temperature of 38.7°C, pulse 118/min, respirations 26/min, a blood pressure of 92/54 mm Hg against a pre-operative 148/84, reduced consciousness, slow capillary refill and only 12 mL of urine in an hour. A rapid breathing rate, low blood pressure and altered mental state together mean infection is affecting the whole body and organ perfusion, which is sepsis and must be treated as an emergency.",
       "distractor_rationales": {
         "A": "The infection probably began in the bladder, but a localised bladder infection does not cause hypotension, a falling level of consciousness and an output of 12 mL/hr. Treating it as local would underestimate how ill Kamla is.",
-        "B": "Low blood pressure, a fast pulse and low urine output do fit blood loss, which makes this tempting after hip surgery. But the dressing is dry, the wound is not swollen, and Kamla is febrile, warm and flushed, which fits infection rather than bleeding.",
+        "B": "Low blood pressure, a fast pulse and low urine output do fit blood loss, and the daily enoxaparin makes bleeding worth considering after hip surgery. But the dressing is dry, the wound is not swollen, and Kamla is febrile, warm and flushed, which fits infection rather than bleeding.",
         "C": "Tramadol can cause confusion in older adults, but it does not cause a temperature of 38.7°C, hypotension or a urine output of 12 mL/hr, and the last dose was nearly 10 hours ago."
       },
       "self_test": "A bladder infection fits the urine findings, but hypotension, rapid breathing and reduced consciousness show the infection is now affecting the whole body, which is sepsis.",
@@ -668,7 +825,7 @@
     }
   ],
   "pathophysiology": "## Pathophysiology teaching\n\n**Normal defences.** Urine is normally sterile above the urethra. Regular emptying of the bladder flushes out bacteria, and the urethral lining and sphincter keep organisms from climbing up.\n\n**How the catheter caused the infection.** An indwelling catheter bypasses these defences. Within days, bacteria (often bowel organisms such as *E. coli*) form a biofilm on the catheter surface and climb along it into the bladder. The risk rises with every day the catheter stays in, which is why Kamla's catheter, due out on post-operative day 1 but still in on day 3, mattered. Older age, diabetes, immobility after a fractured hip and low fluid intake all added to the risk.\n\n**From bladder infection to sepsis.** When bacteria and their toxins enter the bloodstream, the immune system releases inflammatory mediators throughout the body. Blood vessels dilate and become leaky, so blood pressure falls (92/54, then 86/50 mm Hg, against a pre-operative 148/84) and the heart speeds up to compensate. Poor perfusion of the kidneys reduces urine output (12 mL/hr, then about 10 mL/hr) and raises the creatinine from 86 to 164 µmol/L (acute kidney injury). Tissues short of oxygen switch to anaerobic metabolism and produce lactate (3.6 mmol/L). Stress hormones raise the blood glucose (198 to 236 mg/dL). The brain is sensitive to poor perfusion and inflammation, which is why confusion was the first sign.\n\n**Why each decision mattered.**\n- Q1: in older adults, acute confusion often comes before a high fever. Recognising it as new, rather than as age or a poor night, started the search for a cause.\n- Q2: cloudy urine in a catheter can be harmless, but with suprapubic tenderness and new confusion it pointed to a symptomatic urinary infection.\n- Q3: hypotension, rapid breathing and reduced consciousness showed the infection had become systemic; blood loss and tramadol could not explain the fever.\n- Q4: in sepsis the low blood pressure is distributive, so isotonic crystalloid boluses restore volume; a diuretic would worsen it.\n- Q5: blood cultures drawn before the antibiotic identify the organism, and taking them takes minutes, so treatment is not delayed.\n- Q6: the fluid was given to restore blood pressure and perfusion. A blood pressure that falls despite 1,500 mL, with persisting oliguria, signals septic shock and the need for a higher level of care.\n- Q7: while awaiting transfer, the nurse delegated a routine measurement but kept assessment and interpretation of an unstable client.\n- Q8: the missed removal order is a system failure; reporting it lets the ward prevent the next one.\n\n**Source control.** Once a catheter-associated infection is suspected, the team decides whether the catheter can be removed or should be replaced, because the biofilm on the old catheter keeps seeding bacteria.\n\n**Prevention.** Insert a catheter only when needed, using aseptic technique; review the need for it every day and remove it as soon as ordered or no longer indicated; keep a closed drainage system with the bag below the bladder and off the floor; give daily catheter care; encourage fluids and early mobilisation; and use routine observations and an early warning score so that changes such as new confusion are acted on early.",
-  "quality_report": "Drafted by Claude (ai:claude, 2026-10-10) from plan-2026-10-10 request NRG-MS-001. Story: older client, day 3 after hip hemiarthroplasty, catheter left in past its removal order; new confusion (Q1) -> catheter findings (Q2) -> systemic signs before any lab confirms the diagnosis (Q3) -> house officer review with dipstick and lactate (Q4) -> prescriptions, cultures not yet drawn (Q5) -> no response to 1,500 mL (Q6) -> transfer to the high dependency unit (Q7) -> missed order found (Q8). Checks run on all eight items: Cover (each stem can be answered before reading the options: new confusion; infection as cause; sepsis; crystalloid boluses; cultures before antibiotic; persistent hypotension; hourly urine measurement; incident report). Two-answer: Q4 has no antibiotic option so fluids are the single anticipated prescription among the four; Q6 leaves urine output out of the options so blood pressure is the single best marker; Q7 option B was worded to include 'decide when to report' so it fails on interpretation, not on recording. Cue sufficiency: baseline function (independent shopping and banking) given in the opening for Q1; pre-operative blood pressure given for Q3/Q6; day-1 haemoglobin given for Q4 option D; blood-culture authority stated in the opening (addendum 4). Hidden assumptions: no allergies stated before ceftriaxone; tramadol timing given; urine output, sodium, potassium and creatinine given (addendum 3). Jade to confirm: (1) whether T&T ward nurses collect blood cultures under a policy like the one stated, or whether the house officer would; (2) Q7: whether nursing assistants on local surgical wards record 15-minute observations and measure hourly urine output, and that the delegation key matches local scope; (3) Q8: local RHA practice on not referencing incident reports in the clinical record; (4) fluid bolus regimen (500 mL over 15 minutes to 1,500 mL in a 54 kg 78-year-old) and the absence of an antibiotic dose (deliberately not stated); (5) availability of bedside venous lactate on a regional hospital ward; (6) the term 'high dependency unit' for local practice. Reviewer (2026-10-10): Clinical course, flow (Q3 before the dipstick and lactate; Q4 fluids and Q5 cultures-then-antibiotic are different keys; fluids, ceftriaxone and paracetamol shown before Q6), one-best-answer, scope and standard checks re-run; no key changed. Fixes: (1) the IV paracetamol order now states it replaces the regular oral paracetamol, with the last oral dose at 2:00 am, so the case no longer implies a duplicate paracetamol dose in a 54 kg 78-year-old; (2) timeline tightened so escalation follows the failed fluid challenge promptly: the third bolus ends at 9:15 am, reassessment moves from 9:45 to 9:20 am, the registrar handover from 10:00 to 9:30 am, and the transfer from 11:15 to 10:40 am (chart stage now 11:15 am) to match 'a bed in about an hour'; Q6 option A reworded to 'half an hour after paracetamol'; reassessment urine output given as one hourly measurement (8:15 to 9:15 am, 10 mL) instead of overlapping periods; (3) the escalation stage said fluid 'continues as prescribed' although the prescribed 1,500 mL was finished, so the registrar now prescribes a further 500 mL over 30 minutes (needed for Q7 option D); (4) option types retyped to match the self-tests: Q2 C priority to incorrect (it is a misinterpretation, not a sequencing error); Q6 C (pulse, the best distractor) priority to close and A (temperature) close to priority; (5) teaching section adds source control (removing or replacing the infected catheter). Jade to confirm, in addition to the author's list: the further 500 mL bolus after 1,500 mL in a 54 kg older client with no signs of fluid overload; that the 7:45 am picture (likely NEWS2 about 12) would in local practice bring a doctor within 15 minutes rather than an emergency/rapid response call; and IV paracetamol dosing for a client of 54 kg.",
+  "quality_report": "Drafted by Claude (ai:claude, 2026-10-10) from plan-2026-10-10 request NRG-MS-001. Story: older client, day 3 after hip hemiarthroplasty, catheter left in past its removal order; new confusion (Q1) -> catheter findings (Q2) -> systemic signs before any lab confirms the diagnosis (Q3) -> house officer review with dipstick and lactate (Q4) -> prescriptions, cultures not yet drawn (Q5) -> no response to 1,500 mL (Q6) -> transfer to the high dependency unit (Q7) -> missed order found (Q8). Checks run on all eight items: Cover (each stem can be answered before reading the options: new confusion; infection as cause; sepsis; crystalloid boluses; cultures before antibiotic; persistent hypotension; hourly urine measurement; incident report). Two-answer: Q4 has no antibiotic option so fluids are the single anticipated prescription among the four; Q6 leaves urine output out of the options so blood pressure is the single best marker; Q7 option B was worded to include 'decide when to report' so it fails on interpretation, not on recording. Cue sufficiency: baseline function (independent shopping and banking) given in the opening for Q1; pre-operative blood pressure given for Q3/Q6; day-1 haemoglobin given for Q4 option D; blood-culture authority stated in the opening (addendum 4). Hidden assumptions: no allergies stated before ceftriaxone; tramadol timing given; urine output, sodium, potassium and creatinine given (addendum 3). Jade to confirm: (1) whether T&T ward nurses collect blood cultures under a policy like the one stated, or whether the house officer would; (2) Q7: whether nursing assistants on local surgical wards record 15-minute observations and measure hourly urine output, and that the delegation key matches local scope; (3) Q8: local RHA practice on not referencing incident reports in the clinical record; (4) fluid bolus regimen (500 mL over 15 minutes to 1,500 mL in a 54 kg 78-year-old) and the absence of an antibiotic dose (deliberately not stated); (5) availability of bedside venous lactate on a regional hospital ward; (6) the term 'high dependency unit' for local practice. Reviewer (2026-10-10): Clinical course, flow (Q3 before the dipstick and lactate; Q4 fluids and Q5 cultures-then-antibiotic are different keys; fluids, ceftriaxone and paracetamol shown before Q6), one-best-answer, scope and standard checks re-run; no key changed. Fixes: (1) the IV paracetamol order now states it replaces the regular oral paracetamol, with the last oral dose at 2:00 am, so the case no longer implies a duplicate paracetamol dose in a 54 kg 78-year-old; (2) timeline tightened so escalation follows the failed fluid challenge promptly: the third bolus ends at 9:15 am, reassessment moves from 9:45 to 9:20 am, the registrar handover from 10:00 to 9:30 am, and the transfer from 11:15 to 10:40 am (chart stage now 11:15 am) to match 'a bed in about an hour'; Q6 option A reworded to 'half an hour after paracetamol'; reassessment urine output given as one hourly measurement (8:15 to 9:15 am, 10 mL) instead of overlapping periods; (3) the escalation stage said fluid 'continues as prescribed' although the prescribed 1,500 mL was finished, so the registrar now prescribes a further 500 mL over 30 minutes (needed for Q7 option D); (4) option types retyped to match the self-tests: Q2 C priority to incorrect (it is a misinterpretation, not a sequencing error); Q6 C (pulse, the best distractor) priority to close and A (temperature) close to priority; (5) teaching section adds source control (removing or replacing the infected catheter). Jade to confirm, in addition to the author's list: the further 500 mL bolus after 1,500 mL in a 54 kg older client with no signs of fluid overload; that the 7:45 am picture (likely NEWS2 about 12) would in local practice bring a doctor within 15 minutes rather than an emergency/rapid response call; and IV paracetamol dosing for a client of 54 kg. Revision (2026-10-12): Brought up to the full-vitals, full-examination and charted-medication rules; no question, option or key changed. Added: PAINAD pain scores (0-10, as Kamla cannot self-report reliably) to the 7:45 am and 9:20 am vitals; full eight-system examinations in body-systems order at 6:30 am, 7:45 am and 9:20 am, with neutral findings (catheter 'in place, draining' at 6:30 am so the urine is first described at 7:00 am as before; abdomen not called non-tender before the suprapubic tenderness is found; no ankle or sacral oedema and a clean cannula site after 1,500 mL; Psychosocial notes on the daughter). The 7:00 am fluid-balance figures moved from a one-system examination into the narrative (a focused catheter check, not an examination). Medications charted: home/current on the opening (paracetamol 1 g oral 6-hourly, tramadol 50 mg oral 6-hourly as needed, enoxaparin 40 mg subcutaneous daily, amlodipine 5 mg daily, metformin 500 mg twice daily withheld); the 8:15 am orders on the orders stage (0.9% sodium chloride boluses, ceftriaxone 2 g IV, IV paracetamol 1 g 6-hourly as needed, oral paracetamol discontinued, oxygen 2-4 L/min) with ceftriaxone only 'received from pharmacy' before Q5; 'given' statuses only at 9:20 am, after Q5; the further 500 mL bolus and amlodipine withheld at 9:30 am. Wording changed: the escalation narrative adds that the registrar asks for the 10:00 am amlodipine to be withheld. Flow checks re-run: Q3 still before the dipstick and lactate, Q4 and Q5 keys differ, no order charted before its stage, no held/given status before its question. Jade to check: enoxaparin 40 mg daily (not in the original narrative; with creatinine 164 umol/L at 54 kg the clearance is about 20-25 mL/min, so a renal dose reduction would follow at HDU) and that it does not make Q3 option B too defensible; ceftriaxone 2 g IV daily; amlodipine 5 mg; metformin 500 mg twice daily; IV paracetamol 1 g in a 54 kg 78-year-old; PAINAD as the local pain tool for a confused older client. Coordinator (2026-10-12): Q3 B rationale now addresses the enoxaparin; Jade to confirm the enoxaparin dose review as creatinine clearance falls to about 20–25 mL/min (renal dose adjustment), which the case leaves to the prescriber.",
   "validation": {
     "status": "pending"
   }

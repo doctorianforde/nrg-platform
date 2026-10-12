@@ -11,7 +11,27 @@
   "source": "ai:claude",
   "opening": {
     "time_label": "8:30 am",
-    "narrative": "Rawle, a 71-year-old man and retired maxi-taxi driver, attends the chronic disease clinic at the district health centre for a scheduled three-month review, accompanied by a daughter. Rawle says, \"I have a little headache since I wake up this morning, but is nothing serious.\" History includes hypertension for 12 years and type 2 diabetes for 6 years. Prescribed medicines are amlodipine 10 mg once daily, hydrochlorothiazide 25 mg once daily and metformin 500 mg twice daily, collected free each month from the health centre pharmacy under the Chronic Disease Assistance Programme. No known drug allergies. Rawle lives alone and goes to the market by maxi-taxi three mornings a week; the daughter visits at weekends. Breakfast was at 6:30 am. The district medical officer (DMO) is running the clinic this morning."
+    "narrative": "Rawle, a 71-year-old man and retired maxi-taxi driver, attends the chronic disease clinic at the district health centre for a scheduled three-month review, accompanied by a daughter. Rawle says, \"I have a little headache since I wake up this morning, but is nothing serious.\" History includes hypertension for 12 years and type 2 diabetes for 6 years. Prescribed medicines are amlodipine 10 mg once daily, hydrochlorothiazide 25 mg once daily and metformin 500 mg twice daily, collected free each month from the health centre pharmacy under the Chronic Disease Assistance Programme. No known drug allergies. Rawle lives alone and goes to the market by maxi-taxi three mornings a week; the daughter visits at weekends. Breakfast was at 6:30 am. The district medical officer (DMO) is running the clinic this morning.",
+    "medications": [
+      {
+        "name": "Amlodipine",
+        "dose": "10 mg",
+        "route": "Oral",
+        "frequency": "Once daily"
+      },
+      {
+        "name": "Hydrochlorothiazide",
+        "dose": "25 mg",
+        "route": "Oral",
+        "frequency": "Once daily, morning"
+      },
+      {
+        "name": "Metformin",
+        "dose": "500 mg",
+        "route": "Oral",
+        "frequency": "Twice daily with meals"
+      }
+    ]
   },
   "stages": [
     {
@@ -54,20 +74,28 @@
       ],
       "assessment": [
         {
-          "system": "CNS",
+          "system": "Neurological",
           "finding": "Alert and oriented to person, place and time. Speech clear. Pupils equal and reactive to light. Hand grips equal."
         },
         {
-          "system": "Respiratory",
-          "finding": "Chest clear on auscultation."
+          "system": "Cardiovascular",
+          "finding": "Heart sounds regular. Capillary refill under 2 seconds. Pedal pulses palpable. No ankle oedema."
         },
         {
-          "system": "Cardiovascular",
-          "finding": "Heart sounds regular. Capillary refill under 2 seconds. Pedal pulses palpable."
+          "system": "Respiratory",
+          "finding": "Breathing even and unlaboured. Chest clear on auscultation."
+        },
+        {
+          "system": "Gastrointestinal",
+          "finding": "Abdomen soft, non-tender, bowel sounds present. Appetite usual; bowels open daily."
         },
         {
           "system": "Genitourinary",
           "finding": "Reports passing urine without difficulty."
+        },
+        {
+          "system": "Musculoskeletal",
+          "finding": "Moves all limbs freely. Walks steadily without an aid."
         },
         {
           "system": "Integumentary",
@@ -138,12 +166,48 @@
     {
       "key": "stat",
       "time_label": "10:00 am",
-      "narrative": "The DMO tells Rawle and the daughter that both pressure tablets will continue at the same doses, with a nurse review in one week. The DMO then writes on the treatment sheet: \"Amlodipine 10 mg orally, stat, from clinic stock. Recheck blood pressure before the client leaves,\" and moves on to the next client. The nurse takes the tablet from stock and goes to Rawle."
+      "narrative": "The DMO tells Rawle and the daughter that both pressure tablets will continue at the same doses, with a nurse review in one week. The DMO then writes on the treatment sheet: \"Amlodipine 10 mg orally, stat, from clinic stock. Recheck blood pressure before the client leaves,\" and moves on to the next client. The nurse takes the tablet from stock and goes to Rawle.",
+      "medications": [
+        {
+          "name": "Amlodipine",
+          "dose": "10 mg",
+          "route": "Oral",
+          "frequency": "Stat, from clinic stock",
+          "status": "Ordered 10:00 am"
+        }
+      ]
     },
     {
       "key": "plan",
       "time_label": "10:15 am",
-      "narrative": "After speaking with the nurse, the DMO cancels the stat amlodipine because Rawle took the usual morning dose at 6:30 am. The nurse, Rawle and the daughter then agree an adherence plan, and the DMO approves the change in dose timing: the daughter fills a weekly pill organiser every Sunday; both pressure tablets are taken each morning, and on market days the hydrochlorothiazide is taken on returning home, no later than 2 pm; the nurse will telephone midweek. At 11:00 am the blood pressure is 168/102 mm Hg and Rawle reports no new symptoms. Rawle goes home with advice to attend A&E for a severe headache, chest pain, weakness or change in vision, to have blood taken at the health centre on day 5, and to return in one week for review."
+      "narrative": "After speaking with the nurse, the DMO cancels the stat amlodipine because Rawle took the usual morning dose at 6:30 am. The nurse, Rawle and the daughter then agree an adherence plan, and the DMO approves the change in dose timing: the daughter fills a weekly pill organiser every Sunday; both pressure tablets are taken each morning, and on market days the hydrochlorothiazide is taken on returning home, no later than 2 pm; the nurse will telephone midweek. At 11:00 am the blood pressure is 168/102 mm Hg and Rawle reports no new symptoms. Rawle goes home with advice to attend A&E for a severe headache, chest pain, weakness or change in vision, to have blood taken at the health centre on day 5, and to return in one week for review.",
+      "medications": [
+        {
+          "name": "Amlodipine",
+          "dose": "10 mg",
+          "route": "Oral",
+          "frequency": "Stat",
+          "status": "Cancelled by the DMO 10:15 am; usual dose taken 6:30 am"
+        },
+        {
+          "name": "Amlodipine",
+          "dose": "10 mg",
+          "route": "Oral",
+          "frequency": "Once daily, morning"
+        },
+        {
+          "name": "Hydrochlorothiazide",
+          "dose": "25 mg",
+          "route": "Oral",
+          "frequency": "Once daily, morning; on market days on returning home, no later than 2 pm"
+        },
+        {
+          "name": "Metformin",
+          "dose": "500 mg",
+          "route": "Oral",
+          "frequency": "Twice daily with meals"
+        }
+      ]
     },
     {
       "key": "day8",
@@ -173,16 +237,36 @@
         {
           "label": "RBS",
           "value": "132 mg/dL"
+        },
+        {
+          "label": "Pain score",
+          "value": "0/10"
         }
       ],
       "assessment": [
         {
-          "system": "CNS",
+          "system": "Neurological",
           "finding": "Alert and oriented. Reports no headache since the last visit."
+        },
+        {
+          "system": "Cardiovascular",
+          "finding": "Heart sounds regular. Pedal pulses palpable. No ankle oedema."
+        },
+        {
+          "system": "Respiratory",
+          "finding": "Breathing even and unlaboured. Chest clear on auscultation."
+        },
+        {
+          "system": "Gastrointestinal",
+          "finding": "Abdomen soft, non-tender, bowel sounds present. Appetite usual."
         },
         {
           "system": "Genitourinary",
           "finding": "Reports passing more urine in the mornings than before. Not waking at night to pass urine."
+        },
+        {
+          "system": "Musculoskeletal",
+          "finding": "Moves all limbs freely. Walks steadily; no dizziness on standing."
         },
         {
           "system": "Integumentary",
@@ -210,6 +294,26 @@
               "value": "97 µmol/L"
             }
           ]
+        }
+      ],
+      "medications": [
+        {
+          "name": "Amlodipine",
+          "dose": "10 mg",
+          "route": "Oral",
+          "frequency": "Once daily, morning"
+        },
+        {
+          "name": "Hydrochlorothiazide",
+          "dose": "25 mg",
+          "route": "Oral",
+          "frequency": "Once daily, morning; on market days on returning home, no later than 2 pm"
+        },
+        {
+          "name": "Metformin",
+          "dose": "500 mg",
+          "route": "Oral",
+          "frequency": "Twice daily with meals"
         }
       ]
     },
@@ -619,7 +723,7 @@
     }
   ],
   "pathophysiology": "## Pathophysiology teaching\n\n**Normal regulation.** Blood pressure is cardiac output multiplied by peripheral resistance. Baroreceptors adjust it from moment to moment, and the kidneys, through the renin-angiotensin-aldosterone system and sodium and water balance, set it over the long term.\n\n**Chronic hypertension.** Years of raised pressure thicken the walls of small arteries and narrow their lumen, which raises resistance further. The brain protects its blood flow by autoregulation, and in long-standing hypertension that range shifts upwards: the brain becomes used to a high pressure. Diabetes speeds up the same small-vessel damage, so Rawle carries a higher risk to the heart, brain, eyes and kidneys.\n\n**Severe hypertension with and without organ damage.** A reading of 180/110 mm Hg or higher is severe (grade 3 in ESH/ISH terms; the AHA uses 180/120 mm Hg for a hypertensive crisis, and NICE a systolic of 180 or a diastolic of 120). It becomes an emergency when organs are being injured now: encephalopathy (severe headache, confusion, vomiting, seizures), stroke, chest pain or heart failure, retinal haemorrhages or papilloedema, or acute kidney injury. Rawle had a mild headache with an intact neurological examination, a clear fundoscopy, a normal ECG rhythm and no protein in the urine, so this was severe hypertension without acute organ damage (Q3). Because the brain's autoregulation has shifted, a rapid fall in pressure can starve it of blood. That is why, without organ damage, the pressure is lowered gradually with oral tablets over days to weeks (even in a true emergency, specialists aim for a fall of no more than about 25% in the first hour), and why sublingual nifedipine and transfer for intravenous drugs were wrong (Q4).\n\n**Why it was high: the drugs, taken irregularly.** Amlodipine is a calcium channel blocker that relaxes arterial smooth muscle. It peaks 6 to 12 hours after a dose and has a long half-life, so it reaches a steady effect after about a week of daily doses. Hydrochlorothiazide causes a diuresis within hours, which is why Rawle avoided it before a maxi-taxi ride, and lowers resistance over days to weeks. Taken only when a headache appears, neither drug ever reaches a steady effect (Q2). Hypertension is usually silent, so a symptom-driven routine leaves most days untreated.\n\n**Why each decision mattered.**\n- Recognising the severe reading instead of accepting the explanation that the clinic causes it (Q1) started the right checks.\n- Interpreting the account of pill-taking as symptom-driven dosing (Q2) separated nonadherence from treatment failure.\n- Prioritizing severe hypertension without organ damage over an emergency or stroke (Q3) matched the intact neurological findings, and the DMO's examination then confirmed it.\n- Anticipating daily oral treatment with an early recheck (Q4) lowered the pressure safely and avoided adding a drug that had not yet been tested.\n- Holding the stat amlodipine (Q5) prevented a second long-acting dose on the same morning in an older adult at risk of hypotension and falls.\n- At one week the empty organiser and the fall to 144/88 mm Hg showed the drugs work when taken (Q6). Sodium and potassium were checked because a thiazide taken daily can lower both.\n- Reflecting on three visits of \"advised to take medication\" (Q7) and teaching scheduled home readings (Q8) address the belief behind the problem.\n\n**Prevention.** Daily dosing whatever the client feels; tailoring dose timing to daily life (a diuretic after the market trip, before mid-afternoon); pill organisers and family support; asking at every visit whether and why doses are missed; home readings at set times; less salt from saltfish, smoked herring, pigtail and stock cubes; weight control, activity and limited alcohol; and regular review of glucose, kidneys and feet.",
-  "quality_report": "Drafted by Claude (2026-10-10) from CASE_REQUEST NRG-CH-001. Checks run on all eight items. Cover: each stem can be answered before the options are seen (Q1 the severe reading; Q2 symptom-driven dosing; Q3 severe hypertension without organ damage; Q4 daily oral tablets with an early recheck; Q5 hold and clarify a duplicate dose; Q6 the measured pressure with doses taken; Q7 reflection aimed at the gap; Q8 readings at set times). Two-answer: Q1 the callus is a real diabetic-foot concern, but intact skin makes it non-urgent; Q2 'treatment failure' is ruled out because the drugs are not taken daily; Q4 'add a third drug' is ruled out for the same reason; Q6 the headache and the morning urine are deliberate distractors for the belief and for drug-taking rather than response. Cue sufficiency: the 6:30 am dose that Q5 depends on is given in the 9:00 am stage, before the stat order, and is not repeated in the Q5 stage, so Q5 tests recall and integration (hence ASE). Hidden assumption: no standing order is needed; holding and clarifying a duplicate dose is within the registered nurse's scope. The Q5 stage does not mention the morning dose; the plan stage that follows reveals it. Taxonomy: 4 ASE (Q2, Q3, Q5, Q6), 4 AP, no KC. Keys A2 B2 C2 D2. For Jade to confirm: the 180/110 mm Hg severe threshold; whether a DMO in a Trinidad health centre would order a stat dose of the client's usual oral drug in severe hypertension without organ damage; the advice to take hydrochlorothiazide by 2 pm on market days; the A&E return advice; the Chronic Disease Assistance Programme wording; dialect in the client and daughter quotes; and whether a one-week review with sodium and potassium matches local practice. Reviewer (2026-10-10): Clinical and flow review against CASE_REVIEW_BRIEF; no key changed (keys remain C, A, B, D, B, C, A, D). Changes: the DMO's stat order now says 'recheck before the client leaves' instead of 'in one hour', so the case no longer implies an oral amlodipine dose is meant to lower the pressure within the hour, which contradicted Q2C and Q4B (gradual lowering, peak 6-12 h); Q5 option A reworded to match. Q5 rationale now states that a second 10 mg would make 20 mg, twice the usual maximum daily dose, which removes any argument that the DMO intended an extra dose. The plan stage now records that the DMO approves the later hydrochlorothiazide time on market days, so the nurse is not altering administration timing alone (scope). Day 8 bloods are now taken on day 5, since same-morning chemistry is unrealistic for a district health centre lab; the Q6B option and the stage label were updated. The midweek call now comes from the nurse, matching the plan. The opening now states Rawle is a man, matching the population and the daughter's 'Daddy'. Q1 rationale and the teaching section now give the severe threshold as 'at or above 180/110' and note that AHA (180/120) and NICE (180 systolic or 120 diastolic) thresholds differ; the teaching section adds the no-more-than-25% first-hour limit for emergencies. Checked and left as is: Q3 is asked before fundoscopy, ECG and dipstick; Q4 (daily oral tablets, recheck within a week) and Q5 (hold and clarify) differ; Q5's cue (one of each pressure tablet with the 6:30 am breakfast) is on screen from the 9:00 am stage and echoed in Q2 option C, so it is fair recall rather than a hidden fact, and holding and clarifying is within RN scope without a standing order; nurse-performed ECG and dipstick and the one-week nurse recheck are in RN scope. Jade to confirm: which severe threshold the RENR expects (180/110 vs 180/120); that a DMO would order a stat dose of the usual oral drug in this situation; DMO sign-off for the diuretic timing; and day-5 blood timing at the health centre.",
+  "quality_report": "Drafted by Claude (2026-10-10) from CASE_REQUEST NRG-CH-001. Checks run on all eight items. Cover: each stem can be answered before the options are seen (Q1 the severe reading; Q2 symptom-driven dosing; Q3 severe hypertension without organ damage; Q4 daily oral tablets with an early recheck; Q5 hold and clarify a duplicate dose; Q6 the measured pressure with doses taken; Q7 reflection aimed at the gap; Q8 readings at set times). Two-answer: Q1 the callus is a real diabetic-foot concern, but intact skin makes it non-urgent; Q2 'treatment failure' is ruled out because the drugs are not taken daily; Q4 'add a third drug' is ruled out for the same reason; Q6 the headache and the morning urine are deliberate distractors for the belief and for drug-taking rather than response. Cue sufficiency: the 6:30 am dose that Q5 depends on is given in the 9:00 am stage, before the stat order, and is not repeated in the Q5 stage, so Q5 tests recall and integration (hence ASE). Hidden assumption: no standing order is needed; holding and clarifying a duplicate dose is within the registered nurse's scope. The Q5 stage does not mention the morning dose; the plan stage that follows reveals it. Taxonomy: 4 ASE (Q2, Q3, Q5, Q6), 4 AP, no KC. Keys A2 B2 C2 D2. For Jade to confirm: the 180/110 mm Hg severe threshold; whether a DMO in a Trinidad health centre would order a stat dose of the client's usual oral drug in severe hypertension without organ damage; the advice to take hydrochlorothiazide by 2 pm on market days; the A&E return advice; the Chronic Disease Assistance Programme wording; dialect in the client and daughter quotes; and whether a one-week review with sodium and potassium matches local practice. Reviewer (2026-10-10): Clinical and flow review against CASE_REVIEW_BRIEF; no key changed (keys remain C, A, B, D, B, C, A, D). Changes: the DMO's stat order now says 'recheck before the client leaves' instead of 'in one hour', so the case no longer implies an oral amlodipine dose is meant to lower the pressure within the hour, which contradicted Q2C and Q4B (gradual lowering, peak 6-12 h); Q5 option A reworded to match. Q5 rationale now states that a second 10 mg would make 20 mg, twice the usual maximum daily dose, which removes any argument that the DMO intended an extra dose. The plan stage now records that the DMO approves the later hydrochlorothiazide time on market days, so the nurse is not altering administration timing alone (scope). Day 8 bloods are now taken on day 5, since same-morning chemistry is unrealistic for a district health centre lab; the Q6B option and the stage label were updated. The midweek call now comes from the nurse, matching the plan. The opening now states Rawle is a man, matching the population and the daughter's 'Daddy'. Q1 rationale and the teaching section now give the severe threshold as 'at or above 180/110' and note that AHA (180/120) and NICE (180 systolic or 120 diastolic) thresholds differ; the teaching section adds the no-more-than-25% first-hour limit for emergencies. Checked and left as is: Q3 is asked before fundoscopy, ECG and dipstick; Q4 (daily oral tablets, recheck within a week) and Q5 (hold and clarify) differ; Q5's cue (one of each pressure tablet with the 6:30 am breakfast) is on screen from the 9:00 am stage and echoed in Q2 option C, so it is fair recall rather than a hidden fact, and holding and clarifying is within RN scope without a standing order; nurse-performed ECG and dipstick and the one-week nurse recheck are in RN scope. Jade to confirm: which severe threshold the RENR expects (180/110 vs 180/120); that a DMO would order a stat dose of the usual oral drug in this situation; DMO sign-off for the diuretic timing; and day-5 blood timing at the health centre. Revision (2026-10-12): Added home medications to the opening (amlodipine 10 mg, hydrochlorothiazide 25 mg once daily, metformin 500 mg twice daily, no statuses so the 6:30 am dose stays in the 9:00 am narrative for Q5). Charted the stat amlodipine as 'Ordered 10:00 am' on the stat stage (no held/given status before Q5); the cancellation and the DMO-approved new timing are charted on the plan stage, after Q5, and the current regimen again on day 8 without statuses. Baseline examination reordered into body-systems order (CNS renamed Neurological) and Cardiovascular (no ankle oedema), Respiratory (unlaboured), Gastrointestinal and Musculoskeletal normals added. Day 8: pain score 0/10 added; Cardiovascular, Respiratory, Gastrointestinal and Musculoskeletal normals added, including no dizziness on standing. No stem, option or key changed; flow re-checked (Q3 still before the DMO's findings, the Q5 chart shows only the order, Q6 options unaffected). Jade to check: metformin 500 mg twice daily with meals and the market-day hydrochlorothiazide frequency wording on the chart.",
   "validation": {
     "status": "pending"
   }

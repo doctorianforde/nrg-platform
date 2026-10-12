@@ -11,7 +11,40 @@
   "source": "ai:claude",
   "opening": {
     "time_label": "1:30 pm",
-    "narrative": "Akeem, a 22-year-old university student, is admitted directly to the medical ward from the district health centre. Akeem's mother brought Akeem to the health centre after two days of vomiting, crampy abdominal pain and weakness. The mother says, \"Akeem can't keep anything down, not even water, and has been getting up all night to pass water.\" History includes type 1 diabetes since age 15, treated with NPH and regular insulin by injection before breakfast and before dinner. No known drug allergies. Akeem lives at home with family in Chaguanas. At the health centre an IV cannula was inserted and 0.9% sodium chloride was started; it is still running on arrival."
+    "narrative": "Akeem, a 22-year-old university student, is admitted directly to the medical ward from the district health centre. Akeem's mother brought Akeem to the health centre after two days of vomiting, crampy abdominal pain and weakness. The mother says, \"Akeem can't keep anything down, not even water, and has been getting up all night to pass water.\" History includes type 1 diabetes since age 15, treated with NPH and regular insulin by injection before breakfast and before dinner. No known drug allergies. Akeem lives at home with family in Chaguanas. At the health centre an IV cannula was inserted and 0.9% sodium chloride was started; it is still running on arrival.",
+    "medications": [
+      {
+        "name": "Isophane (NPH) insulin",
+        "dose": "18 units",
+        "route": "subcutaneous",
+        "frequency": "once daily before breakfast"
+      },
+      {
+        "name": "Soluble (regular) insulin",
+        "dose": "8 units",
+        "route": "subcutaneous",
+        "frequency": "once daily before breakfast"
+      },
+      {
+        "name": "Isophane (NPH) insulin",
+        "dose": "8 units",
+        "route": "subcutaneous",
+        "frequency": "once daily before dinner"
+      },
+      {
+        "name": "Soluble (regular) insulin",
+        "dose": "6 units",
+        "route": "subcutaneous",
+        "frequency": "once daily before dinner"
+      },
+      {
+        "name": "0.9% sodium chloride",
+        "dose": "1000 mL",
+        "route": "IV",
+        "frequency": "over 1 hour (health centre order)",
+        "status": "running on arrival"
+      }
+    ]
   },
   "stages": [
     {
@@ -40,22 +73,26 @@
           "value": "98% on room air"
         },
         {
+          "label": "Pain",
+          "value": "4/10, crampy, across the abdomen"
+        },
+        {
           "label": "Capillary glucose",
           "value": "486 mg/dL"
         }
       ],
       "assessment": [
         {
-          "system": "CNS",
+          "system": "Neurological",
           "finding": "Alert and oriented to person, place and time. Says, \"I just feel weak and tired.\""
-        },
-        {
-          "system": "Respiratory",
-          "finding": "Chest clear on auscultation bilaterally."
         },
         {
           "system": "Cardiovascular",
           "finding": "Capillary refill 3 seconds. Radial pulses present and equal."
+        },
+        {
+          "system": "Respiratory",
+          "finding": "Breathing regular. Chest clear on auscultation bilaterally."
         },
         {
           "system": "Gastrointestinal",
@@ -66,16 +103,28 @@
           "finding": "Reports passing large amounts of urine for three days."
         },
         {
+          "system": "Musculoskeletal",
+          "finding": "Moves all limbs equally. Generalised weakness; walks to the bathroom with assistance."
+        },
+        {
           "system": "Integumentary",
-          "finding": "Lips and tongue dry. Skin turgor reduced on the forearm."
+          "finding": "Lips and tongue dry. Skin turgor reduced on the forearm. Skin warm and dry."
+        },
+        {
+          "system": "Psychosocial",
+          "finding": "Mother at the bedside. Akeem is cooperative and worried about missing university classes."
         }
       ]
     },
     {
       "key": "reassess",
       "time_label": "2:30 pm",
-      "narrative": "On questioning, Akeem tells the nurse, \"I stopped my insulin two days ago because I wasn't eating anything.\" The nurse reassesses. Akeem takes longer to answer questions but remains oriented. A fruity odour is noticed on the breath. The chest remains clear on auscultation. The ward's bedside ketone meter is on loan to the emergency department and has been sent for. The physician, informed by telephone, asks for urgent blood tests, and the nurse sends the samples at 2:40 pm.",
+      "narrative": "On questioning, Akeem tells the nurse, \"I stopped my insulin two days ago because I wasn't eating anything.\" The nurse reassesses. The ward's bedside ketone meter is on loan to the emergency department and has been sent for. The physician, informed by telephone, asks for urgent blood tests, and the nurse sends the samples at 2:40 pm.",
       "vitals": [
+        {
+          "label": "Temperature (tympanic)",
+          "value": "37.5°C"
+        },
         {
           "label": "Pulse",
           "value": "118/min"
@@ -91,6 +140,44 @@
         {
           "label": "SpO2",
           "value": "98% on room air"
+        },
+        {
+          "label": "Pain",
+          "value": "4/10, crampy, across the abdomen"
+        }
+      ],
+      "assessment": [
+        {
+          "system": "Neurological",
+          "finding": "Takes longer to answer questions but remains oriented to person, place and time."
+        },
+        {
+          "system": "Cardiovascular",
+          "finding": "Capillary refill 3 seconds. Radial pulses present and equal."
+        },
+        {
+          "system": "Respiratory",
+          "finding": "Fruity odour on the breath. Chest clear on auscultation bilaterally. No cough."
+        },
+        {
+          "system": "Gastrointestinal",
+          "finding": "Generalised abdominal tenderness, no guarding. Nauseated; no further vomiting since arrival."
+        },
+        {
+          "system": "Genitourinary",
+          "finding": "Passed about 350 mL of pale urine since admission."
+        },
+        {
+          "system": "Musculoskeletal",
+          "finding": "Moves all limbs equally. Generalised weakness."
+        },
+        {
+          "system": "Integumentary",
+          "finding": "Lips and tongue dry. Skin turgor reduced on the forearm. Skin warm and dry."
+        },
+        {
+          "system": "Psychosocial",
+          "finding": "Mother at the bedside. Akeem is cooperative with care."
         }
       ]
     },
@@ -98,13 +185,16 @@
       "key": "results",
       "time_label": "3:15 pm",
       "narrative": "The results are reported and the physician reviews Akeem on the ward and confirms diabetic ketoacidosis. Prescriptions: continue 0.9% sodium chloride IV at the prescribed rate; a fixed-rate IV insulin infusion of 6.4 units/hr (weight 64 kg) to start at 3:30 pm; hourly capillary glucose and blood ketones; electrolytes repeated 2 hours after the insulin starts; strict fluid balance. The ward's physician-signed IV insulin protocol directs the nurse to start 10% dextrose at 125 mL/hr through a second line once capillary glucose falls below 250 mg/dL. Any change to the insulin rate needs a physician's prescription.",
-      "vitals": [
-        {
-          "label": "Capillary glucose (3:00 pm)",
-          "value": "470 mg/dL"
-        }
-      ],
       "labs": [
+        {
+          "category": "Bedside tests",
+          "items": [
+            {
+              "label": "Capillary glucose (3:00 pm)",
+              "value": "470 mg/dL"
+            }
+          ]
+        },
         {
           "category": "Venous blood gas",
           "items": [
@@ -143,6 +233,28 @@
             }
           ]
         }
+      ],
+      "medications": [
+        {
+          "name": "0.9% sodium chloride",
+          "dose": "1000 mL",
+          "route": "IV",
+          "frequency": "over 2 hours, then as prescribed",
+          "status": "continuing"
+        },
+        {
+          "name": "Soluble (regular) insulin 50 units in 50 mL 0.9% sodium chloride",
+          "dose": "6.4 units/hr (0.1 units/kg/hr, weight 64 kg)",
+          "route": "IV infusion",
+          "frequency": "continuous, fixed rate",
+          "status": "to start 3:30 pm"
+        },
+        {
+          "name": "10% dextrose",
+          "dose": "125 mL/hr",
+          "route": "IV, second line",
+          "frequency": "continuous, once capillary glucose is below 250 mg/dL (ward protocol)"
+        }
       ]
     },
     {
@@ -150,6 +262,10 @@
       "time_label": "7:15 pm",
       "narrative": "The insulin infusion has run at 6.4 units/hr since 3:30 pm. At 5:30 pm the repeat potassium was 4.6 mmol/L, and potassium chloride was added to the 0.9% sodium chloride as prescribed. Akeem has stopped vomiting and has taken sips of water. The 7:00 pm checks are back.",
       "vitals": [
+        {
+          "label": "Temperature (tympanic)",
+          "value": "37.0°C"
+        },
         {
           "label": "Pulse",
           "value": "98/min"
@@ -163,18 +279,50 @@
           "value": "114/70 mm Hg"
         },
         {
+          "label": "SpO2",
+          "value": "99% on room air"
+        },
+        {
+          "label": "Pain",
+          "value": "1/10"
+        },
+        {
           "label": "Capillary glucose (7:00 pm)",
           "value": "236 mg/dL"
         }
       ],
       "assessment": [
         {
-          "system": "CNS",
+          "system": "Neurological",
           "finding": "Alert, answers questions promptly."
+        },
+        {
+          "system": "Cardiovascular",
+          "finding": "Capillary refill 2 seconds. Radial pulses strong and equal."
+        },
+        {
+          "system": "Respiratory",
+          "finding": "Breathing regular. Faint fruity odour on the breath. Chest clear on auscultation bilaterally."
+        },
+        {
+          "system": "Gastrointestinal",
+          "finding": "Abdomen soft, mildly tender, no guarding. No vomiting since 4:00 pm; taking sips of water."
         },
         {
           "system": "Genitourinary",
           "finding": "Urine output 240 mL over the past 3 hours."
+        },
+        {
+          "system": "Musculoskeletal",
+          "finding": "Moves all limbs equally. Sitting up in bed unaided."
+        },
+        {
+          "system": "Integumentary",
+          "finding": "Lips slightly dry. Skin turgor brisk on the forearm."
+        },
+        {
+          "system": "Psychosocial",
+          "finding": "Mother at the bedside. Akeem asks when it will be possible to go home."
         }
       ],
       "labs": [
@@ -190,6 +338,22 @@
               "value": "4.1 mmol/L"
             }
           ]
+        }
+      ],
+      "medications": [
+        {
+          "name": "Soluble (regular) insulin infusion",
+          "dose": "6.4 units/hr",
+          "route": "IV infusion",
+          "frequency": "continuous, fixed rate",
+          "status": "running since 3:30 pm"
+        },
+        {
+          "name": "0.9% sodium chloride with potassium chloride 40 mmol/L",
+          "dose": "1000 mL",
+          "route": "IV",
+          "frequency": "over 4 hours",
+          "status": "potassium added 5:30 pm"
         }
       ]
     },
@@ -219,18 +383,26 @@
           "value": "99% on room air"
         },
         {
+          "label": "Pain",
+          "value": "0/10"
+        },
+        {
           "label": "Capillary glucose",
           "value": "168 mg/dL"
         }
       ],
       "assessment": [
         {
-          "system": "CNS",
+          "system": "Neurological",
           "finding": "Alert and oriented, conversing normally."
         },
         {
+          "system": "Cardiovascular",
+          "finding": "Capillary refill under 2 seconds. Radial pulses strong and equal."
+        },
+        {
           "system": "Respiratory",
-          "finding": "Breathing regular. No odour on the breath."
+          "finding": "Breathing regular. No odour on the breath. Chest clear on auscultation bilaterally."
         },
         {
           "system": "Gastrointestinal",
@@ -239,6 +411,18 @@
         {
           "system": "Genitourinary",
           "finding": "Urine output about 70 mL/hr overnight."
+        },
+        {
+          "system": "Musculoskeletal",
+          "finding": "Moves all limbs equally. Walked to the bathroom unaided."
+        },
+        {
+          "system": "Integumentary",
+          "finding": "Lips and tongue moist. Skin turgor brisk on the forearm."
+        },
+        {
+          "system": "Psychosocial",
+          "finding": "Rested after sleeping most of the night. Asks about going home."
         }
       ],
       "labs": [
@@ -272,12 +456,72 @@
             }
           ]
         }
+      ],
+      "medications": [
+        {
+          "name": "Soluble (regular) insulin infusion",
+          "dose": "6.4 units/hr",
+          "route": "IV infusion",
+          "frequency": "continuous, fixed rate",
+          "status": "running since 3:30 pm yesterday"
+        },
+        {
+          "name": "10% dextrose",
+          "dose": "125 mL/hr",
+          "route": "IV, second line",
+          "frequency": "continuous (ward protocol)",
+          "status": "running since 7:15 pm yesterday"
+        },
+        {
+          "name": "0.9% sodium chloride with potassium chloride 40 mmol/L",
+          "dose": "1000 mL",
+          "route": "IV",
+          "frequency": "over 6 hours",
+          "status": "running"
+        }
       ]
     },
     {
       "key": "transition",
       "time_label": "Day 2, 8:30 am",
-      "narrative": "The physician prescribes Akeem's usual subcutaneous NPH and regular insulin with breakfast, and the insulin infusion to stop one hour after the subcutaneous dose. The nurse gives the dose and Akeem eats breakfast. Akeem says, \"I thought that if I wasn't eating, I shouldn't take my insulin. What am I supposed to do the next time I get sick?\""
+      "narrative": "The physician prescribes Akeem's usual subcutaneous NPH and regular insulin with breakfast, and the insulin infusion to stop one hour after the subcutaneous dose. The nurse gives the dose and Akeem eats breakfast. Akeem says, \"I thought that if I wasn't eating, I shouldn't take my insulin. What am I supposed to do the next time I get sick?\"",
+      "medications": [
+        {
+          "name": "Isophane (NPH) insulin",
+          "dose": "18 units",
+          "route": "subcutaneous",
+          "frequency": "once daily before breakfast",
+          "status": "given 8:30 am"
+        },
+        {
+          "name": "Soluble (regular) insulin",
+          "dose": "8 units",
+          "route": "subcutaneous",
+          "frequency": "once daily before breakfast",
+          "status": "given 8:30 am"
+        },
+        {
+          "name": "Isophane (NPH) insulin",
+          "dose": "8 units",
+          "route": "subcutaneous",
+          "frequency": "once daily before dinner",
+          "status": "due before dinner"
+        },
+        {
+          "name": "Soluble (regular) insulin",
+          "dose": "6 units",
+          "route": "subcutaneous",
+          "frequency": "once daily before dinner",
+          "status": "due before dinner"
+        },
+        {
+          "name": "Soluble (regular) insulin infusion",
+          "dose": "6.4 units/hr",
+          "route": "IV infusion",
+          "frequency": "continuous, fixed rate",
+          "status": "to stop at 9:30 am"
+        }
+      ]
     },
     {
       "key": "team",
@@ -680,7 +924,7 @@
     }
   ],
   "pathophysiology": "## Pathophysiology teaching\n\n**Normal physiology.** Insulin moves glucose into muscle and fat cells, stops the liver releasing glucose, and stops fat being broken down. In type 1 diabetes the pancreas makes almost no insulin, so these effects depend entirely on injected insulin.\n\n**What happened to Akeem.** An illness with vomiting (probably a stomach upset) stopped Akeem eating, and Akeem then stopped the insulin. Illness also raises stress hormones (glucagon, cortisol, adrenaline), which raise glucose and fat breakdown further. Without insulin:\n- Glucose cannot enter cells and the liver keeps releasing it, so glucose climbed to 486 mg/dL.\n- Glucose spills into the urine and draws water with it (osmotic diuresis), causing polyuria, thirst, dry mucous membranes, tachycardia and a raised urea and creatinine. Vomiting adds to the fluid and electrolyte loss.\n- Fat is broken down and the liver turns the fatty acids into ketones. Ketones are acids, so bicarbonate is used up and the pH falls (7.16, bicarbonate 9 mmol/L). The lungs try to compensate by blowing off carbon dioxide, giving deep, rapid (Kussmaul) breathing, and acetone gives the breath a fruity odour. Acidosis also causes abdominal pain, vomiting and drowsiness.\n- Potassium is lost in urine and vomit, but acidosis and insulin lack keep potassium outside the cells, so the serum level (5.8 mmol/L) hides a low total body potassium.\n\n**Why each decision mattered.**\n- Q1: the glucose was the cue the stomach illness did not explain, and it pointed to insulin lack.\n- Q2: reading the deep breathing as compensation for acid, not anxiety, aspiration or overload, showed the problem was getting worse.\n- Q3: prioritizing diabetic ketoacidosis over hyperosmolar hyperglycaemic state or gastroenteritis before the results meant treatment was ready when they arrived.\n- Q4: insulin drives potassium back into cells, so the serum level falls once the infusion starts; anticipating potassium replacement prevents hypokalaemia and arrhythmias.\n- Q5: glucose falls faster than ketones clear. Adding dextrose lets insulin continue until ketone production is switched off; stopping insulin when glucose falls lets the acidosis return.\n- Q6: resolution is judged by ketones and pH, the markers of the problem treated, not by glucose.\n- Q7 and Q8: sick-day teaching targets the cause of this episode, and delegating only routine, stable tasks keeps assessment, IV therapy and evaluation of teaching with the registered nurse during the move back to subcutaneous insulin, when hypoglycaemia or rebound ketosis can occur.\n\n**Moving back to subcutaneous insulin.** The subcutaneous dose is given with a meal and the infusion is stopped after an overlap (here one hour), because IV insulin acts for only minutes; stopping it before the subcutaneous insulin is absorbed would let ketones rise again.\n\n**Prevention.** Never stop insulin during illness; check glucose and ketones every few hours when unwell; keep up fluids, using sugar-containing drinks if unable to eat; seek help early for persistent vomiting, rising ketones or deep breathing; keep diabetes clinic follow-up.",
-  "quality_report": "Drafted by Claude (ai:claude, 2026-10-10) from CASE_REQUEST NRG-MS-002 (primary domain NP, difficulty low, Q7 HPMW, Q8 NLM). Checks run on all eight items: Cover (each key can be formed before seeing options from the data on screen), Two-Answer (Q1 glucose vs pulse resolved by stem 'given Akeem's history' and the fluid already running; Q5 'reduce insulin' excluded by the stated protocol that insulin-rate changes need a prescription; Q8 options limited so only one task is routine and non-assessment), Cue-Sufficiency (Q3 asked before ketones/gas results; Q4 potassium 5.4 shown before planning; Q5 protocol authority given in the earlier 3:15 pm stage, not the 7:15 pm stage), Hidden-Assumption (protocol, weight, insulin regimen and potassium addition all stated before use; Q6 intervention introduced in the 7:15 pm and Day 2 stages). Disclosure: Kussmaul breathing and the fruity odour withheld until Q2 so Q1 is not pre-assembled. Addendum 3: urine output and electrolytes given at 3:15 pm, 7:15 pm and Day 2. Jade to confirm: (1) local DKA protocol - this case follows a UK JBDS-style fixed-rate infusion (0.1 units/kg/hr, insulin continued and 10% dextrose 125 mL/hr added when glucose falls below 250 mg/dL); ADA practice instead lowers the insulin rate with 5% dextrose, so the Q5 key depends on the protocol stated in the case; (2) potassium thresholds for adding KCl; (3) one-hour IV/subcutaneous overlap; (4) whether direct admission from a district health centre without prior ketone testing is realistic locally; (5) nursing assistant scope in T&T for intake/output recording and disconnecting IV lines; (6) sick-day ketone-check frequency (every 4 hours) and whether home blood or urine ketone testing is accessible to clients locally. Reviewer (2026-10-10): Admission potassium changed from 5.4 to 5.8 mmol/L (Q4 rationale, self-test and teaching section updated), because at 5.4 a JBDS protocol, which this case follows for insulin, would already add 40 mmol/L KCl, contradicting the Q4 key 'as the level falls'; at 5.8 both JBDS (no KCl above 5.5) and ADA (hold above 5.2) withhold KCl until the 5:30 pm repeat of 4.6, as written. Added to the 2:30 pm stage that the ward's ketone meter is on loan and has been sent for: a nurse acting on the Q1 cue would otherwise be expected to check ketones at the bedside before Q3, and the later hourly ketone checks need a meter. Q8 option D reworded from 'Decide whether Akeem needs a snack' (the word 'decide' gave it away) to 'Give Akeem a snack whenever Akeem reports feeling shaky', a more tempting unsafe distractor; rationale updated. Q7 option B retyped priority to incorrect (an incomplete plan, not a sequencing error). Teaching section no longer states the stomach illness as fact. No keys changed. Course checked against JBDS/ADA: 0.1 units/kg/hr; glucose fall about 58 mg/dL/hr and ketone fall about 0.9 mmol/L/hr are in the target range; pH 7.16, bicarbonate 9, ketones 5.6 is moderate, not severe, DKA, so ward care fits; Day 2 values meet resolution criteria. Jade to confirm: whether a urine ketone dipstick would routinely be done on a T&T ward before the blood results (it would weaken the 'before confirmation' design of Q3), plus the author's items (1) to (6).",
+  "quality_report": "Drafted by Claude (ai:claude, 2026-10-10) from CASE_REQUEST NRG-MS-002 (primary domain NP, difficulty low, Q7 HPMW, Q8 NLM). Checks run on all eight items: Cover (each key can be formed before seeing options from the data on screen), Two-Answer (Q1 glucose vs pulse resolved by stem 'given Akeem's history' and the fluid already running; Q5 'reduce insulin' excluded by the stated protocol that insulin-rate changes need a prescription; Q8 options limited so only one task is routine and non-assessment), Cue-Sufficiency (Q3 asked before ketones/gas results; Q4 potassium 5.4 shown before planning; Q5 protocol authority given in the earlier 3:15 pm stage, not the 7:15 pm stage), Hidden-Assumption (protocol, weight, insulin regimen and potassium addition all stated before use; Q6 intervention introduced in the 7:15 pm and Day 2 stages). Disclosure: Kussmaul breathing and the fruity odour withheld until Q2 so Q1 is not pre-assembled. Addendum 3: urine output and electrolytes given at 3:15 pm, 7:15 pm and Day 2. Jade to confirm: (1) local DKA protocol - this case follows a UK JBDS-style fixed-rate infusion (0.1 units/kg/hr, insulin continued and 10% dextrose 125 mL/hr added when glucose falls below 250 mg/dL); ADA practice instead lowers the insulin rate with 5% dextrose, so the Q5 key depends on the protocol stated in the case; (2) potassium thresholds for adding KCl; (3) one-hour IV/subcutaneous overlap; (4) whether direct admission from a district health centre without prior ketone testing is realistic locally; (5) nursing assistant scope in T&T for intake/output recording and disconnecting IV lines; (6) sick-day ketone-check frequency (every 4 hours) and whether home blood or urine ketone testing is accessible to clients locally. Reviewer (2026-10-10): Admission potassium changed from 5.4 to 5.8 mmol/L (Q4 rationale, self-test and teaching section updated), because at 5.4 a JBDS protocol, which this case follows for insulin, would already add 40 mmol/L KCl, contradicting the Q4 key 'as the level falls'; at 5.8 both JBDS (no KCl above 5.5) and ADA (hold above 5.2) withhold KCl until the 5:30 pm repeat of 4.6, as written. Added to the 2:30 pm stage that the ward's ketone meter is on loan and has been sent for: a nurse acting on the Q1 cue would otherwise be expected to check ketones at the bedside before Q3, and the later hourly ketone checks need a meter. Q8 option D reworded from 'Decide whether Akeem needs a snack' (the word 'decide' gave it away) to 'Give Akeem a snack whenever Akeem reports feeling shaky', a more tempting unsafe distractor; rationale updated. Q7 option B retyped priority to incorrect (an incomplete plan, not a sequencing error). Teaching section no longer states the stomach illness as fact. No keys changed. Course checked against JBDS/ADA: 0.1 units/kg/hr; glucose fall about 58 mg/dL/hr and ketone fall about 0.9 mmol/L/hr are in the target range; pH 7.16, bicarbonate 9, ketones 5.6 is moderate, not severe, DKA, so ward care fits; Day 2 values meet resolution criteria. Jade to confirm: whether a urine ketone dipstick would routinely be done on a T&T ward before the blood results (it would weaken the 'before confirmation' design of Q3), plus the author's items (1) to (6). Revision (2026-10-12): Added home medications to the opening (NPH 18 units and regular 8 units before breakfast, NPH 8 units and regular 6 units before dinner, about 0.6 units/kg/day at 64 kg; no last-dose status, so the missed insulin still first appears at 2:30 pm) and the health-centre 0.9% sodium chloride. Charted orders where the narrative makes them: 0.9% sodium chloride, the 6.4 units/hr insulin infusion and the protocol 10% dextrose at 3:15 pm; insulin and the potassium-containing fluid (40 mmol/L, added 5:30 pm) at 7:15 pm, with the dextrose left off that chart so it does not cue Q5; dextrose 'running since 7:15 pm' only on Day 2, after Q5; the subcutaneous doses 'given 8:30 am' and the infusion 'to stop at 9:30 am' at 8:30 am. Added pain scores (4/10, 4/10, 1/10, 0/10), temperature and SpO2 where missing, and full eight-system examinations in order at 1:45 pm, 2:30 pm, 7:15 pm and Day 2 (normal systems written as normal; weakness, warm dry skin, faint breath odour at 7:15 pm consistent with ketones 2.4 mmol/L). Wording changes: the 2:30 pm findings (slower answers, fruity odour, clear chest) moved from the narrative into the structured examination so the cues sit among normals; the 3:00 pm capillary glucose moved from vitals to a 'Bedside tests' lab group. No stems, options or keys changed. Jade to confirm: the home insulin doses, the fluid rates (1 L over 1 h, 2 h, 4 h, 6 h) and KCl 40 mmol/L.",
   "validation": {
     "status": "pending"
   }
