@@ -1,7 +1,7 @@
 {
   "case_code": "NRG-MH-001",
   "title": "Agitation at the Community Clinic",
-  "objective": "Students recognise lithium toxicity beneath a manic presentation, link it to dehydration, withhold the drug, escalate, and evaluate the response.",
+  "objective": "Students recognise lithium toxicity beneath a manic presentation, identify deficient fluid volume from vomiting as the priority nursing problem driving it, withhold the drug and escalate, monitor fluid balance, and evaluate the response.",
   "population": "Adult, 34-year-old woman",
   "setting": "Community mental health clinic, Caribbean",
   "primary_condition": "Lithium toxicity",
@@ -125,7 +125,7 @@
     {
       "key": "transfer",
       "time_label": "10:30 am",
-      "narrative": "The physician confirms that lithium is to be withheld and arranges overnight admission to the district hospital for intravenous fluids, with urine output and electrolytes monitored. A clinic review is booked for the next morning, after discharge from hospital.",
+      "narrative": "The physician's working diagnosis is lithium toxicity, precipitated by dehydration from two days of vomiting. The physician confirms that lithium is to be withheld and arranges overnight admission to the district hospital for intravenous fluids, with urine output and electrolytes monitored. A clinic review is booked for the next morning, after discharge from hospital.",
       "medications": [
         {
           "name": "Lithium carbonate",
@@ -368,47 +368,47 @@
       "cj_step": "prioritize_hypotheses",
       "domain": "CDM",
       "taxonomy": "ASE",
-      "stem": "Before the lithium result is available, which condition is most likely and should be prioritized?",
+      "stem": "Before the lithium result is available, which nursing diagnosis should the nurse prioritize for Tanisha?",
       "options": [
         {
           "label": "A",
-          "text": "Relapse of a manic episode"
+          "text": "Risk for falls related to an unsteady, wide-based gait and constant restlessness in the clinic"
         },
         {
           "label": "B",
-          "text": "Lithium toxicity"
+          "text": "Disturbed sleep pattern related to manic hyperactivity, as evidenced by five nights of little sleep"
         },
         {
           "label": "C",
-          "text": "Gastroenteritis with dehydration"
+          "text": "Risk for other-directed violence related to irritability and arguing with family members"
         },
         {
           "label": "D",
-          "text": "Overactive thyroid gland"
+          "text": "Deficient fluid volume related to vomiting and poor intake, as evidenced by dry mucosa and pulse 104/min"
         }
       ],
       "correct": [
-        "B"
+        "D"
       ],
       "option_types": {
         "A": "close",
-        "B": "correct",
-        "C": "priority",
-        "D": "incorrect"
+        "B": "priority",
+        "C": "incorrect",
+        "D": "correct"
       },
-      "rationale_correct": "CORRECT: A recently increased lithium dose, two days of vomiting with poor intake, and a coarse tremor with an unsteady gait form one picture: lithium toxicity. It is also the most dangerous possibility, because it can progress to confusion, seizures and kidney injury, so it is prioritized while the level is awaited.",
+      "rationale_correct": "CORRECT: Two days of vomiting with little fluid, dry lips and oral mucosa, a pulse of 104/min and voiding only once this morning show an actual fluid deficit, a circulation problem that comes first. It is also the problem driving the danger: as Q2 showed, fluid and sodium loss make the kidneys hold on to lithium, so the coarse tremor and unsteady gait will worsen unless the deficit is corrected. Treating it treats the presentation and the cause together.",
       "distractor_rationales": {
-        "A": "Her behaviour does support a manic relapse, which is why this is the classic trap. Relapse does not explain the coarse tremor and unsteady gait, and it is not immediately dangerous; toxicity is.",
-        "C": "Gastroenteritis explains the vomiting and is why the level may have risen, so it is a contributing cause to treat. It does not explain the neurological signs by itself.",
-        "D": "An overactive thyroid can cause tremor, a fast pulse and agitation, but not an unsteady gait with vomiting, and it does not account for the recent lithium dose increase."
+        "A": "Her unsteady, wide-based gait does put her at risk of falling, and she needs supervision when she walks. But it is a risk problem that the nurse can manage with simple precautions, and the gait is a sign of the lithium retention that the fluid deficit is driving. The actual circulation problem comes first.",
+        "B": "Five nights of little sleep is real and will need attention, but it reflects the manic illness that is already known. It is not a threat to circulation or safety in the next few hours.",
+        "C": "She is irritable and argues with her family, but she has made no threats and has not harmed anyone, so the cues for this risk are weak. It ranks below an actual fluid deficit with physical signs."
       },
-      "self_test": "Manic relapse explains the behaviour but not a coarse tremor and unsteady gait after vomiting on a recently increased lithium dose.",
+      "self_test": "Risk for falls is supported by her gait, but it is a risk that simple precautions manage, while the actual fluid deficit is what keeps raising her lithium level.",
       "meta": {
-        "topic": "Mental health pharmacology",
-        "subtopic": "Lithium toxicity",
-        "priority_principle": "Life-threatening problem before the expected illness",
-        "prerequisites": "Lithium therapeutic range",
-        "suggested_review": "Stages of lithium toxicity"
+        "topic": "Nursing diagnosis and prioritization",
+        "subtopic": "Deficient fluid volume in a client taking lithium",
+        "priority_principle": "Actual circulation problem before risk problems; treat the cause the nurse can act on",
+        "prerequisites": "Signs of fluid deficit; renal handling of lithium; NANDA-I diagnosis structure",
+        "suggested_review": "Prioritizing nursing diagnoses (ABC, actual before risk)"
       }
     },
     {
@@ -417,47 +417,47 @@
       "cj_step": "generate_solutions",
       "domain": "CDM",
       "taxonomy": "AP",
-      "stem": "Which intervention should the nurse anticipate in Tanisha's plan of care?",
+      "stem": "While the physician is being contacted, which nursing intervention should the nurse include in the plan of care for Tanisha's priority problem?",
       "options": [
         {
           "label": "A",
-          "text": "IV fluids with monitoring of urine output and electrolytes"
+          "text": "Encourage her to drink two litres of water quickly to flush out the lithium"
         },
         {
           "label": "B",
-          "text": "Oral fluids at home with a repeat lithium level next week"
+          "text": "Weigh her once a day at the same time to track her fluid balance"
         },
         {
           "label": "C",
-          "text": "A low-sodium diet to bring the blood pressure down"
+          "text": "Record intake and output and recheck pulse and blood pressure half-hourly"
         },
         {
           "label": "D",
-          "text": "Activated charcoal to bind the lithium in her stomach"
+          "text": "Keep her nil by mouth until the vomiting has completely stopped"
         }
       ],
       "correct": [
-        "A"
+        "C"
       ],
       "option_types": {
-        "A": "correct",
+        "A": "unsafe",
         "B": "close",
-        "C": "unsafe",
+        "C": "correct",
         "D": "incorrect"
       },
-      "rationale_correct": "CORRECT: A level of 2.0 mmol/L taken 12 hours after a dose is well above the usual maintenance range (roughly 0.6 to 1.2 mmol/L) and matches her neurological signs. She is fluid- and sodium-depleted, which is why her kidneys are holding on to lithium. Restoring fluid and sodium intravenously increases lithium excretion, and urine output and electrolytes show whether the plan is working.",
+      "rationale_correct": "CORRECT: The level of 2.0 mmol/L, taken 12 hours after a dose, confirms that the fluid deficit has let lithium build up. For deficient fluid volume the nurse tracks the deficit closely: every drink, every episode of vomiting and every void, with pulse and blood pressure. Urine output matters doubly because lithium leaves the body in the urine, and the record gives the physician the data needed to plan fluid replacement.",
       "distractor_rationales": {
-        "B": "Rehydration is the right idea, but she has been vomiting for two days and has signs of toxicity, so oral fluids at home with a check next week are too little and too late.",
-        "C": "Reducing sodium makes the kidneys reabsorb more lithium and would raise the level further. Her blood pressure is not the problem being treated.",
-        "D": "Activated charcoal does not bind lithium, and her last dose was 12 hours ago, so it would not lower the level. Removing lithium depends on the kidneys."
+        "A": "She has been vomiting for two days, so a large volume of plain water taken quickly is likely to come back up, and water alone does not replace the sodium her kidneys need to let go of lithium.",
+        "B": "Daily weight is a sound measure of fluid balance over days, but it cannot show what is happening over the next few hours while her level is 2.0 mmol/L and she may keep vomiting.",
+        "D": "Withholding all fluids would deepen the deficit that is causing lithium to build up; the plan should measure and replace fluid, not stop it."
       },
-      "self_test": "Oral fluids at home address the dehydration but are too slow and too unmonitored for a level of 2.0 mmol/L with neurological signs.",
+      "self_test": "Daily weight tracks fluid balance over days, but a client with a lithium level of 2.0 mmol/L needs her intake, output and pulse followed hour by hour.",
       "meta": {
-        "topic": "Mental health pharmacology",
-        "subtopic": "Management of lithium toxicity",
-        "priority_principle": "Correct the cause and monitor the response",
-        "prerequisites": "Sodium-lithium interaction",
-        "suggested_review": "Fluid and electrolyte management in lithium toxicity"
+        "topic": "Fluid and electrolyte nursing care",
+        "subtopic": "Monitoring deficient fluid volume in lithium toxicity",
+        "priority_principle": "Monitor the priority problem closely enough to detect change and escalate",
+        "prerequisites": "Intake and output measurement; signs of fluid deficit; lithium excretion",
+        "suggested_review": "Nursing interventions for deficient fluid volume"
       }
     },
     {
@@ -515,11 +515,11 @@
       "cj_step": "evaluate_outcomes",
       "domain": "CDM",
       "taxonomy": "ASE",
-      "stem": "Which finding best indicates that management of the primary problem is effective?",
+      "stem": "Which finding best indicates that care for Tanisha's priority nursing problem has been effective?",
       "options": [
         {
           "label": "A",
-          "text": "Falling lithium level with less tremor"
+          "text": "Sleeping six hours overnight in hospital"
         },
         {
           "label": "B",
@@ -527,35 +527,35 @@
         },
         {
           "label": "C",
-          "text": "Sleeping six hours overnight"
+          "text": "Blood pressure of 128/80 mm Hg"
         },
         {
           "label": "D",
-          "text": "Blood pressure of 128/80 mm Hg"
+          "text": "About 50 mL of urine an hour and a moist mouth"
         }
       ],
       "correct": [
-        "A"
+        "D"
       ],
       "option_types": {
-        "A": "correct",
-        "B": "close",
-        "C": "close",
-        "D": "incorrect"
+        "A": "close",
+        "B": "incorrect",
+        "C": "incorrect",
+        "D": "correct"
       },
-      "rationale_correct": "CORRECT: The problem being treated was lithium toxicity, so the outcome measures are the lithium level and the toxicity sign. The level has fallen from 2.0 to 1.1 mmol/L and the tremor is much reduced after fluids and withholding the drug.",
+      "rationale_correct": "CORRECT: The priority nursing problem was deficient fluid volume, so its outcome measures are urine output, mucous membranes and pulse. A urine output of about 50 mL/hr, moist oral mucosa and a pulse that has fallen from 104 to 88/min show the deficit is corrected. With volume restored the kidneys clear lithium again, which is why her level has fallen to 1.1 mmol/L and the tremor has eased.",
       "distractor_rationales": {
-        "B": "A brighter mood is welcome, but mood changes slowly and reflects the bipolar illness, not whether the toxicity has been treated.",
-        "C": "Better sleep is a positive sign of settling mania, but it does not measure the toxicity that the fluids and withheld dose were treating.",
-        "D": "Her blood pressure was never the problem being managed, so its improvement does not show that the toxicity treatment worked."
+        "A": "Better sleep is a welcome sign that the mania is settling, but sleep does not measure whether her fluid deficit has been corrected.",
+        "B": "A brighter mood is reported by her sister, but mood reflects the bipolar illness and changes over days to weeks; it says nothing about her fluid balance.",
+        "C": "Her blood pressure was never low, and the small fall from 138/88 mm Hg fits her being calmer; it is not the measure of fluid replacement in her case."
       },
-      "self_test": "Brighter mood is true but measures the manic illness, not the toxicity that the fluids and withheld doses were treating.",
+      "self_test": "Six hours of sleep shows the mania settling, but only urine output, a moist mouth and a slower pulse show the fluid deficit is corrected.",
       "meta": {
-        "topic": "Mental health pharmacology",
-        "subtopic": "Evaluating treatment of lithium toxicity",
-        "priority_principle": "Evaluate the outcome the intervention targeted",
-        "prerequisites": "Lithium level trends",
-        "suggested_review": "Monitoring after lithium toxicity"
+        "topic": "Evaluation of nursing care",
+        "subtopic": "Outcomes for deficient fluid volume",
+        "priority_principle": "Evaluate the outcome the nursing diagnosis targeted",
+        "prerequisites": "Expected outcomes for deficient fluid volume; lithium level trends",
+        "suggested_review": "Evaluating fluid replacement and monitoring after lithium toxicity"
       }
     },
     {
@@ -657,8 +657,8 @@
       }
     }
   ],
-  "pathophysiology": "## Pathophysiology teaching\n\nLithium is cleared almost entirely by the kidneys. In the proximal tubule it is reabsorbed by the same pathways as sodium, so the body cannot tell the two apart.\n\nTanisha's dose had been increased two weeks earlier, which raised her level towards the top of the range. When she then vomited for two days and drank very little, she lost fluid and sodium. Her kidneys responded by reabsorbing more sodium to protect her circulating volume, and they reabsorbed more lithium with it. Her serum level rose to 2.0 mmol/L.\n\n**Timing the level.** Lithium levels are read about 12 hours after the last dose. A sample taken a few hours after a dose reads falsely high, which is why the case states when the sample was taken.\n\n**Signs.** A fine hand tremor is common at usual levels. As the level rises, it becomes a coarse tremor with an unsteady gait, then confusion, seizures and coma, and lithium can injure the kidney further, which slows clearance again. Mania and toxicity can occur together: the illness that prompted the dose increase has not yet settled, which is why her behaviour hides the drug problem.\n\n**Why each decision mattered.**\n- Recognising the coarse tremor and unsteady gait (Q1) and linking the vomiting to lithium retention (Q2) pointed to the drug, not the illness.\n- Prioritizing toxicity over a manic relapse before the result (Q3) meant the level was read as confirmation, not a surprise.\n- Holding the dose (Q5) stopped more drug entering the body; intravenous fluids (Q4) restored sodium and volume so the kidneys could excrete lithium again.\n- Urine output, sodium and potassium on day 2 confirm that the kidneys are clearing lithium and the fluid replacement is adequate.\n- The level and tremor improve within a day; mood settles over days to weeks, which is why mood and sleep are not the measures of toxicity treatment (Q6).\n\n**Prevention.** Steady fluid and salt intake, avoiding NSAIDs and diuretics unless prescribed with monitoring, never doubling a missed dose, extra level checks after any dose change, and seeking help early when vomiting or diarrhoea stops a client keeping fluids down.",
-  "quality_report": "Revised by Claude (2026-10-08) from Jade's Lithium Toxicity draft, at Ian's request, to meet V3 and the error-prevention addendum: Q4 changed from 'withhold the next dose' (duplicating Q5's key) to anticipating IV fluids with urine-output and electrolyte monitoring; a 10:30 am stage added so the IV fluids evaluated in Q6 are introduced first (V3 s.6); implausible distractors replaced (Q4 'increase the dose', Q5 'arrange transport before informing anyone', Q8 'stop lithium once stable'); Q1 rationale explains why the tremor is the safety cue. Cover, two-answer, cue-sufficiency and hidden-assumption checks were re-run on all eight items. Pending Jade's review and clinical validation (lithium thresholds, standing-order scope, Caribbean facility norms). Flow revision (Claude, 2026-10-09, at Ian's request): stages reordered so no question is answered by the screen before it (Q3 now asked before the lithium result; the standing-order wording moved to the opening; Q2 now analyses the vomiting cue). Clinical consistency: dose increased two weeks earlier explains mania with toxicity; coarse tremor and unsteady gait replace the fine tremor to match a level of 2.0 mmol/L; level timed 12 hours post-dose; overnight hospital admission made explicit; Q4 'withhold and repeat in a week' (half-right, overlapped Q5) replaced with activated charcoal; Q5 'half dose' replaced with 'repeat the level'; Q3 'worsening hypertension' replaced with an overactive thyroid. Revision (2026-10-12): added pain score to both vitals sets and SpO2 to day 2; expanded both examinations to all eight body systems in order (assess: normal cardiovascular, respiratory, abdominal, musculoskeletal findings, voided once this morning, lips and oral mucosa slightly dry to fit two days of vomiting; day 2: no vomiting overnight, oral mucosa moist); 'CNS' relabelled 'Neurological'. Medications charted: lithium carbonate 450 mg twice daily on the opening and as due at the level stage; 'held' status and the 0.9% sodium chloride order only at the transfer stage, after Q4 and Q5; day 2 shows lithium on hold and fluids completed; lithium 300 mg twice daily from 10 pm at discharge. No stems, options or keys changed. Jade to confirm: IV fluid regimen (1 L 0.9% sodium chloride over 4 hours then as ordered), the 300 mg twice-daily restart dose, and whether an antiemetic should be charted for the hospital stay (none added).",
+  "pathophysiology": "## Pathophysiology teaching\n\nLithium is cleared almost entirely by the kidneys. In the proximal tubule it is reabsorbed by the same pathways as sodium, so the body cannot tell the two apart.\n\nTanisha's dose had been increased two weeks earlier, which raised her level towards the top of the range. When she then vomited for two days and drank very little, she lost fluid and sodium. Her kidneys responded by reabsorbing more sodium to protect her circulating volume, and they reabsorbed more lithium with it. Her serum level rose to 2.0 mmol/L. The physician's working diagnosis was lithium toxicity precipitated by dehydration.\n\n**Timing the level.** Lithium levels are read about 12 hours after the last dose. A sample taken a few hours after a dose reads falsely high, which is why the case states when the sample was taken.\n\n**Signs.** A fine hand tremor is common at usual levels. As the level rises, it becomes a coarse tremor with an unsteady gait, then confusion, seizures and coma, and lithium can injure the kidney further, which slows clearance again. Mania and toxicity can occur together: the illness that prompted the dose increase has not yet settled, which is why her behaviour hides the drug problem.\n\n**Priority nursing diagnosis.** Deficient fluid volume related to vomiting and poor intake, as evidenced by dry oral mucosa, a pulse of 104/min and reduced voiding. It is an actual circulation problem, and it is the cause the nurse can act on that keeps lithium in her body. Risk for falls, disturbed sleep and risk for violence are all supported, but they rank below it.\n\n**Why each decision mattered.**\n- Recognising the coarse tremor and unsteady gait (Q1) and linking the vomiting to lithium retention (Q2) pointed to the drug, not the illness.\n- Choosing deficient fluid volume as the priority before the result (Q3) focused care on the problem driving the toxicity rather than the manic behaviour.\n- Recording intake and output with pulse and blood pressure (Q4) tracked that deficit hour by hour and gave the physician the data for fluid replacement; urine output also shows whether lithium is being cleared.\n- Holding the dose and reporting (Q5) stopped more drug entering a body that could not clear it; the intravenous fluids then ordered restored volume and sodium so the kidneys could excrete lithium again.\n- On day 2, urine output of about 50 mL/hr, moist mucosa and a slower pulse show the fluid deficit is corrected (Q6); the fall in lithium to 1.1 mmol/L and the eased tremor follow from it. Mood and sleep settle over days to weeks and measure the mania, not the fluid problem.\n\n**Prevention.** Steady fluid and salt intake (Q8), avoiding NSAIDs and diuretics unless prescribed with monitoring, never doubling a missed dose, extra level checks after any dose change, and seeking help early when vomiting or diarrhoea stops a client keeping fluids down.",
+  "quality_report": "Revised by Claude (2026-10-08) from Jade's Lithium Toxicity draft, at Ian's request, to meet V3 and the error-prevention addendum: Q4 changed from 'withhold the next dose' (duplicating Q5's key) to anticipating IV fluids with urine-output and electrolyte monitoring; a 10:30 am stage added so the IV fluids evaluated in Q6 are introduced first (V3 s.6); implausible distractors replaced (Q4 'increase the dose', Q5 'arrange transport before informing anyone', Q8 'stop lithium once stable'); Q1 rationale explains why the tremor is the safety cue. Cover, two-answer, cue-sufficiency and hidden-assumption checks were re-run on all eight items. Pending Jade's review and clinical validation (lithium thresholds, standing-order scope, Caribbean facility norms). Flow revision (Claude, 2026-10-09, at Ian's request): stages reordered so no question is answered by the screen before it (Q3 now asked before the lithium result; the standing-order wording moved to the opening; Q2 now analyses the vomiting cue). Clinical consistency: dose increased two weeks earlier explains mania with toxicity; coarse tremor and unsteady gait replace the fine tremor to match a level of 2.0 mmol/L; level timed 12 hours post-dose; overnight hospital admission made explicit; Q4 'withhold and repeat in a week' (half-right, overlapped Q5) replaced with activated charcoal; Q5 'half dose' replaced with 'repeat the level'; Q3 'worsening hypertension' replaced with an overactive thyroid. Revision (2026-10-12): added pain score to both vitals sets and SpO2 to day 2; expanded both examinations to all eight body systems in order (assess: normal cardiovascular, respiratory, abdominal, musculoskeletal findings, voided once this morning, lips and oral mucosa slightly dry to fit two days of vomiting; day 2: no vomiting overnight, oral mucosa moist); 'CNS' relabelled 'Neurological'. Medications charted: lithium carbonate 450 mg twice daily on the opening and as due at the level stage; 'held' status and the 0.9% sodium chloride order only at the transfer stage, after Q4 and Q5; day 2 shows lithium on hold and fluids completed; lithium 300 mg twice daily from 10 pm at discharge. No stems, options or keys changed. Jade to confirm: IV fluid regimen (1 L 0.9% sodium chloride over 4 hours then as ordered), the 300 mg twice-daily restart dose, and whether an antiemetic should be charted for the hospital stay (none added). Revision (nursing focus, 2026-10-12): Q3 rewritten as the priority nursing diagnosis (stem now asks for the nursing diagnosis to prioritize; four V3 s.13 options; key changed from B 'Lithium toxicity' to D 'Deficient fluid volume related to vomiting and poor intake, as evidenced by dry mucosa and pulse 104/min'; distractors Risk for falls (close), Disturbed sleep pattern (priority), Risk for other-directed violence (incorrect); new rationales, self_test and meta). Q4 changed from anticipating the medical treatment (key A, IV fluids with monitoring) to a nursing intervention for the priority problem: key C 'Record intake and output and recheck pulse and blood pressure half-hourly', different from Q5's key (hold the dose and report). Q5 unchanged (key C, hold the dose and report under the stated standing order). Q6 now measures the outcome for deficient fluid volume: key changed from A 'Falling lithium level with less tremor' to D 'About 50 mL of urine an hour and a moist mouth'; the lithium-level option was removed to avoid a second defensible answer; sleep (close), mood and blood pressure (incorrect) retained. Q1, Q2, Q7, Q8 unchanged. Narrative: the physician's working diagnosis (lithium toxicity precipitated by dehydration) added to the transfer stage, after Q5. Objective and teaching section updated to name the priority nursing diagnosis and link Q3-Q6 to it. Flow re-checked: Q3 is still asked before the level; no stage before Q3-Q6 states the diagnosis or the monitoring; Q2's key (fluid and sodium loss raise lithium) supports but does not state Q3's key. Jade to confirm: deficient fluid volume over risk for falls as the priority (the key assumes the fluid deficit, as the driver of toxicity, outranks fall risk in a supervised clinic setting), and half-hourly pulse and blood pressure as a realistic clinic frequency.",
   "validation": {
     "status": "pending"
   }

@@ -1,7 +1,7 @@
 {
   "case_code": "NRG-MS-002",
   "title": "Vomiting and Weakness in a University Student",
-  "objective": "Students recognise severe hyperglycaemia in a young adult with type 1 diabetes who has been vomiting, interpret compensatory breathing, prioritize diabetic ketoacidosis before confirmation, anticipate potassium replacement, follow the ward protocol when glucose falls without stopping insulin, judge resolution by ketones and pH rather than glucose, teach sick-day rules, and delegate safely during the move back to subcutaneous insulin.",
+  "objective": "Students recognise severe hyperglycaemia in a young adult with type 1 diabetes who has been vomiting, interpret compensatory breathing, prioritize deficient fluid volume as the nursing diagnosis before the results confirm diabetic ketoacidosis, plan hourly fluid-balance monitoring, follow the ward protocol when glucose falls without stopping insulin, judge restored fluid volume by pulse, mucous membranes and urine output, teach sick-day rules, and delegate safely during the move back to subcutaneous insulin.",
   "population": "Young adult, 22-year-old man with type 1 diabetes",
   "setting": "Medical ward, regional hospital, Trinidad and Tobago",
   "primary_condition": "Diabetic ketoacidosis",
@@ -184,7 +184,7 @@
     {
       "key": "results",
       "time_label": "3:15 pm",
-      "narrative": "The results are reported and the physician reviews Akeem on the ward and confirms diabetic ketoacidosis. Prescriptions: continue 0.9% sodium chloride IV at the prescribed rate; a fixed-rate IV insulin infusion of 6.4 units/hr (weight 64 kg) to start at 3:30 pm; hourly capillary glucose and blood ketones; electrolytes repeated 2 hours after the insulin starts; strict fluid balance. The ward's physician-signed IV insulin protocol directs the nurse to start 10% dextrose at 125 mL/hr through a second line once capillary glucose falls below 250 mg/dL. Any change to the insulin rate needs a physician's prescription.",
+      "narrative": "The results are reported and the physician reviews Akeem on the ward and confirms diabetic ketoacidosis. Prescriptions: continue 0.9% sodium chloride IV at the prescribed rate; a fixed-rate IV insulin infusion of 6.4 units/hr (weight 64 kg) to start at 3:30 pm; hourly capillary glucose and blood ketones; electrolytes repeated 2 hours after the insulin starts. The ward's physician-signed IV insulin protocol directs the nurse to start 10% dextrose at 125 mL/hr through a second line once capillary glucose falls below 250 mg/dL. Any change to the insulin rate needs a physician's prescription.",
       "labs": [
         {
           "category": "Bedside tests",
@@ -564,13 +564,13 @@
         "C": "correct",
         "D": "close"
       },
-      "rationale_correct": "CORRECT: Akeem has type 1 diabetes and has been vomiting for two days. A capillary glucose of 486 mg/dL is not explained by a stomach illness alone; it signals a serious lack of insulin, and in type 1 diabetes that raises the risk of ketone build-up. It needs follow-up now (ketone testing and informing the physician). The fast pulse, dry mouth and poor skin turgor are explained by the vomiting and passing large amounts of urine, and IV fluid is already running for them.",
+      "rationale_correct": "CORRECT: Akeem has type 1 diabetes and has been vomiting for two days. A capillary glucose of 486 mg/dL is not explained by a stomach illness alone; it signals a serious lack of insulin, and in type 1 diabetes that raises the risk of ketone build-up. It needs follow-up now (ketone testing and informing the physician). The fast pulse, dry mouth and poor skin turgor need close monitoring, but they are explained by the vomiting and passing large amounts of urine; the glucose is the cue that explains why the losses are so large.",
       "distractor_rationales": {
         "A": "A temperature of 37.5°C is only slightly raised and fits a minor infection or dehydration. It is worth rechecking but does not change the immediate plan.",
         "B": "Generalised tenderness without guarding fits two days of vomiting and is also common when glucose is very high. It needs reassessment, but it is not the finding that points to the dangerous problem.",
-        "D": "A pulse of 116/min with dry mucous membranes and reduced turgor is expected after two days of vomiting and polyuria, and IV fluid is already running. The glucose explains why the fluid loss happened and what else may be developing."
+        "D": "A pulse of 116/min with dry mucous membranes and reduced turgor is expected after two days of vomiting and polyuria, and IV fluid has been started. It needs close monitoring, but the glucose explains why the fluid loss happened and what else may be developing."
       },
-      "self_test": "The pulse of 116/min matches the fluid loss already being treated, whereas a glucose of 486 mg/dL in type 1 diabetes signals insulin lack that the fluids alone will not correct.",
+      "self_test": "The pulse of 116/min matches the fluid loss from vomiting and polyuria, whereas a glucose of 486 mg/dL in type 1 diabetes signals the insulin lack that is causing it.",
       "meta": {
         "topic": "Endocrine nursing",
         "subtopic": "Hyperglycaemia in type 1 diabetes",
@@ -634,47 +634,47 @@
       "cj_step": "prioritize_hypotheses",
       "domain": "CDM",
       "taxonomy": "ASE",
-      "stem": "Before the blood results return, which condition is most likely and should be prioritized?",
+      "stem": "Before the blood results return, which nursing diagnosis should the nurse prioritize for Akeem?",
       "options": [
         {
           "label": "A",
-          "text": "Hyperosmolar hyperglycaemic state"
+          "text": "Ineffective breathing pattern related to compensation for acid build-up as evidenced by deep respirations of 30/min"
         },
         {
           "label": "B",
-          "text": "Acute pancreatitis"
+          "text": "Risk for electrolyte imbalance related to losses of potassium and sodium in vomit and urine"
         },
         {
           "label": "C",
-          "text": "Gastroenteritis with dehydration"
+          "text": "Deficient knowledge related to unfamiliarity with sick-day rules as evidenced by stopping insulin when not eating"
         },
         {
           "label": "D",
-          "text": "Diabetic ketoacidosis"
+          "text": "Deficient fluid volume related to osmotic diuresis and vomiting as evidenced by a pulse of 118/min and a dry mouth"
         }
       ],
       "correct": [
         "D"
       ],
       "option_types": {
-        "A": "close",
-        "B": "incorrect",
-        "C": "priority",
+        "A": "priority",
+        "B": "close",
+        "C": "incorrect",
         "D": "correct"
       },
-      "rationale_correct": "CORRECT: Type 1 diabetes, two days without insulin, a glucose of 486 mg/dL, vomiting, abdominal pain, polyuria, deep rapid breathing, a fruity breath odour and slowing responses form one picture: diabetic ketoacidosis. It is also the most dangerous explanation, because the acidosis and fluid and potassium shifts can become life-threatening within hours, so it is prioritized while the results are awaited.",
+      "rationale_correct": "CORRECT: Deficient fluid volume is an actual problem that threatens circulation now. Two days of vomiting and glucose-driven urine loss (osmotic diuresis; 350 mL more since admission) have left Akeem with a pulse rising from 116 to 118/min, blood pressure falling to 102/64 mm Hg, capillary refill of 3 seconds, a dry mouth and reduced skin turgor. Restoring volume comes first by airway, breathing, circulation: it supports blood pressure, restores kidney perfusion so glucose and ketones can be cleared, and must be under way before potassium can be replaced safely.",
       "distractor_rationales": {
-        "A": "Hyperosmolar hyperglycaemic state also causes very high glucose and dehydration, so it is the closest alternative. It is more typical of older adults with type 2 diabetes, glucose is usually much higher, and there is little ketone production, so it does not explain the deep breathing and fruity odour.",
-        "B": "Pancreatitis causes abdominal pain and vomiting, but the pain is usually severe and epigastric, and it does not explain the deep breathing, fruity odour or the missed insulin. The generalised tenderness here fits ketoacidosis.",
-        "C": "A stomach illness may well have started this episode and explains the vomiting, but on its own it does not explain a glucose of 486 mg/dL, deep rapid breathing and a fruity breath odour."
+        "A": "The airway-breathing-circulation order makes this tempting, but the deep, rapid breathing is the lungs compensating for acid, as Q2 showed. It is effective: SpO2 is 98% on room air and the chest is clear. It settles as fluid and insulin correct the acidosis and is not a problem the nurse corrects directly.",
+        "B": "Potassium and sodium are being lost and will shift once insulin starts, so this risk is real and will be monitored. But it is a risk diagnosis with no results yet, and an actual circulatory problem comes before a risk one.",
+        "C": "Stopping insulin because of not eating shows a real knowledge gap, and it caused this episode. It is addressed with sick-day teaching once Akeem is stable, not ahead of a circulatory problem."
       },
-      "self_test": "Hyperosmolar hyperglycaemic state explains the high glucose and dehydration but not the deep breathing and fruity odour that come from ketone production in type 1 diabetes.",
+      "self_test": "The deep breathing looks like a breathing problem, but it is an effective compensation with SpO2 98% and a clear chest, whereas the fluid deficit is an actual threat to circulation.",
       "meta": {
         "topic": "Endocrine nursing",
-        "subtopic": "Diabetic ketoacidosis versus hyperosmolar hyperglycaemic state",
-        "priority_principle": "Prioritize the most dangerous explanation that fits all the cues",
-        "prerequisites": "Type 1 versus type 2 diabetes; ketone formation",
-        "suggested_review": "Hyperglycaemic emergencies: comparison of DKA and HHS"
+        "subtopic": "Priority nursing diagnosis in a hyperglycaemic crisis",
+        "priority_principle": "Airway, breathing, circulation: an actual circulatory problem before a compensatory or risk problem",
+        "prerequisites": "Nursing diagnosis structure; signs of hypovolaemia; osmotic diuresis; respiratory compensation",
+        "suggested_review": "Nursing care planning for the client with diabetic ketoacidosis"
       }
     },
     {
@@ -683,47 +683,47 @@
       "cj_step": "generate_solutions",
       "domain": "NP",
       "taxonomy": "AP",
-      "stem": "As the insulin infusion begins, which prescription should the nurse anticipate being added to Akeem's plan of care?",
+      "stem": "As the insulin infusion begins, which intervention should the nurse include in the plan of care for Akeem's priority problem?",
       "options": [
         {
           "label": "A",
-          "text": "Sodium bicarbonate infusion to raise the blood pH"
+          "text": "Encourage at least 250 mL of oral fluid every hour while awake"
         },
         {
           "label": "B",
-          "text": "Potassium chloride added to the IV fluid as the level falls"
+          "text": "Record intake and urine output hourly with pulse and blood pressure"
         },
         {
           "label": "C",
-          "text": "IV fluid rate reduced to prevent fluid overload in the lungs"
+          "text": "Weigh Akeem each morning to judge how well fluid is being replaced"
         },
         {
           "label": "D",
-          "text": "Hourly insulin boluses until the glucose is near normal"
+          "text": "Increase the IV fluid rate whenever the pulse stays above 100/min"
         }
       ],
       "correct": [
         "B"
       ],
       "option_types": {
-        "A": "close",
+        "A": "incorrect",
         "B": "correct",
-        "C": "incorrect",
+        "C": "close",
         "D": "unsafe"
       },
-      "rationale_correct": "CORRECT: Akeem's potassium of 5.8 mmol/L looks high, but the vomiting and polyuria have drained the body's total potassium; acidosis and lack of insulin keep what is left outside the cells. Once insulin starts, potassium moves back into the cells and the serum level falls quickly, which is why electrolytes are repeated after 2 hours. Potassium added to the IV fluid when the level falls (with adequate urine output) prevents dangerous hypokalaemia and arrhythmias.",
+      "rationale_correct": "CORRECT: The priority problem is deficient fluid volume, and fluid is being replaced IV at a prescribed rate while insulin starts. Hourly intake and urine output, with pulse and blood pressure, show whether the circulation is recovering (output steady while the pulse falls), pick up a falling output or signs of overload early so the physician can be informed, and confirm that Akeem is passing urine, which is needed before potassium is added to the fluid as the level of 5.8 mmol/L falls on insulin.",
       "distractor_rationales": {
-        "A": "A pH of 7.16 looks alarming, so bicarbonate is tempting. Fluids and insulin stop ketone production and correct the acidosis; bicarbonate is not routine at this pH and can worsen the potassium fall.",
-        "C": "Akeem is a young adult who is still dehydrated, with a raised urea and creatinine. Fluid replacement remains a core treatment, and the chest is clear, so cutting the fluid would slow recovery.",
-        "D": "The physician has prescribed a fixed-rate infusion. Repeated boluses would drop the glucose and potassium too fast and are not part of the prescription."
+        "A": "Oral fluid will help later, but Akeem is still nauseated and vomited on arrival, so large oral volumes are likely to come back up. Replacement at this stage is IV; sips can be offered once vomiting settles.",
+        "C": "Daily weight is a sound fluid-balance measure, which is why it is tempting, but once a day is far too infrequent while litres are given and lost within hours. It cannot guide care over the next few hours.",
+        "D": "Watching the pulse is right, but the fluid rate is prescribed, and changing it is outside the nurse's authority. A persistent tachycardia is reported to the physician, not corrected by adjusting the infusion."
       },
-      "self_test": "Bicarbonate seems to target the low pH, but fluids and insulin correct the acidosis, while the fall in a potassium of 5.8 mmol/L once insulin starts is the predictable danger to plan for.",
+      "self_test": "Daily weight does reflect fluid balance, but with litres given and lost within hours only hourly intake, output and vital signs show the response in time to act.",
       "meta": {
         "topic": "Endocrine nursing",
-        "subtopic": "Potassium management in DKA",
-        "priority_principle": "Anticipate the predictable complication of treatment",
-        "prerequisites": "Insulin moves potassium into cells; total body versus serum potassium",
-        "suggested_review": "Fluid, insulin and potassium therapy in DKA"
+        "subtopic": "Fluid balance monitoring in diabetic ketoacidosis",
+        "priority_principle": "Plan monitoring that measures the priority problem often enough to act on it",
+        "prerequisites": "Expected urine output (about 0.5 mL/kg/hr); signs of hypovolaemia and fluid overload; potassium and kidney function",
+        "suggested_review": "Fluid balance charting and hourly urine output"
       }
     },
     {
@@ -781,19 +781,19 @@
       "cj_step": "evaluate_outcomes",
       "domain": "CDM",
       "taxonomy": "ASE",
-      "stem": "Which finding best indicates that treatment of Akeem's primary problem has been effective?",
+      "stem": "Which finding best indicates that care for Akeem's priority nursing diagnosis has been effective?",
       "options": [
         {
           "label": "A",
-          "text": "Blood ketones 0.4 mmol/L with venous pH 7.35"
+          "text": "Pulse 86/min, moist tongue, urine output 70 mL/hr"
         },
         {
           "label": "B",
-          "text": "Capillary glucose of 168 mg/dL before breakfast"
+          "text": "Blood ketones 0.4 mmol/L with a venous pH of 7.35"
         },
         {
           "label": "C",
-          "text": "Urine output of 70 mL/hr through the night"
+          "text": "Capillary glucose of 168 mg/dL before breakfast"
         },
         {
           "label": "D",
@@ -809,19 +809,19 @@
         "C": "close",
         "D": "incorrect"
       },
-      "rationale_correct": "CORRECT: The primary problem was ketoacidosis, so resolution is judged by the ketones and the acid-base state. Ketones have fallen from 5.6 to 0.4 mmol/L and the pH has risen from 7.16 to 7.35, with bicarbonate 20 mmol/L, after a night of insulin, fluids and potassium. These show that ketone production has stopped and the acidosis has cleared.",
+      "rationale_correct": "CORRECT: The priority nursing diagnosis was deficient fluid volume, so its outcome is a restored circulating volume. After a night of IV fluid with hourly intake and output, the pulse has fallen from 118 to 86/min, the lips and tongue are moist instead of dry, and urine output is a steady 70 mL/hr (about 1 mL/kg/hr). With glucose now 168 mg/dL, too low to drive glucose into the urine, that output reflects good kidney perfusion rather than osmotic diuresis.",
       "distractor_rationales": {
-        "B": "A lower glucose is welcome, but it fell to the 200s yesterday evening while ketones were still 2.4 mmol/L. Glucose comes down faster than the acidosis, so it cannot show that the ketoacidosis has resolved.",
-        "C": "Good urine output shows that the circulation and kidneys have recovered with fluid replacement, but it does not measure the ketones or the acid that defined the problem.",
-        "D": "Appetite and a soft abdomen are encouraging and matter for restarting subcutaneous insulin, but they are not a measure of whether the acidosis has resolved."
+        "B": "Ketones of 0.4 mmol/L and a pH of 7.35 show the ketoacidosis has resolved, which matters for stopping the insulin infusion, but they measure the acid problem, not whether the fluid deficit has been corrected.",
+        "C": "A lower glucose reduces glucose-driven urine loss, but glucose was already 236 mg/dL yesterday evening while Akeem's lips were still slightly dry, so it cannot show that volume has been restored.",
+        "D": "Appetite and a soft abdomen are encouraging and matter for restarting subcutaneous insulin, but they say little about circulating volume."
       },
-      "self_test": "Glucose of 168 mg/dL looks like success, but glucose fell well before the ketones did, so only ketones and pH show that the ketoacidosis has resolved.",
+      "self_test": "Ketones of 0.4 mmol/L and a pH of 7.35 show the acidosis has cleared, but the priority nursing diagnosis was the fluid deficit, which is measured by pulse, mucous membranes and urine output.",
       "meta": {
         "topic": "Endocrine nursing",
-        "subtopic": "Evaluating resolution of DKA",
-        "priority_principle": "Evaluate the outcome the treatment targeted",
-        "prerequisites": "Ketones, pH and bicarbonate trends",
-        "suggested_review": "Criteria for resolution of DKA"
+        "subtopic": "Evaluating restoration of fluid volume",
+        "priority_principle": "Evaluate the expected outcome of the priority nursing diagnosis",
+        "prerequisites": "Signs of adequate hydration; expected urine output; effect of glucose on urine output",
+        "suggested_review": "Expected outcomes for deficient fluid volume"
       }
     },
     {
@@ -923,8 +923,8 @@
       }
     }
   ],
-  "pathophysiology": "## Pathophysiology teaching\n\n**Normal physiology.** Insulin moves glucose into muscle and fat cells, stops the liver releasing glucose, and stops fat being broken down. In type 1 diabetes the pancreas makes almost no insulin, so these effects depend entirely on injected insulin.\n\n**What happened to Akeem.** An illness with vomiting (probably a stomach upset) stopped Akeem eating, and Akeem then stopped the insulin. Illness also raises stress hormones (glucagon, cortisol, adrenaline), which raise glucose and fat breakdown further. Without insulin:\n- Glucose cannot enter cells and the liver keeps releasing it, so glucose climbed to 486 mg/dL.\n- Glucose spills into the urine and draws water with it (osmotic diuresis), causing polyuria, thirst, dry mucous membranes, tachycardia and a raised urea and creatinine. Vomiting adds to the fluid and electrolyte loss.\n- Fat is broken down and the liver turns the fatty acids into ketones. Ketones are acids, so bicarbonate is used up and the pH falls (7.16, bicarbonate 9 mmol/L). The lungs try to compensate by blowing off carbon dioxide, giving deep, rapid (Kussmaul) breathing, and acetone gives the breath a fruity odour. Acidosis also causes abdominal pain, vomiting and drowsiness.\n- Potassium is lost in urine and vomit, but acidosis and insulin lack keep potassium outside the cells, so the serum level (5.8 mmol/L) hides a low total body potassium.\n\n**Why each decision mattered.**\n- Q1: the glucose was the cue the stomach illness did not explain, and it pointed to insulin lack.\n- Q2: reading the deep breathing as compensation for acid, not anxiety, aspiration or overload, showed the problem was getting worse.\n- Q3: prioritizing diabetic ketoacidosis over hyperosmolar hyperglycaemic state or gastroenteritis before the results meant treatment was ready when they arrived.\n- Q4: insulin drives potassium back into cells, so the serum level falls once the infusion starts; anticipating potassium replacement prevents hypokalaemia and arrhythmias.\n- Q5: glucose falls faster than ketones clear. Adding dextrose lets insulin continue until ketone production is switched off; stopping insulin when glucose falls lets the acidosis return.\n- Q6: resolution is judged by ketones and pH, the markers of the problem treated, not by glucose.\n- Q7 and Q8: sick-day teaching targets the cause of this episode, and delegating only routine, stable tasks keeps assessment, IV therapy and evaluation of teaching with the registered nurse during the move back to subcutaneous insulin, when hypoglycaemia or rebound ketosis can occur.\n\n**Moving back to subcutaneous insulin.** The subcutaneous dose is given with a meal and the infusion is stopped after an overlap (here one hour), because IV insulin acts for only minutes; stopping it before the subcutaneous insulin is absorbed would let ketones rise again.\n\n**Prevention.** Never stop insulin during illness; check glucose and ketones every few hours when unwell; keep up fluids, using sugar-containing drinks if unable to eat; seek help early for persistent vomiting, rising ketones or deep breathing; keep diabetes clinic follow-up.",
-  "quality_report": "Drafted by Claude (ai:claude, 2026-10-10) from CASE_REQUEST NRG-MS-002 (primary domain NP, difficulty low, Q7 HPMW, Q8 NLM). Checks run on all eight items: Cover (each key can be formed before seeing options from the data on screen), Two-Answer (Q1 glucose vs pulse resolved by stem 'given Akeem's history' and the fluid already running; Q5 'reduce insulin' excluded by the stated protocol that insulin-rate changes need a prescription; Q8 options limited so only one task is routine and non-assessment), Cue-Sufficiency (Q3 asked before ketones/gas results; Q4 potassium 5.4 shown before planning; Q5 protocol authority given in the earlier 3:15 pm stage, not the 7:15 pm stage), Hidden-Assumption (protocol, weight, insulin regimen and potassium addition all stated before use; Q6 intervention introduced in the 7:15 pm and Day 2 stages). Disclosure: Kussmaul breathing and the fruity odour withheld until Q2 so Q1 is not pre-assembled. Addendum 3: urine output and electrolytes given at 3:15 pm, 7:15 pm and Day 2. Jade to confirm: (1) local DKA protocol - this case follows a UK JBDS-style fixed-rate infusion (0.1 units/kg/hr, insulin continued and 10% dextrose 125 mL/hr added when glucose falls below 250 mg/dL); ADA practice instead lowers the insulin rate with 5% dextrose, so the Q5 key depends on the protocol stated in the case; (2) potassium thresholds for adding KCl; (3) one-hour IV/subcutaneous overlap; (4) whether direct admission from a district health centre without prior ketone testing is realistic locally; (5) nursing assistant scope in T&T for intake/output recording and disconnecting IV lines; (6) sick-day ketone-check frequency (every 4 hours) and whether home blood or urine ketone testing is accessible to clients locally. Reviewer (2026-10-10): Admission potassium changed from 5.4 to 5.8 mmol/L (Q4 rationale, self-test and teaching section updated), because at 5.4 a JBDS protocol, which this case follows for insulin, would already add 40 mmol/L KCl, contradicting the Q4 key 'as the level falls'; at 5.8 both JBDS (no KCl above 5.5) and ADA (hold above 5.2) withhold KCl until the 5:30 pm repeat of 4.6, as written. Added to the 2:30 pm stage that the ward's ketone meter is on loan and has been sent for: a nurse acting on the Q1 cue would otherwise be expected to check ketones at the bedside before Q3, and the later hourly ketone checks need a meter. Q8 option D reworded from 'Decide whether Akeem needs a snack' (the word 'decide' gave it away) to 'Give Akeem a snack whenever Akeem reports feeling shaky', a more tempting unsafe distractor; rationale updated. Q7 option B retyped priority to incorrect (an incomplete plan, not a sequencing error). Teaching section no longer states the stomach illness as fact. No keys changed. Course checked against JBDS/ADA: 0.1 units/kg/hr; glucose fall about 58 mg/dL/hr and ketone fall about 0.9 mmol/L/hr are in the target range; pH 7.16, bicarbonate 9, ketones 5.6 is moderate, not severe, DKA, so ward care fits; Day 2 values meet resolution criteria. Jade to confirm: whether a urine ketone dipstick would routinely be done on a T&T ward before the blood results (it would weaken the 'before confirmation' design of Q3), plus the author's items (1) to (6). Revision (2026-10-12): Added home medications to the opening (NPH 18 units and regular 8 units before breakfast, NPH 8 units and regular 6 units before dinner, about 0.6 units/kg/day at 64 kg; no last-dose status, so the missed insulin still first appears at 2:30 pm) and the health-centre 0.9% sodium chloride. Charted orders where the narrative makes them: 0.9% sodium chloride, the 6.4 units/hr insulin infusion and the protocol 10% dextrose at 3:15 pm; insulin and the potassium-containing fluid (40 mmol/L, added 5:30 pm) at 7:15 pm, with the dextrose left off that chart so it does not cue Q5; dextrose 'running since 7:15 pm' only on Day 2, after Q5; the subcutaneous doses 'given 8:30 am' and the infusion 'to stop at 9:30 am' at 8:30 am. Added pain scores (4/10, 4/10, 1/10, 0/10), temperature and SpO2 where missing, and full eight-system examinations in order at 1:45 pm, 2:30 pm, 7:15 pm and Day 2 (normal systems written as normal; weakness, warm dry skin, faint breath odour at 7:15 pm consistent with ketones 2.4 mmol/L). Wording changes: the 2:30 pm findings (slower answers, fruity odour, clear chest) moved from the narrative into the structured examination so the cues sit among normals; the 3:00 pm capillary glucose moved from vitals to a 'Bedside tests' lab group. No stems, options or keys changed. Jade to confirm: the home insulin doses, the fluid rates (1 L over 1 h, 2 h, 4 h, 6 h) and KCl 40 mmol/L.",
+  "pathophysiology": "## Pathophysiology teaching\n\n**Normal physiology.** Insulin moves glucose into muscle and fat cells, stops the liver releasing glucose, and stops fat being broken down. In type 1 diabetes the pancreas makes almost no insulin, so these effects depend entirely on injected insulin.\n\n**What happened to Akeem.** An illness with vomiting (probably a stomach upset) stopped Akeem eating, and Akeem then stopped the insulin. Illness also raises stress hormones (glucagon, cortisol, adrenaline), which raise glucose and fat breakdown further. Without insulin:\n- Glucose cannot enter cells and the liver keeps releasing it, so glucose climbed to 486 mg/dL.\n- Glucose spills into the urine and draws water with it (osmotic diuresis), causing polyuria, thirst, dry mucous membranes, tachycardia and a raised urea and creatinine. Vomiting adds to the fluid and electrolyte loss.\n- Fat is broken down and the liver turns the fatty acids into ketones. Ketones are acids, so bicarbonate is used up and the pH falls (7.16, bicarbonate 9 mmol/L). The lungs try to compensate by blowing off carbon dioxide, giving deep, rapid (Kussmaul) breathing, and acetone gives the breath a fruity odour. Acidosis also causes abdominal pain, vomiting and drowsiness.\n- Potassium is lost in urine and vomit, but acidosis and insulin lack keep potassium outside the cells, so the serum level (5.8 mmol/L) hides a low total body potassium.\n\n**Priority nursing diagnosis.** Deficient fluid volume related to osmotic diuresis and vomiting, as evidenced by a pulse of 118/min, falling blood pressure, slow capillary refill, a dry mouth and reduced skin turgor. It came first by airway, breathing, circulation: the airway was clear, the deep breathing was an effective compensation (SpO2 98%), and circulation was what was failing. Restoring volume also restores kidney perfusion, which clears glucose and ketones and must be in place before potassium is given. The physician's working diagnosis, confirmed by the results, was diabetic ketoacidosis.\n\n**Why each decision mattered.**\n- Q1: the glucose was the cue the stomach illness did not explain, and it pointed to insulin lack as the cause of the fluid loss.\n- Q2: reading the deep breathing as compensation for acid, not anxiety, aspiration or overload, showed the problem was getting worse.\n- Q3: choosing deficient fluid volume over the breathing pattern, electrolyte risk or knowledge gap put the actual threat to circulation first, before the results arrived.\n- Q4: hourly intake, urine output, pulse and blood pressure measure the priority problem often enough to act on it, and confirm urine flow before potassium is added as insulin drives the serum level down.\n- Q5: glucose falls faster than ketones clear. Adding dextrose lets insulin continue until ketone production is switched off; stopping insulin when glucose falls lets the acidosis return.\n- Q6: the outcome of the priority nursing diagnosis is judged by pulse, mucous membranes and urine output; ketones and pH show the acidosis has cleared, a separate outcome.\n- Q7 and Q8: sick-day teaching targets the knowledge gap that started this episode, and delegating only routine, stable tasks (such as recording intake and output) keeps assessment, IV therapy and evaluation of teaching with the registered nurse during the move back to subcutaneous insulin, when hypoglycaemia or rebound ketosis can occur.\n\n**Moving back to subcutaneous insulin.** The subcutaneous dose is given with a meal and the infusion is stopped after an overlap (here one hour), because IV insulin acts for only minutes; stopping it before the subcutaneous insulin is absorbed would let ketones rise again.\n\n**Prevention.** Never stop insulin during illness; check glucose and ketones every few hours when unwell; keep up fluids, using sugar-containing drinks if unable to eat; seek help early for persistent vomiting, rising ketones or deep breathing; keep diabetes clinic follow-up.",
+  "quality_report": "Drafted by Claude (ai:claude, 2026-10-10) from CASE_REQUEST NRG-MS-002 (primary domain NP, difficulty low, Q7 HPMW, Q8 NLM). Checks run on all eight items: Cover (each key can be formed before seeing options from the data on screen), Two-Answer (Q1 glucose vs pulse resolved by stem 'given Akeem's history' and the fluid already running; Q5 'reduce insulin' excluded by the stated protocol that insulin-rate changes need a prescription; Q8 options limited so only one task is routine and non-assessment), Cue-Sufficiency (Q3 asked before ketones/gas results; Q4 potassium 5.4 shown before planning; Q5 protocol authority given in the earlier 3:15 pm stage, not the 7:15 pm stage), Hidden-Assumption (protocol, weight, insulin regimen and potassium addition all stated before use; Q6 intervention introduced in the 7:15 pm and Day 2 stages). Disclosure: Kussmaul breathing and the fruity odour withheld until Q2 so Q1 is not pre-assembled. Addendum 3: urine output and electrolytes given at 3:15 pm, 7:15 pm and Day 2. Jade to confirm: (1) local DKA protocol - this case follows a UK JBDS-style fixed-rate infusion (0.1 units/kg/hr, insulin continued and 10% dextrose 125 mL/hr added when glucose falls below 250 mg/dL); ADA practice instead lowers the insulin rate with 5% dextrose, so the Q5 key depends on the protocol stated in the case; (2) potassium thresholds for adding KCl; (3) one-hour IV/subcutaneous overlap; (4) whether direct admission from a district health centre without prior ketone testing is realistic locally; (5) nursing assistant scope in T&T for intake/output recording and disconnecting IV lines; (6) sick-day ketone-check frequency (every 4 hours) and whether home blood or urine ketone testing is accessible to clients locally. Reviewer (2026-10-10): Admission potassium changed from 5.4 to 5.8 mmol/L (Q4 rationale, self-test and teaching section updated), because at 5.4 a JBDS protocol, which this case follows for insulin, would already add 40 mmol/L KCl, contradicting the Q4 key 'as the level falls'; at 5.8 both JBDS (no KCl above 5.5) and ADA (hold above 5.2) withhold KCl until the 5:30 pm repeat of 4.6, as written. Added to the 2:30 pm stage that the ward's ketone meter is on loan and has been sent for: a nurse acting on the Q1 cue would otherwise be expected to check ketones at the bedside before Q3, and the later hourly ketone checks need a meter. Q8 option D reworded from 'Decide whether Akeem needs a snack' (the word 'decide' gave it away) to 'Give Akeem a snack whenever Akeem reports feeling shaky', a more tempting unsafe distractor; rationale updated. Q7 option B retyped priority to incorrect (an incomplete plan, not a sequencing error). Teaching section no longer states the stomach illness as fact. No keys changed. Course checked against JBDS/ADA: 0.1 units/kg/hr; glucose fall about 58 mg/dL/hr and ketone fall about 0.9 mmol/L/hr are in the target range; pH 7.16, bicarbonate 9, ketones 5.6 is moderate, not severe, DKA, so ward care fits; Day 2 values meet resolution criteria. Jade to confirm: whether a urine ketone dipstick would routinely be done on a T&T ward before the blood results (it would weaken the 'before confirmation' design of Q3), plus the author's items (1) to (6). Revision (2026-10-12): Added home medications to the opening (NPH 18 units and regular 8 units before breakfast, NPH 8 units and regular 6 units before dinner, about 0.6 units/kg/day at 64 kg; no last-dose status, so the missed insulin still first appears at 2:30 pm) and the health-centre 0.9% sodium chloride. Charted orders where the narrative makes them: 0.9% sodium chloride, the 6.4 units/hr insulin infusion and the protocol 10% dextrose at 3:15 pm; insulin and the potassium-containing fluid (40 mmol/L, added 5:30 pm) at 7:15 pm, with the dextrose left off that chart so it does not cue Q5; dextrose 'running since 7:15 pm' only on Day 2, after Q5; the subcutaneous doses 'given 8:30 am' and the infusion 'to stop at 9:30 am' at 8:30 am. Added pain scores (4/10, 4/10, 1/10, 0/10), temperature and SpO2 where missing, and full eight-system examinations in order at 1:45 pm, 2:30 pm, 7:15 pm and Day 2 (normal systems written as normal; weakness, warm dry skin, faint breath odour at 7:15 pm consistent with ketones 2.4 mmol/L). Wording changes: the 2:30 pm findings (slower answers, fruity odour, clear chest) moved from the narrative into the structured examination so the cues sit among normals; the 3:00 pm capillary glucose moved from vitals to a 'Bedside tests' lab group. No stems, options or keys changed. Jade to confirm: the home insulin doses, the fluid rates (1 L over 1 h, 2 h, 4 h, 6 h) and KCl 40 mmol/L. Revision (nursing focus, 2026-10-12): Q3 rewritten as the priority nursing diagnosis; old key D 'Diabetic ketoacidosis', new key D 'Deficient fluid volume related to osmotic diuresis and vomiting as evidenced by a pulse of 118/min and a dry mouth' (distractors: ineffective breathing pattern, priority; risk for electrolyte imbalance, close; deficient knowledge, incorrect); new rationales, self-test and meta, still ASE. Q4 rewritten from an anticipated prescription to a nursing intervention for the priority problem; old key B 'Potassium chloride added to the IV fluid as the level falls', new key B 'Record intake and urine output hourly with pulse and blood pressure' (potassium now taught in the Q4 rationale and the teaching section). Q6 options rewritten to measure the nursing-diagnosis outcome; old key A 'Blood ketones 0.4 mmol/L with venous pH 7.35', new key A 'Pulse 86/min, moist tongue, urine output 70 mL/hr' (ketones/pH kept as a close distractor). Q5, Q7 and Q8 checked: nursing actions on the presentation, keys unchanged (C, D, B); Q5 key differs from Q4. Q1 key unchanged (C); its rationale and self-test no longer say the IV fluid already covers the pulse and dry mouth, which would have contradicted Q3. Removed 'strict fluid balance' from the 3:15 pm prescriptions so that stage does not hand over Q4's key; the physician's DKA diagnosis stays in that stage, after Q3. Objective and teaching section updated to name the priority nursing diagnosis and link Q4-Q8 to it. Flow rechecked: Q3 asked at 2:30 pm before results; Q6 evaluates IV fluid (opening) and hourly monitoring (Q4); no stage text repeats a key. Jade to confirm: deficient fluid volume over ineffective breathing pattern as the priority (Kussmaul breathing treated as effective compensation), hourly urine measurement without a catheter on a T&T ward, and whether 'strict fluid balance' should be restored as a physician order after Q4.",
   "validation": {
     "status": "pending"
   }

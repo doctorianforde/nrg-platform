@@ -38,6 +38,13 @@ medical diagnosis.
   escalation, holding a dose, fluid and nutrition, safety, teaching, delegation, communication. A collaborative order is
   fine as a key only when the question is about the nurse carrying it out safely.
 - The teaching section names the priority nursing diagnosis and links each intervention to it.
+- **Don't let a pattern become the answer.** Across the bank, keys must not settle into "deficient fluid volume" for Q3 or
+  "monitor intake, output and vital signs" for Q4.
+  - Q4's key should be the most effective active nursing intervention for the priority problem (positioning, airway care,
+    a safety measure, carrying out a protocol, feeding or fluid support, teaching), with monitoring as a distractor or as
+    Q6's data. Use monitoring as the key only when monitoring truly is the best answer.
+  - Before writing Q3 and Q4, run `npx tsx scripts/plan-cases.ts --report` and read the existing cases' Q3 and Q4 keys
+    (`content/case-studies/**/*.json`). Avoid repeating them.
 
 ## How to build it (V3 s.17, in this order)
 1. **Story first.** Write the whole clinical course in your head, from the opening to the endpoint: what is really happening,
