@@ -2333,3 +2333,15 @@ session XP rounds down (needed for the plan's 12.5 → 12). (2) Open: `question_
 user (tutor mode needs it), so a student could look up promotion-quiz keys via the API during the 90 s — proposed fix in Phase 3.
 Unconfirmed values live in ranking_config with confirmed=false: mock_repeat_factor 0.25, promo grace 5 s, retake 24 h,
 14-day exclusion. Next: Phase 3 (screens) awaits Ian's go.
+- 2026-10-12: **Both Phase 2 follow-ups fixed (Ian).** (1) The plan doc's worked example corrected in the Claude Doc: 1.125 →
+  112.5 → **112 XP**, session XP "rounded down", and the 12 XP example annotated (12.5, rounded down). (2) **Answer keys hidden
+  from user tokens** (migration `20261012170000_hide_answer_keys`, staging): `question_options.is_correct/rationale/
+  distractor_type` and `questions.explanation` are no longer selectable by anon/authenticated (students AND teachers through
+  the API). Tutor mode fetches one question's key after "Check answer" via the server action `revealPracticeAnswer`
+  (src/lib/quiz/actions.ts), which refuses questions in the student's open promotion quiz or open mock sitting; finished mock
+  results and finished cases, and the teacher review/case pages, read keys server-side (`attachKeys`, `adminClient`). Mock
+  results now also omit explanations/rationales on the server until the teacher releases them (previously hidden only in the
+  browser). Tests: `node scripts/test-answer-keys.mjs` 14/14 (direct reads refused for student and teacher, select=* refused,
+  stems still readable, practice and case grading still work); ranking suites still 19/19 and 47/47; browser check on staging:
+  practice page carries no key before answering, feedback and explanation appear after Check answer, teacher review and case
+  pages show keys. Not browser-tested: a finished mock-exam results page (same attachKeys path).
