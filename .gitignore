@@ -54,3 +54,6 @@ OKComputer_NRG_Website/
 
 # badge art tooling
 .venv-badges/
+
+# Original image-AI badge art: kept locally by Ian (not in git); finished cut-outs live in public/badges/
+trophy/
