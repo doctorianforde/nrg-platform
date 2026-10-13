@@ -4,6 +4,8 @@ import { requireRole } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 import { DashboardShell } from "@/components/DashboardShell";
 import { GroupStandings, type Standing } from "@/components/exam/GroupStandings";
+import { flags } from "@/lib/flags";
+import { loadBadgeStrips } from "@/lib/badges/queries";
 import { LobbyView, type LobbyMember } from "./LobbyView";
 
 export const dynamic = "force-dynamic";
@@ -90,6 +92,7 @@ export default async function GroupExamPage({ params }: { params: { groupId: str
       .select("id, student_id, score_pct, correct_count, total_questions, completed_at")
       .eq("group_id", group.id);
 
+    const strips = flags.rankingV2 ? await loadBadgeStrips(supabase, roster.map((m) => m.student_id)) : null;
     const standings: Standing[] = roster.map((m) => {
       const s = sessions?.find((x) => x.student_id === m.student_id);
       return {
@@ -100,6 +103,7 @@ export default async function GroupExamPage({ params }: { params: { groupId: str
         total: s?.total_questions ?? null,
         completed: Boolean(s?.completed_at),
         isYou: m.student_id === user.id,
+        badges: strips?.get(m.student_id) ?? [],
       };
     });
 

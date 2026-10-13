@@ -1,5 +1,7 @@
 import { cn } from "@/lib/cn";
 import { Badge } from "@/components/ui/Badge";
+import { MiniBadges } from "@/components/badges/MiniBadges";
+import type { MiniBadge } from "@/lib/badges/queries";
 
 export type Standing = {
   studentId: string;
@@ -9,6 +11,8 @@ export type Standing = {
   total: number | null;
   completed: boolean;
   isYou: boolean;
+  /** Latest badges (ranking v2; empty when the student hides them). */
+  badges?: MiniBadge[];
 };
 
 /**
@@ -60,6 +64,7 @@ export function GroupStandings({
               {s.completed ? i + 1 : "–"}
             </span>
             <span className="truncate text-card-foreground">{s.name}</span>
+            {s.badges?.length ? <MiniBadges badges={s.badges} /> : null}
             {s.isYou ? <Badge tone="blue">You</Badge> : null}
             <span className="ml-auto shrink-0 text-right">
               {s.completed && s.scorePct !== null ? (

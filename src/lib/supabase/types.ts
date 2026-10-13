@@ -298,6 +298,8 @@ export type Database = {
       study_streak_v2: { Args: { p_user: string }; Returns: number }
       mark_badges_seen: { Args: { p_codes: string[] }; Returns: number }
       badges_visible: { Args: { p_user: string }; Returns: boolean }
+      recent_badge_wall: { Args: { p_days?: number; p_limit?: number }; Returns: { user_id: string; display_name: string; badge_code: string; earned_at: string }[] }
+      classmate_short_name: { Args: { p_user: string }; Returns: string | null }
       xp_level: { Args: { p_xp: number }; Returns: number }
       promotion_status: { Args: { p_user?: string }; Returns: Json }
       start_promotion_quiz: { Args: Record<PropertyKey, never>; Returns: string }

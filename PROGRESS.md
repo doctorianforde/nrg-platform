@@ -2524,3 +2524,20 @@ answer-key suite 14/14 still pass. Types updated. Next: Phase 2 (celebrations) o
   seen; nothing replays on reload; Summit ceremony under reduced motion shows the final state with no confetti; flip
   verified frame by frame (Novice V → edge → Advanced Beginner I → trophy rises); no page errors. tsc/lint/build clean.
 - Next: Phase 3 (trophy case on the profile, `/study/trophies`, classmates' badges, teacher view, show-badges toggle).
+
+### Trophies Phase 3 done on staging (Claude, 2026-10-13) — trophy case, flagged
+- Migration `20261013140000_badge_wall` (staging): `recent_badge_wall(days, limit)` and `classmate_short_name(user)`
+  (definer; first name + last initial, only for students who show their badges), `short_name()`.
+- `/study/trophies` (nav link "Trophies" for students, flag on): rank ladder by tier with tier trophies and the summit;
+  accomplishments by area; earned badges in colour with dates, locked ones grey with how to earn them; "Your collection"
+  (n of 56) with the **Show my badges to classmates** switch; "Recent achievements" wall of classmates' badges this week
+  (own entries left out), each name opening that classmate's trophy card.
+- Profile: "Trophy case" strip (latest 4, n of 56, link). Group-exam standings show each member's latest badges (hidden
+  for students who turned them off). Teacher message thread shows the student's badges (teachers always see them).
+- Browser-tested against staging with three throwaway students (A shown, B shown, C hidden): page renders 12 of 56 with
+  correct earned/locked tiles; wall shows B and not C; B's card opens; the switch saves and re-renders (Off); profile strip
+  correct; no page errors. Group standings and the teacher thread strip are type-checked and built but not browser-tested.
+- Also fixed 2026-10-13: Vercel build of the prod project's staging preview failed fetching Google Fonts; fonts are now
+  self-hosted (`src/app/fonts`, next/font/local), both projects build.
+- Trophies remaining: Phase 4 (backfill + prod launch) rides with the ranking v2 go-live; decide whether pre-launch badges
+  celebrate or are pre-marked seen. Jade still to confirm the badge list.

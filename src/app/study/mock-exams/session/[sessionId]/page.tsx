@@ -6,6 +6,8 @@ import { attachKeys, fetchQuizQuestions } from "@/lib/quiz/fetch";
 import { ExamRunner } from "./ExamRunner";
 import { ResultsView } from "./ResultsView";
 import { GroupStandings, type Standing } from "@/components/exam/GroupStandings";
+import { flags } from "@/lib/flags";
+import { loadBadgeStrips } from "@/lib/badges/queries";
 
 export const dynamic = "force-dynamic";
 
@@ -80,6 +82,10 @@ export default async function MockExamSessionPage({
         isYou: r.student_id === user.id,
       };
     });
+    if (flags.rankingV2) {
+      const strips = await loadBadgeStrips(supabase, ids);
+      standings = standings.map((s) => ({ ...s, badges: strips.get(s.studentId) ?? [] }));
+    }
   }
 
   if (session.completed_at) {

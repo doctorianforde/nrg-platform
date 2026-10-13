@@ -6,6 +6,9 @@ import { DashboardShell } from "@/components/DashboardShell";
 import { Conversation } from "@/components/messages/Conversation";
 import { loadThread } from "@/lib/messages/queries";
 import { markThreadRead } from "@/lib/messages/actions";
+import { flags } from "@/lib/flags";
+import { loadBadgeStrips } from "@/lib/badges/queries";
+import { MiniBadges } from "@/components/badges/MiniBadges";
 
 export const dynamic = "force-dynamic";
 
@@ -16,6 +19,8 @@ export default async function TeacherThreadPage({ params }: { params: { id: stri
   const data = await loadThread(createClient(), params.id, user.id, true);
   if (!data) notFound();
   await markThreadRead(params.id);
+  // Ranking v2: the student's badges, for encouragement (teachers see them even when hidden from classmates).
+  const strip = flags.rankingV2 ? (await loadBadgeStrips(createClient(), [data.thread.studentId], 12)).get(data.thread.studentId) ?? [] : [];
 
   return (
     <DashboardShell
@@ -29,6 +34,12 @@ export default async function TeacherThreadPage({ params }: { params: { id: stri
         <Link href="/teacher/messages" className="inline-block text-sm text-brand-700 underline">
           ‹ Back to the inbox
         </Link>
+        {strip.length ? (
+          <div className="flex flex-wrap items-center gap-2 rounded-lg border border-brand-100 bg-white px-3 py-2 text-sm">
+            <span className="text-muted-foreground">Badges</span>
+            <MiniBadges badges={strip} size={28} />
+          </div>
+        ) : null}
         <Conversation
           thread={data.thread}
           messages={data.messages}

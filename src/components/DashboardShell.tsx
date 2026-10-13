@@ -6,8 +6,9 @@ import { Avatar } from "@/components/ui/Avatar";
 import { BadgeCelebrationsServer } from "@/components/badges/BadgeCelebrationsServer";
 import { flags } from "@/lib/flags";
 
-const NAV: Array<{ href: string; label: string; min: Profile["role"] }> = [
+const NAV: Array<{ href: string; label: string; min: Profile["role"]; rankingV2?: boolean }> = [
   { href: "/study", label: "Study", min: "student" },
+  { href: "/study/trophies", label: "Trophies", min: "student", rankingV2: true },
   { href: "/study/submit", label: "Write a question", min: "student" },
   { href: "/study/profile", label: "Profile", min: "student" },
   { href: "/teacher", label: "Teacher", min: "teacher" },
@@ -51,7 +52,7 @@ export function DashboardShell({
             </span>
           </Link>
           <nav className="hidden md:flex gap-1 text-sm">
-            {NAV.filter((n) => hasAtLeast(profile.role, n.min)).map((n) => (
+            {NAV.filter((n) => hasAtLeast(profile.role, n.min) && (!n.rankingV2 || (flags.rankingV2 && profile.role === "student"))).map((n) => (
               <Link
                 key={n.href}
                 href={n.href}
