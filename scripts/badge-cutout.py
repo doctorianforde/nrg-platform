@@ -11,8 +11,8 @@ A sheet with several badges (names in reading order: left to right, top row firs
 
 Writes <name>-512.png and <name>-128.png for each badge (transparent, square, trimmed with a small margin).
 
-How: flood-fill from the image border over near-white pixels (so white highlights inside a badge are kept), feather the
-cut edge, then find each badge as a separate island of non-white pixels. Specks smaller than 0.5% of the image are ignored,
+How: flood-fill from the image border over near-white pixels (so white highlights inside a badge are kept), also clear
+large enclosed patches of flat white (inside handles and loops), feather the cut edge, then find each badge as a separate island of non-white pixels. Specks smaller than 0.5% of the image are ignored,
 and pieces whose boxes overlap are merged (e.g. a sparkle drawn just off a badge).
 """
 import sys
@@ -41,6 +41,21 @@ def background_mask(im):
         for nx, ny in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
             if 0 <= nx < w and 0 <= ny < h and not bg[ny * w + nx] and near_white(px[nx, ny]):
                 bg[ny * w + nx] = 1; q.append((nx, ny))
+    # Background sealed inside the art (e.g. inside a trophy handle) doesn't touch the border. Remove enclosed regions of
+    # flat, near-pure white that are large enough to be background, not a highlight: a highlight is small or shaded.
+    seen = bytearray(w * h)
+    min_hole = 0.0015 * w * h
+    for start in range(w * h):
+        if bg[start] or seen[start] or not near_white(px[start % w, start // w], lim=242): continue
+        region = [start]; seen[start] = 1; i = 0
+        while i < len(region):
+            x, y = region[i] % w, region[i] // w; i += 1
+            for nx, ny in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
+                if 0 <= nx < w and 0 <= ny < h:
+                    j = ny * w + nx
+                    if not seen[j] and not bg[j] and near_white(px[nx, ny], lim=242): seen[j] = 1; region.append(j)
+        if len(region) >= min_hole:
+            for j in region: bg[j] = 1
     return bg
 
 
