@@ -8,16 +8,25 @@ For Ian to take to an image-generation AI (Midjourney, DALL·E, Ideogram, Firefl
    one per tier.
 2. **Paste the style block** at the end of every prompt, word for word, so the whole set matches. If your tool supports a
    style or character reference, generate the first medal (N-1) until you like it, then use it as the reference for the rest.
-3. **Output:** square 1:1, at least 1024 × 1024 px, PNG with a **transparent background** (if the tool can't do
-   transparency, ask for a plain white background and I'll remove it). Centred, with a little empty margin around it.
+3. **Output:** square 1:1, at least 1024 × 1024 px, PNG on a **flat pure white background** (the style block asks for it).
+   I remove the white and make the transparent versions; you don't need to cut anything out.
 4. **Check at small size:** each badge must still read clearly at 64 px wide, roughly the size it appears in the trophy case.
 5. **Name the files** exactly as listed (e.g. `rank-novice.png`) and drop them in one folder. I'll compress them, put them in
    `public/badges/`, and make the grey "locked" versions in code.
 
 ### Style block (append to every prompt)
-> Polished game achievement badge, semi-flat vector illustration style with soft gradients, clean bold outlines and a gentle
-> top-left highlight, centred on a fully transparent background, front view, symmetrical, no text, no letters, no numbers,
-> no watermark, no signature, crisp edges, high contrast, readable at small sizes, square 1:1.
+> Polished game achievement badge, semi-flat vector illustration style with soft gradients and a gentle top-left highlight,
+> a crisp dark outline around the entire outer edge of the badge, isolated and centred on a solid flat pure white background
+> (#FFFFFF) with nothing else in the scene, wide empty white margin on all sides, no drop shadow, no cast shadow, no glow,
+> no sparkles, no floor or surface, no vignette, no gradient in the background, no checkerboard pattern, front view,
+> symmetrical, no text, no letters, no numbers, no watermark, no signature, high contrast, readable at small sizes, square 1:1.
+
+**Why it's written this way (Nano Banana / Gemini and similar tools):** these tools can't output a truly transparent
+background, and asking for one often produces a fake grey-and-white checkerboard painted into the image. A flat pure white
+background with a dark outline round the badge, and nothing (shadow, glow, sparkles) bleeding into the white, lets the
+background be removed cleanly afterwards. Glows and sparkles are added by the app instead, where they can also animate.
+If a result comes back with a shadow, a tinted background or a checkerboard, regenerate it or say "same badge, background
+pure flat white, remove the shadow".
 
 ### Colours (keep to these)
 | Tier / use | Colour | Hex |
@@ -40,19 +49,19 @@ Each is the same medal shape so the ladder looks like one set; only the colour a
 | File | Prompt (then add the style block) |
 |---|---|
 | `rank-novice.png` | A round medal with a cool pewter-grey enamel face set in a plain brushed pewter rim, a small embossed nursing lamp at the top of the rim, a smooth empty circular centre left blank for a numeral, two short pewter-grey ribbon tails hanging below. Modest and simple. |
-| `rank-advanced-beginner.png` | The same round medal design with a clear blue enamel face set in a polished bronze rim, a small embossed nursing lamp at the top of the rim, a smooth empty circular centre left blank for a numeral, two short blue ribbon tails below, a faint inner glow. |
-| `rank-competent.png` | The same round medal design with an emerald green enamel face set in a polished silver rim with a fine beaded edge, a small embossed nursing lamp at the top of the rim, a smooth empty circular centre left blank for a numeral, two green ribbon tails below, a soft shine across the face. |
-| `rank-proficient.png` | The same round medal design with a royal purple enamel face set in a bright silver rim with small laurel leaves engraved around the edge, a small embossed nursing lamp at the top, a smooth empty circular centre left blank for a numeral, two purple ribbon tails below, a gentle radiant glow behind the medal. |
-| `rank-expert.png` | The same round medal design with a warm gold enamel face set in an ornate polished gold rim with engraved laurel leaves and four tiny inset gemstones, a small embossed nursing lamp at the top, a smooth empty circular centre left blank for a numeral, two gold ribbon tails below, a radiant golden glow behind the medal. |
+| `rank-advanced-beginner.png` | The same round medal design with a clear blue enamel face set in a polished bronze rim, a small embossed nursing lamp at the top of the rim, a smooth empty circular centre left blank for a numeral, two short blue ribbon tails below. |
+| `rank-competent.png` | The same round medal design with an emerald green enamel face set in a polished silver rim with a fine beaded edge, a small embossed nursing lamp at the top of the rim, a smooth empty circular centre left blank for a numeral, two green ribbon tails below, a soft shine across the enamel face. |
+| `rank-proficient.png` | The same round medal design with a royal purple enamel face set in a bright silver rim with small laurel leaves engraved around the edge, a small embossed nursing lamp at the top, a smooth empty circular centre left blank for a numeral, two purple ribbon tails below. |
+| `rank-expert.png` | The same round medal design with a warm gold enamel face set in an ornate polished gold rim with engraved laurel leaves and four tiny inset gemstones, a small embossed nursing lamp at the top, a smooth empty circular centre left blank for a numeral, two gold ribbon tails below. |
 
 ## 2. Tier trophies (4) and the summit trophy (1)
 | File | Prompt (then add the style block) |
 |---|---|
-| `trophy-advanced-beginner.png` | A small trophy cup in polished bronze with clear blue enamel bands, two curved handles, a nursing lamp emblem on the front of the cup, standing on a short dark plinth, a few small sparkles around it. |
-| `trophy-competent.png` | A trophy cup in polished silver with emerald green enamel bands, two curved handles, a nursing lamp emblem on the front, a laurel wreath wrapped around the stem, standing on a stepped dark plinth, sparkles around it. |
-| `trophy-proficient.png` | A tall trophy cup in bright silver with royal purple enamel bands, elegant curved handles, a nursing lamp emblem on the front, a laurel wreath around the stem, on a stepped plinth with a purple band, a soft radiant glow behind. |
-| `trophy-expert.png` | A grand trophy cup in polished gold with warm gold enamel, ornate curved handles, a nursing lamp emblem on the front, a full laurel wreath around the stem, on a tall stepped plinth with gold trim, a radiant golden glow and sparkles. |
-| `trophy-summit.png` | A majestic gold trophy topped with a glowing nursing lamp whose flame gives off warm light, a Rod of Asclepius engraved on the front, a full laurel wreath, a deep purple ribbon draped across the base, standing on a grand stepped plinth, golden rays and sparkles behind. The finest and most impressive badge in the set. |
+| `trophy-advanced-beginner.png` | A small trophy cup in polished bronze with clear blue enamel bands, two curved handles, a nursing lamp emblem on the front of the cup, standing on a short dark plinth. |
+| `trophy-competent.png` | A trophy cup in polished silver with emerald green enamel bands, two curved handles, a nursing lamp emblem on the front, a laurel wreath wrapped around the stem, standing on a stepped dark plinth. |
+| `trophy-proficient.png` | A tall trophy cup in bright silver with royal purple enamel bands, elegant curved handles, a nursing lamp emblem on the front, a laurel wreath around the stem, on a stepped plinth with a purple band. |
+| `trophy-expert.png` | A grand trophy cup in polished gold with warm gold enamel, ornate curved handles, a nursing lamp emblem on the front, a full laurel wreath around the stem, on a tall stepped plinth with gold trim. |
+| `trophy-summit.png` | A majestic gold trophy topped with a lit nursing lamp with a bright golden flame (kept inside the badge outline), a Rod of Asclepius engraved on the front, a full laurel wreath, a deep purple ribbon draped across the base, standing on a grand stepped plinth. The finest and most impressive badge in the set. |
 
 ## 3. Accomplishment badges (27)
 All use the same frame: **a rounded shield with a deep purple (#6B2D8B) face and a gold trim**, the icon in the centre.
@@ -74,7 +83,7 @@ centre:"* then the icon below, then the style block.
 | `domain-hpmw.png` | silver | a heart with a fresh green leaf growing from its top |
 | `domain-com.png` | silver | two overlapping speech bubbles, one purple and one white |
 | `domain-pd.png` | silver | an open book with a graduation cap resting on top |
-| `blueprint-master.png` | gold | a seven-pointed star, each point set with a different small coloured gem, glowing at the centre |
+| `blueprint-master.png` | gold | a seven-pointed star, each point set with a different small coloured gem, a bright centre |
 | `first-steps.png` | bronze | a single footprint at the start of a winding path |
 | `century.png` | bronze | a neat stack of flash cards with a small star on the top card |
 | `thousand-strong.png` | silver | a mountain with a path climbing to a flag near the top |
@@ -83,10 +92,10 @@ centre:"* then the icon below, then the style block.
 | `pass-mark.png` | silver | an exam paper with a large green checkmark seal on it |
 | `distinction.png` | gold | an exam paper with a gold star rosette ribbon pinned to it |
 | `team-player.png` | bronze | three simple figures standing side by side with linked arms |
-| `flawless.png` | gold | a brilliant cut diamond, sparkling |
+| `flawless.png` | gold | a brilliant cut diamond with bright facets |
 | `first-time.png` | silver | an arrow striking the centre of a target |
 | `case-opened.png` | bronze | an open patient folder with a small heartbeat line on the first page |
-| `clinical-judgement.png` | gold | a ring divided into six glowing segments around a small heartbeat line |
+| `clinical-judgement.png` | gold | a ring divided into six bright segments around a small heartbeat line |
 | `caseload.png` | silver | a neat stack of patient folders with a heartbeat line on the top one |
 | `author.png` | silver | a quill pen writing a question mark |
 | `prolific-author.png` | gold | a quill pen standing in an inkwell beside a stack of books |
@@ -96,6 +105,6 @@ Management, PC Professional Conduct, HPMW Health Promotion, COM Communication, P
 
 ## Checklist when the images come back
 - [ ] All 37 files present (5 rank medals, 5 trophies, 27 accomplishments), named as above.
-- [ ] Transparent (or plain white) background, no text or numbers anywhere in the image.
+- [ ] Flat pure white background with no shadow, glow, checkerboard or tint; no text or numbers anywhere in the image.
 - [ ] The five rank medals share one shape; only colour and rim change.
 - [ ] Every badge readable at 64 px.
