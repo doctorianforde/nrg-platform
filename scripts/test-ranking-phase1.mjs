@@ -2,6 +2,9 @@
 // T34 style: creates throwaway users, prints PASS/FAIL per assertion, then deletes the users (their attempts,
 // sessions and XP go with them). Secrets come from .env.local; nothing is hardcoded.
 //
+// The "XP unchanged" checks describe the old rules, so the run holds ranking_config.rules_live at 0 (shadow mode) and puts
+// back whatever value staging had at the start.
+//
 //   node scripts/test-ranking-phase1.mjs
 import { randomBytes } from "node:crypto";
 import { readFileSync } from "node:fs";
@@ -45,7 +48,10 @@ async function createUser(role) {
 }
 
 const users = [];
+let rulesLiveAtStart = null;
 try {
+  rulesLiveAtStart = Number((await call("/rest/v1/ranking_config?select=value&key=eq.rules_live")).data[0].value);
+  await call("/rest/v1/ranking_config?key=eq.rules_live", { method: "PATCH", body: { value: 0 } });
   const a = await createUser("student"); users.push(a);
   const b = await createUser("student"); users.push(b);
   const teacher = await createUser("teacher"); users.push(teacher);
@@ -111,6 +117,7 @@ try {
   console.error("test error:", e.message);
   process.exitCode = 1;
 } finally {
+  if (rulesLiveAtStart !== null) await call("/rest/v1/ranking_config?key=eq.rules_live", { method: "PATCH", body: { value: rulesLiveAtStart } });
   for (const u of users) await call(`/auth/v1/admin/users/${u.uid}`, { method: "DELETE" });
   if (users.length) {
     const ids = users.map((u) => u.uid).join(",");

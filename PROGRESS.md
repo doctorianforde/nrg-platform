@@ -21,11 +21,12 @@ Read this section first; everything below it is the dated log of how we got here
 | Supabase project | `kwhaqhhwqykckarjbdod` | `cdvubijjepwmhhkgppbl` |
 | Site | https://nrg-platform-staging.vercel.app | the `nrg-platform` Vercel project |
 | Git branch that deploys it | `staging` | `main` |
-| Migrations applied | all 43 in `supabase/migrations/` | the first 29 (through `20260920070000`) |
+| Migrations applied | all 45 in `supabase/migrations/` | the first 29 (through `20260920070000`) |
 | `NEXT_PUBLIC_RANKING_V2` | `1` | unset |
+| `ranking_config.rules_live` | `1` (**live since 2026-10-13**) | table not there yet |
 
 - Work is pushed with `git branch -f staging main && git push origin staging`. **Do not push `main`**: local `main` is
-  27 commits ahead of `origin/main`, and that code needs the 14 prod migrations below first (CLAUDE.md, "Branches and deploys").
+  45 commits ahead of `origin/main`, and that code needs the 16 prod migrations below first (CLAUDE.md, "Branches and deploys").
 - Migrations are applied with the Supabase CLI through the pooler (CLAUDE.md). The Supabase MCP `apply_migration` call
   returned "declined" twice on 2026-10-12 without a prompt; the CLI route works.
 - Prod app and data are as shipped on 2026-09-24 (HEAD `490380b` at that time), plus one data change since: 6 miskeyed live
@@ -42,17 +43,20 @@ submissions, the review queue `/teacher/review`. Content: 460 live questions (Ja
 | Whole-bank review (MCQ standard v0.1) | AI + prototype pools rewritten; `needs_changes` pile cleared (377 rewritten → pending, 177 retired); negative stems kept with `not_asked` | "Full bank review", fix-pass entries; `docs/phase-1/FIX_JADE_CHECKLIST.md` |
 | Prod port of the AI bank | SQL ready: 1,991 rewrites + 9 retirements, dry-run matched | `docs/phase-1/PROD_PORT_RUNBOOK.md` |
 | Case studies | Schema, slide-show player (calculator, timers, reference ranges), teacher review/validate/publish, generator + reviewer briefs, 6 cases in_review (lithium + 5 AI), nursing-diagnosis focus, full exam/vitals/medications | "Case study platform" entries; `docs/phase-1/CASE_STUDY_PLAN.md` |
-| Ranking v2 | Phases 1–3 done: `question_attempts`, rules engine in **shadow mode** (`rules_live = 0`), promotion quiz + screens behind the flag | "Ranking v2" entries; go-live plan below them |
+| Ranking v2 | Phases 1–3 done and **live on staging** (2026-10-13: `rules_live = 1`, the new XP rules, streak and mastery bonuses pay; rank comes from promotion quizzes) | "Ranking v2" entries; go-live plan below them |
+| Trophies | Phases 1–3 done and live on staging: 56 badges, award engine, celebrations, trophy case, classmates' wall, privacy switch. Launch steps rehearsed on staging (backfill + pre-mark seen) | "Trophies" entries; `docs/phase-1/TROPHY_PLAN.md` |
 | Answer keys | No longer readable with a user token; keys reach the browser only after answering (practice) or finishing (mock, case), or on staff pages | 2026-10-12 answer-key entry |
 
 ### Waiting for prod, in this order (see "Ranking v2 — prod go-live plan")
 1. Back up prod.
 2. Migrations `20261004181457`, `20261004194204`, `20261009000911`, `20261009003423`, `20261012124123`, `20261012150000`,
-   `20261012160000` … `20261012160600`. All additive or in-place replacements; XP stays as today (shadow mode).
+   `20261012160000` … `20261012160600`, trophies `20261013120000`, `20261013140000`. All additive or in-place
+   replacements; XP stays as today (shadow mode).
 3. Merge `staging` → `main` (prod app). Ranking flag stays off on prod.
 4. Then `20261012170000_hide_answer_keys` (it breaks the *old* prod code, so it must follow step 3).
 5. AI-bank port SQL (`PROD_PORT_RUNBOOK.md`) when Ian approves the content.
-6. Ranking: 1–2 weeks of shadow comparison, then announce (everyone restarts at level 0), set the prod flag, `rules_live = 1`.
+6. Ranking + trophies: 1–2 weeks of shadow comparison, then announce (everyone restarts at level 0), set the prod flag,
+   `rules_live = 1`, backfill badges and pre-mark them seen (exactly what was done on staging on 2026-10-13).
 
 ### Open decisions
 | Decision | Owner |
@@ -78,11 +82,12 @@ promotion quiz is open), `case-test-teacher@…` / `case-test-student@…` (free
 
 ### Test suites (staging; each creates and deletes throwaway users)
 `node scripts/test-ranking-phase1.mjs` (19), `node scripts/test-ranking-phase2.mjs` (47), `node scripts/test-answer-keys.mjs`
-(14), `node scripts/e2e-rls-test.mjs` (T34). Content gates: `npx tsx scripts/review-bank.ts --check`,
+(14), `node scripts/test-trophies-phase1.mjs` (28), `node scripts/e2e-rls-test.mjs` (T34). The two ranking suites hold
+`rules_live` at 0 while their shadow checks run and put back the starting value afterwards. Content gates: `npx tsx scripts/review-bank.ts --check`,
 `npx tsx scripts/import-case.ts --check`, `npx tsx scripts/plan-cases.ts --report`.
 
 ### Next up
-1. Ian reviews ranking Phase 3 on staging, then decides on the go-live plan.
+1. Ian reviews ranking v2 + trophies live on staging (as `ian-paid-student`), then approves the prod go-live plan.
 2. Jade's reviews (bank fix pass, case studies, config values).
 3. More AI cases once the 6 are reviewed (`npx tsx scripts/plan-cases.ts --count N`, then the generator and reviewer briefs).
 
@@ -2546,3 +2551,15 @@ answer-key suite 14/14 still pass. Types updated. Next: Phase 2 (celebrations) o
   celebrate or are pre-marked seen. Jade still to confirm the badge list.
 - 2026-10-13: Trophy decisions: badges earned before launch are **pre-marked as seen** at go-live (step 7 of the go-live
   plan), and **Jade approved the badge list** as built (56 badges; thresholds in `badge_definitions.criteria`).
+
+## Ranking v2 + trophies made live on staging (Claude, 2026-10-13)
+Ian: "make it live on staging". Ran go-live step 7 against staging only, as a dress rehearsal for prod:
+- `select public.backfill_badges();` → 0 new badges (the live triggers had already awarded everything staging has earned:
+  7 badges, all already seen). Then `update public.user_badges set seen_at = now() where seen_at is null;` (0 rows).
+- `update public.ranking_config set value = 1 where key = 'rules_live';`: staging now pays the new XP rules (weighted
+  practice XP, streak-day bonus, mastery bonus, mock retake ×0.25). The flag was already on, so the screens were live.
+- Test fix: both ranking suites used to force `rules_live` back to 0 at the end, which would have switched staging off
+  again. They now set 0 only while their shadow-mode checks run and restore the starting value. Results with staging
+  live: phase 1 19/19, phase 2 47/47, answer keys 14/14, trophies 28/28; `rules_live` confirmed 1 afterwards.
+- Rollback on staging if needed: `update public.ranking_config set value = 0 where key = 'rules_live';`.
+Prod untouched (still 29 migrations, no flag).

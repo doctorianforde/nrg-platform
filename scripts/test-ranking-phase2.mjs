@@ -1,6 +1,7 @@
 // Ranking v2, phase 2 gate — rules engine, shadow mode, mocks and the promotion quiz, against STAGING only.
 // T34 style: throwaway users, PASS/FAIL per assertion, users deleted at the end. Secrets from .env.local.
-// One block flips ranking_config.rules_live to 1 for a few seconds to test the live path, and always restores it to 0.
+// The shadow-mode checks run with ranking_config.rules_live = 0 and one block flips it to 1 to test the live path; whatever
+// value staging had at the start (1 since rules went live on staging) is always restored at the end.
 //
 //   node scripts/test-ranking-phase2.mjs
 import { randomBytes } from "node:crypto";
@@ -35,7 +36,7 @@ async function createUser(role = "student") {
 const shadow = async (uid, kind) => (await call(`/rest/v1/xp_shadow?select=old_amount,new_amount,detail,created_at&user_id=eq.${uid}&kind=eq.${kind}&order=created_at.asc`)).data ?? [];
 const sum = (a) => a.reduce((s, x) => s + x, 0);
 
-let liveFlipped = false;
+let liveFlipped = false, rulesLiveAtStart = null;
 try {
   // ---- Worked examples (pure functions) ----
   const w = [...Array(15).fill(1.5), ...Array(5).fill(1.0), ...Array(5).fill(0.125)];
@@ -51,8 +52,10 @@ try {
   const d7 = (await rpc("streak_bonus", { p_length: 7 })).data, d100 = (await rpc("streak_bonus", { p_length: 100 })).data;
   check("a 100-day streak pays 6,790 XP in total", total === 6790 && d7 === 70 && d100 === 70, total);
 
+  rulesLiveAtStart = Number((await call("/rest/v1/ranking_config?select=value&key=eq.rules_live")).data[0].value);
+  await call("/rest/v1/ranking_config?key=eq.rules_live", { method: "PATCH", body: { value: 0 } }); liveFlipped = true;
   const cfg = (await call("/rest/v1/ranking_config?select=value&key=eq.rules_live")).data[0].value;
-  check("staging is in shadow mode (rules_live = 0)", Number(cfg) === 0, cfg);
+  check("shadow mode for the shadow checks (rules_live = 0)", Number(cfg) === 0, cfg);
 
   const np = (await call("/rest/v1/questions?select=id,domain_id,question_options(id,is_correct)&is_active=eq.true&context=eq.standalone&domain_id=eq.1&order=id&limit=30")).data;
   const right = (q) => q.question_options.filter((o) => o.is_correct).map((o) => o.id);
@@ -155,14 +158,14 @@ try {
   check("mock answers are recorded as attempts", r.data.length === 20, `rows=${r.data.length}`);
 
   // ---- Live path (rules_live = 1 for a few seconds) ----
-  await call("/rest/v1/ranking_config?key=eq.rules_live", { method: "PATCH", body: { value: 1 } }); liveFlipped = true;
+  await call("/rest/v1/ranking_config?key=eq.rules_live", { method: "PATCH", body: { value: 1 } });
   const lv = await createUser();
   r = await session(lv, np.slice(0, 10), right);
   xp = (await call(`/rest/v1/xp_events?select=amount,detail&source_id=eq.${r.data.id}`)).data;
   check("live: practice pays the weighted amount (60) with its breakdown", xp[0]?.amount === 60 && xp[0]?.detail?.raw === 60, `${xp[0]?.amount}`);
   const lvStreak = (await call(`/rest/v1/xp_events?select=amount&user_id=eq.${lv.uid}&reason=eq.streak_day`)).data;
   check("live: the streak day pays 10 XP on day 1", lvStreak.length === 1 && lvStreak[0].amount === 10, JSON.stringify(lvStreak));
-  await call("/rest/v1/ranking_config?key=eq.rules_live", { method: "PATCH", body: { value: 0 } }); liveFlipped = false;
+  await call("/rest/v1/ranking_config?key=eq.rules_live", { method: "PATCH", body: { value: 0 } });
 
   // ---- Promotion quiz ----
   const p = await createUser();
@@ -218,9 +221,9 @@ try {
   console.error("test error:", e.stack ?? e.message);
   process.exitCode = 1;
 } finally {
-  if (liveFlipped) await call("/rest/v1/ranking_config?key=eq.rules_live", { method: "PATCH", body: { value: 0 } });
+  if (liveFlipped) await call("/rest/v1/ranking_config?key=eq.rules_live", { method: "PATCH", body: { value: rulesLiveAtStart } });
   const live = (await call("/rest/v1/ranking_config?select=value&key=eq.rules_live")).data?.[0]?.value;
-  check("rules_live restored to 0", Number(live) === 0, live);
+  check(`rules_live restored to ${rulesLiveAtStart}`, Number(live) === rulesLiveAtStart, live);
   await call(`/rest/v1/mock_exam_sets?title=eq.Ranking%20test%20set`, { method: "DELETE" });
   for (const u of users) await call(`/auth/v1/admin/users/${u.uid}`, { method: "DELETE" });
   if (users.length) {
