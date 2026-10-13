@@ -1,24 +1,34 @@
 import type { Metadata } from "next";
-import { Inter, Poppins, Nunito_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { UserProvider } from "@/lib/auth/UserProvider";
 
 // Font stack matches the reference design (OKComputer_NRG_Website_v62):
 // Inter for UI/body, Poppins for headings, Nunito Sans for brand accents.
-const inter = Inter({
-  subsets: ["latin"],
+// Self-hosted (src/app/fonts, latin subset, SIL Open Font License) rather than next/font/google: fetching from Google at
+// build time failed a Vercel build on 2026-10-13, and a font download should never be able to break a deploy.
+const inter = localFont({
+  src: "./fonts/inter-latin.woff2",
   variable: "--font-inter",
-  weight: ["300", "400", "500", "600", "700"],
+  weight: "300 700",
+  display: "swap",
 });
-const poppins = Poppins({
-  subsets: ["latin"],
+const poppins = localFont({
+  src: [
+    { path: "./fonts/poppins-400-latin.woff2", weight: "400" },
+    { path: "./fonts/poppins-500-latin.woff2", weight: "500" },
+    { path: "./fonts/poppins-600-latin.woff2", weight: "600" },
+    { path: "./fonts/poppins-700-latin.woff2", weight: "700" },
+    { path: "./fonts/poppins-800-latin.woff2", weight: "800" },
+  ],
   variable: "--font-poppins",
-  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
 });
-const nunito = Nunito_Sans({
-  subsets: ["latin"],
+const nunito = localFont({
+  src: "./fonts/nunito-sans-latin.woff2",
   variable: "--font-nunito",
-  weight: ["400", "600", "700"],
+  weight: "400 700",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
