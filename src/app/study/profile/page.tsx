@@ -15,6 +15,9 @@ import { parseMonth, toDateKey } from "@/lib/calendar/types";
 import { CalendarPanel } from "@/components/calendar/CalendarPanel";
 import { loadXp } from "@/lib/xp/queries";
 import { RankCard } from "@/components/xp/RankCard";
+import { RankCardV2 } from "@/components/xp/RankCardV2";
+import { loadRankV2 } from "@/lib/xp/rank-v2";
+import { flags } from "@/lib/flags";
 
 export const dynamic = "force-dynamic";
 
@@ -33,8 +36,10 @@ export default async function StudentProfilePage({
   );
   const { from, to } = monthRange(year, month);
 
-  const [xp, events, students, threads, attempts, { data: sessions }] = await Promise.all([
+  const [xp, rankV2, events, students, threads, attempts, { data: sessions }] = await Promise.all([
     loadXp(supabase, user.id),
+    // Ranking v2 (staging only until go-live): rank comes from passed promotion quizzes, capped by XP.
+    flags.rankingV2 ? loadRankV2(supabase, user.id) : Promise.resolve(null),
     loadEvents(supabase, user.id, isStaff, from, to),
     isStaff ? loadStudentOptions(supabase) : Promise.resolve([]),
     loadThreads(supabase, user.id, false),
@@ -118,7 +123,7 @@ export default async function StudentProfilePage({
           </div>
 
           <div className="space-y-5">
-            <RankCard xp={xp} />
+            {rankV2 ? <RankCardV2 rank={rankV2} /> : <RankCard xp={xp} />}
 
             <Card className="rounded-xl border-brand-100">
               <CardTitle className="mb-3">Your details</CardTitle>
