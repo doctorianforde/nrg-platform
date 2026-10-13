@@ -2476,3 +2476,8 @@ points; `user_badges.seen_at` drives a queue of celebrations (rank-up ceremony /
 confetti; reduced-motion respected). Trophy case on the profile and `/study/trophies`; teachers see a student's badges.
 Proposed: no XP for badges, private to student + teachers, code-drawn SVG art, backfill mocks/approvals/cases at launch.
 Waiting on Jade (badge list) and Ian/Jade (XP, visibility, art) before Phase 1.
+- 2026-10-13: Trophy decisions (Ian): **no XP** for badges; **visible to classmates** (opt-out "Show my badges to classmates",
+  on by default; shown on a classmate profile card, in group-exam standings and a 7-day "Recent achievements" wall); **art
+  from an image AI**: prompts in `docs/phase-1/BADGE_ART_PROMPTS.md` (37 text-free images; app overlays numerals and names
+  and makes locked versions); **backfill** mocks, approved questions and cases at launch. Still with Jade: badge list,
+  sound default, secret badges.

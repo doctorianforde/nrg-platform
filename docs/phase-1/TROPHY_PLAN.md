@@ -1,6 +1,6 @@
 # Trophies, badges and celebrations: plan
 
-Status: **plan only (2026-10-13)**, nothing built. Requested by Jade: a trophy system with badges and animations for major
+Status: **plan only (2026-10-13)**, nothing built. Ian's decisions recorded below (2026-10-13). Requested by Jade: a trophy system with badges and animations for major
 accomplishments and for every rank after the first. Builds on ranking v2 (promotion quiz, streak, topic mastery), which is
 on staging and not yet on prod.
 
@@ -96,12 +96,21 @@ Because awards are tied to the moment, not recomputed later, a badge stays earne
   page: rank badges as a 24-step ladder, accomplishments grouped by area. Earned badges in colour with the date;
   locked ones as grey silhouettes with how to earn them (secret badges, if Jade wants any, show "???").
 - **Teachers** see a student's badges on the student's profile view (encouragement, not ranking).
+- **Classmates** (Ian, 2026-10-13: badges are visible to classmates) see a student's badges, unless that student turns off
+  **"Show my badges to classmates"** on their profile (on by default; `profiles.show_badges`, mirroring the privacy toggles in
+  Jade's prototype). Where classmates see them:
+  - a small profile card when a classmate's name is clicked (name, rank badge, latest badges);
+  - next to names in group-exam standings;
+  - a **"Recent achievements"** wall on `/study/trophies` showing badges classmates earned in the last 7 days.
+  RLS: a student reads another student's `user_badges` only when that student's `show_badges` is true. Badges never reveal
+  XP, scores or topic states. A leaderboard stays out of scope until Jade asks for one.
 - Nothing about multipliers or topic states, in line with Jade's rank-only rule for students.
 
 ### Art
-Proposed: **badges drawn in code (SVG)** so all 24 rank badges and ~20 accomplishments match, scale cleanly and ship
-without waiting on artwork: a tier-coloured shield or medal frame, the level numeral or an icon, and a ribbon for tier
-trophies. Commissioned artwork can replace any badge later by changing its `art` key.
+Ian, 2026-10-13: Ian generates the art with an image AI from prompts: `docs/phase-1/BADGE_ART_PROMPTS.md` (37 images: 5 tier
+medals, 4 tier trophies, 1 summit trophy, 27 accomplishment badges, all with no text). The app overlays the level numeral and
+the badge name, so the 24 rank badges come from the 5 medals, and it makes the grey "locked" versions itself. Until the images
+arrive the build uses simple placeholder medals, so nothing waits on the art.
 
 ## Fit with ranking v2 and go-live
 - Rank badges depend on the promotion quiz, so they go live with ranking v2. Under Ian's rule that everyone restarts at
@@ -121,10 +130,10 @@ trophies. Commissioned artwork can replace any badge later by changing its `art`
 ## Decisions needed
 | Decision | Proposal | Owner |
 |---|---|---|
-| The accomplishment list, names and thresholds | The table above as a starting point | Jade |
-| Do badges give XP? | No: XP stays tied to study, so badges can't be farmed for rank | Ian / Jade |
-| Who sees a student's badges? | The student and their teachers; no public display yet (the prototype's privacy toggles and leaderboard can come later) | Ian / Jade |
-| Art | Code-drawn SVG now, commissioned art optional later | Ian / Jade |
-| Backfill past accomplishments at launch? | Yes for mocks, approved questions and cases; not for volume or streaks | Ian |
-| Sound on unlock | Off by default, student can turn it on | Jade |
-| Secret badges? | None at first | Jade |
+| The accomplishment list, names and thresholds | The table above as a starting point | Jade (open) |
+| Do badges give XP? | **Decided (Ian): no XP.** XP stays tied to study, so badges can't be farmed for rank | done |
+| Who sees a student's badges? | **Decided (Ian): classmates too**, with a "Show my badges to classmates" toggle, on by default | done; Jade to confirm the default |
+| Art | **Decided (Ian): image AI from the prompts in `BADGE_ART_PROMPTS.md`**; placeholders until then | Ian generates the 37 images |
+| Backfill past accomplishments at launch? | **Decided (Ian): yes, where data exists** (mocks, approved questions, cases); volume and streaks count from launch | done |
+| Sound on unlock | Off by default, student can turn it on | Jade (open) |
+| Secret badges? | None at first | Jade (open) |
