@@ -11,8 +11,14 @@ For Ian to take to an image-generation AI (Midjourney, DALL·E, Ideogram, Firefl
 3. **Output:** square 1:1, at least 1024 × 1024 px, PNG on a **flat pure white background** (the style block asks for it).
    I remove the white and make the transparent versions; you don't need to cut anything out.
 4. **Check at small size:** each badge must still read clearly at 64 px wide, roughly the size it appears in the trophy case.
-5. **Name the files** exactly as listed (e.g. `rank-novice.png`) and drop them in one folder. I'll compress them, put them in
-   `public/badges/`, and make the grey "locked" versions in code.
+5. **Name the files** exactly as listed (e.g. `rank-novice.png`) and drop them in the repo's `trophy/` folder. I remove the
+   white with `scripts/badge-cutout.py`, put them in `public/badges/`, and make the grey "locked" versions in code.
+6. **Keep the set matching:** for the other four medals, stay in the same Gemini chat as the first medal and ask for
+   "the same medal, same shape and lamp, but with a clear blue enamel face and a polished bronze rim" (and so on per tier),
+   rather than starting a new chat. Do the same for the trophies and for the accomplishment shields.
+
+**First result (2026-10-13):** `rank-novice` from Nano Banana passed every check: clean white background removal, the
+numeral overlay fits the empty centre, readable at 64 px, no fringe on dark or purple.
 
 ### Style block (append to every prompt)
 > Polished game achievement badge, semi-flat vector illustration style with soft gradients and a gentle top-left highlight,
