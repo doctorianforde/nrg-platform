@@ -17,7 +17,7 @@ For Ian to take to an image-generation AI (Midjourney, DALL·E, Ideogram, Firefl
    "the same medal, same shape and lamp, but with a clear blue enamel face and a polished bronze rim" (and so on per tier),
    rather than starting a new chat. Do the same for the trophies and for the accomplishment shields.
 
-**Progress (2026-10-13):** all 5 rank medals done and in `public/badges/` (the full 24-badge ladder, numerals by the app); still to make: 5 trophies and 27 accomplishment shields. Originals stay in `trophy/` on Ian's machine (git-ignored).
+**Progress (2026-10-13):** all 5 rank medals done and in `public/badges/` (the full 24-badge ladder, numerals by the app); trophy-advanced-beginner done too; still to make: 4 trophies and 27 accomplishment shields. Originals stay in `trophy/` on Ian's machine (git-ignored).
 
 **First result (2026-10-13):** `rank-novice` from Nano Banana passed every check: clean white background removal, the
 numeral overlay fits the empty centre, readable at 64 px, no fringe on dark or purple.
@@ -138,6 +138,27 @@ Each is the same medal shape so the ladder looks like one set; only the colour a
 | `trophy-proficient.png` | A tall trophy cup in bright silver with royal purple enamel bands, elegant curved handles, a nursing lamp emblem on the front, a laurel wreath around the stem, on a stepped plinth with a purple band. |
 | `trophy-expert.png` | A grand trophy cup in polished gold with warm gold enamel, ornate curved handles, a nursing lamp emblem on the front, a full laurel wreath around the stem, on a tall stepped plinth with gold trim. |
 | `trophy-summit.png` | A majestic gold trophy topped with a lit nursing lamp with a bright golden flame (kept inside the badge outline), a Rod of Asclepius engraved on the front, a full laurel wreath, a deep purple ribbon draped across the base, standing on a grand stepped plinth. The finest and most impressive badge in the set. |
+
+### Follow-up prompts for the other four trophies (same Gemini chat as `trophy-advanced-beginner`)
+The first trophy came out well (2026-10-13). To keep the cup shape identical, ask for each of these in the same chat:
+1. **Competent:** "The same trophy as before, same cup shape, handles, nursing lamp emblem and plinth, but in polished silver
+   with emerald green enamel bands instead of bronze and blue, and a small laurel wreath wrapped around the stem. Draw the
+   lamp's flame sitting directly on the tip of its spout. Keep the same style, the crisp dark outline and the plain flat pure
+   white background, no shadow, no glow, no text."
+2. **Proficient:** "The same trophy again, same handles, lamp emblem and plinth, but slightly taller, in bright polished silver
+   with royal purple enamel bands, a laurel wreath wrapped around the stem, and a thin purple band around the plinth. Flame
+   sitting on the tip of the lamp's spout. Same style, crisp dark outline, plain flat pure white background, no shadow, no
+   glow, no text."
+3. **Expert:** "The same trophy again, but grander: polished gold with warm gold enamel bands, more ornate curved handles, a
+   full laurel wreath around the stem, and a taller stepped plinth with gold trim. Same nursing lamp emblem with the flame on
+   the tip of the spout. Same style, crisp dark outline, plain flat pure white background, no shadow, no glow, no text."
+4. **Summit:** "Now the finest trophy of the whole set, in the same style family: a majestic polished gold trophy, larger and
+   more ornate than the others, topped with a lit nursing lamp with a bright golden flame kept inside the outline, a Rod of
+   Asclepius (one snake around one staff) engraved on the front of the cup, a full laurel wreath around the stem, a deep
+   purple ribbon draped across the base, standing on a grand stepped plinth. Crisp dark outline, plain flat pure white
+   background, no shadow, no glow, no rays, no sparkles, no text."
+
+If the shape drifts, add "keep exactly the same cup shape and proportions as the first trophy".
 
 ## 3. Accomplishment badges (27)
 All use the same frame: **a rounded shield with a deep purple (#6B2D8B) face and a gold trim**, the icon in the centre.
