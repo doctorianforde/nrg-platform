@@ -11,7 +11,85 @@ refer to the tracker in `PLAN.md`.
 
 ---
 
-## Current state (as of 2026-09-18)
+## Current state (as of 2026-10-13)
+
+Read this section first; everything below it is the dated log of how we got here.
+
+### Environments and deploying
+| | Staging | Prod |
+|---|---|---|
+| Supabase project | `kwhaqhhwqykckarjbdod` | `cdvubijjepwmhhkgppbl` |
+| Site | https://nrg-platform-staging.vercel.app | the `nrg-platform` Vercel project |
+| Git branch that deploys it | `staging` | `main` |
+| Migrations applied | all 43 in `supabase/migrations/` | the first 29 (through `20260920070000`) |
+| `NEXT_PUBLIC_RANKING_V2` | `1` | unset |
+
+- Work is pushed with `git branch -f staging main && git push origin staging`. **Do not push `main`**: local `main` is
+  27 commits ahead of `origin/main`, and that code needs the 14 prod migrations below first (CLAUDE.md, "Branches and deploys").
+- Migrations are applied with the Supabase CLI through the pooler (CLAUDE.md). The Supabase MCP `apply_migration` call
+  returned "declined" twice on 2026-10-12 without a prompt; the CLI route works.
+- Prod app and data are as shipped on 2026-09-24 (HEAD `490380b` at that time), plus one data change since: 6 miskeyed live
+  questions deactivated on Ian's instruction (2026-10-05).
+
+### Live on prod (unchanged since 2026-09-24)
+Practice/tutor mode, flashcards, mock exams (solo + group, timer, rationale release), fatigue analysis, student profile,
+messaging, calendar, profile pictures, teacher approval and account admin, XP + ranks (XP-derived) + student question
+submissions, the review queue `/teacher/review`. Content: 460 live questions (Jade's), 2,000 AI questions inactive.
+
+### On staging only (built, tested, waiting for prod)
+| Area | State | Where to read more |
+|---|---|---|
+| Whole-bank review (MCQ standard v0.1) | AI + prototype pools rewritten; `needs_changes` pile cleared (377 rewritten → pending, 177 retired); negative stems kept with `not_asked` | "Full bank review", fix-pass entries; `docs/phase-1/FIX_JADE_CHECKLIST.md` |
+| Prod port of the AI bank | SQL ready: 1,991 rewrites + 9 retirements, dry-run matched | `docs/phase-1/PROD_PORT_RUNBOOK.md` |
+| Case studies | Schema, slide-show player (calculator, timers, reference ranges), teacher review/validate/publish, generator + reviewer briefs, 6 cases in_review (lithium + 5 AI), nursing-diagnosis focus, full exam/vitals/medications | "Case study platform" entries; `docs/phase-1/CASE_STUDY_PLAN.md` |
+| Ranking v2 | Phases 1–3 done: `question_attempts`, rules engine in **shadow mode** (`rules_live = 0`), promotion quiz + screens behind the flag | "Ranking v2" entries; go-live plan below them |
+| Answer keys | No longer readable with a user token; keys reach the browser only after answering (practice) or finishing (mock, case), or on staff pages | 2026-10-12 answer-key entry |
+
+### Waiting for prod, in this order (see "Ranking v2 — prod go-live plan")
+1. Back up prod.
+2. Migrations `20261004181457`, `20261004194204`, `20261009000911`, `20261009003423`, `20261012124123`, `20261012150000`,
+   `20261012160000` … `20261012160600`. All additive or in-place replacements; XP stays as today (shadow mode).
+3. Merge `staging` → `main` (prod app). Ranking flag stays off on prod.
+4. Then `20261012170000_hide_answer_keys` (it breaks the *old* prod code, so it must follow step 3).
+5. AI-bank port SQL (`PROD_PORT_RUNBOOK.md`) when Ian approves the content.
+6. Ranking: 1–2 weeks of shadow comparison, then announce (everyone restarts at level 0), set the prod flag, `rules_live = 1`.
+
+### Open decisions
+| Decision | Owner |
+|---|---|
+| Approve the prod go-live plan and its timing | Ian |
+| Approve the 377 fix-pass rewrites; check the 71 changed keys and 177 retirements (`FIX_JADE_CHECKLIST.md`) | Jade |
+| Validate the 6 case studies (each case's quality report lists what to confirm) | Jade |
+| Keep the case reference-range panel, or follow CASE_REQUEST addendum #2 (no ranges) | Ian / Jade |
+| Ranking config values marked unconfirmed: mock retake ×0.25, quiz grace 5 s, 24 h retake wait, 14-day exclusion | Jade |
+| I/II/III combination-format questions (the RENR sample test uses them; ~15 flagged items) | Ian / Jade |
+| Numeric dose-calculation items | Ian / Jade |
+| Blood glucose mmol/L → mg/dL in the existing bank (3 live Jade questions on prod) | Jade |
+| Abbreviation exempt list | Ian |
+| Copyright call on 269 held-back prototype questions (recommendation: drop) | Ian |
+| Should students see inactive questions at all (question rows are still readable; keys no longer are) | Ian |
+| Subscription service Phase 0 (payout route, processor, prices) | Ian / Jade |
+| T33 human read-and-verify; T35 tell Jade M2 is delivered | Ian |
+| Jade's prod teacher account; custom SMTP before real signups | Ian |
+
+### Staging test accounts (passwords are not kept in the repo)
+`ian-teacher@nrg-staging.test` (teacher, premium), `ian-paid-student@nrg-staging.test` (student, premium; has 260 XP so the
+promotion quiz is open), `case-test-teacher@…` / `case-test-student@…` (free), `jade@nrg-staging.test` (Jade, teacher).
+
+### Test suites (staging; each creates and deletes throwaway users)
+`node scripts/test-ranking-phase1.mjs` (19), `node scripts/test-ranking-phase2.mjs` (47), `node scripts/test-answer-keys.mjs`
+(14), `node scripts/e2e-rls-test.mjs` (T34). Content gates: `npx tsx scripts/review-bank.ts --check`,
+`npx tsx scripts/import-case.ts --check`, `npx tsx scripts/plan-cases.ts --report`.
+
+### Next up
+1. Ian reviews ranking Phase 3 on staging, then decides on the go-live plan.
+2. Jade's reviews (bank fix pass, case studies, config values).
+3. More AI cases once the 6 are reviewed (`npx tsx scripts/plan-cases.ts --count N`, then the generator and reviewer briefs).
+
+---
+
+## Snapshot as of 2026-09-18 (historical — superseded by the section above)
+
 
 **Database schema (Week 1 — T01–T14): done.** Both `nrg-platform-staging`
 (`kwhaqhhwqykckarjbdod`) and `nrg-platform-prod` (`cdvubijjepwmhhkgppbl`) have the
@@ -1925,7 +2003,7 @@ rows on staging: 4,798 prototype imports (`proto:*`) + 2,000 generated (`ai:*`).
 - Not checked: near-duplicates (previously ~10%), model-level review of scope/distractor quality, competency-level syllabus coverage
   (the competency number is not stored). Nothing was deactivated or edited.
 
-## Not yet done / not yet verified
+## Not yet done / not yet verified (as of 2026-09-24 — superseded by "Current state (as of 2026-10-13)" at the top)
 
 - **T33 — human read-and-verify** of the 20 sampled questions against the docx
   (script above is ready; the judgment call is not done).
@@ -2022,13 +2100,12 @@ Jade for content sign-off) — say the word and I'll pull a batch into an .xlsx.
 
 ## Git
 
-`main` is clean and level with `origin/main` (verified 2026-09-24, `HEAD` = `490380b`,
-"fix(data): correct the provenance of Jade's questions, and require a named reviewer").
-The earlier note here — that `f1d4d95` and `6927c9e` were unpushed — was stale; both
-shipped in the 2026-09-20 push.
+**Updated 2026-10-13.** Since 2026-10-09 there are two deploy branches: `staging` deploys the staging site (staging DB)
+and `main` deploys prod. `origin/main` is still `3f8e0f2` (prod app as of 2026-09-24 plus content-only commits); local `main`
+is 27 commits ahead and is pushed only to `staging` until the prod migrations are applied. The paragraph below this note
+describes the setup before 2026-10-09 and is kept for history.
 
-A push to `main` deploys **both** Vercel projects: `nrg-platform` (prod DB) and
-`nrg-platform-staging` (staging DB). There is no separate staging branch.
+*Before 2026-10-09:* a push to `main` deployed both Vercel projects, and there was no separate staging branch.
 
 ## AI bank: rationale misalignment, colour-coded option types, 50-question trial (Claude, 2026-10-04/05) — STAGING ONLY, prod untouched
 
@@ -2262,6 +2339,11 @@ test uses the I/II/III combination format, which bears on the ~15 "needs-jade" c
   cases (lithium, urosepsis) where it is clinically the best answer; Jade to confirm each priority choice (quality_reports).
 
 ## Ranking system and subscription plans (Claude, 2026-10-12) — plans only, no code, nothing run
+
+> **Update 2026-10-13:** the ranking plan has since been built on staging (Phases 1–3, entries below). Decisions since this
+> entry: pass mark 17/25 and everyone starts at level 0 (Ian); retaken mock sets pay less (Ian); the 300 XP cap and 14-day
+> repeat window are in `ranking_config`; the flag exists and is set on staging only; the deploy risk is handled by the
+> `staging` branch. The plan's worked example was corrected to 112 XP. The subscription plan below is unchanged.
 
 **Ranking, streaks, promotion quiz.** From the Oct meeting notes (Ian: daily streak; Jade: extra XP for weak/new topics,
 less for repeats and mastered). Plan = Claude Doc "NRG Ranking: Streaks and Weakness XP Build Plan"
