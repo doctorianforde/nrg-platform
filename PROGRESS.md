@@ -2487,3 +2487,24 @@ Waiting on Jade (badge list) and Ian/Jade (XP, visibility, art) before Phase 1.
   writing `public/badges/<name>-512.png` and `-128.png`. The app overlays rank numerals and names, and greys out locked
   badges. Summit trophy keeps a two-snake emblem (Ian's call). Originals stay in `trophy/` on Ian's machine (git-ignored).
   Next: trophy system Phase 1 (data + awarding) when Ian says go.
+
+## Trophies Phase 1 done on staging (Claude, 2026-10-13) — data and award engine, no screens yet
+Migration `20261013120000_trophies` (staging, via CLI/pooler):
+- `badge_definitions`: 56 badges seeded: 24 rank badges (`rank-1`…`rank-24`, named from the ladder), 5 trophies (tier
+  trophies at levels 5/10/15/20, summit at 24) and 27 accomplishments. Thresholds live in `criteria` (e.g. Century
+  `{"type":"volume","count":100}`) so Jade can change them without code; admins may edit name, description, criteria,
+  active, secret, order.
+- `user_badges` (one row per student per badge; `seen_at` drives the celebrations queue); `profiles.show_badges`
+  (default true: classmates see badges unless the student opts out; teachers always see them).
+- `award_badges(user, event, context)` (service-role only): checks just the badges the event can affect and inserts
+  idempotently; staff never earn. Hooks: `apply_answer_bonuses` (practice, mock, promotion answers → volume, streak, mastery,
+  Blueprint Master), and triggers on mock completion, promotion finish, case completion and student-question approval.
+- `mark_badges_seen(codes)` (own badges only), `badges_visible(user)`, `backfill_badges(user?)` (mocks, cases, approved
+  questions; for launch).
+- No direct writes to `user_badges`. Badges give no XP and are awarded regardless of `rules_live` (they are recognition, not
+  XP). Before prod launch decide whether badges earned before launch should celebrate or be pre-marked seen.
+Gate: `node scripts/test-trophies-phase1.mjs` **28/28 PASS** (every category through its real path: practice volume,
+streak 7, Weak→Mastered + domain, Blueprint Master, mock 50%/100%/group, level-5 promotion quiz 25/25 → rank badge + tier
+trophy + Flawless + First Time, a fully correct case → Case Opened + Clinical Judgement, question approval → Author; staff
+excluded; privacy toggle; no self-grants; seen marking own only; idempotent backfill). Ranking suites 19/19 and 47/47 and
+answer-key suite 14/14 still pass. Types updated. Next: Phase 2 (celebrations) on Ian's go.

@@ -6,7 +6,7 @@
 // Extended by hand for 20261004181457 / 20261009000911 (question_options.distractor_type) and
 // 20261009003423 (case study platform: case_stages, case_attempts, case_attempt_responses, questions.context, RPCs),
 // 20261012124123 (case_stages.medications), 20261012150000 (question_attempts, record_practice_answers),
-// 20261012160000–160600 (ranking v2: config, shadow, rules, mock attempts, promotion quiz).
+// 20261012160000–160600 (ranking v2: config, shadow, rules, mock attempts, promotion quiz), 20261013120000 (trophies).
 // Regenerate after every migration (questions review_* columns added by hand for 20260919010000): npx supabase gen types typescript --project-id cdvubijjepwmhhkgppbl > src/lib/supabase/types.ts
 export type Json =
   | string
@@ -50,6 +50,18 @@ export type Database = {
         Row: { amount: number; created_at: string; id: string; reason: string; source_id: string | null; user_id: string }
         Insert: { amount: number; created_at?: string; id?: string; reason: string; source_id?: string | null; user_id: string }
         Update: { amount?: number; created_at?: string; id?: string; reason?: string; source_id?: string | null; user_id?: string }
+        Relationships: []
+      }
+      badge_definitions: {
+        Row: { art: string; category: string; code: string; criteria: Json; description: string; is_active: boolean; is_secret: boolean; name: string; sort_order: number; tier: string | null; weight: string }
+        Insert: { art: string; category: string; code: string; criteria: Json; description: string; is_active?: boolean; is_secret?: boolean; name: string; sort_order: number; tier?: string | null; weight: string }
+        Update: { art?: string; category?: string; code?: string; criteria?: Json; description?: string; is_active?: boolean; is_secret?: boolean; name?: string; sort_order?: number; tier?: string | null; weight?: string }
+        Relationships: []
+      }
+      user_badges: {
+        Row: { badge_code: string; context: Json | null; earned_at: string; seen_at: string | null; user_id: string }
+        Insert: { badge_code: string; context?: Json | null; earned_at?: string; seen_at?: string | null; user_id: string }
+        Update: { badge_code?: string; context?: Json | null; earned_at?: string; seen_at?: string | null; user_id?: string }
         Relationships: []
       }
       promotion_attempts: {
@@ -206,9 +218,9 @@ export type Database = {
         Relationships: []
       }
       profiles: {
-        Row: { avatar_url: string | null; created_at: string; full_name: string | null; id: string; role: string; subscription_tier: string; suspended_at: string | null; updated_at: string }
-        Insert: { avatar_url?: string | null; created_at?: string; full_name?: string | null; id: string; role?: string; subscription_tier?: string; suspended_at?: string | null; updated_at?: string }
-        Update: { avatar_url?: string | null; created_at?: string; full_name?: string | null; id?: string; role?: string; subscription_tier?: string; suspended_at?: string | null; updated_at?: string }
+        Row: { avatar_url: string | null; created_at: string; full_name: string | null; id: string; show_badges: boolean; role: string; subscription_tier: string; suspended_at: string | null; updated_at: string }
+        Insert: { show_badges?: boolean; avatar_url?: string | null; created_at?: string; full_name?: string | null; id: string; role?: string; subscription_tier?: string; suspended_at?: string | null; updated_at?: string }
+        Update: { show_badges?: boolean; avatar_url?: string | null; created_at?: string; full_name?: string | null; id?: string; role?: string; subscription_tier?: string; suspended_at?: string | null; updated_at?: string }
         Relationships: []
       }
       question_options: {
@@ -284,6 +296,8 @@ export type Database = {
       }
       study_streak: { Args: { p_user: string }; Returns: number }
       study_streak_v2: { Args: { p_user: string }; Returns: number }
+      mark_badges_seen: { Args: { p_codes: string[] }; Returns: number }
+      badges_visible: { Args: { p_user: string }; Returns: boolean }
       xp_level: { Args: { p_xp: number }; Returns: number }
       promotion_status: { Args: { p_user?: string }; Returns: Json }
       start_promotion_quiz: { Args: Record<PropertyKey, never>; Returns: string }
