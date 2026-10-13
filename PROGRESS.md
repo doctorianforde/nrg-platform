@@ -2462,6 +2462,9 @@ the student's token), so it goes AFTER the new code is live. Everything else is 
 6. Shadow period (suggest 1–2 weeks): compare `xp_shadow` new vs old amounts per student; adjust `ranking_config` if needed.
 7. Go-live: announce to students that rank now comes from promotion quizzes and **everyone starts at level 0** (Ian,
    2026-10-12); set `NEXT_PUBLIC_RANKING_V2=1` on the prod Vercel project and redeploy; set `ranking_config.rules_live = 1`.
+   Trophies at the same moment (Ian, 2026-10-13): run `select public.backfill_badges();` (mocks, cases, approved
+   questions), then **pre-mark every existing badge as seen** so launch day isn't a flood of celebrations:
+   `update public.user_badges set seen_at = now() where seen_at is null;`. Only badges earned after launch celebrate.
    Rollback: `rules_live = 0` and unset the flag (old awards resume; nothing is deleted).
 Open before go-live: Jade's sign-off on the unconfirmed config rows (mock retake ×0.25, 5 s grace, 24 h wait, 14-day exclusion).
 
@@ -2541,3 +2544,5 @@ answer-key suite 14/14 still pass. Types updated. Next: Phase 2 (celebrations) o
   self-hosted (`src/app/fonts`, next/font/local), both projects build.
 - Trophies remaining: Phase 4 (backfill + prod launch) rides with the ranking v2 go-live; decide whether pre-launch badges
   celebrate or are pre-marked seen. Jade still to confirm the badge list.
+- 2026-10-13: Trophy decisions: badges earned before launch are **pre-marked as seen** at go-live (step 7 of the go-live
+  plan), and **Jade approved the badge list** as built (56 badges; thresholds in `badge_definitions.criteria`).

@@ -130,10 +130,12 @@ arrive the build uses simple placeholder medals, so nothing waits on the art.
 ## Decisions needed
 | Decision | Proposal | Owner |
 |---|---|---|
-| The accomplishment list, names and thresholds | The table above as a starting point | Jade (open) |
+| The accomplishment list, names and thresholds | **Decided: approved by Jade** (2026-10-13) as built | done |
 | Do badges give XP? | **Decided (Ian): no XP.** XP stays tied to study, so badges can't be farmed for rank | done |
 | Who sees a student's badges? | **Decided (Ian): classmates too**, with a "Show my badges to classmates" toggle, on by default | done; Jade to confirm the default |
 | Art | **Decided (Ian): image AI from the prompts in `BADGE_ART_PROMPTS.md`**; placeholders until then | Ian generates the 37 images |
 | Backfill past accomplishments at launch? | **Decided (Ian): yes, where data exists** (mocks, approved questions, cases); volume and streaks count from launch | done |
 | Sound on unlock | Off by default, student can turn it on | Jade (open) |
 | Secret badges? | None at first | Jade (open) |
+
+**Launch (Ian, 2026-10-13):** run `backfill_badges()`, then pre-mark every existing badge as seen, so only badges earned after launch celebrate. Steps in PROGRESS.md, "Ranking v2 — prod go-live plan", step 7.
