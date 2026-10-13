@@ -51,6 +51,74 @@ Motifs: the **nursing lamp** (Florence Nightingale's lamp of care) is the recurr
 
 ---
 
+## All at once: sprite sheets (4 prompts instead of 32)
+
+Image AIs can't hand back 32 separate files from one prompt, but they can draw several badges on **one image in a grid**.
+`scripts/badge-cutout.py --sheet` then splits the sheet into separate badges, finding each one by the white space around
+it (the grid doesn't need to be perfect). Each badge comes out around 600 px, which is above the 512 px the app uses.
+Drawing a set together also tends to keep the style more consistent.
+
+**Rules for a sheet to split cleanly:** every badge fully separate with clear white space around it (badges that touch
+can't be split), no captions or labels under them, nothing else on the sheet. If the tool adds labels or merges two badges,
+ask it to "regenerate with wider white gaps and no labels".
+
+### Sheet style block (use this one for sheets, instead of the single-badge style block)
+> A sprite sheet of separate game achievement badges arranged in a neat evenly spaced grid, every badge fully isolated with
+> wide empty white space between badges and around the edges, no badge touching or overlapping another, all badges the same
+> size and drawn in one consistent style: polished semi-flat vector illustration with soft gradients, a gentle top-left
+> highlight and a crisp dark outline around each badge's outer edge, on a solid flat pure white background (#FFFFFF), no
+> drop shadows, no glow, no sparkles, no floor, no gradient or texture in the background, no checkerboard pattern, no
+> grid lines, no text, no letters, no numbers, no labels or captions, no watermark, square 1:1.
+
+### Sheet A: trophies (5, three on top and two below)
+> Five trophies in a grid, three in the top row and two centred in the bottom row. All share one design family: a cup with
+> two curved handles, a nursing lamp emblem on the front of the cup, standing on a stepped dark plinth. Top row, left to
+> right: (1) a small bronze cup with clear blue enamel bands; (2) a silver cup with emerald green enamel bands and a laurel
+> wreath around the stem; (3) a taller bright silver cup with royal purple enamel bands and a laurel wreath around the stem.
+> Bottom row, left to right: (4) a grand polished gold cup with warm gold enamel, ornate handles and a full laurel wreath;
+> (5) the grandest: a majestic gold trophy topped with a lit nursing lamp with a bright golden flame, a Rod of Asclepius
+> (one snake on one staff) engraved on the front, a full laurel wreath and a deep purple ribbon draped across the base.
+> *(then the sheet style block)*
+
+Split with names: `trophy-advanced-beginner trophy-competent trophy-proficient trophy-expert trophy-summit`
+
+### Shield sheets B, C, D (9 each, three rows of three)
+Start each with: *"Nine shield badges in a three-by-three grid. Every badge is the same rounded shield with a deep purple
+(#6B2D8B) face and a metal trim, with one icon in the centre. Left to right, top row first:"* then the list, then the
+sheet style block.
+
+**Sheet B:** (1) bronze trim, a single bright orange flame; (2) silver trim, a tall orange and yellow flame with a small
+spark above it; (3) gold trim, a large blazing flame in orange, yellow and white wrapped by a small laurel wreath;
+(4) gold trim, an arrow starting low in red on the left and curving up sharply into green on the right with a small
+heartbeat line through it; (5) gold trim, a seven-pointed star with a different small coloured gem on each point and a
+bright centre; (6) bronze trim, a single footprint at the start of a winding path; (7) bronze trim, a neat stack of flash
+cards with a small star on the top card; (8) silver trim, a mountain with a path climbing to a flag near the top;
+(9) gold trim, a mountain peak with a flag planted at the summit and a sunrise behind.
+
+Split with names: `streak-7 streak-30 streak-100 turned-it-around blueprint-master first-steps century thousand-strong five-thousand`
+
+**Sheet C:** all silver trim except (8) and (9): (1) a stethoscope curled in a circle; (2) a brain with a small green
+checkmark beside it; (3) a clipboard with three small figures above it; (4) a balanced pair of scales with a small heart on
+the centre post; (5) a heart with a fresh green leaf growing from its top; (6) two overlapping speech bubbles, one purple
+and one white; (7) an open book with a graduation cap resting on top; (8) gold trim, a brilliant cut diamond with bright
+facets; (9) silver trim, an arrow striking the centre of a target.
+
+Split with names: `domain-np domain-cdm domain-nlm domain-pc domain-hpmw domain-com domain-pd flawless first-time`
+
+**Sheet D:** (1) bronze trim, an exam paper with a pencil lying across it; (2) silver trim, an exam paper with a large
+green checkmark seal; (3) gold trim, an exam paper with a gold star rosette ribbon pinned to it; (4) bronze trim, three
+simple figures standing side by side with linked arms; (5) bronze trim, an open patient folder with a small heartbeat line
+on the first page; (6) gold trim, a ring divided into six bright segments around a small heartbeat line; (7) silver trim,
+a neat stack of patient folders with a heartbeat line on the top one; (8) silver trim, a quill pen writing a question mark;
+(9) gold trim, a quill pen standing in an inkwell beside a stack of books.
+
+Split with names: `first-paper pass-mark distinction team-player case-opened clinical-judgement caseload author prolific-author`
+
+**After each sheet:** drop it in `trophy/` (e.g. `sheet-a.jpeg`) and I'll split it, check every badge is in the right place,
+and regenerate any single badge that came out wrong with its one-at-a-time prompt below.
+
+---
+
 ## 1. Rank medals (5 images; the app adds the numeral II–V or I–V)
 Each is the same medal shape so the ladder looks like one set; only the colour and the metal change as students climb.
 
