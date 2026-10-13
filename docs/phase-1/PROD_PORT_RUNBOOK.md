@@ -29,6 +29,8 @@ Nothing becomes active. Ported AI questions stay `is_active = false`, `review_st
    - `20261009000911_distractor_type_not_asked`: adds the `not_asked` type used by negative-stem questions.
    - `20261009003423_case_study_platform`: `questions.context`, the `unsafe` option type, case stages, attempts and the case RPCs.
    - `20261012124123_case_stage_medications`: the medications block on case stages.
+   - Ranking v2 (`20261012150000` … `20261012160600`) may follow here; `20261012170000_hide_answer_keys` must wait until the
+     new app code is live on prod. Full order and checks: PROGRESS.md "Ranking v2 — prod go-live plan".
 2. **Regenerate the port SQL** from the current staging state, with a dry run on staging (it rolls back):
    ```bash
    npx tsx scripts/port-review-to-prod.ts --out data/review/prod-port/ai-port.sql --test-on-staging

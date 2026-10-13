@@ -31,6 +31,7 @@ actually needs to do it.
 | RLS hardening (revoke unneeded grants) | **AI** (Kimi) | Mechanical, well-specified, no judgment needed — optional hardening, do whenever. |
 | Review the 2,000 AI-generated questions (currently `is_active=false`) | **You / Jade** (content judgment), **AI** (tooling) | AI generated them and can build the review UI/export, but a nursing-exam SME (you or Jade) has to actually judge clinical accuracy before anything goes live to students. This is the single biggest remaining content-risk item in Phase 1. Jade started on 2026-09-21 — 3 reviewed so far. |
 | Negative-stem questions | **Done on staging** (Claude, 2026-10-08, option 1 chosen by Ian) | Keep the format; key = `correct`, three true statements = `not_asked`. 51 rewritten on staging; prod gets them with the port after migration `20261009000911`. The app rationale view must show the `not_asked` label. |
+| Ranking v2 (weighted XP, streak bonus, promotion quiz) | **Phases 1–3 built on staging** (Claude, 2026-10-13), shadow mode, flagged — **Ian**: review on staging, approve the go-live plan in PROGRESS.md; **Jade**: confirm the proposed config values | Phase 4 (prod) not started. Answer keys hidden from user tokens as part of this work. |
 | Case study platform (unfolding cases, Jade's V3 standard) | **Steps 1–4 built on staging** (Claude, 2026-10-10): slide-show player, generator, pilot of 5 AI cases in_review — **Jade**: validate the 6 cases (each quality_report lists what to confirm); **Ian/Jade**: reference-range panel vs addendum #2; **Ian**: OK to generate more (`plan-cases.ts --count N`) | Decisions made: answers lock per stage, feedback at end only, flexible option types incl. unsafe, standard/premium tiers only. Build order: schema + runner → teacher review → generator. |
 | Answer-option cues in the AI bank | **Done on staging** (Claude, 2026-09-24) — **you**: decide when this goes to prod, and whether Jade re-reviews first | The correct answer was the longest option in **83%** of the 2,000, so picking the longest scored ~83% without reading the stem. All 1,545 items that carried the cue are rewritten (**caveat added 2026-10-04: their per-option rationales were left in the old positions and are now misaligned — see the rationale row below**) — the whole bank now sits at **18.1% correct-is-longest against a 25% chance baseline**, with the length tell down from 43.1 to 2.3 chars. The 455 never touched never carried the cue (25.1%, exactly chance). `scripts/fix-option-cues.ts` holds the validator; backups in `scripts/data/`. Prod still has the original 2,000, inert and byte-identical. See `PROGRESS.md`. |
 | Jade's two open review notes | **You / Jade** (decision) | "Regionally accepted practices rather than Trinidad and Tobago", and "questions should be in a taxonomy rather than a difficulty". Both change how questions are written or tagged, so they need deciding before the next rewrite pass. His third note — rationales must cover the wrong options — is done for the 100 and enforced by the validator. |
@@ -136,11 +137,11 @@ study-streak definition (all live in `src/lib/xp/` + migrations `20260920030000`
 | Nursing Knowledge facts | **Built (133 facts).** Needs Jade's clinical sign-off — see `docs/phase-1/nursing-knowledge-facts-for-review.pdf` |
 | Topic Elo + real analytics | Practice needs per-answer rows, not just session totals |
 | Import prototype questions | **Staging import done + key pool cleared (2026-09-20)** — now **4,798** rows in the review queue (`source='prototype-import'`, all `is_active=false`/`pending`), independently re-verified with 0 key errors, letter references idempotently correct, RLS 15/15. The 77 key-mismatch items were all false positives of the token-overlap heuristic: 70 hand-reviewed and promoted, 7 compound-option items held for human review. The export is now deterministic per question, so later edits cannot reshuffle unrelated rows. **Blocked on:** Jade's clinical review/approval, which is the only real gate left. The prod import is unblocked (`20260920050000` is on prod) and the topic clusters are applied on staging; the 269 copyright-flagged items need Ian's drop-or-keep call first. |
-| Rank-up exams | The question import above |
+| Rank-up exams | **Planned (2026-10-12), not built.** Promotion quiz: 25 questions, 90 s each, replaces automatic promotion. Plan: Claude Doc "NRG Ranking: Streaks and Weakness XP Build Plan" (https://claude.ai/code/artifact/222d637d-cb65-4e19-ba13-f5995e4bf503); build prompt `NRG_Ranking_Build_Prompt.md`. Needs per-answer rows first |
 | Case study simulator (100 cases) | A new schema for vitals/labs/phases |
 | Q-gen AI grading | An LLM key and budget |
 | Group study / live sessions | Realtime infra + Google Meet |
-| Subscriptions | **Pricing is unwritten** in the spec |
+| Subscriptions | **Pricing is unwritten** in the spec. **Build plan drafted (2026-10-12)**: Claude Doc "NRG Subscription Service: Build Plan" (https://claude.ai/code/artifact/0872ed90-73ec-410c-9e96-2d756b5fb7da). Blocked on Phase 0 answers: whether Schwab accepts processor payouts, merchant/tax status, which processor (WiPay recurring and USD payout unconfirmed; PayPal Subscriptions in T&T and payout to Schwab unconfirmed), prices |
 
 **Decisions only Ian or Jade can make:** rank naming (the brief says Bronze→Diamond,
 `rankSystemData.ts` says Benner — I followed Benner); free-tier limits (v1 says 50
@@ -266,6 +267,14 @@ Saunders-derived and verbatim-NCLEX questions at all.
   study-habit data, and XP/ranks exist. Leaderboards and the analytics pages
   themselves are still not built — no backing tables in our schema; needs Ian's
   data-model decision first (see Phase 1 table above).
+- **Ranking, streaks and promotion quiz** (2026-10-12): plan written, nothing built. Confirmed with Jade:
+  weak <=30%, mastered >=75% over the last 30 answers; 1.5 boost on new/weak topics, 0.5 on mastered,
+  0.25 on repeats; 200 XP mastery milestone; streak = 10+ distinct questions a day in Trinidad time,
+  pays 10 XP x streak length **capped at 70 a day**; mock exams pay full XP on mastered topics; students
+  see only their rank. Promotion by quiz (25 questions, 90 s each). **Proposed, unconfirmed:** pass mark
+  17/25, 24 h retake wait, no XP reward, all 24 promotions. Open: whether rank-only also hides topic
+  states and Next Best Action; whether retaken mock sets pay less. Pushing to main deploys the prod app,
+  so all new behaviour must sit behind a feature flag. See `PROGRESS.md`.
 - **Three unreviewed docx files** in Jade's RENR folder — see `PROGRESS.md`.
 - **Local AI provider wiring**: `scripts/generate-questions.ts` already supports
   `--provider ollama` for locally-run models — this is existing capability, not new

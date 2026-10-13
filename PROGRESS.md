@@ -2345,3 +2345,40 @@ Unconfirmed values live in ranking_config with confirmed=false: mock_repeat_fact
   stems still readable, practice and case grading still work); ranking suites still 19/19 and 47/47; browser check on staging:
   practice page carries no key before answering, feedback and explanation appear after Check answer, teacher review and case
   pages show keys. Not browser-tested: a finished mock-exam results page (same attachKeys path).
+
+### Ranking v2 Phase 3 done on staging (Claude, 2026-10-13) — screens, flagged
+- Rank card v2 (`src/components/xp/RankCardV2.tsx`, profile page when `NEXT_PUBLIC_RANKING_V2=1`): rank from
+  `promotion_status` (highest level passed, capped by XP), XP total, streak flame (`study_streak_v2`), progress to the next
+  level's XP, and the promotion call to action (available / resume / retake time / XP still needed). No XP breakdown,
+  multipliers or topic states anywhere for students.
+- `/study/promotion` (rules + Start; open attempt redirects) and `/study/promotion/[attemptId]` (`PromotionRunner`: one
+  question, 90 s countdown that defers to the server clock, SATA checkboxes, auto-advance on timeout with a notice,
+  "Submit and finish", result screen). Server actions in `src/app/study/promotion/actions.ts`. Flag off → old rank card and
+  both routes 404.
+- Verified in a browser against staging with a throwaway student: rank card (Novice I, 250 XP, quiz available, no
+  breakdown), clock starts at 0:89 and survives a reload, a question served 86 s earlier runs out and auto-advances with the
+  notice, 24/25 passes, revisiting a finished quiz shows only the result; seeded pass → Novice II "250 XP to unlock the
+  Novice III promotion quiz"; seeded fail → retake time on the card and the quiz page. No page errors. tsc/lint/build clean.
+- Gate: Ian reviews on staging (`ian-paid-student@nrg-staging.test` needs 200+ XP to see the quiz; the shadow rules still pay
+  practice at today's bands).
+
+## Ranking v2 — prod go-live plan (Phase 4, NOT done; for Ian's approval)
+Order matters: migration `20261012170000_hide_answer_keys` breaks the CURRENT prod code (its tutor mode reads keys with
+the student's token), so it goes AFTER the new code is live. Everything else is additive or replaces a function in place.
+1. Back up prod (Supabase dashboard snapshot, or `pg_dump` via the pooler).
+2. Apply, in order, through the pooler (CLAUDE.md): the case/review migrations already in PROD_PORT_RUNBOOK
+   (`20261004181457`, `20261004194204`, `20261009000911`, `20261009003423`, `20261012124123`), then ranking
+   `20261012150000`, `…160000`, `…160100`, `…160200`, `…160300`, `…160400`, `…160500`, `…160600`. `rules_live` starts at 0
+   (shadow), so prod students keep today's XP exactly. NOT yet `…170000`.
+3. Merge `staging` → `main` (prod app deploys). Leave `NEXT_PUBLIC_RANKING_V2` unset on the prod Vercel project: prod shows
+   the old rank card, but practice and mocks now record `question_attempts` and the shadow log fills.
+   Check: practice, mock exams, case studies, teacher review load on prod; `SUPABASE_SERVICE_ROLE_KEY` is set on the prod
+   project (it is, as a Secret) because key reads now go through the server.
+4. Apply `20261012170000_hide_answer_keys`; re-run `scripts/test-answer-keys.mjs` pointed at prod (needs a prod variant —
+   write it before go-live) or check by hand that a student token cannot select `is_correct`.
+5. Run the AI-bank review port (`data/review/prod-port/ai-port.sql`, PROD_PORT_RUNBOOK) when ready; independent of ranking.
+6. Shadow period (suggest 1–2 weeks): compare `xp_shadow` new vs old amounts per student; adjust `ranking_config` if needed.
+7. Go-live: announce to students that rank now comes from promotion quizzes and **everyone starts at level 0** (Ian,
+   2026-10-12); set `NEXT_PUBLIC_RANKING_V2=1` on the prod Vercel project and redeploy; set `ranking_config.rules_live = 1`.
+   Rollback: `rules_live = 0` and unset the flag (old awards resume; nothing is deleted).
+Open before go-live: Jade's sign-off on the unconfirmed config rows (mock retake ×0.25, 5 s grace, 24 h wait, 14-day exclusion).
