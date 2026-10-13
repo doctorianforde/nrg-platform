@@ -2464,3 +2464,15 @@ the student's token), so it goes AFTER the new code is live. Everything else is 
    2026-10-12); set `NEXT_PUBLIC_RANKING_V2=1` on the prod Vercel project and redeploy; set `ranking_config.rules_live = 1`.
    Rollback: `rules_live = 0` and unset the flag (old awards resume; nothing is deleted).
 Open before go-live: Jade's sign-off on the unconfirmed config rows (mock retake ×0.25, 5 s grace, 24 h wait, 14-day exclusion).
+
+## Trophies, badges and celebrations: planned (Claude, 2026-10-13) — plan only, nothing built
+Jade wants a trophy system with badges and animations for major accomplishments and every rank after the first. Plan:
+`docs/phase-1/TROPHY_PLAN.md`. 24 rank badges earned by passing each promotion quiz (tier trophies at Advanced Beginner I,
+Competent I, Proficient I, Expert I; summit trophy at Expert V) plus ~20 accomplishment badges (streaks 7/30/100, Weak →
+Mastered, domain and all-domain mastery, question volume, mock pass/distinction, Flawless promotion quiz, case-study
+clinical judgement, approved student questions). Awarded once, in the database, from data already recorded
+(`question_attempts`, `promotion_attempts`, mocks, cases, approvals) via `award_badges()` hooked into the existing award
+points; `user_badges.seen_at` drives a queue of celebrations (rank-up ceremony / reveal card / toast; CSS + small canvas
+confetti; reduced-motion respected). Trophy case on the profile and `/study/trophies`; teachers see a student's badges.
+Proposed: no XP for badges, private to student + teachers, code-drawn SVG art, backfill mocks/approvals/cases at launch.
+Waiting on Jade (badge list) and Ian/Jade (XP, visibility, art) before Phase 1.
