@@ -1,16 +1,8 @@
 # Badge art: what's left to make
 
-**Done (2026-10-13):** all 5 rank medals and 4 of the 5 trophies (Advanced Beginner, Competent, Proficient, Expert), in
-`public/badges/`.
-**Left:** a fix to the Summit trophy and the 27 accomplishment shields. Everything you need is on this page.
-
-## Fix first: the Summit trophy
-The first Summit came out with **two snakes** on the staff (a caduceus), not the single-snake Rod of Asclepius. In the same
-chat, send:
-> Same summit trophy, but replace the engraved symbol on the cup with a Rod of Asclepius: a single snake coiled around a
-> single plain staff. Only one snake, no second snake, no wings. Keep everything else exactly the same.
-
-Save as `trophy-summit`.
+**Done (2026-10-13):** all 5 rank medals and all 5 trophies, in `public/badges/`. (The Summit trophy keeps its two-snake
+emblem: Ian's call.)
+**Left:** the 27 accomplishment shields. Everything you need is on this page.
 
 ## How to work
 - Use **Nano Banana (Gemini)**. Do each group in **one chat** so the shapes stay identical.
@@ -21,7 +13,7 @@ Save as `trophy-summit`.
 
 ---
 
-## Part 1: the trophies (done except the Summit fix above; kept for reference)
+## Part 1: the trophies (all done; kept for reference)
 **Same chat as the Advanced Beginner trophy** (the bronze cup with blue bands), one prompt at a time.
 
 **1. Competent** → save as `trophy-competent`
@@ -143,6 +135,6 @@ in the centre [icon]."* using this list:
 
 ## Checklist
 - [x] `trophy-competent`, `trophy-proficient`, `trophy-expert`
-- [ ] `trophy-summit` (single snake: see the fix at the top)
+- [x] `trophy-summit`
 - [ ] 27 shields (3 sheets, or 27 single images)
 - [ ] Every image: flat white background, no shadow or text
