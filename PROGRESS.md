@@ -2481,3 +2481,9 @@ Waiting on Jade (badge list) and Ian/Jade (XP, visibility, art) before Phase 1.
   from an image AI**: prompts in `docs/phase-1/BADGE_ART_PROMPTS.md` (37 text-free images; app overlays numerals and names
   and makes locked versions); **backfill** mocks, approved questions and cases at launch. Still with Jade: badge list,
   sound default, secret badges.
+- 2026-10-13: **Badge art complete.** Ian generated all 37 images in Nano Banana from `docs/phase-1/BADGE_ART_PROMPTS.md` /
+  `BADGE_ART_REMAINING.md` (5 rank medals, 5 trophies, 27 shields via three 3×3 sprite sheets). `scripts/badge-cutout.py`
+  removes the white background (`--sheet` splits sprite sheets; `--holes` clears enclosed white for trophy handles only),
+  writing `public/badges/<name>-512.png` and `-128.png`. The app overlays rank numerals and names, and greys out locked
+  badges. Summit trophy keeps a two-snake emblem (Ian's call). Originals stay in `trophy/` on Ian's machine (git-ignored).
+  Next: trophy system Phase 1 (data + awarding) when Ian says go.

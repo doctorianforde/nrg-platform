@@ -1,8 +1,7 @@
 # Badge art: what's left to make
 
-**Done (2026-10-13):** all 5 rank medals and all 5 trophies, in `public/badges/`. (The Summit trophy keeps its two-snake
-emblem: Ian's call.)
-**Left:** the 27 accomplishment shields. Everything you need is on this page.
+**All 37 done (2026-10-13)** and in `public/badges/` (512 and 128 px each): 5 rank medals, 5 trophies, 27 shields (the
+shields from three sprite sheets). Nothing left to make; this page is kept as a record of the prompts.
 
 ## How to work
 - Use **Nano Banana (Gemini)**. Do each group in **one chat** so the shapes stay identical.
@@ -136,5 +135,5 @@ in the centre [icon]."* using this list:
 ## Checklist
 - [x] `trophy-competent`, `trophy-proficient`, `trophy-expert`
 - [x] `trophy-summit`
-- [ ] 27 shields (3 sheets, or 27 single images)
-- [ ] Every image: flat white background, no shadow or text
+- [x] 27 shields (3 sheets)
+- [x] Every image: flat white background, no shadow or text

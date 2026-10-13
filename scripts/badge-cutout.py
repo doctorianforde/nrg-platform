@@ -4,6 +4,7 @@
 
 One badge per image:
     .venv-badges/bin/python scripts/badge-cutout.py trophy/rank-novice.jpeg public/badges/rank-novice
+Add --holes for art with closed loops of background (trophy handles); never for art with white parts (papers, pages).
 
 A sheet with several badges (names in reading order: left to right, top row first):
     .venv-badges/bin/python scripts/badge-cutout.py --sheet trophy/sheet-trophies.jpeg public/badges \\
@@ -11,8 +12,8 @@ A sheet with several badges (names in reading order: left to right, top row firs
 
 Writes <name>-512.png and <name>-128.png for each badge (transparent, square, trimmed with a small margin).
 
-How: flood-fill from the image border over near-white pixels (so white highlights inside a badge are kept), also clear
-large enclosed patches of flat white (inside handles and loops), feather the cut edge, then find each badge as a separate island of non-white pixels. Specks smaller than 0.5% of the image are ignored,
+How: flood-fill from the image border over near-white pixels (so white highlights inside a badge are kept), with --holes also
+clear large enclosed patches of flat white (inside trophy handles), feather the cut edge, then find each badge as a separate island of non-white pixels. Specks smaller than 0.5% of the image are ignored,
 and pieces whose boxes overlap are merged (e.g. a sparkle drawn just off a badge).
 """
 import sys
@@ -25,7 +26,7 @@ def near_white(p, lim=232):
     return min(r, g, b) >= lim and max(r, g, b) - min(r, g, b) <= 14
 
 
-def background_mask(im):
+def background_mask(im, holes=False):
     w, h = im.size
     px = im.load()
     bg = bytearray(w * h)  # 1 = background
@@ -41,8 +42,10 @@ def background_mask(im):
         for nx, ny in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
             if 0 <= nx < w and 0 <= ny < h and not bg[ny * w + nx] and near_white(px[nx, ny]):
                 bg[ny * w + nx] = 1; q.append((nx, ny))
-    # Background sealed inside the art (e.g. inside a trophy handle) doesn't touch the border. Remove enclosed regions of
-    # flat, near-pure white that are large enough to be background, not a highlight: a highlight is small or shaded.
+    # --holes: background sealed inside the art (e.g. inside a trophy handle) doesn't touch the border. Remove enclosed
+    # regions of flat, near-pure white large enough to be background. Off by default: on shields it would also delete
+    # white artwork such as exam papers, book pages and speech bubbles.
+    if not holes: return bg
     seen = bytearray(w * h)
     min_hole = 0.0015 * w * h
     for start in range(w * h):
@@ -117,13 +120,15 @@ def save_badge(rgba, box, stem, w, h):
 
 
 def main(argv):
+    holes = "--holes" in argv
+    argv = [a for a in argv if a != "--holes"]
     sheet = argv[:1] == ["--sheet"]
     if sheet: argv = argv[1:]
     if len(argv) < 2: sys.exit(__doc__)
     src = argv[0]
     im = Image.open(src).convert("RGB")
     w, h = im.size
-    bg = background_mask(im)
+    bg = background_mask(im, holes)
     alpha = Image.frombytes("L", (w, h), bytes(0 if v else 255 for v in bg)).filter(ImageFilter.GaussianBlur(1.2))
     rgba = im.copy(); rgba.putalpha(alpha)
     if not sheet:
