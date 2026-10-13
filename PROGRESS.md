@@ -2508,3 +2508,19 @@ streak 7, Weak→Mastered + domain, Blueprint Master, mock 50%/100%/group, level
 trophy + Flawless + First Time, a fully correct case → Case Opened + Clinical Judgement, question approval → Author; staff
 excluded; privacy toggle; no self-grants; seen marking own only; idempotent backfill). Ranking suites 19/19 and 47/47 and
 answer-key suite 14/14 still pass. Types updated. Next: Phase 2 (celebrations) on Ian's go.
+
+### Trophies Phase 2 done on staging (Claude, 2026-10-13) — celebrations, flagged
+- `src/components/badges/`: `BadgeArt` (art from `public/badges`, rank numeral drawn on the medal, locked = grey),
+  `Confetti` (canvas burst; skipped under reduced motion), `BadgeCelebrations` (queue: rank ceremony → reveal cards →
+  toasts) and `BadgeCelebrationsServer` (loads unseen badges on every student page render). Mounted in `DashboardShell`
+  for students when `NEXT_PUBLIC_RANKING_V2=1`. `src/lib/badges/` holds types, the loader and the server actions
+  (`fetchUnseenBadges`, `markBadgesSeen`). Practice and the promotion quiz dispatch `nrg:badges-check` when they finish;
+  mock/case flows redirect, so the server render picks badges up.
+- Ceremony: the previous rank's medal flips to the new one, the tier trophy rises beside it, confetti (bigger for tier and
+  summit trophies), "You are now …"; Continue or Esc. Reveal card: badge pops in with a shine; "Next (n more)". Toasts: up
+  to three in the corner for 5 s, marked seen as they appear. Tailwind keyframes added (badge-pop, badge-flip,
+  trophy-rise, shine, toast-in, fade-in, rise-in), all behind `motion-safe:` with fades for reduced motion.
+- Browser-tested against staging (throwaway students): ceremony → two reveals → three toasts in order; every badge marked
+  seen; nothing replays on reload; Summit ceremony under reduced motion shows the final state with no confetti; flip
+  verified frame by frame (Novice V → edge → Advanced Beginner I → trophy rises); no page errors. tsc/lint/build clean.
+- Next: Phase 3 (trophy case on the profile, `/study/trophies`, classmates' badges, teacher view, show-badges toggle).

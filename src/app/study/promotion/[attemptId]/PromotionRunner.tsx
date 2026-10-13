@@ -41,6 +41,9 @@ export function PromotionRunner({ attemptId, initial, targetName }: { attemptId:
     return () => clearInterval(t);
   }, [state.done]);
 
+  // The quiz finished: the database has awarded any rank badge or trophy; ask the badge player to celebrate it.
+  useEffect(() => { if (state.done) window.dispatchEvent(new Event("nrg:badges-check")); }, [state.done]);
+
   const left = state.done ? 0 : Math.max(0, Math.ceil((deadline - now) / 1000));
 
   // Out of time: ask the server to move on; it may still be within its grace, so try again shortly until it does.

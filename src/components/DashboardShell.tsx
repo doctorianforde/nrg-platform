@@ -3,6 +3,8 @@ import Image from "next/image";
 import type { Profile } from "@/lib/auth/session";
 import { hasAtLeast } from "@/lib/auth/roles";
 import { Avatar } from "@/components/ui/Avatar";
+import { BadgeCelebrationsServer } from "@/components/badges/BadgeCelebrationsServer";
+import { flags } from "@/lib/flags";
 
 const NAV: Array<{ href: string; label: string; min: Profile["role"] }> = [
   { href: "/study", label: "Study", min: "student" },
@@ -93,6 +95,8 @@ export function DashboardShell({
       </div>
 
       <main className="mx-auto max-w-6xl px-4 py-8">{children}</main>
+      {/* Trophies: newly earned badges celebrate here (students only; staging until ranking v2 goes live). */}
+      {flags.rankingV2 && profile.role === "student" ? <BadgeCelebrationsServer userId={profile.id} /> : null}
     </div>
   );
 }

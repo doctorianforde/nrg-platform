@@ -64,7 +64,8 @@ export function TutorSession({
     const total = tally.correct + tally.wrong;
     if (total === 0) return;
     reported.current = true;
-    void onComplete(total, tally.correct, answers.current);
+    // After the run is recorded, ask the badge player to check for anything this session earned.
+    void Promise.resolve(onComplete(total, tally.correct, answers.current)).then(() => window.dispatchEvent(new Event("nrg:badges-check")));
   }, [finished, tally, onComplete]);
 
   if (questions.length === 0) {
