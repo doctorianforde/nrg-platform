@@ -17,6 +17,8 @@ For Ian to take to an image-generation AI (Midjourney, DALL·E, Ideogram, Firefl
    "the same medal, same shape and lamp, but with a clear blue enamel face and a polished bronze rim" (and so on per tier),
    rather than starting a new chat. Do the same for the trophies and for the accomplishment shields.
 
+**Progress (2026-10-13):** 3 of 5 rank medals done and in `public/badges/` (novice, advanced-beginner, competent); still to make: proficient, expert, 5 trophies, 27 shields.
+
 **First result (2026-10-13):** `rank-novice` from Nano Banana passed every check: clean white background removal, the
 numeral overlay fits the empty centre, readable at 64 px, no fringe on dark or purple.
 
