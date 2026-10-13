@@ -1,5 +1,8 @@
 # Badge art: image-generation prompts
 
+> **Working list:** `BADGE_ART_REMAINING.md` has only what is still to make (4 trophies, 27 shields). This file is the
+> full reference and history.
+
 For Ian to take to an image-generation AI (Midjourney, DALL·E, Ideogram, Firefly, etc.). Plan: `TROPHY_PLAN.md`.
 
 ## How to use these
