@@ -62,7 +62,7 @@ function PromotionCallout({ rank, nextName }: { rank: RankV2; nextName: string }
     return (
       <div className={`${box} border-amber-300 bg-amber-50 text-amber-900`}>
         <p className="font-medium">Your {nextName} promotion quiz is in progress.</p>
-        <Link href={`/study/promotion/${rank.openAttemptId}`} className="mt-2 inline-block rounded-md bg-primary px-4 py-1.5 font-medium text-primary-foreground hover:bg-brand-800">
+        <Link href={`/study/promotion/${rank.openAttemptId}`} className="mt-2 inline-block rounded-md bg-primary px-4 py-1.5 font-medium text-primary-foreground hover:bg-primary-hover">
           Resume the quiz
         </Link>
       </div>
@@ -80,7 +80,7 @@ function PromotionCallout({ rank, nextName }: { rank: RankV2; nextName: string }
     <div className={`${box} border-brand-200 bg-brand-50 text-brand-900`}>
       <p className="font-medium">Promotion quiz available</p>
       <p className="mt-1 text-brand-800">Pass it to move up to {nextName}.</p>
-      <Link href="/study/promotion" className="mt-2 inline-block rounded-md bg-primary px-4 py-1.5 font-medium text-primary-foreground hover:bg-brand-800">
+      <Link href="/study/promotion" className="mt-2 inline-block rounded-md bg-primary px-4 py-1.5 font-medium text-primary-foreground hover:bg-primary-hover">
         Take the quiz
       </Link>
     </div>

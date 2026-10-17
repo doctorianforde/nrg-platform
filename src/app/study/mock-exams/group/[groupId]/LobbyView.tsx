@@ -165,7 +165,7 @@ export function LobbyView({
             <input type="hidden" name="group_id" value={groupId} />
             <SubmitButton
               className={cn(
-                "rounded-lg bg-brand-700 px-5 py-2.5 text-sm font-semibold text-white",
+                "rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground",
                 members.length < 2 && "pointer-events-none opacity-50"
               )}
             >

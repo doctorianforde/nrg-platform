@@ -218,9 +218,9 @@ export type Database = {
         Relationships: []
       }
       profiles: {
-        Row: { avatar_url: string | null; created_at: string; full_name: string | null; id: string; show_badges: boolean; role: string; subscription_tier: string; suspended_at: string | null; updated_at: string }
-        Insert: { show_badges?: boolean; avatar_url?: string | null; created_at?: string; full_name?: string | null; id: string; role?: string; subscription_tier?: string; suspended_at?: string | null; updated_at?: string }
-        Update: { show_badges?: boolean; avatar_url?: string | null; created_at?: string; full_name?: string | null; id?: string; role?: string; subscription_tier?: string; suspended_at?: string | null; updated_at?: string }
+        Row: { avatar_url: string | null; created_at: string; full_name: string | null; id: string; show_badges: boolean; role: string; subscription_tier: string; suspended_at: string | null; theme: string | null; updated_at: string }
+        Insert: { show_badges?: boolean; avatar_url?: string | null; created_at?: string; full_name?: string | null; id: string; role?: string; subscription_tier?: string; suspended_at?: string | null; theme?: string | null; updated_at?: string }
+        Update: { show_badges?: boolean; avatar_url?: string | null; created_at?: string; full_name?: string | null; id?: string; role?: string; subscription_tier?: string; suspended_at?: string | null; theme?: string | null; updated_at?: string }
         Relationships: []
       }
       question_options: {

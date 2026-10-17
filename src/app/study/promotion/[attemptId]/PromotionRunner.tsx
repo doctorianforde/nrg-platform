@@ -79,7 +79,7 @@ export function PromotionRunner({ attemptId, initial, targetName }: { attemptId:
             <p className="mt-1 text-sm text-muted-foreground">You can try again after 24 hours with a fresh set of questions. Your XP is safe.</p>
           </>
         )}
-        <Link href="/study/profile" className="mt-6 inline-block rounded-md bg-primary px-5 py-2 text-sm font-medium text-primary-foreground hover:bg-brand-800">
+        <Link href="/study/profile" className="mt-6 inline-block rounded-md bg-primary px-5 py-2 text-sm font-medium text-primary-foreground hover:bg-primary-hover">
           Back to your rank
         </Link>
       </div>
@@ -131,7 +131,7 @@ export function PromotionRunner({ attemptId, initial, targetName }: { attemptId:
             {left === 0 ? "Time's up, moving on…" : sata ? "Select all that apply. You can't come back to this question." : "You can't come back to this question."}
           </span>
           <button type="button" onClick={submit} disabled={!selected.length || busy || left === 0}
-            className="rounded-lg bg-primary px-5 py-2 text-sm font-medium text-primary-foreground hover:bg-brand-800 disabled:cursor-not-allowed disabled:opacity-50">
+            className="rounded-lg bg-primary px-5 py-2 text-sm font-medium text-primary-foreground hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50">
             {busy ? "Saving…" : state.position === state.total ? "Submit and finish" : "Submit answer"}
           </button>
         </div>

@@ -19,13 +19,13 @@ function Bubble({ message }: { message: ThreadMessage }) {
       ) : null}
       <div className={`max-w-[42rem] rounded-2xl px-4 py-3 ${
         message.mine
-          ? "bg-brand-700 text-white"
+          ? "bg-primary text-primary-foreground"
           : message.fromStaff
             ? "border border-brand-200 bg-brand-50 text-card-foreground"
             : "border border-border bg-card text-card-foreground"
       }`}
       >
-        <div className={`flex flex-wrap items-baseline gap-2 text-xs ${message.mine ? "text-white/70" : "text-muted-foreground"}`}>
+        <div className={`flex flex-wrap items-baseline gap-2 text-xs ${message.mine ? "text-primary-foreground/75" : "text-muted-foreground"}`}>
           <span className="font-medium">{message.mine ? "You" : message.authorName}</span>
           {!message.mine && message.fromStaff ? (
             <span className="rounded-full bg-brand-200 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-brand-800">

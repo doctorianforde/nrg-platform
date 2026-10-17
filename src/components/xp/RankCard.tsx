@@ -49,7 +49,7 @@ export function RankCard({ xp }: { xp: XpSummary }) {
               key={tier}
               className={`rounded-full px-2 py-0.5 ${
                 tier === xp.tier
-                  ? "bg-brand-700 font-medium text-white"
+                  ? "bg-primary font-medium text-primary-foreground"
                   : reached
                     ? "bg-brand-100 text-brand-800"
                     : "bg-muted text-muted-foreground"

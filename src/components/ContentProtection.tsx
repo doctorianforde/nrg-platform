@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { THEME_LIST } from "@/lib/theme/themes";
 
 /**
  * Deterrents against copying, printing and screenshotting the question bank, applied to students only (DashboardShell
@@ -60,8 +61,17 @@ export function ContentProtection({
   const [showNotice, setShowNotice] = useState(false);
 
   const label = `${identity} · ${date}`;
-  const light = useMemo(() => watermarkUri(label, "#1f1530"), [label]);
-  const dark = useMemo(() => watermarkUri(label, "#ffffff"), [label]);
+  // One tile per theme, in that theme's ink: dark ink on the light themes, white on the dark one, each at its own
+  // opacity (themes.ts), so the mark stays visible but quiet whichever theme the student picked.
+  const watermarkCss = useMemo(
+    () =>
+      THEME_LIST.map(
+        (t) =>
+          `[data-theme="${t.id}"] .cp-watermark { opacity: ${t.watermark.opacity}; }\n` +
+          `[data-theme="${t.id}"] .cp-watermark::before { background-image: ${watermarkUri(label, t.watermark.ink)}; }`
+      ).join("\n"),
+    [label]
+  );
 
   useEffect(() => {
     try {
@@ -230,16 +240,12 @@ export function ContentProtection({
         .cp-root img { -webkit-user-drag: none; }
         .cp-watermark { position: fixed; inset: 0; z-index: 35; pointer-events: none; overflow: hidden; opacity: 0.08; }
         .cp-watermark::before { content: ""; position: absolute; left: 50%; top: 50%; width: 250vmax; height: 250vmax;
-          transform: translate(-50%, -50%) rotate(-28deg); background-image: ${light}; background-repeat: repeat; }
-        @media (prefers-color-scheme: dark) {
-          .cp-watermark { opacity: 0.1; }
-          .cp-watermark::before { background-image: ${dark}; }
-        }
+          transform: translate(-50%, -50%) rotate(-28deg); background-repeat: repeat; }
+        ${watermarkCss}
         .cp-shield { position: fixed; inset: 0; z-index: 60; pointer-events: none; display: flex; align-items: center;
-          justify-content: center; opacity: 0; visibility: hidden; background: rgba(245, 243, 250, 0.9);
+          justify-content: center; opacity: 0; visibility: hidden; background: hsl(var(--muted) / 0.9);
           -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
         html.${SHIELD_CLASS} .cp-shield { opacity: 1; visibility: visible; }
-        @media (prefers-color-scheme: dark) { .cp-shield { background: rgba(20, 14, 32, 0.9); } }
         .cp-print-notice { display: none; }
         @media print {
           body * { visibility: hidden !important; }
@@ -256,7 +262,7 @@ export function ContentProtection({
         // In the page flow, not floating, so it can never sit on top of an answer or a submit button.
         <div
           role="note"
-          className="mb-4 flex flex-wrap items-center gap-3 rounded-xl border border-brand-100 bg-white px-4 py-3 text-sm text-gray-700 shadow-sm"
+          className="mb-4 flex flex-wrap items-center gap-3 rounded-xl border border-brand-100 bg-card px-4 py-3 text-sm text-card-foreground shadow-sm"
         >
           <p className="min-w-0 flex-1">
             Screenshots and copying of questions are not permitted. Content is watermarked with your account.
@@ -264,7 +270,7 @@ export function ContentProtection({
           <button
             type="button"
             onClick={dismissNotice}
-            className="rounded-md bg-brand-700 px-3 py-1.5 text-xs font-semibold text-white hover:bg-brand-800"
+            className="rounded-md bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground hover:bg-primary-hover"
           >
             Got it
           </button>
@@ -274,7 +280,7 @@ export function ContentProtection({
       </div>
       <div className="cp-watermark" aria-hidden="true" data-testid="cp-watermark" />
       <div className="cp-shield" aria-hidden="true" data-testid="cp-shield">
-        <div className="rounded-xl border border-brand-100 bg-white px-6 py-4 text-center text-sm text-gray-700 shadow-sm">
+        <div className="rounded-xl border border-brand-100 bg-card px-6 py-4 text-center text-sm text-card-foreground shadow-sm">
           Content hidden while this window is not in focus.
           <br />
           Click or tap the page to continue.
@@ -289,7 +295,7 @@ export function ContentProtection({
         <div
           role="status"
           aria-live="polite"
-          className="pointer-events-none fixed bottom-4 left-1/2 z-[70] -translate-x-1/2 rounded-lg bg-brand-900 px-4 py-2 text-sm text-white shadow-lg"
+          className="pointer-events-none fixed bottom-4 left-1/2 z-[70] -translate-x-1/2 rounded-lg bg-foreground px-4 py-2 text-sm text-background shadow-lg"
         >
           {toast}
         </div>

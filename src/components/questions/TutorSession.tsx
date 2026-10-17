@@ -104,7 +104,7 @@ export function TutorSession({
               reported.current = false;
               played.current = false;
             }}
-            className="rounded-md bg-primary px-5 py-2 text-sm font-medium text-primary-foreground hover:bg-brand-800"
+            className="rounded-md bg-primary px-5 py-2 text-sm font-medium text-primary-foreground hover:bg-primary-hover"
           >
             Restart
           </button>
@@ -240,7 +240,7 @@ export function TutorSession({
             <button
               type="button"
               onClick={next}
-              className="rounded-md bg-primary px-5 py-2 text-sm font-medium text-primary-foreground hover:bg-brand-800"
+              className="rounded-md bg-primary px-5 py-2 text-sm font-medium text-primary-foreground hover:bg-primary-hover"
             >
               {index + 1 >= questions.length ? "Finish" : "Next question"}
             </button>
@@ -253,7 +253,7 @@ export function TutorSession({
                 "rounded-md px-5 py-2 text-sm font-medium",
                 selected.length === 0 || checking
                   ? "cursor-not-allowed bg-muted text-muted-foreground"
-                  : "bg-primary text-primary-foreground hover:bg-brand-800"
+                  : "bg-primary text-primary-foreground hover:bg-primary-hover"
               )}
             >
               {checking ? "Checking…" : "Check answer"}

@@ -127,7 +127,7 @@ export default async function TeacherMockExamsPage({
                       <td className="px-4 py-3 text-right">
                         <Link
                           href={`/teacher/mock-exams/${set.id}`}
-                          className="rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground transition-colors hover:bg-brand-800"
+                          className="rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
                         >
                           Manage
                         </Link>

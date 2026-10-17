@@ -1,7 +1,22 @@
 import type { Config } from "tailwindcss";
+import plugin from "tailwindcss/plugin";
+import twColors from "tailwindcss/colors";
+import { PALETTE_STEPS, REMAPPED_PALETTES, themeCss } from "./src/lib/theme/themes";
 
 // Design tokens extracted from OKComputer_NRG_Website_v62/assets/index-*.css
 // (see PROGRESS.md). Purple primary hsl(270 60% 35%) = #6b2d8b.
+// Since 2026-10-17 every colour token is a CSS variable set per theme (src/lib/theme/themes.ts); the default theme,
+// Royal, keeps the original values.
+
+type Palette = Record<(typeof PALETTE_STEPS)[number], string>;
+// Read the palettes by name: some legacy aliases on the colours export warn when touched.
+const PALETTES = Object.fromEntries(
+  REMAPPED_PALETTES.map((n) => [n, (twColors as unknown as Record<string, Palette>)[n]])
+) as Record<string, Palette>;
+const hexRgb = (hex: string) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16)).join(" ");
+const hsl = (v: string) => `hsl(var(--${v}) / <alpha-value>)`;
+const shadow = (a: number) => `hsl(var(--shadow) / calc(${a} * var(--shadow-strength)))`;
+
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -12,41 +27,59 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        card: "hsl(var(--card))",
-        "card-foreground": "hsl(var(--card-foreground))",
-        popover: "hsl(var(--popover))",
-        "popover-foreground": "hsl(var(--popover-foreground))",
-        primary: "hsl(var(--primary))",
-        "primary-foreground": "hsl(var(--primary-foreground))",
-        secondary: "hsl(var(--secondary))",
-        "secondary-foreground": "hsl(var(--secondary-foreground))",
-        muted: "hsl(var(--muted))",
-        "muted-foreground": "hsl(var(--muted-foreground))",
-        accent: "hsl(var(--accent))",
-        "accent-foreground": "hsl(var(--accent-foreground))",
-        destructive: "hsl(var(--destructive))",
-        "destructive-foreground": "hsl(var(--destructive-foreground))",
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        // Extended purple scale — values sampled from the reference build
-        brand: {
-          50: "#faf5ff",
-          100: "#f3e8ff",
-          200: "#e9d5ff",
-          300: "#d8b4fe",
-          400: "#c084fc",
-          500: "#8b4fa8",
-          600: "#7b3fa0",
-          700: "#6b2d8b",
-          800: "#5a2475",
-          900: "#4a1d6a",
-          950: "#2d1b4e",
-          midnight: "#1a1030",
+        // HSL triples behind variables, so opacity modifiers (bg-primary/90) work.
+        background: hsl("background"),
+        foreground: hsl("foreground"),
+        card: hsl("card"),
+        "card-foreground": hsl("card-foreground"),
+        popover: hsl("popover"),
+        "popover-foreground": hsl("popover-foreground"),
+        primary: hsl("primary"),
+        "primary-foreground": hsl("primary-foreground"),
+        "primary-hover": hsl("primary-hover"),
+        secondary: hsl("secondary"),
+        "secondary-foreground": hsl("secondary-foreground"),
+        muted: hsl("muted"),
+        "muted-foreground": hsl("muted-foreground"),
+        accent: hsl("accent"),
+        "accent-foreground": hsl("accent-foreground"),
+        destructive: hsl("destructive"),
+        "destructive-foreground": hsl("destructive-foreground"),
+        border: hsl("border"),
+        input: hsl("input"),
+        ring: hsl("ring"),
+        // Page-header band (DashboardShell) and other "hero" surfaces.
+        header: {
+          from: hsl("header-from"),
+          via: hsl("header-via"),
+          to: hsl("header-to"),
+          foreground: hsl("header-foreground"),
+          muted: hsl("header-muted"),
         },
+        // Brand scale per theme (Royal = the original purple hex values); see themes.ts for what each step is for.
+        brand: Object.fromEntries(
+          [...PALETTE_STEPS, "midnight"].map((s) => [s, `rgb(var(--brand-${s}) / <alpha-value>)`])
+        ),
         gold: "#fbbf24",
+        // Tailwind's palettes behind variables that only dark themes set; everywhere else the fallback is Tailwind's
+        // own value, so light themes and staff pages render exactly as before.
+        ...Object.fromEntries(
+          REMAPPED_PALETTES.map((name) => [
+            name,
+            Object.fromEntries(
+              PALETTE_STEPS.map((s) => [s, `rgb(var(--tw-${name}-${s}, ${hexRgb(PALETTES[name][s])}) / <alpha-value>)`])
+            ),
+          ])
+        ),
+      },
+      boxShadow: {
+        // Tailwind's default geometry; colour and strength per theme (Royal: black at the default strength).
+        sm: `0 1px 2px 0 ${shadow(0.05)}`,
+        DEFAULT: `0 1px 3px 0 ${shadow(0.1)}, 0 1px 2px -1px ${shadow(0.1)}`,
+        md: `0 4px 6px -1px ${shadow(0.1)}, 0 2px 4px -2px ${shadow(0.1)}`,
+        lg: `0 10px 15px -3px ${shadow(0.1)}, 0 4px 6px -4px ${shadow(0.1)}`,
+        xl: `0 20px 25px -5px ${shadow(0.1)}, 0 8px 10px -6px ${shadow(0.1)}`,
+        "2xl": `0 25px 50px -12px ${shadow(0.25)}`,
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -55,7 +88,8 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
-        heading: ["var(--font-poppins)", "var(--font-inter)", "sans-serif"],
+        // --font-heading is set per theme (Poppins, Nunito Sans or Inter, all self-hosted).
+        heading: ["var(--font-heading)", "var(--font-inter)", "sans-serif"],
         brand: ["var(--font-nunito)", "var(--font-inter)", "sans-serif"],
       },
       keyframes: {
@@ -103,6 +137,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  // One variable block per theme: `:root, [data-theme="royal"]`, then `[data-theme="lagoon"]` etc.
+  plugins: [plugin(({ addBase }) => addBase(themeCss(PALETTES)))],
 };
 export default config;

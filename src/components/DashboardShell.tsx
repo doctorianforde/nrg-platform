@@ -6,6 +6,7 @@ import { Avatar } from "@/components/ui/Avatar";
 import { BadgeCelebrationsServer } from "@/components/badges/BadgeCelebrationsServer";
 import { flags } from "@/lib/flags";
 import { ContentProtection } from "@/components/ContentProtection";
+import { ThemeQuickSwitch } from "@/components/theme/ThemeQuickSwitch";
 
 const NAV: Array<{ href: string; label: string; min: Profile["role"]; rankingV2?: boolean }> = [
   { href: "/study", label: "Study", min: "student" },
@@ -46,7 +47,7 @@ export function DashboardShell({
   const protectedView = protect && flags.contentProtection && profile.role === "student";
   return (
     <div className="min-h-screen bg-muted">
-      <header className="sticky top-0 z-20 bg-white/95 backdrop-blur border-b border-brand-100 shadow-sm">
+      <header className="sticky top-0 z-20 bg-card/95 backdrop-blur border-b border-brand-100 shadow-sm">
         <div className="mx-auto max-w-6xl px-4 h-16 flex items-center gap-6">
           <Link href="/" className="flex items-center gap-2 font-brand font-bold tracking-tight text-brand-800">
             <Image
@@ -65,13 +66,14 @@ export function DashboardShell({
               <Link
                 key={n.href}
                 href={n.href}
-                className="rounded-lg px-3 py-2 text-gray-600 hover:bg-brand-50/50 hover:text-brand-700"
+                className="rounded-lg px-3 py-2 text-muted-foreground hover:bg-brand-50/50 hover:text-brand-700"
               >
                 {n.label}
               </Link>
             ))}
           </nav>
           <div className="ml-auto flex items-center gap-3 text-xs">
+            {profile.role === "student" ? <ThemeQuickSwitch /> : null}
             <Avatar
               name={profile.full_name}
               url={profile.avatar_url}
@@ -91,16 +93,16 @@ export function DashboardShell({
         </div>
       </header>
 
-      {/* Purple banner page-header pattern from the reference design */}
-      <div className="bg-gradient-to-r from-brand-900 via-brand-700 to-brand-900 text-white">
+      {/* Banner page-header pattern from the reference design (purple on Royal; each theme sets its own gradient) */}
+      <div className="bg-gradient-to-r from-header-from via-header-via to-header-to text-header-foreground">
         <div className="mx-auto max-w-6xl px-4 py-8">
           {eyebrow ? (
-            <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-brand-200">
+            <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-header-muted">
               {eyebrow}
             </p>
           ) : null}
           <h1 className="font-heading text-2xl font-bold">{title}</h1>
-          {subtitle ? <p className="mt-1 text-sm text-purple-100">{subtitle}</p> : null}
+          {subtitle ? <p className="mt-1 text-sm text-header-muted">{subtitle}</p> : null}
         </div>
       </div>
 

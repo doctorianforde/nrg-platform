@@ -61,7 +61,7 @@ export default async function CaseStudiesPage() {
             const st = status(cs.id);
             const n = count(cs.id);
             const card = (
-              <Card className="flex h-full flex-col rounded-xl border-purple-100 transition-shadow hover:shadow-md">
+              <Card className="flex h-full flex-col rounded-xl border-brand-100 transition-shadow hover:shadow-md">
                 <div className="flex flex-wrap items-center gap-2">
                   {domain ? <Badge tone="purple">{domain.name}</Badge> : null}
                   {cs.difficulty ? <Badge tone="gray" className="capitalize">{cs.difficulty}</Badge> : null}

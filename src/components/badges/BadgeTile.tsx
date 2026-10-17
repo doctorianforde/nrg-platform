@@ -6,7 +6,7 @@ const fmt = (iso: string) => new Date(iso).toLocaleDateString("en-GB", { day: "n
 export function BadgeTile({ code, art, name, hint, earnedAt, size = 72 }: { code: string; art: string; name: string; hint: string; earnedAt?: string; size?: number }) {
   const earned = Boolean(earnedAt);
   return (
-    <div className={`flex flex-col items-center rounded-xl border p-3 text-center ${earned ? "border-brand-100 bg-white" : "border-dashed border-border bg-muted/40"}`}
+    <div className={`flex flex-col items-center rounded-xl border p-3 text-center ${earned ? "border-brand-100 bg-card" : "border-dashed border-border bg-muted/40"}`}
       title={earned ? `${name} · earned ${fmt(earnedAt!)}` : `${name} · ${hint}`}>
       <BadgeArt code={code} art={art} size={size} locked={!earned} />
       <p className={`mt-2 text-xs font-semibold leading-tight ${earned ? "text-card-foreground" : "text-muted-foreground"}`}>{name}</p>

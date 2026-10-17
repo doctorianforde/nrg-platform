@@ -413,7 +413,7 @@ export default async function Home() {
                   className={cn(
                     "mt-6 block rounded-lg px-6 py-3 text-center text-sm font-medium",
                     p.highlight
-                      ? "bg-primary text-primary-foreground hover:bg-brand-800"
+                      ? "bg-primary text-primary-foreground hover:bg-primary-hover"
                       : "border-2 border-brand-700 text-brand-700 hover:bg-brand-50"
                   )}
                 >

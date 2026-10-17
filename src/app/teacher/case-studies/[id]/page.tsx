@@ -23,7 +23,7 @@ export default async function TeacherCasePage({ params, searchParams }: { params
     <form action={setCaseStatus}>
       <input type="hidden" name="id" value={header.id} />
       <input type="hidden" name="to" value={to} />
-      <button className={primary ? "rounded-lg bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground hover:bg-brand-800" : btn}>{label}</button>
+      <button className={primary ? "rounded-lg bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground hover:bg-primary-hover" : btn}>{label}</button>
     </form>
   );
 

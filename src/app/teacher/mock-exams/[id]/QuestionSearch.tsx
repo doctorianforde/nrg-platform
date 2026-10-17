@@ -115,7 +115,7 @@ export function QuestionSearch({
               type="button"
               disabled={pending}
               onClick={() => add(r.id)}
-              className="shrink-0 rounded-md bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground hover:bg-brand-800 disabled:opacity-50"
+              className="shrink-0 rounded-md bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground hover:bg-primary-hover disabled:opacity-50"
             >
               {addingId === r.id ? "Adding…" : "Add"}
             </button>

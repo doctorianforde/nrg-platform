@@ -241,7 +241,7 @@ export function PracticeSetup({ domains }: { domains: Domain[] }) {
         <button
           type="button"
           onClick={start}
-          className="mt-6 w-full rounded-lg bg-primary px-5 py-3 text-sm font-medium text-primary-foreground hover:bg-brand-800"
+          className="mt-6 w-full rounded-lg bg-primary px-5 py-3 text-sm font-medium text-primary-foreground hover:bg-primary-hover"
         >
           ▶ Start session
         </button>

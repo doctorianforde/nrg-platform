@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { headers } from "next/headers";
 import { UserProvider } from "@/lib/auth/UserProvider";
+import { ThemeSync } from "@/components/theme/ThemeSync";
+import { DEFAULT_THEME, THEME_HEADER, isThemeId } from "@/lib/theme/themes";
 
 // Font stack matches the reference design (OKComputer_NRG_Website_v62):
 // Inter for UI/body, Poppins for headings, Nunito Sans for brand accents.
@@ -41,11 +44,20 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // The middleware resolves the student's theme (study area only; everyone else gets the default) so it is in the
+  // first HTML byte: no flash of the default theme. The font variables sit on <html> too, because each theme's
+  // --font-heading refers to them from there.
+  const requested = headers().get(THEME_HEADER);
+  const theme = isThemeId(requested) ? requested : DEFAULT_THEME;
   return (
-    <html lang="en">
-      <body
-        className={`${inter.variable} ${poppins.variable} ${nunito.variable} font-sans antialiased`}
-      >
+    <html
+      lang="en"
+      data-theme={theme}
+      className={`${inter.variable} ${poppins.variable} ${nunito.variable}`}
+      suppressHydrationWarning
+    >
+      <body className="font-sans antialiased">
+        <ThemeSync />
         <UserProvider>{children}</UserProvider>
       </body>
     </html>

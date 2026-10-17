@@ -48,8 +48,8 @@ function ClassmateCard({ id, fallbackName, onClose }: { id: string; fallbackName
   }, [onClose]);
   return (
     <div role="dialog" aria-modal="true" aria-labelledby="classmate-title" onClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 motion-safe:animate-fade-in">
-      <div onClick={(e) => e.stopPropagation()} className="w-full max-w-md rounded-2xl bg-white p-5 shadow-2xl motion-safe:animate-bounce-in">
+      className="fixed inset-0 z-50 flex items-center justify-center bg-brand-midnight/50 p-4 motion-safe:animate-fade-in">
+      <div onClick={(e) => e.stopPropagation()} className="w-full max-w-md rounded-2xl bg-card p-5 shadow-2xl motion-safe:animate-bounce-in">
         <div className="flex items-center justify-between gap-2">
           <h2 id="classmate-title" className="font-heading text-lg font-bold text-card-foreground">{data?.name ?? fallbackName}&apos;s trophies</h2>
           <button ref={button} type="button" onClick={onClose} aria-label="Close" className="rounded px-2 text-xl leading-none text-muted-foreground hover:bg-muted">×</button>

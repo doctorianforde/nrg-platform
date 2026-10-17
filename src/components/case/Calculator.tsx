@@ -100,7 +100,7 @@ export function Calculator({ onClose }: { onClose: () => void }) {
         <button type="button" className={key} onClick={negate} aria-label="Change sign">±</button>
         <button type="button" className={key} onClick={() => digit("0")}>0</button>
         <button type="button" className={key} onClick={() => digit(".")}>.</button>
-        <button type="button" className="rounded-md bg-primary py-2.5 text-base font-semibold text-primary-foreground hover:bg-brand-800" onClick={equals}>=</button>
+        <button type="button" className="rounded-md bg-primary py-2.5 text-base font-semibold text-primary-foreground hover:bg-primary-hover" onClick={equals}>=</button>
       </div>
     </div>
   );

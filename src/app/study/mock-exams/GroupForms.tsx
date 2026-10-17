@@ -28,7 +28,7 @@ export function JoinGroupForm() {
         autoCapitalize="characters"
         spellCheck={false}
         placeholder="7QK2MP"
-        className="w-32 rounded-lg border border-border bg-white px-3 py-2 font-mono text-sm uppercase tracking-widest text-card-foreground placeholder:text-muted-foreground/60"
+        className="w-32 rounded-lg border border-border bg-card px-3 py-2 font-mono text-sm uppercase tracking-widest text-card-foreground placeholder:text-muted-foreground/60"
       />
       <Submit
         label="Join group"

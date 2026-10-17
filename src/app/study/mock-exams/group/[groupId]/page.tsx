@@ -120,7 +120,7 @@ export default async function GroupExamPage({ params }: { params: { groupId: str
           {mine.session_id ? (
             <Link
               href={`/study/mock-exams/session/${mine.session_id}`}
-              className="inline-block rounded-lg bg-brand-700 px-5 py-2.5 text-sm font-semibold text-white"
+              className="inline-block rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary-hover"
             >
               See your own paper
             </Link>

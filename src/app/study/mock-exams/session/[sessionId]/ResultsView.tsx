@@ -213,7 +213,7 @@ export function ResultsView({
         </Link>
         <Link
           href={`/study/profile?attach=${session.id}`}
-          className="inline-block rounded-lg bg-primary px-5 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-brand-800"
+          className="inline-block rounded-lg bg-primary px-5 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary-hover"
         >
           Ask your teacher about this attempt
         </Link>

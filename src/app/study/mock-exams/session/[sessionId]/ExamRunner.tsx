@@ -186,7 +186,7 @@ export function ExamRunner({
   return (
     <div>
       {/* Slim sticky exam bar with a thin purple progress line at its top edge. */}
-      <div className="sticky top-16 z-10 -mx-4 border-b border-brand-100 bg-white/95 backdrop-blur">
+      <div className="sticky top-16 z-10 -mx-4 border-b border-brand-100 bg-card/95 backdrop-blur">
         <div
           className="absolute left-0 top-0 h-0.5 bg-brand-700 transition-all duration-300"
           style={{ width: `${((index + 1) / questions.length) * 100}%` }}
@@ -270,7 +270,7 @@ export function ExamRunner({
                 type="button"
                 disabled={index === questions.length - 1}
                 onClick={() => setIndex((i) => Math.min(questions.length - 1, i + 1))}
-                className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-brand-800 disabled:opacity-40"
+                className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover disabled:opacity-40"
               >
                 Next ›
               </button>
@@ -301,7 +301,7 @@ export function ExamRunner({
                     type="button"
                     disabled={pending}
                     onClick={submit}
-                    className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-brand-800 disabled:opacity-50"
+                    className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover disabled:opacity-50"
                   >
                     {pending ? "Submitting…" : "Yes, submit my exam"}
                   </button>

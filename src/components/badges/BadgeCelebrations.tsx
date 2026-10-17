@@ -74,9 +74,9 @@ function RankCeremony({ badges, onDone }: { badges: EarnedBadge[]; onDone: () =>
   const summit = trophy?.code === "trophy-summit";
   return (
     <div role="dialog" aria-modal="true" aria-labelledby="ceremony-title"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[#160d22]/80 p-4 backdrop-blur-sm motion-safe:animate-fade-in motion-reduce:animate-fade-in">
+      className="fixed inset-0 z-50 flex items-center justify-center bg-brand-midnight/80 p-4 backdrop-blur-sm motion-safe:animate-fade-in motion-reduce:animate-fade-in">
       <Confetti pieces={summit ? 260 : trophy ? 200 : 140} durationMs={summit ? 3600 : 2600} />
-      <div className="relative w-full max-w-md overflow-hidden rounded-2xl bg-gradient-to-b from-[#4A1D6A] to-[#2a1040] px-6 pb-6 pt-7 text-center text-white shadow-2xl ring-1 ring-white/10">
+      <div className="relative w-full max-w-md overflow-hidden rounded-2xl bg-gradient-to-b from-header-from to-brand-midnight px-6 pb-6 pt-7 text-center text-white shadow-2xl ring-1 ring-white/10">
         <div aria-hidden="true" className="pointer-events-none absolute -top-24 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-[#F2B705]/25 blur-3xl" />
         <p className="relative text-xs font-semibold uppercase tracking-[0.2em] text-[#F2D27A]">{summit ? "Top of the ladder" : trophy ? "New tier reached" : "Promotion"}</p>
         <div className="relative mt-4 flex items-end justify-center gap-4">
@@ -107,7 +107,7 @@ function RankCeremony({ badges, onDone }: { badges: EarnedBadge[]; onDone: () =>
             : level !== null ? `${TIER_NAME[tierOfLevel(level)]} tier · level ${level + 1} of 25` : ""}
         </p>
         <button ref={button} type="button" onClick={onDone}
-          className="relative mt-6 rounded-lg bg-[#F2B705] px-6 py-2.5 text-sm font-semibold text-[#2a1040] hover:bg-[#FFD84D] focus:outline-none focus-visible:ring-2 focus-visible:ring-white">
+          className="relative mt-6 rounded-lg bg-[#F2B705] px-6 py-2.5 text-sm font-semibold text-brand-midnight hover:bg-[#FFD84D] focus:outline-none focus-visible:ring-2 focus-visible:ring-white">
           Continue
         </button>
       </div>
@@ -120,8 +120,8 @@ function RevealCard({ badge, more, onDone }: { badge: EarnedBadge; more: number;
   const button = useDismissKeys(onDone);
   return (
     <div role="dialog" aria-modal="true" aria-labelledby="reveal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[#160d22]/70 p-4 backdrop-blur-sm motion-safe:animate-fade-in motion-reduce:animate-fade-in">
-      <div className="w-full max-w-sm rounded-2xl bg-white px-6 pb-6 pt-6 text-center shadow-2xl motion-safe:animate-bounce-in motion-reduce:animate-fade-in">
+      className="fixed inset-0 z-50 flex items-center justify-center bg-brand-midnight/70 p-4 backdrop-blur-sm motion-safe:animate-fade-in motion-reduce:animate-fade-in">
+      <div className="w-full max-w-sm rounded-2xl bg-card px-6 pb-6 pt-6 text-center shadow-2xl motion-safe:animate-bounce-in motion-reduce:animate-fade-in">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-700">Badge earned</p>
         <div className="relative mx-auto mt-3 w-fit overflow-hidden rounded-full motion-safe:animate-badge-pop motion-reduce:animate-fade-in">
           <BadgeArt code={badge.code} art={badge.art} size={150} />
@@ -130,7 +130,7 @@ function RevealCard({ badge, more, onDone }: { badge: EarnedBadge; more: number;
         <h2 id="reveal-title" className="mt-3 font-heading text-xl font-bold text-card-foreground">{badge.name}</h2>
         <p className="mt-1 text-sm text-muted-foreground">{badge.description}</p>
         <button ref={button} type="button" onClick={onDone}
-          className="mt-5 rounded-lg bg-primary px-6 py-2 text-sm font-semibold text-primary-foreground hover:bg-brand-800">
+          className="mt-5 rounded-lg bg-primary px-6 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary-hover">
           {more > 0 ? `Next (${more} more)` : "Nice!"}
         </button>
       </div>
@@ -154,7 +154,7 @@ function Toasts({ badges, onShown, onGone }: { badges: EarnedBadge[]; onShown: (
   return (
     <div aria-live="polite" className="pointer-events-none fixed bottom-4 right-4 z-50 flex w-[min(22rem,calc(100vw-2rem))] flex-col gap-2">
       {visible.map((b) => (
-        <div key={b.code} className="pointer-events-auto flex items-center gap-3 rounded-xl border border-brand-100 bg-white p-3 shadow-lg motion-safe:animate-toast-in motion-reduce:animate-fade-in">
+        <div key={b.code} className="pointer-events-auto flex items-center gap-3 rounded-xl border border-brand-100 bg-card p-3 shadow-lg motion-safe:animate-toast-in motion-reduce:animate-fade-in">
           <BadgeArt code={b.code} art={b.art} size={52} />
           <div className="min-w-0 flex-1">
             <p className="text-[11px] font-semibold uppercase tracking-wide text-brand-700">Badge earned</p>

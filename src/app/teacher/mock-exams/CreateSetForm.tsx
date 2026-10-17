@@ -8,7 +8,7 @@ function SubmitButton() {
   return (
     <button
       disabled={pending}
-      className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-brand-800 disabled:opacity-50"
+      className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary-hover disabled:opacity-50"
     >
       {pending ? "Creating…" : "Create exam set"}
     </button>

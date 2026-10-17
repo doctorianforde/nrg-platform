@@ -32,7 +32,7 @@ export function KnowledgeWidget() {
   return (
     <div
       className={cn(
-        "fixed bottom-4 right-4 z-30 w-80 rounded-xl bg-gradient-to-br from-brand-700 to-brand-800 p-4 text-white shadow-2xl",
+        "fixed bottom-4 right-4 z-30 w-80 rounded-xl bg-gradient-to-br from-header-via to-header-from p-4 text-header-foreground shadow-2xl",
         "motion-safe:animate-bounce-in"
       )}
       role="complementary"
@@ -41,14 +41,14 @@ export function KnowledgeWidget() {
       <div className="flex items-center justify-between">
         <span className="font-heading text-sm font-semibold">Nursing Knowledge</span>
         <div className="flex items-center gap-2">
-          <span className="text-[11px] text-purple-200" aria-hidden>
+          <span className="text-[11px] text-header-muted" aria-hidden>
             {(index % FACTS.length) + 1}/{FACTS.length}
           </span>
           <button
             type="button"
             aria-label="Close nursing knowledge card"
             onClick={() => setOpen(false)}
-            className="rounded px-1.5 text-purple-200 hover:text-white"
+            className="rounded px-1.5 text-header-muted hover:text-header-foreground"
           >
             ✕
           </button>
@@ -66,11 +66,11 @@ export function KnowledgeWidget() {
           aria-expanded={flipped}
           className={cn(
             "mt-3 block w-full rounded-lg bg-white/10 p-3 text-left text-sm transition-colors hover:bg-white/15",
-            flipped && "text-purple-100"
+            flipped && "text-header-muted"
           )}
         >
           {flipped ? fact.back : fact.front}
-          <span className="mt-1 block text-xs text-purple-200">
+          <span className="mt-1 block text-xs text-header-muted">
             {flipped ? "Tap to flip back" : "Tap to reveal"}
           </span>
         </button>
@@ -83,7 +83,7 @@ export function KnowledgeWidget() {
             setIndex((i) => i - 1);
             setFlipped(false);
           }}
-          className="text-purple-200 hover:text-white"
+          className="text-header-muted hover:text-header-foreground"
         >
           ‹ Previous
         </button>
@@ -93,7 +93,7 @@ export function KnowledgeWidget() {
             setIndex((i) => i + 1);
             setFlipped(false);
           }}
-          className="font-medium text-white hover:underline"
+          className="font-medium text-header-foreground hover:underline"
         >
           Next ›
         </button>

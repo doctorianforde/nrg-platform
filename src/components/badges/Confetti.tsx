@@ -1,8 +1,13 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { DEFAULT_THEME, THEMES, isThemeId } from "@/lib/theme/themes";
 
-const COLOURS = ["#6B2D8B", "#A35BC9", "#F2B705", "#FFD84D", "#16A34A", "#3B82F6", "#FFFFFF"];
+/** The current theme's confetti colours (brand tones, gold, a green and a blue, white). */
+const colours = () => {
+  const t = document.documentElement.dataset.theme;
+  return THEMES[isThemeId(t) ? t : DEFAULT_THEME].confetti;
+};
 
 /** A short burst of confetti on a full-screen canvas. Skipped entirely when the student prefers reduced motion. */
 export function Confetti({ pieces = 140, durationMs = 2600 }: { pieces?: number; durationMs?: number }) {
@@ -14,6 +19,7 @@ export function Confetti({ pieces = 140, durationMs = 2600 }: { pieces?: number;
     const dpr = window.devicePixelRatio || 1;
     const resize = () => { canvas.width = innerWidth * dpr; canvas.height = innerHeight * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); };
     resize();
+    const COLOURS = colours();
     const cx = innerWidth / 2, cy = innerHeight * 0.38;
     const parts = Array.from({ length: pieces }, () => {
       const a = Math.random() * Math.PI * 2, v = 4 + Math.random() * 9;

@@ -20,6 +20,9 @@ import { loadRankV2 } from "@/lib/xp/rank-v2";
 import { flags } from "@/lib/flags";
 import { TrophyStrip } from "@/components/badges/TrophyStrip";
 import { loadBadgeCatalogue, loadEarned } from "@/lib/badges/queries";
+import { headers } from "next/headers";
+import { ThemePicker } from "@/components/theme/ThemePicker";
+import { DEFAULT_THEME, THEME_HEADER, isThemeId } from "@/lib/theme/themes";
 
 export const dynamic = "force-dynamic";
 
@@ -64,6 +67,9 @@ export default async function StudentProfilePage({
     null
   );
   const unread = threads.filter((t) => t.unread).length;
+  // The theme the middleware resolved for this request (= profiles.theme for a student).
+  const resolvedTheme = headers().get(THEME_HEADER);
+  const theme = isThemeId(resolvedTheme) ? resolvedTheme : DEFAULT_THEME;
 
   return (
     <DashboardShell protect={false}
@@ -84,6 +90,16 @@ export default async function StudentProfilePage({
             hint={unread > 0 ? "Your teacher has replied" : "Nothing new"}
           />
         </div>
+
+        {!isStaff ? (
+          <Card id="theme" className="scroll-mt-20 rounded-xl border-brand-100">
+            <CardTitle>Your theme</CardTitle>
+            <p className="mb-4 mt-1 text-sm text-muted-foreground">
+              Pick the look you like to study in. Midnight is easier on the eyes at night.
+            </p>
+            <ThemePicker initial={theme} />
+          </Card>
+        ) : null}
 
         <Card id="calendar" className="scroll-mt-20 rounded-xl border-brand-100">
           <CardTitle>Calendar</CardTitle>

@@ -2,29 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Design tokens from the OKComputer reference build (light theme only) */
-:root {
-  --background: 0 0% 100%;
-  --foreground: 270 30% 15%;
-  --card: 0 0% 100%;
-  --card-foreground: 270 30% 15%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 270 30% 15%;
-  --primary: 270 60% 35%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 270 25% 95%;
-  --secondary-foreground: 270 60% 35%;
-  --muted: 270 15% 96%;
-  --muted-foreground: 270 10% 45%;
-  --accent: 270 25% 95%;
-  --accent-foreground: 270 60% 35%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 270 20% 90%;
-  --input: 270 20% 90%;
-  --ring: 270 60% 35%;
-  --radius: 0.625rem;
-}
+/*
+ * Design tokens: one CSS-variable block per theme, generated from src/lib/theme/themes.ts by the plugin in
+ * tailwind.config.ts (`:root, [data-theme="royal"]` is the default; lagoon, midnight and sunset follow). The theme is
+ * server-rendered on <html data-theme> (src/app/layout.tsx); any element may carry its own data-theme (the picker's
+ * previews do). `color-scheme` comes with each block, so form controls and scrollbars match.
+ */
 
 @layer base {
   body {
@@ -32,6 +15,17 @@
   }
   h1, h2, h3, h4 {
     @apply font-heading;
+  }
+}
+
+/* A theme switch cross-fades colours briefly (ThemeSync adds the class for ~350 ms); never with reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  html.theme-switching,
+  html.theme-switching *,
+  html.theme-switching *::before,
+  html.theme-switching *::after {
+    transition: background-color 300ms ease, border-color 300ms ease, color 300ms ease, fill 300ms ease,
+      box-shadow 300ms ease !important;
   }
 }
 
