@@ -2,11 +2,18 @@
 
 import { getSession } from "@/lib/auth/session";
 import { adminClient } from "@/lib/supabase/admin";
+import { loadAnswerKeys, type KeyRow } from "@/lib/quiz/answer-keys";
 
-export type RevealedAnswer = { correctIds: string[]; rationales: Record<string, string | null>; explanation: string | null };
+export type RevealedAnswer = {
+  correctIds: string[];
+  rationales: Record<string, string | null>;
+  /** Option id → distractor_type (null when the option is untyped, or on a database without the column). */
+  types: Record<string, string | null>;
+  explanation: string | null;
+};
 
 /**
- * Tutor mode: the key, explanation and option rationales for ONE practice question, fetched only after the student has
+ * Tutor mode: the key, explanation, option rationales and option types for ONE practice question, fetched only after the student has
  * answered it. Answer keys are not readable with a student's token, so this is the only way a student sees one.
  *
  * Refused for anything that isn't a live standalone practice question, and for a question that is part of the
@@ -17,11 +24,12 @@ export async function revealPracticeAnswer(questionId: string): Promise<Revealed
   if (!session?.profile) return { error: "Sign in first." };
   const uid = session.user.id;
 
-  const { data: q } = await adminClient
-    .from("questions")
-    .select("id, is_active, context, explanation, question_options(id, is_correct, rationale)")
-    .eq("id", questionId)
-    .maybeSingle();
+  let q: KeyRow | undefined;
+  try {
+    [q] = await loadAnswerKeys([questionId]);
+  } catch {
+    return { error: "Could not load the answer. Try again." };
+  }
   if (!q || !q.is_active || q.context !== "standalone") return { error: "That question is not available." };
 
   const [{ data: openQuiz }, { data: openMocks }] = await Promise.all([
@@ -43,6 +51,7 @@ export async function revealPracticeAnswer(questionId: string): Promise<Revealed
   return {
     correctIds: q.question_options.filter((o) => o.is_correct).map((o) => o.id),
     rationales: Object.fromEntries(q.question_options.map((o) => [o.id, o.rationale])),
+    types: Object.fromEntries(q.question_options.map((o) => [o.id, o.distractor_type])),
     explanation: q.explanation,
   };
 }

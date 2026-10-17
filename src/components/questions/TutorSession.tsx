@@ -221,7 +221,13 @@ export function TutorSession({
         {revealed && key ? (
           <RationalePanel
             explanation={key.explanation}
-            options={q.options.map((o) => ({ ...o, is_correct: correctIds.includes(o.id), rationale: key.rationales[o.id] ?? null }))}
+            options={q.options.map((o) => ({
+              ...o,
+              is_correct: correctIds.includes(o.id),
+              rationale: key.rationales[o.id] ?? null,
+              distractor_type: key.types?.[o.id] ?? null,
+            }))}
+            selectedIds={selected}
           />
         ) : null}
         {checkError ? <p className="mt-3 text-sm text-red-700">{checkError}</p> : null}

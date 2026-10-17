@@ -160,40 +160,43 @@ export function ResultsView({
                 <p className="mt-3 whitespace-pre-line text-sm leading-relaxed text-card-foreground">
                   {q.body}
                 </p>
-                <div className="mt-3 space-y-2">
-                  {q.options.map((o, i) => {
-                    const wasSelected = selected.has(o.id);
-                    const state: OptionState = o.is_correct
-                      ? wasSelected
-                        ? "correct"
-                        : "missed"
-                      : wasSelected
-                        ? "wrong"
-                        : "dimmed";
-                    return (
-                      <OptionRow
-                        key={o.id}
-                        index={i}
-                        body={o.body}
-                        state={state}
-                        disabled
-                        marker={
-                          o.is_correct ? (
-                            <Badge tone="green">Correct answer</Badge>
-                          ) : wasSelected ? (
-                            <Badge tone="red">Your answer</Badge>
-                          ) : null
-                        }
-                      />
-                    );
-                  })}
-                </div>
                 {rationaleReleased ? (
+                  // Released: the colour-coded review (correct first, typed options labelled) replaces the plain rows.
                   <RationalePanel
                     explanation={q.explanation ?? null}
-                    options={q.options.map((o) => ({ ...o, is_correct: Boolean(o.is_correct), rationale: o.rationale ?? null }))}
+                    options={q.options}
+                    selectedIds={response?.selected_option_ids ?? []}
                   />
-                ) : null}
+                ) : (
+                  <div className="mt-3 space-y-2">
+                    {q.options.map((o, i) => {
+                      const wasSelected = selected.has(o.id);
+                      const state: OptionState = o.is_correct
+                        ? wasSelected
+                          ? "correct"
+                          : "missed"
+                        : wasSelected
+                          ? "wrong"
+                          : "dimmed";
+                      return (
+                        <OptionRow
+                          key={o.id}
+                          index={i}
+                          body={o.body}
+                          state={state}
+                          disabled
+                          marker={
+                            o.is_correct ? (
+                              <Badge tone="green">Correct answer</Badge>
+                            ) : wasSelected ? (
+                              <Badge tone="red">Your answer</Badge>
+                            ) : null
+                          }
+                        />
+                      );
+                    })}
+                  </div>
+                )}
               </li>
             );
           })}

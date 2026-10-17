@@ -89,9 +89,13 @@ export default async function MockExamSessionPage({
   }
 
   if (session.completed_at) {
-    // Finished: the key may be shown. Explanations and rationales only once the teacher has released them, and they
-    // are left out on the server otherwise, not just hidden in the browser.
-    const reviewed = await attachKeys(questions, { rationales: set.rationale_released_at != null });
+    // Finished: the key may be shown. Explanations, rationales and option types only once the teacher has released
+    // them, and they are left out on the server otherwise, not just hidden in the browser. While a group-mate is still
+    // sitting the paper the review is shut (ResultsView), so no keys are loaded at all.
+    const groupStillSitting = standings?.some((x) => !x.completed) ?? false;
+    const reviewed = groupStillSitting
+      ? questions
+      : await attachKeys(questions, { rationales: set.rationale_released_at != null });
     return (
       <DashboardShell
         profile={profile}
@@ -120,7 +124,7 @@ export default async function MockExamSessionPage({
             answered_at: string | null;
           }>}
           rationaleReleased={set.rationale_released_at != null}
-          groupStillSitting={standings?.some((x) => !x.completed) ?? false}
+          groupStillSitting={groupStillSitting}
         />
       </DashboardShell>
     );

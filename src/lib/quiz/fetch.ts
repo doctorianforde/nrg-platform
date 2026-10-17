@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { adminClient } from "@/lib/supabase/admin";
+import { loadAnswerKeys } from "./answer-keys";
 import type { QuizQuestion } from "./types";
 
 export type QuizFilters = {
@@ -89,18 +89,15 @@ export async function fetchQuizQuestions(filters: QuizFilters): Promise<QuizQues
 }
 
 /**
- * Add the answer key (and, if `rationales`, the explanation and per-option rationales) to questions already loaded.
+ * Add the answer key (and, if `rationales`, the explanation, per-option rationales and option types) to questions
+ * already loaded.
  * SERVER-ONLY: reads with the service role, so the caller must first have decided the viewer may see them (staff, or a
  * finished attempt). Never call this for a question the student is still answering.
  */
 export async function attachKeys(questions: QuizQuestion[], { rationales }: { rationales: boolean }): Promise<QuizQuestion[]> {
   if (questions.length === 0) return questions;
-  const { data, error } = await adminClient
-    .from("questions")
-    .select("id, explanation, question_options(id, is_correct, rationale)")
-    .in("id", questions.map((q) => q.id));
-  if (error) throw new Error(`Failed to load answer keys: ${error.message}`);
-  const byId = new Map((data ?? []).map((r) => [r.id, r]));
+  const keys = await loadAnswerKeys(questions.map((q) => q.id));
+  const byId = new Map(keys.map((r) => [r.id, r]));
   return questions.map((q) => {
     const k = byId.get(q.id);
     const opt = new Map((k?.question_options ?? []).map((o) => [o.id, o]));
@@ -111,6 +108,7 @@ export async function attachKeys(questions: QuizQuestion[], { rationales }: { ra
         ...o,
         is_correct: opt.get(o.id)?.is_correct ?? false,
         rationale: rationales ? opt.get(o.id)?.rationale ?? null : null,
+        distractor_type: rationales ? opt.get(o.id)?.distractor_type ?? null : null,
       })),
     };
   });
