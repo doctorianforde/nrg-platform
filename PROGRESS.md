@@ -21,12 +21,12 @@ Read this section first; everything below it is the dated log of how we got here
 | Supabase project | `kwhaqhhwqykckarjbdod` | `cdvubijjepwmhhkgppbl` |
 | Site | https://nrg-platform-staging.vercel.app | the `nrg-platform` Vercel project |
 | Git branch that deploys it | `staging` | `main` |
-| Migrations applied | all 46 in `supabase/migrations/` | the first 29 (through `20260920070000`) |
+| Migrations applied | all 47 in `supabase/migrations/` | the first 29 (through `20260920070000`) |
 | `NEXT_PUBLIC_RANKING_V2` | `1` | unset |
 | `ranking_config.rules_live` | `1` (**live since 2026-10-13**) | table not there yet |
 
 - Work is pushed with `git branch -f staging main && git push origin staging`. **Do not push `main`**: local `main` is
-  56 commits ahead of `origin/main`, and that code needs the 17 prod migrations below first (CLAUDE.md, "Branches and deploys").
+  58 commits ahead of `origin/main`, and that code needs the 18 prod migrations below first (CLAUDE.md, "Branches and deploys").
 - Migrations are applied with the Supabase CLI through the pooler (CLAUDE.md). The Supabase MCP `apply_migration` call
   returned "declined" twice on 2026-10-12 without a prompt; the CLI route works.
 - Prod app and data are as shipped on 2026-09-24 (HEAD `490380b` at that time), plus one data change since: 6 miskeyed live
@@ -50,11 +50,13 @@ submissions, the review queue `/teacher/review`. Content: 460 live questions (Ja
 | Colour-coded rationales | Practice tutor + released mock review show typed options (correct / close / priority / incorrect / not asked); untyped questions fall back to plain | 2026-10-17 entry |
 | Content protection | Students: watermark, no copy/print, blur on focus loss / screenshot keys (`NEXT_PUBLIC_CONTENT_PROTECTION`, on by default) | 2026-10-17 entry |
 | AI-bank dedup | 610 duplicates retired; pending AI queue 1,987 → 1,377 | 2026-10-17 entry; `docs/phase-1/DEDUP_REPORT.md` |
+| Student themes | Royal (default), Lagoon, Midnight (dark), Sunset; picker on profile + header switcher; saved in `profiles.theme` | 2026-10-17 themes entry |
 
 ### Waiting for prod, in this order (see "Ranking v2 — prod go-live plan")
 1. Back up prod.
 2. Migrations `20261004181457`, `20261004194204`, `20261009000911`, `20261009003423`, `20261012124123`, `20261012150000`,
-   `20261012160000` … `20261012160600`, trophies `20261013120000`, `20261013140000`. All additive or in-place
+   `20261012160000` … `20261012160600`, trophies `20261013120000`, `20261013140000`, themes `20261017180000` (must precede
+   the merge: theme saves fail without the column). All additive or in-place
    replacements; XP stays as today (shadow mode).
 3. Merge `staging` → `main` (prod app). Ranking flag stays off on prod.
 4. Then `20261012170000_hide_answer_keys` (it breaks the *old* prod code, so it must follow step 3), checked with
@@ -2632,3 +2634,25 @@ T34 15/15, write paths 38/38.
   Ian to say if he wants that.
 - Housekeeping: `.gitignore` now covers `RENR Prep Guide with Sample Test.pdf` and `.claude/worktrees/`. Staging still holds 8
   leftover "Ranking/Trophy test set" mock sets and one empty exam group from older suite runs (left alone).
+
+### Student themes (Claude, 2026-10-17) — staging
+Ian: "students select from 4 beautiful themes, creative licence". Four themes, students only and only inside `/study` (staff,
+landing and auth pages always Royal):
+- **Royal** (default, today's purple exactly), **Lagoon** (sea-glass teal on sand, Nunito Sans headings), **Midnight** (dark,
+  lavender on deep ink, `color-scheme: dark`), **Sunset** (terracotta/ember on cream, plum→amber header).
+- Tokens in `src/lib/theme/themes.ts`, emitted per `[data-theme]` by a plugin in `tailwind.config.ts`; `brand-*` and core colours
+  are now CSS-variable driven with alpha support (side effect: `bg-muted/40`, `bg-muted/60`, `border-primary/50`,
+  `text-muted-foreground/60` now render). On Midnight, Tailwind's own scales are flipped so the rationale colours, alerts and
+  pills keep their meaning. Watermark ink/opacity is per theme.
+- Migration `20261017180000_profile_theme` (`profiles.theme`, CHECK in the 4 ids; staging only). Middleware reads it once per
+  browser+user into a cookie; root layout renders `<html data-theme>` server-side (no flash); `ThemeSync` for client
+  navigation. Picker card with live mini previews on `/study/profile` + a swatch switcher in the student header; optimistic,
+  saved by `saveTheme` with the student's token, reverted on failure.
+- Verified: tsc/lint/build clean; 30/30 browser checks on staging (each theme applies, saves, survives reload and fresh login,
+  watermark ink, no phone overflow; teacher stays Royal even with Midnight stored; invalid theme rejected); all six suites pass
+  after the migration; `node --no-warnings scripts/theme-contrast.mjs`: every text pair WCAG AA (body 13.3–16.3, buttons
+  6.1–10.1). Screenshots: session scratchpad `themes/` incl. 2×2 contact sheets.
+- Not verified: in-app navigation back into `/study` after leaving it; a live celebration overlay per theme. Still hard-coded:
+  celebration gold, the white logo PNG (a light tile on Midnight), white-background lesson images on the dashboard cards.
+- Testing checklist for tonight's launch: Claude artifact "NRG Launch Test Run" (https://claude.ai/artifact/1cwn7szyUHL1ZsKinSpShA),
+  results synced across devices and readable by Claude.

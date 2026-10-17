@@ -8,8 +8,8 @@ for *what actually happened*, this file is for *what's left and who does it*.
 ## Status legend
 `done` · `pending` · `needs-verify` (marked done before, not re-confirmed) · `blocked`
 
-**Updated 2026-10-17.** Staging holds all 46 migrations in `supabase/migrations/`; prod holds the first 29 (through
-`20260920070000`). The other 17 (bank review, case studies, ranking v2, answer-key hiding, trophies, grants hardening) wait for the prod go-live plan in
+**Updated 2026-10-17.** Staging holds all 47 migrations in `supabase/migrations/`; prod holds the first 29 (through
+`20260920070000`). The other 18 (bank review, case studies, ranking v2, answer-key hiding, trophies, grants hardening, themes) wait for the prod go-live plan in
 `PROGRESS.md`. Deploys: branch `staging` → staging site, branch `main` → prod; local `main` is pushed only to `staging` for
 now. Ranking v2 and trophies are **live on staging** (`rules_live = 1`, flag on) for Ian's review.
 The one-page summary of where everything stands is `PROGRESS.md` → "Current state (as of 2026-10-17)".
@@ -24,9 +24,11 @@ actually needs to do it.
 
 | Item | Owner | Why |
 |---|---|---|
-| **Prod go-live: 17 migrations, merge `staging` → `main`, then hide answer keys + grants hardening** | **Ian** (approve + timing), **AI** (run it) | Order and checks in `PROGRESS.md` → "Ranking v2 — prod go-live plan". The answer-key migration must follow the code deploy; the prod answer-key test is ready (`test-answer-keys.mjs --target prod`, 2026-10-17). Back up prod first. |
+| **Prod go-live: 18 migrations, merge `staging` → `main`, then hide answer keys + grants hardening** | **Ian** (approve + timing), **AI** (run it) | Order and checks in `PROGRESS.md` → "Ranking v2 — prod go-live plan". The answer-key migration must follow the code deploy; the prod answer-key test is ready (`test-answer-keys.mjs --target prod`, 2026-10-17). Back up prod first. |
 | Mock exam submit dropped answers saved <600 ms before submitting | **Fixed on staging** (Claude, 2026-10-17) | Bug is in live prod code; the fix ships with the merge to `main`. |
 | Content protection for students ("disable screenshots") | **Done on staging** (Claude, 2026-10-17) — **Ian**: try it on a real phone/Mac/Windows | Watermark + no copy/print + blur on focus loss/screenshot keys; flag `NEXT_PUBLIC_CONTENT_PROTECTION`. True screenshot blocking is impossible on the web; the watermark makes leaks traceable. |
+| Student themes (4: Royal, Lagoon, Midnight, Sunset) | **Done on staging** (Claude, 2026-10-17) — **Ian**: try them (checklist N1) | Migration `20261017180000_profile_theme` must reach prod before the merge. |
+| Launch testing checklist | **Ian** | https://claude.ai/artifact/1cwn7szyUHL1ZsKinSpShA — 36 checks, synced; Claude reads failures from it. |
 | Promotion quiz topic-specific / harder by level? | **Ian / Jade** (decision) | Built 2026-10-12/13 as one blueprint-weighted pool for all 24 levels. Changing it is a contained edit to `start_promotion_quiz()`. |
 | Answer keys hidden from user tokens | **Done on staging** (Claude, 2026-10-12) | Students and teachers could read every key and explanation through the API (promotion quiz and mock exams exposed). Now keys reach the browser only after answering (practice), after finishing (mock, case), or on staff pages. 14/14 tests. Goes to prod as step 4 of the go-live plan. |
 | Trophies, badges and celebrations (Jade's request) | **Live on staging** (Claude, 2026-10-13): art (37 images), award engine 28/28, celebrations, trophy case, classmates' wall, privacy switch; launch steps rehearsed (backfill + pre-mark seen). Decided (Ian): no XP for badges, visible to classmates (opt-out), backfill where data exists, pre-launch badges pre-marked seen; badge list approved by Jade — **Ian**: review on staging; prod launch rides with the ranking v2 go-live | `docs/phase-1/TROPHY_PLAN.md`: 24 rank badges (one per promotion, tier and summit trophies at levels 5/10/15/20/24) + ~20 accomplishments; awarded in the database at the moment earned; rank-up ceremony, reveal card or toast; trophy case on the profile. Rank badges go live with ranking v2. |
