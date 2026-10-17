@@ -28,7 +28,7 @@ export default async function SubmitQuestionPage() {
   const pending = submissions.filter((s) => s.reviewStatus === "pending").length;
 
   return (
-    <DashboardShell
+    <DashboardShell protect={false}
       profile={profile}
       email={user.email}
       title="Write a question"

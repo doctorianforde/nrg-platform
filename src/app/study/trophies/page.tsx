@@ -62,7 +62,7 @@ export default async function TrophiesPage() {
   const pct = Math.round((100 * earned.size) / Math.max(1, defs.length));
 
   return (
-    <DashboardShell profile={profile} email={user.email} title="Trophies" eyebrow="Rank"
+    <DashboardShell protect={false} profile={profile} email={user.email} title="Trophies" eyebrow="Rank"
       subtitle="Every badge you can earn. Earned ones are in colour; the rest show how to get them.">
       <div className="grid gap-5 lg:grid-cols-[1fr_20rem]">
         <div className="space-y-5">

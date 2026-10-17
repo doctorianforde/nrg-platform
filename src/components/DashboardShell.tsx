@@ -5,6 +5,7 @@ import { hasAtLeast } from "@/lib/auth/roles";
 import { Avatar } from "@/components/ui/Avatar";
 import { BadgeCelebrationsServer } from "@/components/badges/BadgeCelebrationsServer";
 import { flags } from "@/lib/flags";
+import { ContentProtection } from "@/components/ContentProtection";
 
 const NAV: Array<{ href: string; label: string; min: Profile["role"]; rankingV2?: boolean }> = [
   { href: "/study", label: "Study", min: "student" },
@@ -24,6 +25,7 @@ export function DashboardShell({
   title,
   eyebrow,
   subtitle,
+  protect = true,
   children,
 }: {
   profile: Profile;
@@ -33,8 +35,15 @@ export function DashboardShell({
   eyebrow?: string;
   /** One-sentence gray subtitle below the title. */
   subtitle?: string;
+  /**
+   * Content protection (watermark, no copy/print, screen shield) for students. On by default so any new student page
+   * that shows questions is covered; pass false on pages that show only the student's own material (profile, threads,
+   * trophies, their submissions). Never applies to teachers, admins or super admins.
+   */
+  protect?: boolean;
   children: React.ReactNode;
 }) {
+  const protectedView = protect && flags.contentProtection && profile.role === "student";
   return (
     <div className="min-h-screen bg-muted">
       <header className="sticky top-0 z-20 bg-white/95 backdrop-blur border-b border-brand-100 shadow-sm">
@@ -95,7 +104,18 @@ export function DashboardShell({
         </div>
       </div>
 
-      <main className="mx-auto max-w-6xl px-4 py-8">{children}</main>
+      <main className="mx-auto max-w-6xl px-4 py-8">
+        {protectedView ? (
+          <ContentProtection
+            identity={[profile.full_name, email, profile.id.slice(0, 8)].filter(Boolean).join(" · ")}
+            date={new Date().toISOString().slice(0, 10)}
+          >
+            {children}
+          </ContentProtection>
+        ) : (
+          children
+        )}
+      </main>
       {/* Trophies: newly earned badges celebrate here (students only; staging until ranking v2 goes live). */}
       {flags.rankingV2 && profile.role === "student" ? <BadgeCelebrationsServer userId={profile.id} /> : null}
     </div>

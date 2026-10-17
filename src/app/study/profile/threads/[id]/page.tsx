@@ -19,7 +19,7 @@ export default async function StudentThreadPage({ params }: { params: { id: stri
   await markThreadRead(params.id);
 
   return (
-    <DashboardShell
+    <DashboardShell protect={false}
       profile={profile}
       email={user.email}
       title="Conversation"

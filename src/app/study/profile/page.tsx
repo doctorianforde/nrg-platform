@@ -66,7 +66,7 @@ export default async function StudentProfilePage({
   const unread = threads.filter((t) => t.unread).length;
 
   return (
-    <DashboardShell
+    <DashboardShell protect={false}
       profile={profile}
       email={user.email}
       title="Your profile"
