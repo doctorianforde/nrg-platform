@@ -57,3 +57,9 @@ OKComputer_NRG_Website/
 
 # Original image-AI badge art: kept locally by Ian (not in git); finished cut-outs live in public/badges/
 trophy/
+
+# CXC sample test (copyrighted source material, kept local)
+RENR Prep Guide with Sample Test.pdf
+
+# Claude Code agent worktrees
+.claude/worktrees/

@@ -58,6 +58,10 @@ export function ExamRunner({
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
   const timers = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
+  // Debounced answers not yet sent, and saves already on the wire. Submit flushes
+  // the first and waits for both, so a pick made just before submitting is graded.
+  const queued = useRef<Map<string, string[]>>(new Map());
+  const inFlight = useRef<Set<Promise<unknown>>>(new Set());
   const latestAnswers = useRef(answers);
   latestAnswers.current = answers;
 
@@ -109,24 +113,44 @@ export function ExamRunner({
   const selected = answers[q.id] ?? [];
   const answeredCount = questions.filter((x) => (answers[x.id] ?? []).length > 0).length;
 
+  const send = (questionId: string, optionIds: string[]) => {
+    queued.current.delete(questionId);
+    timers.current.delete(questionId);
+    const p = saveResponse(sessionId, questionId, optionIds).then((result) => {
+      if (result?.error) {
+        setSaveState("error");
+        setSaveError(result.error);
+      } else if (latestAnswers.current[questionId] === optionIds) {
+        setSaveState("saved");
+      }
+      return result;
+    });
+    inFlight.current.add(p);
+    void p.finally(() => inFlight.current.delete(p));
+    return p;
+  };
+
   const persist = (questionId: string, optionIds: string[]) => {
     const existing = timers.current.get(questionId);
     if (existing) clearTimeout(existing);
     setSaveState("saving");
     setSaveError(null);
+    queued.current.set(questionId, optionIds);
     timers.current.set(
       questionId,
-      setTimeout(() => {
-        void saveResponse(sessionId, questionId, optionIds).then((result) => {
-          if (result?.error) {
-            setSaveState("error");
-            setSaveError(result.error);
-          } else if (latestAnswers.current[questionId] === optionIds) {
-            setSaveState("saved");
-          }
-        });
-      }, SAVE_DEBOUNCE_MS)
+      setTimeout(() => void send(questionId, optionIds), SAVE_DEBOUNCE_MS)
     );
+  };
+
+  // Sends every debounced answer now and waits for all outstanding saves.
+  const flushSaves = async () => {
+    for (const [questionId, optionIds] of Array.from(queued.current)) {
+      const t = timers.current.get(questionId);
+      if (t) clearTimeout(t);
+      void send(questionId, optionIds);
+    }
+    const results = await Promise.all(Array.from(inFlight.current));
+    return results.find((r) => (r as { error?: string } | undefined)?.error) as { error?: string } | undefined;
   };
 
   const toggle = (optionId: string) => {
@@ -142,6 +166,13 @@ export function ExamRunner({
   const submit = () => {
     setSubmitError(null);
     startTransition(async () => {
+      const failed = await flushSaves();
+      // On the timer's auto-submit, submit anyway: a late save is refused by RLS
+      // regardless, and holding the paper open would be worse.
+      if (failed?.error && !autoSubmitted.current) {
+        setSubmitError(`An answer could not be saved: ${failed.error}`);
+        return;
+      }
       const result = await submitSession(sessionId);
       if (result?.error) setSubmitError(result.error);
       // On success the server action redirects back to this page, which then
