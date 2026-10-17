@@ -11,7 +11,7 @@ refer to the tracker in `PLAN.md`.
 
 ---
 
-## Current state (as of 2026-10-13)
+## Current state (as of 2026-10-17)
 
 Read this section first; everything below it is the dated log of how we got here.
 
@@ -21,12 +21,12 @@ Read this section first; everything below it is the dated log of how we got here
 | Supabase project | `kwhaqhhwqykckarjbdod` | `cdvubijjepwmhhkgppbl` |
 | Site | https://nrg-platform-staging.vercel.app | the `nrg-platform` Vercel project |
 | Git branch that deploys it | `staging` | `main` |
-| Migrations applied | all 45 in `supabase/migrations/` | the first 29 (through `20260920070000`) |
+| Migrations applied | all 46 in `supabase/migrations/` | the first 29 (through `20260920070000`) |
 | `NEXT_PUBLIC_RANKING_V2` | `1` | unset |
 | `ranking_config.rules_live` | `1` (**live since 2026-10-13**) | table not there yet |
 
 - Work is pushed with `git branch -f staging main && git push origin staging`. **Do not push `main`**: local `main` is
-  45 commits ahead of `origin/main`, and that code needs the 16 prod migrations below first (CLAUDE.md, "Branches and deploys").
+  56 commits ahead of `origin/main`, and that code needs the 17 prod migrations below first (CLAUDE.md, "Branches and deploys").
 - Migrations are applied with the Supabase CLI through the pooler (CLAUDE.md). The Supabase MCP `apply_migration` call
   returned "declined" twice on 2026-10-12 without a prompt; the CLI route works.
 - Prod app and data are as shipped on 2026-09-24 (HEAD `490380b` at that time), plus one data change since: 6 miskeyed live
@@ -46,6 +46,10 @@ submissions, the review queue `/teacher/review`. Content: 460 live questions (Ja
 | Ranking v2 | Phases 1–3 done and **live on staging** (2026-10-13: `rules_live = 1`, the new XP rules, streak and mastery bonuses pay; rank comes from promotion quizzes) | "Ranking v2" entries; go-live plan below them |
 | Trophies | Phases 1–3 done and live on staging: 56 badges, award engine, celebrations, trophy case, classmates' wall, privacy switch. Launch steps rehearsed on staging (backfill + pre-mark seen) | "Trophies" entries; `docs/phase-1/TROPHY_PLAN.md` |
 | Answer keys | No longer readable with a user token; keys reach the browser only after answering (practice) or finishing (mock, case), or on staff pages | 2026-10-12 answer-key entry |
+| Table grants hardened | `anon`/`authenticated` lose privileges no policy uses (341 revokes, logged + reversible) | 2026-10-17 entry |
+| Colour-coded rationales | Practice tutor + released mock review show typed options (correct / close / priority / incorrect / not asked); untyped questions fall back to plain | 2026-10-17 entry |
+| Content protection | Students: watermark, no copy/print, blur on focus loss / screenshot keys (`NEXT_PUBLIC_CONTENT_PROTECTION`, on by default) | 2026-10-17 entry |
+| AI-bank dedup | 610 duplicates retired; pending AI queue 1,987 → 1,377 | 2026-10-17 entry; `docs/phase-1/DEDUP_REPORT.md` |
 
 ### Waiting for prod, in this order (see "Ranking v2 — prod go-live plan")
 1. Back up prod.
@@ -53,8 +57,11 @@ submissions, the review queue `/teacher/review`. Content: 460 live questions (Ja
    `20261012160000` … `20261012160600`, trophies `20261013120000`, `20261013140000`. All additive or in-place
    replacements; XP stays as today (shadow mode).
 3. Merge `staging` → `main` (prod app). Ranking flag stays off on prod.
-4. Then `20261012170000_hide_answer_keys` (it breaks the *old* prod code, so it must follow step 3).
-5. AI-bank port SQL (`PROD_PORT_RUNBOOK.md`) when Ian approves the content.
+4. Then `20261012170000_hide_answer_keys` (it breaks the *old* prod code, so it must follow step 3), checked with
+   `CONFIRM_PROD=1 node scripts/test-answer-keys.mjs --target prod` (`--pre` before it); then `20261017120000_revoke_unneeded_grants`
+   and `node scripts/test-write-paths.mjs`-style smoke checks.
+5. AI-bank port SQL (`PROD_PORT_RUNBOOK.md`) when Ian approves the content, then `data/review/prod-port/dedup-v1-prod.sql`
+   (must follow the port).
 6. Ranking + trophies: 1–2 weeks of shadow comparison, then announce (everyone restarts at level 0), set the prod flag,
    `rules_live = 1`, backfill badges and pre-mark them seen (exactly what was done on staging on 2026-10-13).
 
@@ -72,6 +79,9 @@ submissions, the review queue `/teacher/review`. Content: 460 live questions (Ja
 | Abbreviation exempt list | Ian |
 | Copyright call on 269 held-back prototype questions (recommendation: drop) | Ian |
 | Should students see inactive questions at all (question rows are still readable; keys no longer are) | Ian |
+| Drop the `_backup_*` / `_reset_*` snapshot tables, or keep them (now unreadable via the API) | Ian |
+| Promotion quiz: same pool for every level, blueprint-weighted, not topic-specific or harder by level. Change it? | Ian / Jade |
+| Miskeyed-looking AI block spec1586–1605 (9 still pending) and contradictory keys between AI items (boggy fundus, croup, catheter infection, T&T 6-week vaccines, suicide-risk replies) | Jade |
 | Subscription service Phase 0 (payout route, processor, prices) | Ian / Jade |
 | T33 human read-and-verify; T35 tell Jade M2 is delivered | Ian |
 | Jade's prod teacher account; custom SMTP before real signups | Ian |
@@ -82,13 +92,16 @@ promotion quiz is open), `case-test-teacher@…` / `case-test-student@…` (free
 
 ### Test suites (staging; each creates and deletes throwaway users)
 `node scripts/test-ranking-phase1.mjs` (19), `node scripts/test-ranking-phase2.mjs` (47), `node scripts/test-answer-keys.mjs`
-(14), `node scripts/test-trophies-phase1.mjs` (28), `node scripts/e2e-rls-test.mjs` (T34). The two ranking suites hold
+(14; `--target prod` with `CONFIRM_PROD=1`, `--pre` before the hide migration), `node scripts/test-trophies-phase1.mjs` (28),
+`node scripts/e2e-rls-test.mjs` (T34, 15; fixed 2026-10-17, it had been failing 9/15 silently), `node scripts/test-write-paths.mjs`
+(38: every app write path a user token uses). The two ranking suites hold
 `rules_live` at 0 while their shadow checks run and put back the starting value afterwards. Content gates: `npx tsx scripts/review-bank.ts --check`,
 `npx tsx scripts/import-case.ts --check`, `npx tsx scripts/plan-cases.ts --report`.
 
 ### Next up
-1. Ian reviews ranking v2 + trophies live on staging (as `ian-paid-student`), then approves the prod go-live plan.
-2. Jade's reviews (bank fix pass, case studies, config values).
+1. Ian reviews ranking v2 + trophies + today's work (colour-coded rationales, content protection) on staging (as
+   `ian-paid-student`), then approves the prod go-live plan.
+2. Jade's reviews (bank fix pass, case studies, config values) — the AI queue is now 1,377 after dedup; flag spec1586–1605 keys to him.
 3. More AI cases once the 6 are reviewed (`npx tsx scripts/plan-cases.ts --count N`, then the generator and reviewer briefs).
 
 ---
@@ -2461,8 +2474,8 @@ the student's token), so it goes AFTER the new code is live. Everything else is 
    the old rank card, but practice and mocks now record `question_attempts` and the shadow log fills.
    Check: practice, mock exams, case studies, teacher review load on prod; `SUPABASE_SERVICE_ROLE_KEY` is set on the prod
    project (it is, as a Secret) because key reads now go through the server.
-4. Apply `20261012170000_hide_answer_keys`; re-run `scripts/test-answer-keys.mjs` pointed at prod (needs a prod variant —
-   write it before go-live) or check by hand that a student token cannot select `is_correct`.
+4. Apply `20261012170000_hide_answer_keys`; run `CONFIRM_PROD=1 node scripts/test-answer-keys.mjs --target prod` (built
+   2026-10-17; run it with `--pre` before the migration too). Then `20261017120000_revoke_unneeded_grants`.
 5. Run the AI-bank review port (`data/review/prod-port/ai-port.sql`, PROD_PORT_RUNBOOK) when ready; independent of ranking.
 6. Shadow period (suggest 1–2 weeks): compare `xp_shadow` new vs old amounts per student; adjust `ranking_config` if needed.
 7. Go-live: announce to students that rank now comes from promotion quizzes and **everyone starts at level 0** (Ian,
@@ -2563,3 +2576,59 @@ Ian: "make it live on staging". Ran go-live step 7 against staging only, as a dr
   live: phase 1 19/19, phase 2 47/47, answer keys 14/14, trophies 28/28; `rules_live` confirmed 1 afterwards.
 - Rollback on staging if needed: `update public.ranking_config set value = 0 where key = 'rules_live';`.
 Prod untouched (still 29 migrations, no flag).
+
+## Session 2026-10-17 (Claude): answer-key prod test, grants hardening, colour-coded rationales, content protection, dedup, mock submit fix
+All on staging; prod untouched. Pushed to `staging`. Work was done by four parallel agents in worktrees, merged and
+re-verified together: tsc, lint and build clean; suites ranking 1 19/19, ranking 2 47/47, answer keys 14/14, trophies 28/28,
+T34 15/15, write paths 38/38.
+- **Answer-key test for prod** (`scripts/test-answer-keys.mjs`): `--target staging|prod` (prod needs `CONFIRM_PROD=1`; project
+  ref checked in URL and keys), `--pre` mode for before the hide migration (expected 4/14 on a hidden-keys DB), throwaway users
+  always deleted with a leftover-row check, no hard-coded staging ids (SKIP lines if prod lacks a case). Not run on prod.
+- **T34 suite was stale**: `e2e-rls-test.mjs` failed 9/15 on staging before today (answer-key column grants, real accounts) and
+  exited 0 anyway. Fixed: explicit `select=` on writes, admin count compared with the service role, cleanup in `finally`,
+  non-zero exit on FAIL.
+- **Grants hardening** (T34 finding #2), migration `20261017120000_revoke_unneeded_grants` (staging): TRUNCATE / TRIGGER /
+  REFERENCES / MAINTAIN from anon + authenticated everywhere; all anon writes and anon sequence use; SELECT on the snapshot tables
+  (`_backup_*`, `_reset_to_pending_20261008`, `migration_log`, which hold keys); authenticated INSERT/UPDATE/DELETE only where no
+  permissive policy covers the verb (derived from `pg_policies` at run time, so it is right on prod too). Default privileges for
+  future tables. Skips any table/verb with column grants and aborts if a column grant or an app write path would change. 341
+  revokes logged in `_grant_hardening_20261017`; rollback in the header. Visible change: refused writes now return 401/403
+  (42501) instead of affecting 0 rows. New `scripts/test-write-paths.mjs` (38) covers profile, badges toggle, avatar, calendar,
+  messaging, submit + approve, mocks, release, groups, plus 5 now-refused writes. Not done: EXECUTE on SECURITY DEFINER RPCs for
+  anon (they check `auth.uid()`; worth a review), dropping the snapshot tables (Ian). Existing bug noted, not fixed:
+  `src/lib/xp/actions.ts` student-submit failure cleanup deletes the question with the user token, which no policy allows.
+- **Colour-coded rationales** in practice tutor mode and released mock review, shared component
+  `src/components/questions/OptionReviewList.tsx` (also used by the case review now). Types loaded server-side only
+  (`src/lib/quiz/answer-keys.ts`), at the same gates as rationales; if `distractor_type` is missing (prod before the migration)
+  it re-reads without it and caches that for 10 min (fallback not exercised live). Untyped options render neutrally with only the
+  key green. Group mock pages no longer load keys at all while a member is still sitting. 28/28 browser checks on staging.
+  Not verified: SATA questions, the teacher release button.
+- **Content protection for students** (`src/components/ContentProtection.tsx`, via `DashboardShell` prop `protect`; flag
+  `NEXT_PUBLIC_CONTENT_PROTECTION`, on unless `0/off/false`, build-time): tiled watermark (name · email · user-id prefix · date),
+  no selection/copy/context menu/drag (inputs still work), print hidden + Ctrl/Cmd+P/S blocked, blur on PrintScreen /
+  Cmd+Shift / Win+Shift and on window blur or hidden tab (visual only; timers and saves continue), one-time notice. Not on
+  profile, threads, trophies, submit. Teachers/admins unaffected. 47/47 browser checks (simulated key/focus events). A web page
+  cannot block OS screenshots or phone cameras; the watermark is what makes leaks traceable. Not verified on real OS capture
+  tools, the promotion quiz runner or a timed group exam.
+- **Mock exam submit lost answers** (found during the protection test, fixed): answers save on a 600 ms debounce and submit did
+  not wait, so quick answers right before submitting were graded unanswered (browser repro on staging: 0/3 saved). Submit now
+  flushes queued saves and awaits in-flight ones (3/3); a failed save blocks a manual submit with an error, the timer's
+  auto-submit goes ahead. This bug is in live prod code too; the fix ships with the `staging` → `main` merge.
+- **Semantic dedup of the AI bank** (`scripts/dedup-bank.ts`, `docs/phase-1/DEDUP_REPORT.md`, `DEDUP_BRIEF.md`,
+  `dedup-verdicts.json`): local Ollama embeddings (`mxbai-embed-large`, stem + correct answer, mean-centred), mutual top-3
+  neighbour pairs, clusters capped at 12, every cluster judged by reviewer subagents against a brief. Thresholds 0.65 AI–AI,
+  0.60 AI–Jade, 0.70 AI–prototype (report only). Retired on staging **610** (519 AI–AI, 91 AI items duplicating a Jade
+  question, Jade's original kept): `rejected`, inactive, note `[dedup-v1 2026-10-17] RETIRED: Duplicate of …`. Spot-checked
+  precision 30/30 and 15/15. Pending AI queue **1,987 → 1,377**. Backup `_backup_dedup_questions_20261017`; rollback
+  `scripts/sql/dedup-v1-rollback-staging.sql`; prod SQL (not run, after `ai-port.sql`) `data/review/prod-port/dedup-v1-prod.sql`
+  + rollback. Embedding cache in `scripts/data/dedup/` (ignored). Left: ~565 AI pairs at 0.58–0.65 unjudged (~40 more
+  duplicates likely), prototype pool not deduped, 188 AI–prototype duplicates reported only. Findings for Jade: spec1586–1605
+  look systematically miskeyed (9 still pending: 1586, 1591, 1593, 1594, 1597, 1600, 1602, 1603, 1604); contradictory keys
+  between AI items (boggy fundus, catheter infection, croup, T&T 6-week vaccines, suicide-risk replies vs
+  `jade:nrg-new-100:q41`); Jade's `renr-100-original` repeats `sample-1`; `jade:nrg-qbank-starter-56:q26` may be miskeyed.
+- **Promotion quiz** (Ian asked whether it was built): yes, since 2026-10-12/13: 25 questions, 90 s each server-timed, pass
+  17/25, one quiz per promotion (all 24). Same pool for every level (all live standalone questions), apportioned to the RENR
+  blueprint by domain, excluding questions answered in the last 14 days. Not topic-specific and not harder at higher levels;
+  Ian to say if he wants that.
+- Housekeeping: `.gitignore` now covers `RENR Prep Guide with Sample Test.pdf` and `.claude/worktrees/`. Staging still holds 8
+  leftover "Ranking/Trophy test set" mock sets and one empty exam group from older suite runs (left alone).

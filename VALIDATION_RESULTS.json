@@ -2,7 +2,7 @@
   {
     "name": "student reads questions (limit 10)",
     "pass": true,
-    "detail": "status=200 rows=10 (total bank=1000, active=112)"
+    "detail": "status=200 rows=10 (total bank=1000, active=111)"
   },
   {
     "name": "student INSERT question blocked",
@@ -22,7 +22,7 @@
   {
     "name": "teacher INSERT question succeeds",
     "pass": true,
-    "detail": "status=201 id=08ed7872-3e7e-421b-82fd-0796168e52e9"
+    "detail": "status=201 id=2c18bfc1-3c44-4632-b173-9b91067a8549"
   },
   {
     "name": "other teacher UPDATE blocked",
@@ -42,7 +42,7 @@
   {
     "name": "teacher reads students + own row, but not other staff",
     "pass": true,
-    "detail": "status=200 rows=8 own=true student=true otherTeacher=false admin=false"
+    "detail": "status=200 rows=5 own=true student=true otherTeacher=false admin=false"
   },
   {
     "name": "admin reads all questions",
@@ -57,7 +57,7 @@
   {
     "name": "admin reads all profiles",
     "pass": true,
-    "detail": "status=200 rows=25 (all profiles=25, test users=4)"
+    "detail": "status=200 rows=26 (all profiles=26, test users=4)"
   },
   {
     "name": "anon question read blocked (refused or 0 rows)",
