@@ -44,8 +44,9 @@ export type Theme = {
   /** One line for the picker. */
   mood: string;
   dark: boolean;
-  /** Font variable (from src/app/layout.tsx) for headings and the wordmark. */
-  headingFont: "--font-poppins" | "--font-nunito" | "--font-inter";
+  /** Font variables (from src/app/layout.tsx) for headings and the wordmark, and for body text. */
+  headingFont: "--font-poppins" | "--font-nunito-rounded" | "--font-outfit" | "--font-fraunces";
+  bodyFont: "--font-inter" | "--font-nunito" | "--font-atkinson" | "--font-dm-sans";
   /** HSL triples. */
   tokens: {
     background: string;
@@ -82,7 +83,8 @@ export type Theme = {
   shadowStrength: number;
   /** Hex. `midnight` is the deepest tone, for overlays and backdrops. */
   brand: Record<BrandStep | "midnight", string>;
-  /** Watermark ink for content protection, and its layer opacity. */
+  /** Watermark ink for content protection, and its layer opacity: faint by design (Ian, 2026-10-19, "about 5%"); the
+   *  staff page /admin/watermark recovers it from a screenshot. */
   watermark: { ink: string; opacity: number };
   /** Confetti colours for celebrations. */
   confetti: string[];
@@ -96,6 +98,7 @@ export const THEMES: Record<ThemeId, Theme> = {
     mood: "The NRG classic: regal purple, crisp and focused.",
     dark: false,
     headingFont: "--font-poppins",
+    bodyFont: "--font-inter",
     tokens: {
       background: "0 0% 100%",
       foreground: "270 30% 15%",
@@ -140,17 +143,19 @@ export const THEMES: Record<ThemeId, Theme> = {
       950: "#2d1b4e",
       midnight: "#1a1030",
     },
-    watermark: { ink: "#1f1530", opacity: 0.08 },
+    watermark: { ink: "#1f1530", opacity: 0.05 },
     confetti: ["#6B2D8B", "#A35BC9", "#F2B705", "#FFD84D", "#16A34A", "#3B82F6", "#FFFFFF"],
   },
 
   // Calm light theme: Caribbean shallows over warm sand. Teal primary, sand page, softer corners, rounded headings.
+  // Shown as "Teal" (Ian, 2026-10-19); the stored id stays "lagoon" so saved choices and the profiles CHECK still hold.
   lagoon: {
     id: "lagoon",
-    name: "Lagoon",
+    name: "Teal",
     mood: "Calm Caribbean shallows: sea-glass teal on warm sand.",
     dark: false,
-    headingFont: "--font-nunito",
+    headingFont: "--font-nunito-rounded",
+    bodyFont: "--font-nunito",
     tokens: {
       background: "40 60% 99%",
       foreground: "195 45% 14%",
@@ -195,17 +200,19 @@ export const THEMES: Record<ThemeId, Theme> = {
       950: "#062d38",
       midnight: "#05222b",
     },
-    watermark: { ink: "#0b3540", opacity: 0.08 },
+    watermark: { ink: "#0b3540", opacity: 0.05 },
     confetti: ["#0E6976", "#3BB6B3", "#F2B705", "#FFD84D", "#F97F56", "#3B82F6", "#FFFFFF"],
   },
 
   // Dark theme for night study: deep blue-slate (not black), low-glare lavender primary with dark text on buttons.
+  // Atkinson Hyperlegible body text stays crisp in light-on-dark; Outfit headings.
   midnight: {
     id: "midnight",
     name: "Midnight",
     mood: "Low-glare night study: soft lavender on deep ink.",
     dark: true,
-    headingFont: "--font-inter",
+    headingFont: "--font-outfit",
+    bodyFont: "--font-atkinson",
     tokens: {
       background: "229 24% 11%",
       foreground: "230 30% 92%",
@@ -250,17 +257,19 @@ export const THEMES: Record<ThemeId, Theme> = {
       950: "#f5f2ff",
       midnight: "#08070f",
     },
-    watermark: { ink: "#ffffff", opacity: 0.045 },
+    watermark: { ink: "#ffffff", opacity: 0.035 },
     confetti: ["#C4B5FD", "#A996F0", "#F2B705", "#FFD84D", "#4ADE80", "#60A5FA", "#FFFFFF"],
   },
 
-  // Warm and distinctive: a Tobago sunset. Terracotta-coral primary on cream, plum-to-ember header band.
+  // Warm and distinctive: a Tobago sunset. Terracotta-coral primary on cream, plum-to-ember header band. Soft serif
+  // headings (Fraunces) over DM Sans body text.
   sunset: {
     id: "sunset",
     name: "Sunset",
     mood: "Warm Tobago evening: coral, ember and cream.",
     dark: false,
-    headingFont: "--font-poppins",
+    headingFont: "--font-fraunces",
+    bodyFont: "--font-dm-sans",
     tokens: {
       background: "30 100% 99%",
       foreground: "14 45% 15%",
@@ -305,7 +314,7 @@ export const THEMES: Record<ThemeId, Theme> = {
       950: "#40120b",
       midnight: "#2a0d10",
     },
-    watermark: { ink: "#3b1d14", opacity: 0.08 },
+    watermark: { ink: "#3b1d14", opacity: 0.05 },
     confetti: ["#B23A1B", "#F6815A", "#F2B705", "#FFD84D", "#7A2A55", "#16A34A", "#FFFFFF"],
   },
 };
@@ -373,6 +382,7 @@ export function themeCss(palettes: Record<string, Palette>): Record<string, Reco
     v["--radius"] = t.radius;
     v["--shadow-strength"] = String(t.shadowStrength);
     v["--font-heading"] = `var(${t.headingFont})`;
+    v["--font-body"] = `var(${t.bodyFont})`;
     v["color-scheme"] = t.dark ? "dark" : "light";
     const card = hslToHex(t.tokens.card);
     for (const name of REMAPPED_PALETTES) {

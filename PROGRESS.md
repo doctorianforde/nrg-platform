@@ -11,7 +11,7 @@ refer to the tracker in `PLAN.md`.
 
 ---
 
-## Current state (as of 2026-10-17)
+## Current state (as of 2026-10-19)
 
 Read this section first; everything below it is the dated log of how we got here.
 
@@ -48,9 +48,9 @@ submissions, the review queue `/teacher/review`. Content: 460 live questions (Ja
 | Answer keys | No longer readable with a user token; keys reach the browser only after answering (practice) or finishing (mock, case), or on staff pages | 2026-10-12 answer-key entry |
 | Table grants hardened | `anon`/`authenticated` lose privileges no policy uses (341 revokes, logged + reversible) | 2026-10-17 entry |
 | Colour-coded rationales | Practice tutor + released mock review show typed options (correct / close / priority / incorrect / not asked); untyped questions fall back to plain | 2026-10-17 entry |
-| Content protection | Students: watermark, no copy/print, blur on focus loss / screenshot keys (`NEXT_PUBLIC_CONTENT_PROTECTION`, on by default) | 2026-10-17 entry |
+| Content protection | Students: faint watermark (5%, 3.5% on Midnight), no copy/print, blur on focus loss / screenshot keys (`NEXT_PUBLIC_CONTENT_PROTECTION`, on by default); staff reveal tool `/admin/watermark` | 2026-10-17 entry; 2026-10-19 entry |
 | AI-bank dedup | 610 duplicates retired; pending AI queue 1,987 → 1,377 | 2026-10-17 entry; `docs/phase-1/DEDUP_REPORT.md` |
-| Student themes | Royal (default), Lagoon, Midnight (dark), Sunset; picker on profile + header switcher; saved in `profiles.theme` | 2026-10-17 themes entry |
+| Student themes | Royal (default), Teal (id `lagoon`), Midnight (dark), Sunset, each with its own heading + body font; picker on profile + header switcher; saved in `profiles.theme` | 2026-10-17 themes entry; 2026-10-19 entry |
 
 ### Waiting for prod, in this order (see "Ranking v2 — prod go-live plan")
 1. Back up prod.
@@ -2656,3 +2656,23 @@ landing and auth pages always Royal):
   celebration gold, the white logo PNG (a light tile on Midnight), white-background lesson images on the dashboard cards.
 - Testing checklist for tonight's launch: Claude artifact "NRG Launch Test Run" (https://claude.ai/artifact/1cwn7szyUHL1ZsKinSpShA),
   results synced across devices and readable by Claude.
+
+## Session 2026-10-19 (Claude): launch-checklist failures N1 + N2 fixed on staging
+Ian's first checklist pass (artifact "NRG Launch Test Run"): N1b, N5, N6, N7 pass; N1, N2, N3 fail with change requests.
+- **N1 themes**: "change the fonts as well and change the name of Lagoon to Teal". Each theme now has its own heading and
+  body font (`bodyFont` + `headingFont` in `src/lib/theme/themes.ts`, emitted as `--font-body` / `--font-heading`; Tailwind
+  `font-sans` now reads `--font-body`): Royal Poppins + Inter (unchanged, staff pages identical), **Teal** Nunito + Nunito
+  Sans, Midnight Outfit + Atkinson Hyperlegible, Sunset Fraunces + DM Sans. New faces self-hosted in `src/app/fonts` (OFL,
+  from fontsource), `preload: false` so only students on that theme download them. Lagoon is shown as "Teal"; the stored id
+  stays `lagoon` (no migration; the `profiles.theme` CHECK and saved choices are unchanged). Picker shows each theme's
+  body font in its description.
+- **N2/N3 watermark**: "only appear faintly … like 5% … but easily detected by image software". Opacity 0.08 → **0.05** on
+  the light themes, 0.045 → **0.035** on Midnight. New staff page **`/admin/watermark`** (admin+, linked from `/admin`):
+  load a leaked screenshot, the browser high-pass filters it (pixel minus local mean, ×gain, slider) and the tiled
+  "name · email · id prefix · date" stands out; nothing is uploaded. N3 (phone screenshot not blocked) is expected: a web
+  page cannot block OS screenshots; the watermark was present, which is the protection.
+- Verified: tsc, lint, build clean; built CSS carries the right `--font-body`/`--font-heading` per theme. Offline harness
+  (theme colours + font pairs + the real watermark tile, 2× screenshots): all four font pairs load, and the reveal filter
+  recovers the full label on every theme from the PNG, a JPEG-70 recompression and a half-size JPEG (forwarded-screenshot
+  case). **Not verified in the running app**: the live browser test against staging could not run because this machine's
+  network refused most parallel connections that evening (~17/20 to both Supabase and Vercel); Ian re-tests N1–N3 on staging.

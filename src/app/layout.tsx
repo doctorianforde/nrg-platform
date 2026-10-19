@@ -7,7 +7,7 @@ import { ThemeSync } from "@/components/theme/ThemeSync";
 import { DEFAULT_THEME, THEME_HEADER, isThemeId } from "@/lib/theme/themes";
 
 // Font stack matches the reference design (OKComputer_NRG_Website_v62):
-// Inter for UI/body, Poppins for headings, Nunito Sans for brand accents.
+// Inter for UI/body, Poppins for headings, Nunito Sans for brand accents. Student themes swap in their own pair.
 // Self-hosted (src/app/fonts, latin subset, SIL Open Font License) rather than next/font/google: fetching from Google at
 // build time failed a Vercel build on 2026-10-13, and a font download should never be able to break a deploy.
 const inter = localFont({
@@ -33,6 +33,47 @@ const nunito = localFont({
   weight: "400 700",
   display: "swap",
 });
+// Theme-only faces (src/lib/theme/themes.ts): not preloaded, so only a student on that theme downloads them.
+const nunitoRounded = localFont({
+  src: "./fonts/nunito-latin.woff2",
+  variable: "--font-nunito-rounded",
+  weight: "300 900",
+  display: "swap",
+  preload: false,
+});
+const outfit = localFont({
+  src: "./fonts/outfit-latin.woff2",
+  variable: "--font-outfit",
+  weight: "300 800",
+  display: "swap",
+  preload: false,
+});
+const atkinson = localFont({
+  src: [
+    { path: "./fonts/atkinson-400-latin.woff2", weight: "400" },
+    { path: "./fonts/atkinson-700-latin.woff2", weight: "700" },
+  ],
+  variable: "--font-atkinson",
+  display: "swap",
+  preload: false,
+});
+const fraunces = localFont({
+  src: "./fonts/fraunces-latin.woff2",
+  variable: "--font-fraunces",
+  weight: "300 800",
+  display: "swap",
+  preload: false,
+});
+const dmSans = localFont({
+  src: "./fonts/dm-sans-latin.woff2",
+  variable: "--font-dm-sans",
+  weight: "300 800",
+  display: "swap",
+  preload: false,
+});
+const FONT_VARIABLES = [inter, poppins, nunito, nunitoRounded, outfit, atkinson, fraunces, dmSans]
+  .map((f) => f.variable)
+  .join(" ");
 
 export const metadata: Metadata = {
   title: "NRG Platform",
@@ -53,7 +94,7 @@ export default function RootLayout({
     <html
       lang="en"
       data-theme={theme}
-      className={`${inter.variable} ${poppins.variable} ${nunito.variable}`}
+      className={FONT_VARIABLES}
       suppressHydrationWarning
     >
       <body className="font-sans antialiased">

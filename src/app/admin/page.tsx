@@ -1,4 +1,5 @@
 import { requireRole } from "@/lib/auth/session";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import type { Database } from "@/lib/supabase/types";
 import { DashboardShell } from "@/components/DashboardShell";
@@ -422,6 +423,16 @@ export default async function Page() {
           </p>
         </Card>
       </div>
+
+      <Card className="mt-8">
+        <CardTitle>Leaked question screenshots</CardTitle>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Every student page carries a faint watermark naming the account. Load a screenshot to reveal it.
+        </p>
+        <Link href="/admin/watermark" className="mt-3 inline-block text-sm font-semibold text-primary hover:underline">
+          Reveal a watermark →
+        </Link>
+      </Card>
     </DashboardShell>
   );
 }

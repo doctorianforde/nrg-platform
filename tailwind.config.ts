@@ -87,8 +87,9 @@ const config: Config = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
-        // --font-heading is set per theme (Poppins, Nunito Sans or Inter, all self-hosted).
+        // --font-body and --font-heading are set per theme (src/lib/theme/themes.ts; all self-hosted, Royal = Inter +
+        // Poppins). Inter stays the fallback.
+        sans: ["var(--font-body)", "var(--font-inter)", "system-ui", "sans-serif"],
         heading: ["var(--font-heading)", "var(--font-inter)", "sans-serif"],
         brand: ["var(--font-nunito)", "var(--font-inter)", "sans-serif"],
       },

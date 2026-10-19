@@ -4,7 +4,7 @@
 
 /*
  * Design tokens: one CSS-variable block per theme, generated from src/lib/theme/themes.ts by the plugin in
- * tailwind.config.ts (`:root, [data-theme="royal"]` is the default; lagoon, midnight and sunset follow). The theme is
+ * tailwind.config.ts (`:root, [data-theme="royal"]` is the default; lagoon (shown as "Teal"), midnight and sunset follow). The theme is
  * server-rendered on <html data-theme> (src/app/layout.tsx); any element may carry its own data-theme (the picker's
  * previews do). `color-scheme` comes with each block, so form controls and scrollbars match.
  */

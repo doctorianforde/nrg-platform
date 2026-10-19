@@ -13,7 +13,7 @@ export function ThemePreview({ theme, className }: { theme: Theme; className?: s
     <div
       data-theme={theme.id}
       aria-hidden="true"
-      className={cn("overflow-hidden rounded-lg border border-border bg-muted text-left", className)}
+      className={cn("overflow-hidden rounded-lg border border-border bg-muted text-left font-sans", className)}
     >
       <div className="bg-gradient-to-r from-header-from via-header-via to-header-to px-3 py-2.5">
         <div className="font-heading text-[13px] font-bold leading-tight text-header-foreground">Study</div>
@@ -74,7 +74,9 @@ export function ThemePicker({ initial }: { initial: ThemeId }) {
                     {t.name}
                     {t.dark ? <span className="ml-1.5 align-middle text-[10px] font-medium uppercase tracking-wide text-muted-foreground">Dark</span> : null}
                   </div>
-                  <p className="mt-0.5 text-xs leading-snug text-muted-foreground">{t.mood}</p>
+                  <p className="mt-0.5 text-xs leading-snug text-muted-foreground" style={{ fontFamily: `var(${t.bodyFont})` }}>
+                    {t.mood}
+                  </p>
                 </div>
                 <span
                   className={cn(

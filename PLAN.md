@@ -8,7 +8,7 @@ for *what actually happened*, this file is for *what's left and who does it*.
 ## Status legend
 `done` · `pending` · `needs-verify` (marked done before, not re-confirmed) · `blocked`
 
-**Updated 2026-10-17.** Staging holds all 47 migrations in `supabase/migrations/`; prod holds the first 29 (through
+**Updated 2026-10-19.** Staging holds all 47 migrations in `supabase/migrations/`; prod holds the first 29 (through
 `20260920070000`). The other 18 (bank review, case studies, ranking v2, answer-key hiding, trophies, grants hardening, themes) wait for the prod go-live plan in
 `PROGRESS.md`. Deploys: branch `staging` → staging site, branch `main` → prod; local `main` is pushed only to `staging` for
 now. Ranking v2 and trophies are **live on staging** (`rules_live = 1`, flag on) for Ian's review.
@@ -26,8 +26,8 @@ actually needs to do it.
 |---|---|---|
 | **Prod go-live: 18 migrations, merge `staging` → `main`, then hide answer keys + grants hardening** | **Ian** (approve + timing), **AI** (run it) | Order and checks in `PROGRESS.md` → "Ranking v2 — prod go-live plan". The answer-key migration must follow the code deploy; the prod answer-key test is ready (`test-answer-keys.mjs --target prod`, 2026-10-17). Back up prod first. |
 | Mock exam submit dropped answers saved <600 ms before submitting | **Fixed on staging** (Claude, 2026-10-17) | Bug is in live prod code; the fix ships with the merge to `main`. |
-| Content protection for students ("disable screenshots") | **Done on staging** (Claude, 2026-10-17) — **Ian**: try it on a real phone/Mac/Windows | Watermark + no copy/print + blur on focus loss/screenshot keys; flag `NEXT_PUBLIC_CONTENT_PROTECTION`. True screenshot blocking is impossible on the web; the watermark makes leaks traceable. |
-| Student themes (4: Royal, Lagoon, Midnight, Sunset) | **Done on staging** (Claude, 2026-10-17) — **Ian**: try them (checklist N1) | Migration `20261017180000_profile_theme` must reach prod before the merge. |
+| Content protection for students ("disable screenshots") | **Done on staging** (Claude, 2026-10-17); watermark made faint (5%) + staff reveal tool `/admin/watermark` (2026-10-19, Ian's N2 note) — **Ian**: re-test N2/N3, try Windows (N4) | Watermark + no copy/print + blur on focus loss/screenshot keys; flag `NEXT_PUBLIC_CONTENT_PROTECTION`. True screenshot blocking is impossible on the web; the watermark makes leaks traceable. |
+| Student themes (4: Royal, Teal, Midnight, Sunset) | **Done on staging** (Claude, 2026-10-17); per-theme fonts + Lagoon renamed Teal (2026-10-19, Ian's N1 note) — **Ian**: re-test N1 | Migration `20261017180000_profile_theme` must reach prod before the merge. |
 | Launch testing checklist | **Ian** | https://claude.ai/artifact/1cwn7szyUHL1ZsKinSpShA — 36 checks, synced; Claude reads failures from it. |
 | Promotion quiz topic-specific / harder by level? | **Ian / Jade** (decision) | Built 2026-10-12/13 as one blueprint-weighted pool for all 24 levels. Changing it is a contained edit to `start_promotion_quiz()`. |
 | Answer keys hidden from user tokens | **Done on staging** (Claude, 2026-10-12) | Students and teachers could read every key and explanation through the API (promotion quiz and mock exams exposed). Now keys reach the browser only after answering (practice), after finishing (mock, case), or on staff pages. 14/14 tests. Goes to prod as step 4 of the go-live plan. |
