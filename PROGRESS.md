@@ -2674,5 +2674,8 @@ Ian's first checklist pass (artifact "NRG Launch Test Run"): N1b, N5, N6, N7 pas
 - Verified: tsc, lint, build clean; built CSS carries the right `--font-body`/`--font-heading` per theme. Offline harness
   (theme colours + font pairs + the real watermark tile, 2× screenshots): all four font pairs load, and the reveal filter
   recovers the full label on every theme from the PNG, a JPEG-70 recompression and a half-size JPEG (forwarded-screenshot
-  case). **Not verified in the running app**: the live browser test against staging could not run because this machine's
-  network refused most parallel connections that evening (~17/20 to both Supabase and Vercel); Ian re-tests N1–N3 on staging.
+  case). Then live on the deployed staging site (throwaway student + admin, deleted): each theme renders its own font pair,
+  watermark opacity 0.05/0.035 as set, picker shows Teal, `/admin` links the tool, students are turned away from it, and the
+  reveal page recovered the student's id prefix from a real 2× practice screenshot (16/17; the one miss was the test's own
+  name check reading the preview text first). A local dev run was not possible: this machine's network refused most
+  parallel connections that evening. Ian re-tests N1–N3 on staging.
