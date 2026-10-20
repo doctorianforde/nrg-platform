@@ -61,9 +61,6 @@ function watermarkUri(label: string, color: string, opacity: number) {
   return `url("data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}")`;
 }
 
-/** Opaque surfaces the watermark is painted on, besides the page itself. Translucent ones (`bg-muted/40` …) let the
- *  surface underneath show through, so they need nothing. */
-const SURFACES = [".bg-card", ".bg-muted", ".bg-brand-50", ".bg-white", ".bg-popover", ".bg-card\\/95"];
 const WM_CLASS = "cp-watermarked";
 
 const isEditable = (t: EventTarget | null) =>
@@ -86,10 +83,11 @@ export function ContentProtection({
 
   const label = `${identity} · ${date}`;
   // One tile per theme, in that theme's ink: dark ink on the light themes, white on the dark one, each at its own
-  // opacity (themes.ts). It is painted as a background on the page and on every opaque surface, pinned to the window
-  // (background-attachment: fixed) so the tiles line up across cards; text and controls sit on top of it.
+  // opacity (themes.ts). It is painted on the page background only (Ian, 2026-10-20: "send it to the background"):
+  // cards, questions and options stay clean, so a capture shows it in the margins around them, not on the content.
   const watermarkCss = useMemo(() => {
-    const targets = ["body", ...SURFACES].map((sel) => `html.${WM_CLASS} ${sel}`).join(", ");
+    // The page background is DashboardShell's full-screen wrapper (it covers <body>).
+    const targets = `html.${WM_CLASS} [data-page-background]`;
     return (
       THEME_LIST.map(
         (t) => `html.${WM_CLASS}[data-theme="${t.id}"] { --cp-wm: ${watermarkUri(label, t.watermark.ink, t.watermark.opacity)}; }`

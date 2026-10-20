@@ -2671,7 +2671,10 @@ Ian's first checklist pass (artifact "NRG Launch Test Run"): N1b, N5, N6, N7 pas
   the light themes, 0.045 → **0.035** on Midnight. Then (Ian: "still on top of the content, I would like it behind") the
   overlay layer was replaced by a pre-tilted, seamless SVG tile painted as a background (window-pinned) on the page and on
   opaque surfaces (`bg-card`, `bg-muted`, `bg-brand-50`, `bg-white`, `bg-popover`), so text, buttons and coloured panels
-  sit on top of it; coloured rationale panels and buttons carry no mark. Reveal still recovers the label (offline harness). New staff page **`/admin/watermark`** (admin+, linked from `/admin`):
+  sit on top of it; coloured rationale panels and buttons carry no mark. Reveal still recovers the label (offline harness).
+  Then (Ian, 2026-10-20: still over the content; background or remove) it moved to the **page background only**: painted on
+  DashboardShell's full-screen wrapper (`data-page-background`), not on cards, questions or options. A capture carries it
+  in the margins around the cards; a crop to a single card does not. New staff page **`/admin/watermark`** (admin+, linked from `/admin`):
   also in the top menu as "Reveal watermark" for admins and super admins (added after Ian could not find the card at the bottom
   of `/admin`); load a leaked screenshot, the browser high-pass filters it (pixel minus local mean, ×gain, slider) and the tiled
   "name · email · id prefix · date" stands out; nothing is uploaded. N3 (phone screenshot not blocked) is expected: a web

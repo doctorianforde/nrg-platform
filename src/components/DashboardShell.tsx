@@ -47,7 +47,7 @@ export function DashboardShell({
 }) {
   const protectedView = protect && flags.contentProtection && profile.role === "student";
   return (
-    <div className="min-h-screen bg-muted">
+    <div className="min-h-screen bg-muted" data-page-background="">
       <header className="sticky top-0 z-20 bg-card/95 backdrop-blur border-b border-brand-100 shadow-sm">
         <div className="mx-auto max-w-6xl px-4 h-16 flex items-center gap-6">
           <Link href="/" className="flex items-center gap-2 font-brand font-bold tracking-tight text-brand-800">
