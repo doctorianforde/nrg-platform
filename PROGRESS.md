@@ -2668,7 +2668,10 @@ Ian's first checklist pass (artifact "NRG Launch Test Run"): N1b, N5, N6, N7 pas
   stays `lagoon` (no migration; the `profiles.theme` CHECK and saved choices are unchanged). Picker shows each theme's
   body font in its description.
 - **N2/N3 watermark**: "only appear faintly … like 5% … but easily detected by image software". Opacity 0.08 → **0.05** on
-  the light themes, 0.045 → **0.035** on Midnight. New staff page **`/admin/watermark`** (admin+, linked from `/admin`):
+  the light themes, 0.045 → **0.035** on Midnight. Then (Ian: "still on top of the content, I would like it behind") the
+  overlay layer was replaced by a pre-tilted, seamless SVG tile painted as a background (window-pinned) on the page and on
+  opaque surfaces (`bg-card`, `bg-muted`, `bg-brand-50`, `bg-white`, `bg-popover`), so text, buttons and coloured panels
+  sit on top of it; coloured rationale panels and buttons carry no mark. Reveal still recovers the label (offline harness). New staff page **`/admin/watermark`** (admin+, linked from `/admin`):
   also in the top menu as "Reveal watermark" for admins and super admins (added after Ian could not find the card at the bottom
   of `/admin`); load a leaked screenshot, the browser high-pass filters it (pixel minus local mean, ×gain, slider) and the tiled
   "name · email · id prefix · date" stands out; nothing is uploaded. N3 (phone screenshot not blocked) is expected: a web

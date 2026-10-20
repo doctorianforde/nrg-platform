@@ -25,22 +25,46 @@ const escapeXml = (s: string) =>
   s.replace(/[<>&'"]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", "'": "&apos;", '"': "&quot;" })[c] as string);
 
 /**
- * Watermark tile as an SVG data URI: horizontal text in brick-staggered rows (one copy centred on the upper row, one
- * split across the edges of the lower row, completed by the neighbouring tile). The tilt comes from rotating the
- * whole tiled layer in CSS, so copies never collide.
+ * Watermark tile as an SVG data URI, drawn already tilted so it can be a plain repeating background (behind the content,
+ * Ian 2026-10-19) rather than a rotated overlay on top of it. The tile is W×H with the text running along its diagonal
+ * direction (W, −H), so that direction is a lattice vector and every line of text continues seamlessly into the
+ * neighbouring tiles. Four parallel lines per tile; each copy is also drawn shifted by ±W / ±H so the parts that cross
+ * the tile edge are completed by the neighbours. Opacity is baked into the ink (a background image has no opacity).
  */
-function watermarkUri(label: string, color: string) {
+function watermarkUri(label: string, color: string, opacity: number) {
   const text = escapeXml(label);
-  const w = Math.max(360, Math.ceil(label.length * 8.8) + 110);
-  const h = 150;
-  const at = (x: number, y: number) => `<text x="${x}" y="${y}" text-anchor="middle" dominant-baseline="middle">${text}</text>`;
+  const D = Math.ceil(label.length * 8.8) + 140; // period along a line: the text plus a gap
+  const ANGLE = (28 * Math.PI) / 180;
+  const W = Math.round(D * Math.cos(ANGLE)), H = Math.round(D * Math.sin(ANGLE));
+  const deg = (-Math.atan2(H, W) * 180) / Math.PI;
+  const len = Math.hypot(W, H);
+  const texts: string[] = [];
+  for (let k = 0; k < 4; k++) {
+    // Line k crosses the top edge at x = kW/4; slide each line's copy along it so the rows are staggered.
+    const f = (k * 0.37) % 1;
+    const cx = (k * W) / 4 + f * W, cy = -f * H;
+    for (const dx of [-W, 0, W, 2 * W]) {
+      for (const dy of [-H, 0, H, 2 * H]) {
+        const x = cx + dx, y = cy + dy;
+        if (x < -len / 2 || x > W + len / 2 || y < -len / 2 || y > H + len / 2) continue;
+        if (Math.max(Math.abs(x - W / 2) - W / 2, 0) ** 2 + Math.max(Math.abs(y - H / 2) - H / 2, 0) ** 2 > (len / 2) ** 2) continue;
+        const X = x.toFixed(1), Y = y.toFixed(1);
+        texts.push(`<text x="${X}" y="${Y}" transform="rotate(${deg.toFixed(3)} ${X} ${Y})" text-anchor="middle" dominant-baseline="middle">${text}</text>`);
+      }
+    }
+  }
   const svg =
-    `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}">` +
-    `<g fill="${color}" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="600">` +
-    at(w / 2, h / 4) + at(0, (3 * h) / 4) + at(w, (3 * h) / 4) +
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">` +
+    `<g fill="${color}" fill-opacity="${opacity}" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="600">` +
+    texts.join("") +
     `</g></svg>`;
   return `url("data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}")`;
 }
+
+/** Opaque surfaces the watermark is painted on, besides the page itself. Translucent ones (`bg-muted/40` …) let the
+ *  surface underneath show through, so they need nothing. */
+const SURFACES = [".bg-card", ".bg-muted", ".bg-brand-50", ".bg-white", ".bg-popover", ".bg-card\\/95"];
+const WM_CLASS = "cp-watermarked";
 
 const isEditable = (t: EventTarget | null) =>
   t instanceof Element && !!t.closest("input, textarea, select, [contenteditable=''], [contenteditable='true']");
@@ -62,16 +86,17 @@ export function ContentProtection({
 
   const label = `${identity} · ${date}`;
   // One tile per theme, in that theme's ink: dark ink on the light themes, white on the dark one, each at its own
-  // opacity (themes.ts), so the mark stays visible but quiet whichever theme the student picked.
-  const watermarkCss = useMemo(
-    () =>
+  // opacity (themes.ts). It is painted as a background on the page and on every opaque surface, pinned to the window
+  // (background-attachment: fixed) so the tiles line up across cards; text and controls sit on top of it.
+  const watermarkCss = useMemo(() => {
+    const targets = ["body", ...SURFACES].map((sel) => `html.${WM_CLASS} ${sel}`).join(", ");
+    return (
       THEME_LIST.map(
-        (t) =>
-          `[data-theme="${t.id}"] .cp-watermark { opacity: ${t.watermark.opacity}; }\n` +
-          `[data-theme="${t.id}"] .cp-watermark::before { background-image: ${watermarkUri(label, t.watermark.ink)}; }`
-      ).join("\n"),
-    [label]
-  );
+        (t) => `html.${WM_CLASS}[data-theme="${t.id}"] { --cp-wm: ${watermarkUri(label, t.watermark.ink, t.watermark.opacity)}; }`
+      ).join("\n") +
+      `\n${targets} { background-image: var(--cp-wm); background-repeat: repeat; background-attachment: fixed; }`
+    );
+  }, [label]);
 
   useEffect(() => {
     try {
@@ -79,6 +104,11 @@ export function ContentProtection({
     } catch {
       /* storage blocked: skip the one-time notice */
     }
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.classList.add(WM_CLASS);
+    return () => document.documentElement.classList.remove(WM_CLASS);
   }, []);
 
   useEffect(() => {
@@ -238,9 +268,6 @@ export function ContentProtection({
           -webkit-user-select: text; user-select: text; -webkit-touch-callout: default;
         }
         .cp-root img { -webkit-user-drag: none; }
-        .cp-watermark { position: fixed; inset: 0; z-index: 35; pointer-events: none; overflow: hidden; opacity: 0.08; }
-        .cp-watermark::before { content: ""; position: absolute; left: 50%; top: 50%; width: 250vmax; height: 250vmax;
-          transform: translate(-50%, -50%) rotate(-28deg); background-repeat: repeat; }
         ${watermarkCss}
         .cp-shield { position: fixed; inset: 0; z-index: 60; pointer-events: none; display: flex; align-items: center;
           justify-content: center; opacity: 0; visibility: hidden; background: hsl(var(--muted) / 0.9);
@@ -249,7 +276,7 @@ export function ContentProtection({
         .cp-print-notice { display: none; }
         @media print {
           body * { visibility: hidden !important; }
-          .cp-watermark, .cp-shield { display: none !important; }
+          .cp-shield { display: none !important; }
           .cp-print-notice, .cp-print-notice * { visibility: visible !important; }
           .cp-print-notice { display: block !important; position: absolute; top: 0; left: 0; right: 0; padding: 48px;
             font: 16px/1.5 Arial, Helvetica, sans-serif; color: #000; text-align: center; }
@@ -278,7 +305,6 @@ export function ContentProtection({
       ) : null}
         {children}
       </div>
-      <div className="cp-watermark" aria-hidden="true" data-testid="cp-watermark" />
       <div className="cp-shield" aria-hidden="true" data-testid="cp-shield">
         <div className="rounded-xl border border-brand-100 bg-card px-6 py-4 text-center text-sm text-card-foreground shadow-sm">
           Content hidden while this window is not in focus.
