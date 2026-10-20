@@ -80,7 +80,7 @@ export function DashboardShell({
             </span>
             <span className="hidden opacity-80 sm:inline">{email}</span>
             <form action="/auth/signout" method="post">
-              <button className="rounded-full border border-border px-3 py-1 font-medium text-muted-foreground transition-colors hover:border-brand-300 hover:bg-muted hover:text-foreground">
+              <button className="whitespace-nowrap rounded-full border border-border px-3 py-1 font-medium text-muted-foreground transition-colors hover:border-brand-300 hover:bg-muted hover:text-foreground">
                 Sign out
               </button>
             </form>

@@ -24,7 +24,7 @@ export function NavLinks({ items }: { items: NavItem[] }) {
             href={n.href}
             aria-current={isActive ? "page" : undefined}
             className={cn(
-              "rounded-full px-3.5 py-1.5 font-medium transition-colors",
+              "whitespace-nowrap rounded-full px-3.5 py-1.5 font-medium transition-colors",
               isActive
                 ? "bg-brand-100 text-brand-800 shadow-sm"
                 : "text-muted-foreground hover:bg-brand-50/70 hover:text-brand-700"

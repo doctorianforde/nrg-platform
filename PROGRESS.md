@@ -2763,11 +2763,14 @@ literals on themed pages — and zero logic changes)
   zebra+hover tables, weightier decision buttons (same flow), amber reviewer-notes panel, release-rationales as a
   deliberate confirmation card, admin section ticks, watermark tool chrome only (canvas/processing logic untouched).
 
-**Verified**: `npx tsc --noEmit`, `npx next lint`, `npx next build` all clean. Local visual smoke test (Playwright,
-dev server pointed at the staging DB): landing + login screenshots confirmed. Signed-in pages could not be checked
-locally (the supabase browser client doesn't persist its cookie over plain-http localhost; works over https) — **check
-them on the staging site**. Note while testing: `.env.local`'s primary vars point at **prod**, so `next dev` without
-overrides runs the local app against prod.
+**Verified**: `npx tsc --noEmit`, `npx next lint`, `npx next build` all clean. Visual smoke test (Playwright + Chrome
+against a local dev server on the staging DB, behind a throwaway local **https** proxy — the supabase browser client
+doesn't persist its auth cookie over plain-http localhost, and this network blocks browsers from reaching the staging
+site directly): landing, login, study lobby (Royal, Midnight, Sunset — watermark intact in the margins), mock exams,
+teacher dashboard and review queue all confirmed good. `/admin` couldn't be captured (repeated "Failed to fetch" to
+Supabase on this network, plus it needs `SUPABASE_SERVICE_ROLE_KEY` set — use the **staging** one locally); it shares
+the same shell/vocabulary as the verified teacher pages. Note while testing: `.env.local`'s primary vars point at
+**prod**, so `next dev` without overrides runs the local app against prod.
 
 **For Ian to review on staging** (as `ian-paid-student`, all 4 themes, plus teacher/admin accounts): overall look,
 the banner overlap on every page, Midnight (dark) contrast, and that content protection still watermarks correctly.
