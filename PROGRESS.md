@@ -2669,7 +2669,8 @@ Ian's first checklist pass (artifact "NRG Launch Test Run"): N1b, N5, N6, N7 pas
   body font in its description.
 - **N2/N3 watermark**: "only appear faintly … like 5% … but easily detected by image software". Opacity 0.08 → **0.05** on
   the light themes, 0.045 → **0.035** on Midnight. New staff page **`/admin/watermark`** (admin+, linked from `/admin`):
-  load a leaked screenshot, the browser high-pass filters it (pixel minus local mean, ×gain, slider) and the tiled
+  also in the top menu as "Reveal watermark" for admins and super admins (added after Ian could not find the card at the bottom
+  of `/admin`); load a leaked screenshot, the browser high-pass filters it (pixel minus local mean, ×gain, slider) and the tiled
   "name · email · id prefix · date" stands out; nothing is uploaded. N3 (phone screenshot not blocked) is expected: a web
   page cannot block OS screenshots; the watermark was present, which is the protection.
 - Verified: tsc, lint, build clean; built CSS carries the right `--font-body`/`--font-heading` per theme. Offline harness
