@@ -88,8 +88,9 @@ submissions, the review queue `/teacher/review`. Content: 460 live questions (Ja
 | T33 human read-and-verify; T35 tell Jade M2 is delivered | Ian |
 | Jade's prod teacher account; custom SMTP before real signups | Ian |
 
-### Staging test accounts (passwords are not kept in the repo)
-`ian-teacher@nrg-staging.test` (teacher, premium), `ian-paid-student@nrg-staging.test` (student, premium; has 260 XP so the
+### Staging test accounts (passwords are not kept in the repo; Ian's copy is the git-ignored `TEST_ACCOUNTS.local.md`)
+`ian-admin@nrg-staging.test` (admin) and `ian-super-admin@nrg-staging.test` (super_admin), both added 2026-10-20 for
+admin-page testing; `ian-teacher@nrg-staging.test` (teacher, premium), `ian-paid-student@nrg-staging.test` (student, premium; has 260 XP so the
 promotion quiz is open), `case-test-teacher@…` / `case-test-student@…` (free), `jade@nrg-staging.test` (Jade, teacher).
 
 ### Test suites (staging; each creates and deletes throwaway users)
