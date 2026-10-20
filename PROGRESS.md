@@ -21,16 +21,19 @@ Read this section first; everything below it is the dated log of how we got here
 | Supabase project | `kwhaqhhwqykckarjbdod` | `cdvubijjepwmhhkgppbl` |
 | Site | https://nrg-platform-staging.vercel.app | the `nrg-platform` Vercel project |
 | Git branch that deploys it | `staging` | `main` |
-| Migrations applied | all 48 in `supabase/migrations/` | the first 29 (through `20260920070000`) |
+| Migrations applied | all 48 in `supabase/migrations/` | all 48 (**since 2026-10-20**) |
+| App | `ebbafd8` | `ebbafd8` (same code, **since 2026-10-20**) |
 | `NEXT_PUBLIC_RANKING_V2` | `1` | unset |
-| `ranking_config.rules_live` | `1` (**live since 2026-10-13**) | table not there yet |
+| `ranking_config.rules_live` | `1` (**live since 2026-10-13**) | `0` (shadow: prod students keep today's XP) |
 
-- Work is pushed with `git branch -f staging main && git push origin staging`. **Do not push `main`**: local `main` is
-  58 commits ahead of `origin/main`, and that code needs the 19 prod migrations below first (CLAUDE.md, "Branches and deploys").
+- Work is pushed with `git branch -f staging main && git push origin staging`; push `main` only after any new migration is
+  applied to prod (CLAUDE.md, "Branches and deploys"). Since the 2026-10-20 go-live, `main` = `staging` = `origin/main`.
 - Migrations are applied with the Supabase CLI through the pooler (CLAUDE.md). The Supabase MCP `apply_migration` call
   returned "declined" twice on 2026-10-12 without a prompt; the CLI route works.
-- Prod app and data are as shipped on 2026-09-24 (HEAD `490380b` at that time), plus one data change since: 6 miskeyed live
-  questions deactivated on Ian's instruction (2026-10-05).
+- Prod went live with everything on 2026-10-20 (see that day's go-live entry): all migrations, the redesign, case studies,
+  trophies (hidden behind the ranking flag), themes, content protection, hidden answer keys, hardened grants, generation
+  requests. Prod **content** is unchanged: 460 Jade questions (454 live after the 6 deactivated on 2026-10-05), the 2,000 AI
+  questions inactive and in their original form (the reviewed rewrites are not ported yet), no case studies.
 
 ### Live on prod (unchanged since 2026-09-24)
 Practice/tutor mode, flashcards, mock exams (solo + group, timer, rationale release), fatigue analysis, student profile,
@@ -54,6 +57,7 @@ submissions, the review queue `/teacher/review`. Content: 460 live questions (Ja
 | Student themes | Royal (default), Teal (id `lagoon`), Midnight (dark), Sunset, each with its own heading + body font; picker on profile + header switcher; saved in `profiles.theme` | 2026-10-17 themes entry; 2026-10-19 entry |
 
 ### Waiting for prod, in this order (see "Ranking v2 — prod go-live plan")
+Steps 1–4 **done 2026-10-20** (go-live entry at the end of this file). Left: 5 and 6.
 1. Back up prod.
 2. Migrations `20261004181457`, `20261004194204`, `20261009000911`, `20261009003423`, `20261012124123`, `20261012150000`,
    `20261012160000` … `20261012160600`, trophies `20261013120000`, `20261013140000`, themes `20261017180000` (must precede
@@ -2791,3 +2795,25 @@ the banner overlap on every page, Midnight (dark) contrast, and that content pro
   are cancelled on staging.
 - **Not done:** not committed or pushed (the staging site doesn't have it yet). Prod needs `20261020120000` before the
   merge to `main`.
+
+## Prod go-live, steps 1–4 (2026-10-20) — done
+Ian authorised bringing prod up to date. Claude's own prod writes were blocked by Claude Code's auto-mode guard, so Claude
+prepared and checked each step and **Ian ran the prod commands in his terminal**; Claude pushed nothing to prod itself.
+Helper: a session-scratchpad `prod.cjs` (pooler connection, password from `.env.local`; `apply <version…>` runs each
+migration file in one transaction and records it in `supabase_migrations.schema_migrations`, like the CLI).
+1. **Backup** (Claude, read-only): every `public` + `supabase_migrations` table (27 tables, 16,127 rows) plus all functions,
+   policies, grants, triggers, constraints and indexes as JSON, in `~/NRG-backups/prod-2026-10-20-pre-golive` (outside the
+   repo: it holds user data; auth users not included, nothing touched them). Preflight matched the record: 29 migrations,
+   2,460 questions (454 live), 2 accounts.
+2. **17 migrations** (Ian): `20261004181457` … `20261012160600`, trophies, badge wall, themes, generation requests: all
+   `APPLIED`. `rules_live` stays 0 (shadow).
+3. **App** (Ian): `main` fast-forwarded to `staging` and pushed (`3f8e0f2..ebbafd8`); Vercel `nrg-platform` deploy
+   `dpl_5jU1gR78SBfrDQuSmZvWE4V2SEn7` READY; Ian checked practice, mock exams, case studies and Generate on prod: all load.
+4. **Answer keys + grants** (Ian): `test-answer-keys.mjs --target prod --pre` 13/13 (keys still readable, as expected) →
+   `20261012170000_hide_answer_keys` → the same test 13/13 (student and teacher reads of `is_correct`, rationales, option
+   types, explanations now 403; stems/options 200; practice grading 200; case grading skipped: prod has no cases yet) →
+   `20261017120000_revoke_unneeded_grants` APPLIED (its built-in assertions passed).
+Not done (decisions, not technical steps): **5** the AI-bank port (Ian approves the content), then the dedup SQL; **6** ranking +
+trophies launch (shadow comparison, student announcement, everyone restarts at level 0, flag + `rules_live`, badge backfill).
+Prod migrations were applied in this order rather than by timestamp. All 48 are now recorded, so a future
+`supabase db push` sees nothing older pending.
