@@ -11,7 +11,7 @@ refer to the tracker in `PLAN.md`.
 
 ---
 
-## Current state (as of 2026-10-19)
+## Current state (as of 2026-10-20)
 
 Read this section first; everything below it is the dated log of how we got here.
 
@@ -21,12 +21,12 @@ Read this section first; everything below it is the dated log of how we got here
 | Supabase project | `kwhaqhhwqykckarjbdod` | `cdvubijjepwmhhkgppbl` |
 | Site | https://nrg-platform-staging.vercel.app | the `nrg-platform` Vercel project |
 | Git branch that deploys it | `staging` | `main` |
-| Migrations applied | all 47 in `supabase/migrations/` | the first 29 (through `20260920070000`) |
+| Migrations applied | all 48 in `supabase/migrations/` | the first 29 (through `20260920070000`) |
 | `NEXT_PUBLIC_RANKING_V2` | `1` | unset |
 | `ranking_config.rules_live` | `1` (**live since 2026-10-13**) | table not there yet |
 
 - Work is pushed with `git branch -f staging main && git push origin staging`. **Do not push `main`**: local `main` is
-  58 commits ahead of `origin/main`, and that code needs the 18 prod migrations below first (CLAUDE.md, "Branches and deploys").
+  58 commits ahead of `origin/main`, and that code needs the 19 prod migrations below first (CLAUDE.md, "Branches and deploys").
 - Migrations are applied with the Supabase CLI through the pooler (CLAUDE.md). The Supabase MCP `apply_migration` call
   returned "declined" twice on 2026-10-12 without a prompt; the CLI route works.
 - Prod app and data are as shipped on 2026-09-24 (HEAD `490380b` at that time), plus one data change since: 6 miskeyed live
@@ -50,6 +50,7 @@ submissions, the review queue `/teacher/review`. Content: 460 live questions (Ja
 | Colour-coded rationales | Practice tutor + released mock review show typed options (correct / close / priority / incorrect / not asked); untyped questions fall back to plain | 2026-10-17 entry |
 | Content protection | Students: faint watermark (5%, 3.5% on Midnight), no copy/print, blur on focus loss / screenshot keys (`NEXT_PUBLIC_CONTENT_PROTECTION`, on by default); staff reveal tool `/admin/watermark` | 2026-10-17 entry; 2026-10-19 entry |
 | AI-bank dedup | 610 duplicates retired; pending AI queue 1,987 → 1,377 | 2026-10-17 entry; `docs/phase-1/DEDUP_REPORT.md` |
+| Generation requests | Prompted and automatic modes for the MCQ generator and the case planner; shared request/plan/interpreter in `src/lib/generation/`; CLI `scripts/generation-request.ts`; queue table `generation_requests`. UI waits for the redesign | 2026-10-20 entry; `docs/phase-1/GENERATION_REQUESTS.md` |
 | Student themes | Royal (default), Teal (id `lagoon`), Midnight (dark), Sunset, each with its own heading + body font; picker on profile + header switcher; saved in `profiles.theme` | 2026-10-17 themes entry; 2026-10-19 entry |
 
 ### Waiting for prod, in this order (see "Ranking v2 — prod go-live plan")
@@ -2687,3 +2688,86 @@ Ian's first checklist pass (artifact "NRG Launch Test Run"): N1b, N5, N6, N7 pas
   reveal page recovered the student's id prefix from a real 2× practice screenshot (16/17; the one miss was the test's own
   name check reading the preview text first). A local dev run was not possible: this machine's network refused most
   parallel connections that evening. Ian re-tests N1–N3 on staging.
+
+## Session 2026-10-20 (Claude): generation requests, prompted vs automatic mode
+Ian: "for the case study generator and all the other question generators create a way to be prompted by Jade vs an automatic
+mode where he can select taxonomy, domain, topic, difficulty etc; create the framework, and the UI once the current UI
+redesign is complete." Framework built; the UI is specified but not built. The redesign was in progress at the same time
+(about 75 uncommitted files under `src/app` and `src/components`, from another session) and none of them were touched here;
+the UI is recorded in PLAN.md as blocked on the redesign.
+- **One request shape** for every generator (`src/lib/generation/request.ts`, pure TS so the UI can reuse it): `kind`
+  (`mcq` | `case_study`), `mode` (`auto` | `prompted`), `count`, `selections`, Jade's `prompt`, and the `interpretation`
+  he confirms. Each MCQ axis (domains, taxonomy, clusters, difficulty) takes a list (even split) or a percent record;
+  `topics` are rows from `topics` (or free text, created on insert). Case selections: specialties, conditions (catalog or
+  free text), population, setting, difficulty, primary and Q7/Q8 domains.
+- **Prompted mode** compiles to the same selections. `heuristicInterpret()` runs offline (count, domains, taxonomy words,
+  difficulty, clusters/specialties, catalog conditions, topics matched whole-word against the 1,220 staging topics, most
+  specific reading per phrase). The other routes are a model call (anthropic/kimi) or an agent brief, whose JSON
+  `parseInterpretation()` validates code by code. Conflicts with the standard (critical care, advanced practice, SATA, mmol/L
+  glucose, images, all/none of the above) are listed, never honoured. Nothing runs until the interpretation is confirmed.
+  The prompt also reaches the author: a "TEACHER'S REQUEST" block in the MCQ system prompt, placed before the standard and
+  subordinate to it; `teacher_request` on each CASE_REQUEST, with a new section in `CASE_GEN_BRIEF.md`.
+- **Generators**: the planner moved from `generate-questions.ts` to `src/lib/generation/plan.ts` (also fixes zero-weight
+  codes getting leftover items). `generate-questions.ts --request` and `plan-cases.ts --request` take a request; without
+  one, both produce byte-identical output to before (prompts/plans at 10, 37, 100 items, a mock run; case plans for
+  `--count 5` and `--count 8 --specialty PD`).
+- **CLI** `scripts/generation-request.ts`: `new` / `show` / `interpret` / `confirm` / `run`, and the queue commands
+  `submit` / `queue` / `pull` / `finish`.
+- **Queue** `20261020120000_generation_requests.sql`, **staging only**. Applied with the connector's `execute_sql` (the CLI
+  needs the DB password typed interactively) and recorded in `schema_migrations` under the file's version. RLS checked
+  with simulated sessions (13/13): staff read all and create/edit their own until it runs; they cannot set running or done,
+  write results, or delete; students and anon get nothing; `kind`/`mode` must match the JSON. Prod doesn't need it until the
+  UI ships.
+- Verified: `npx tsx scripts/test-generation-requests.ts` 49/49 (offline); app `tsc` and lint clean; a live queue round
+  trip on staging (prompted request interpreted against real topics → submit → pull → mock run → finish). This machine's
+  network dropped two of the `finish` calls ("fetch failed") before the third went through. **Left on staging:** that one
+  test row (`QUEUE TEST: …`, status done); the clean-up delete was declined in-session. Remove it with
+  `delete from generation_requests where request->>'prompt' like 'QUEUE TEST:%';`.
+- Not done: the UI (spec in `docs/phase-1/GENERATION_REQUESTS.md`); no real-model run of the interpreter (no API key used,
+  per the subscriptions-first rule).
+
+## Session 2026-10-20 (Claude): whole-app UI redesign on staging
+
+Ian asked for the UI to move from "basic" to visually stunning, all functionality preserved, staging first. This was a
+visual-only pass: classNames, decorative wrappers and inline SVG icons; no data fetching, server actions, props, gating,
+copy or guards changed anywhere. `tsc`, `next lint` and `next build` all clean afterwards.
+
+**Foundation (shared layer, so all pages and all 4 themes inherit it)**
+- `tailwind.config.ts`: `rounded-xl`/`rounded-2xl` now derive from the per-theme `--radius`, so Teal/Sunset's softer
+  corners carry through everywhere.
+- `globals.css`: themed `:focus-visible` rings and `::selection`; new utilities `card-lift` (hover elevation),
+  `text-gradient-brand`, `hero-ornament` + `hero-dots` (light blooms / dot lattice for opaque gradient surfaces only).
+- `DashboardShell`: glassy blurred sticky header, gradient-framed logo and avatar, pill nav with an **active-page
+  state** (new client `src/components/NavLinks.tsx`), richer hero band (ornaments, bigger title, eyebrow rule) that
+  fades into the page colour, and the content now overlaps the band by 2rem so the first cards float on the gradient.
+  **Watermark untouched**: the `[data-page-background]` wrapper keeps a plain colour — the fade + ornaments live inside
+  the opaque banner, so the content-protection background-image rules still work exactly as before.
+- UI primitives: `Card` (softer border, `interactive` lift prop), `StatCard` (gradient hairline, ringed icon tile,
+  tabular numbers), `Badge` (ring + optional status `dot`), `EmptyState` (icon, better rhythm).
+- Auth pages: full gradient scene with ornaments; both forms moved off hardcoded `hsl(270…)`/gray literals onto tokens.
+
+**Page passes** (4 parallel subagents, each on a disjoint file list, same brief: tokens only — no hex/hsl/gray/white
+literals on themed pages — and zero logic changes)
+- Landing page + KnowledgeWidget: hero on header-band tokens with ornaments and staggered entrances, section eyebrows,
+  card-lift features, gradient weight bars, upgraded journey/testimonials/pricing (featured-plan ring), brand-midnight
+  footer, py-20+ rhythm.
+- Student study core: lobby stat icons + image-zoom mode cards + domain weight bars; practice filter chips with checked
+  rings; tutor session with letter-chip options and SVG correct/cross marks (reveal flow untouched); flashcards as a
+  tactile gradient flip deck; case-study runner with connected stage dots, striped vitals tables, polished calculator.
+  `OptionReviewList` colour semantics (correct/close/priority/incorrect/not_asked) untouched — spacing/typography only.
+- Mock exams/promotion/profile/trophies/messages/calendar/rank cards: score hero with an SVG progress ring, gradient
+  progress bars, mono join-code chips, letter-chip promotion options, message bubbles (own = primary, sharp corner),
+  calendar today-circle, trophy shelves, gradient rank progress. Exam-runner zero-feedback behaviour and fatigue
+  colour thresholds (green 70+/amber 50+/red) untouched.
+- Teacher/admin/super-admin: review-queue CTA with gradient accent, Badge-with-dot statuses, toolbar filter card,
+  zebra+hover tables, weightier decision buttons (same flow), amber reviewer-notes panel, release-rationales as a
+  deliberate confirmation card, admin section ticks, watermark tool chrome only (canvas/processing logic untouched).
+
+**Verified**: `npx tsc --noEmit`, `npx next lint`, `npx next build` all clean. Local visual smoke test (Playwright,
+dev server pointed at the staging DB): landing + login screenshots confirmed. Signed-in pages could not be checked
+locally (the supabase browser client doesn't persist its cookie over plain-http localhost; works over https) — **check
+them on the staging site**. Note while testing: `.env.local`'s primary vars point at **prod**, so `next dev` without
+overrides runs the local app against prod.
+
+**For Ian to review on staging** (as `ian-paid-student`, all 4 themes, plus teacher/admin accounts): overall look,
+the banner overlap on every page, Midnight (dark) contrast, and that content protection still watermarks correctly.

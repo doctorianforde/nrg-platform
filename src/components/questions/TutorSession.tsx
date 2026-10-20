@@ -70,7 +70,7 @@ export function TutorSession({
 
   if (questions.length === 0) {
     return (
-      <div className="rounded-lg border border-dashed border-border bg-card p-8 text-center text-sm text-muted-foreground">
+      <div className="rounded-xl border border-dashed border-border bg-card/60 p-10 text-center text-sm text-muted-foreground">
         No questions matched these filters.{" "}
         <Link href={backHref} className="text-primary underline">
           Adjust your selection
@@ -84,9 +84,9 @@ export function TutorSession({
     const total = tally.correct + tally.wrong;
     const pct = total === 0 ? 0 : Math.round((tally.correct / total) * 100);
     return (
-      <div className="mx-auto max-w-xl rounded-lg border border-border bg-card p-8 text-center shadow-sm">
-        <h2 className="font-heading text-2xl font-bold">Session complete</h2>
-        <p className="mt-4 font-heading text-5xl font-bold text-primary">{pct}%</p>
+      <div className="mx-auto max-w-xl overflow-hidden rounded-xl border border-border/80 bg-card p-8 text-center shadow-sm motion-safe:animate-rise-in">
+        <h2 className="font-heading text-2xl font-bold text-card-foreground">Session complete</h2>
+        <p className="mt-4 font-heading text-5xl font-bold tabular-nums text-primary motion-safe:animate-bounce-in">{pct}%</p>
         <p className="mt-2 text-sm text-muted-foreground">
           {tally.correct} of {total} correct
         </p>
@@ -104,13 +104,13 @@ export function TutorSession({
               reported.current = false;
               played.current = false;
             }}
-            className="rounded-md bg-primary px-5 py-2 text-sm font-medium text-primary-foreground hover:bg-primary-hover"
+            className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary-hover hover:shadow-md"
           >
             Restart
           </button>
           <Link
             href={backHref}
-            className="rounded-md border border-border px-5 py-2 text-sm font-medium text-card-foreground hover:bg-muted"
+            className="rounded-lg border border-border bg-card px-5 py-2.5 text-sm font-medium text-card-foreground transition-colors hover:border-brand-300 hover:bg-muted"
           >
             {backLabel}
           </Link>
@@ -184,20 +184,26 @@ export function TutorSession({
           {title} · Question {index + 1} of {questions.length}
         </span>
         {revealed ? (
-          <Badge tone={isCorrect ? "green" : "red"}>{isCorrect ? "Correct" : "Incorrect"}</Badge>
+          <Badge
+            tone={isCorrect ? "green" : "red"}
+            dot
+            className="motion-safe:animate-bounce-nudge"
+          >
+            {isCorrect ? "Correct" : "Incorrect"}
+          </Badge>
         ) : null}
       </div>
-      <div className="mb-2 h-1.5 w-full overflow-hidden rounded-full bg-border">
+      <div className="mb-2 h-1.5 w-full overflow-hidden rounded-full bg-muted">
         <div
-          className="h-full rounded-full bg-primary transition-all"
+          className="h-full rounded-full bg-gradient-to-r from-brand-400 to-brand-600 transition-all duration-300"
           style={{ width: `${((index + (revealed ? 1 : 0)) / questions.length) * 100}%` }}
         />
       </div>
 
-      <div className="rounded-lg border border-border bg-card p-6 shadow-sm">
+      <div className="rounded-xl border border-border/80 bg-card p-6 shadow-sm">
         <QuestionMetaBadges meta={q} />
         {intro && index === 0 ? (
-          <p className="mt-4 whitespace-pre-line rounded-md bg-muted p-4 text-sm text-card-foreground">
+          <p className="mt-4 whitespace-pre-line rounded-lg bg-muted p-4 text-sm leading-relaxed text-card-foreground">
             {intro}
           </p>
         ) : null}
@@ -240,7 +246,7 @@ export function TutorSession({
             <button
               type="button"
               onClick={next}
-              className="rounded-md bg-primary px-5 py-2 text-sm font-medium text-primary-foreground hover:bg-primary-hover"
+              className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary-hover hover:shadow-md"
             >
               {index + 1 >= questions.length ? "Finish" : "Next question"}
             </button>
@@ -250,10 +256,10 @@ export function TutorSession({
               onClick={reveal}
               disabled={selected.length === 0 || checking}
               className={cn(
-                "rounded-md px-5 py-2 text-sm font-medium",
+                "rounded-lg px-5 py-2.5 text-sm font-semibold transition-all",
                 selected.length === 0 || checking
                   ? "cursor-not-allowed bg-muted text-muted-foreground"
-                  : "bg-primary text-primary-foreground hover:bg-primary-hover"
+                  : "bg-primary text-primary-foreground shadow-sm hover:bg-primary-hover hover:shadow-md"
               )}
             >
               {checking ? "Checking…" : "Check answer"}

@@ -4,7 +4,15 @@ import { requireRole } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 import { adminClient } from "@/lib/supabase/admin";
 import { DashboardShell } from "@/components/DashboardShell";
-import { filtersToQuery, parseFilters, STATUS_BADGE, STATUS_LABEL, STUDENT_SOURCE, type ReviewStatus } from "@/lib/review/filters";
+import { Badge } from "@/components/ui/Badge";
+import { filtersToQuery, parseFilters, STATUS_LABEL, STUDENT_SOURCE, type ReviewStatus } from "@/lib/review/filters";
+
+const STATUS_TONE: Record<ReviewStatus, "gray" | "green" | "amber" | "red"> = {
+  pending: "gray",
+  approved: "green",
+  needs_changes: "amber",
+  rejected: "red",
+};
 import { findNextId, findPosition } from "@/lib/review/queue";
 import { ReviewForm } from "./ReviewForm";
 
@@ -46,24 +54,24 @@ export default async function ReviewQuestionPage({
 
   return (
     <DashboardShell profile={profile} email={user.email} title="Review question">
-      <div className="text-gray-900">
-        <div className="mb-4 flex flex-wrap items-center gap-3 text-sm">
-          <Link href={`/teacher/review${qs}`} className="text-[hsl(270,60%,35%)] underline">← Back to list</Link>
-          <span className="text-gray-600">
+      <div className="text-foreground">
+        <div className="mb-4 flex flex-wrap items-center gap-3 rounded-xl border border-border/80 bg-card px-4 py-3 text-sm shadow-sm">
+          <Link href={`/teacher/review${qs}`} className="rounded-lg px-3 py-1.5 text-sm font-medium text-brand-700 transition-colors hover:bg-brand-50">← Back to list</Link>
+          <span className="tabular-nums text-muted-foreground">
             {inSet ? `${pos.position} of ${pos.total} in this filter` : `${pos.total} in this filter`}
           </span>
-          <span className={`rounded px-2 py-0.5 text-xs ${STATUS_BADGE[status]}`}>{STATUS_LABEL[status]}</span>
+          <Badge tone={STATUS_TONE[status]} dot>{STATUS_LABEL[status]}</Badge>
           {q.reviewed_at && (
-            <span className="text-xs text-gray-600">
+            <span className="text-xs text-muted-foreground">
               {q.reviewed_by === user.id ? "by you · " : ""}{new Date(q.reviewed_at).toLocaleString()}
             </span>
           )}
-          <span className="ml-auto font-mono text-xs text-gray-400">{q.source_id?.split(":").pop()}</span>
+          <span className="ml-auto font-mono text-xs text-muted-foreground/60">{q.source_id?.split(":").pop()}</span>
           {nextId && nextId !== q.id && (
-            <Link href={`/teacher/review/${nextId}${qs}`} className="rounded border border-gray-300 bg-white px-3 py-1">Skip →</Link>
+            <Link href={`/teacher/review/${nextId}${qs}`} className="rounded-lg border border-border bg-card px-4 py-1.5 text-sm font-medium text-card-foreground transition-colors hover:border-brand-300 hover:bg-muted">Skip →</Link>
           )}
         </div>
-        {saved && <p className="mb-4 rounded bg-green-50 px-3 py-2 text-sm text-green-800">Edits saved.</p>}
+        {saved && <p className="mb-4 rounded-lg border border-green-200 bg-green-50 px-3 py-2 text-sm text-green-800">Edits saved.</p>}
         <ReviewForm
           key={q.updated_at}
           question={{

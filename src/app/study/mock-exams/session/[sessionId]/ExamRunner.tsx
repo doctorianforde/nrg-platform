@@ -188,19 +188,19 @@ export function ExamRunner({
       {/* Slim sticky exam bar with a thin purple progress line at its top edge. */}
       <div className="sticky top-16 z-10 -mx-4 border-b border-brand-100 bg-card/95 backdrop-blur">
         <div
-          className="absolute left-0 top-0 h-0.5 bg-brand-700 transition-all duration-300"
+          className="absolute left-0 top-0 h-0.5 rounded-r-full bg-gradient-to-r from-brand-400 to-brand-600 transition-all duration-300"
           style={{ width: `${((index + 1) / questions.length) * 100}%` }}
         />
         <div className="mx-auto flex h-12 max-w-6xl items-center gap-4 px-4">
           <Link
             href="/study/mock-exams"
-            className="shrink-0 text-sm text-muted-foreground transition-colors hover:text-brand-700"
+            className="shrink-0 rounded-lg px-2 py-1 text-sm font-medium text-muted-foreground transition-colors hover:bg-brand-50 hover:text-brand-700"
           >
             ‹ Exit
           </Link>
           <span className="truncate text-sm font-semibold text-card-foreground">{setTitle}</span>
           {groupId ? (
-            <span className="shrink-0 rounded bg-brand-100 px-1.5 py-0.5 text-[11px] font-medium text-brand-800">
+            <span className="shrink-0 rounded-full bg-brand-100 px-2 py-0.5 text-[11px] font-medium text-brand-800 ring-1 ring-brand-200/60">
               Group
             </span>
           ) : null}
@@ -209,19 +209,19 @@ export function ExamRunner({
               role="timer"
               aria-live={remaining <= 60_000 ? "assertive" : "off"}
               className={cn(
-                "shrink-0 rounded px-2 py-0.5 text-sm font-semibold tabular-nums",
+                "shrink-0 rounded-md px-2 py-0.5 text-sm font-semibold tabular-nums ring-1",
                 remaining <= 60_000
-                  ? "bg-red-100 text-red-800"
+                  ? "bg-red-100 text-red-800 ring-red-200/70"
                   : remaining <= 300_000
-                    ? "bg-amber-100 text-amber-800"
-                    : "bg-gray-100 text-gray-700"
+                    ? "bg-amber-100 text-amber-800 ring-amber-200/70"
+                    : "bg-muted text-card-foreground ring-border/70"
               )}
             >
               {remaining === 0 ? "Time up" : formatRemaining(remaining)}
             </span>
           ) : null}
-          <span className="ml-auto shrink-0 text-sm text-muted-foreground">
-            <strong className="text-card-foreground">
+          <span className="ml-auto shrink-0 text-sm tabular-nums text-muted-foreground">
+            <strong className="font-semibold text-card-foreground">
               Question {index + 1} of {questions.length}
             </strong>
             <span className="hidden sm:inline">
@@ -253,7 +253,7 @@ export function ExamRunner({
               ))}
             </div>
             {saveError ? (
-              <p role="alert" className="mt-3 rounded bg-red-50 px-3 py-2 text-sm text-red-800">
+              <p role="alert" className="mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">
                 {saveError}
               </p>
             ) : null}
@@ -262,7 +262,7 @@ export function ExamRunner({
                 type="button"
                 disabled={index === 0}
                 onClick={() => setIndex((i) => Math.max(0, i - 1))}
-                className="rounded-lg border-2 border-brand-700 px-4 py-2 text-sm font-medium text-brand-700 transition-colors hover:bg-brand-50 disabled:opacity-40"
+                className="rounded-lg border border-border bg-card px-4 py-2 text-sm font-medium text-card-foreground transition-colors hover:border-brand-300 hover:bg-muted disabled:opacity-40"
               >
                 ‹ Previous
               </button>
@@ -270,7 +270,7 @@ export function ExamRunner({
                 type="button"
                 disabled={index === questions.length - 1}
                 onClick={() => setIndex((i) => Math.min(questions.length - 1, i + 1))}
-                className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover disabled:opacity-40"
+                className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary-hover hover:shadow-md disabled:opacity-40"
               >
                 Next ›
               </button>
@@ -283,7 +283,7 @@ export function ExamRunner({
                 <button
                   type="button"
                   onClick={() => setConfirming(true)}
-                  className="rounded-lg border-2 border-brand-700 px-5 py-2 text-sm font-semibold text-brand-700 transition-colors hover:bg-brand-50"
+                  className="rounded-lg border border-brand-300 bg-brand-50 px-5 py-2 text-sm font-semibold text-brand-700 transition-colors hover:bg-brand-100"
                 >
                   Submit exam
                 </button>
@@ -301,7 +301,7 @@ export function ExamRunner({
                     type="button"
                     disabled={pending}
                     onClick={submit}
-                    className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover disabled:opacity-50"
+                    className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary-hover hover:shadow-md disabled:opacity-50"
                   >
                     {pending ? "Submitting…" : "Yes, submit my exam"}
                   </button>
@@ -317,7 +317,7 @@ export function ExamRunner({
               </div>
             )}
             {submitError ? (
-              <p role="alert" className="mt-3 rounded bg-red-50 px-3 py-2 text-sm text-red-800">
+              <p role="alert" className="mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">
                 {submitError}
               </p>
             ) : null}

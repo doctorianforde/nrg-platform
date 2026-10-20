@@ -62,10 +62,10 @@ export function CaseRunner(p: Props) {
   return (
     <div className="space-y-4">
       {/* Top bar: progress, timers, calculator */}
-      <div className="flex flex-wrap items-center gap-3 rounded-xl border border-border bg-card px-4 py-2.5 shadow-sm">
-        <span className="text-sm font-semibold text-card-foreground">Question {p.question.position} of {p.total}</span>
+      <div className="flex flex-wrap items-center gap-3 rounded-xl border border-border/80 bg-card px-4 py-2.5 shadow-sm">
+        <span className="text-sm font-semibold tabular-nums text-card-foreground">Question {p.question.position} of {p.total}</span>
         <div className="h-1.5 min-w-[6rem] flex-1 overflow-hidden rounded-full bg-muted">
-          <div className="h-full rounded-full bg-primary" style={{ width: `${((p.question.position - 1) / p.total) * 100}%` }} />
+          <div className="h-full rounded-full bg-gradient-to-r from-brand-400 to-brand-600 transition-all duration-300" style={{ width: `${((p.question.position - 1) / p.total) * 100}%` }} />
         </div>
         <div className="flex items-center gap-3 font-mono text-sm tabular-nums text-card-foreground" aria-label="Timers">
           <span title="Time on this question" suppressHydrationWarning><span className="font-sans text-xs text-muted-foreground">Question </span>{qTime}</span>
@@ -73,7 +73,7 @@ export function CaseRunner(p: Props) {
         </div>
         <div className="relative">
           <button type="button" onClick={() => setCalcOpen((o) => !o)} aria-expanded={calcOpen}
-            className="flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-sm font-medium hover:bg-muted">
+            className="flex items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-1.5 text-sm font-medium text-card-foreground shadow-sm transition-colors hover:border-brand-300 hover:bg-muted">
             <CalcIcon /> Calculator
           </button>
           {calcOpen ? <div className="absolute right-0 top-full z-30 mt-2"><Calculator onClose={() => setCalcOpen(false)} /></div> : null}
@@ -81,19 +81,20 @@ export function CaseRunner(p: Props) {
       </div>
 
       {/* Slide */}
-      <div className="rounded-xl border border-border bg-muted/40 p-3 sm:p-4">
+      <div className="rounded-xl border border-border/80 bg-muted/40 p-3 sm:p-4">
         <div className="mb-3 flex items-center justify-between gap-2">
           <button type="button" onClick={() => setIndex((i) => Math.max(0, i - 1))} disabled={index === 0}
-            className="rounded-lg border border-border bg-card px-3 py-1.5 text-sm font-medium hover:bg-muted disabled:opacity-40">← Previous</button>
-          <div className="flex items-center gap-1.5" aria-label={`Slide ${index + 1} of ${p.slides.length} revealed`}>
+            className="rounded-lg border border-border bg-card px-3 py-1.5 text-sm font-medium text-card-foreground shadow-sm transition-colors hover:border-brand-300 hover:bg-muted disabled:opacity-40">← Previous</button>
+          <div className="relative flex items-center gap-1.5" aria-label={`Slide ${index + 1} of ${p.slides.length} revealed`}>
+            <span aria-hidden className="absolute inset-x-1 top-1/2 -z-10 h-px -translate-y-1/2 bg-brand-200" />
             {p.slides.map((s, i) => (
               <button key={s.id} type="button" onClick={() => setIndex(i)} aria-label={`Go to ${s.time_label}`}
-                className={`h-2.5 rounded-full transition-all ${i === index ? "w-6 bg-primary" : i >= p.firstNew && s.stage_order > 0 ? "w-2.5 bg-brand-400" : "w-2.5 bg-border hover:bg-muted-foreground"}`} />
+                className={`h-2.5 rounded-full transition-all ${i === index ? "w-6 bg-gradient-to-r from-brand-500 to-brand-600 shadow-sm ring-1 ring-brand-300/60" : i >= p.firstNew && s.stage_order > 0 ? "w-2.5 bg-brand-400 hover:bg-brand-500" : "w-2.5 bg-border hover:bg-muted-foreground"}`} />
             ))}
             {!p.isLast ? <span className="ml-1 text-xs text-muted-foreground" title="More of the case unlocks after you lock in your answer">🔒</span> : null}
           </div>
           <button type="button" onClick={() => setIndex((i) => Math.min(last, i + 1))} disabled={index === last}
-            className="rounded-lg border border-border bg-card px-3 py-1.5 text-sm font-medium hover:bg-muted disabled:opacity-40">Next →</button>
+            className="rounded-lg border border-border bg-card px-3 py-1.5 text-sm font-medium text-card-foreground shadow-sm transition-colors hover:border-brand-300 hover:bg-muted disabled:opacity-40">Next →</button>
         </div>
         {/* On larger screens the slide scrolls inside a fixed height so the question and ranges stay in view. */}
         <div className="rounded-xl lg:max-h-[46vh] lg:overflow-y-auto">
@@ -106,16 +107,16 @@ export function CaseRunner(p: Props) {
 
       {/* Question (lower left) and reference ranges (lower right) */}
       <div className="grid gap-4 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
-        <form action={p.action} className="rounded-xl border border-border bg-card p-5 shadow-sm">
+        <form action={p.action} className="rounded-xl border border-border/80 bg-card p-5 shadow-sm">
           <input type="hidden" name="caseId" value={p.caseId} />
           <input type="hidden" name="attemptId" value={p.attemptId} />
           <h2 className="font-heading text-base font-semibold text-card-foreground">Question {p.question.position}</h2>
           <p className="mt-2 text-base text-card-foreground">{p.question.body}</p>
           <div className="mt-4 space-y-2">
             {p.question.options.map((o, i) => (
-              <label key={o.id} className="flex cursor-pointer items-start gap-3 rounded-md border border-border bg-card px-4 py-3 text-sm hover:border-primary/50 hover:bg-muted has-[:checked]:border-primary has-[:checked]:bg-brand-50">
-                <input type="radio" name="optionId" value={o.id} required className="mt-0.5" />
-                <span className="font-semibold">{LETTERS[i]}.</span>
+              <label key={o.id} className="flex cursor-pointer items-start gap-3 rounded-xl border border-border bg-card px-4 py-3.5 text-sm transition-colors hover:border-primary/50 hover:bg-muted has-[:checked]:border-primary has-[:checked]:bg-brand-50 has-[:checked]:ring-1 has-[:checked]:ring-primary/30">
+                <input type="radio" name="optionId" value={o.id} required className="mt-0.5 accent-primary" />
+                <span className="font-semibold text-brand-800">{LETTERS[i]}.</span>
                 <span>{o.body}</span>
               </label>
             ))}
@@ -128,15 +129,15 @@ export function CaseRunner(p: Props) {
           </div>
         </form>
 
-        <aside className="rounded-xl border border-border bg-card p-5 shadow-sm">
+        <aside className="rounded-xl border border-border/80 bg-card p-5 shadow-sm">
           <h2 className="font-heading text-base font-semibold text-card-foreground">Reference ranges</h2>
           {p.ranges.length ? (
             <table className="mt-3 w-full text-sm">
               <tbody>
                 {p.ranges.map((r) => (
-                  <tr key={r.name} className="border-t border-border first:border-0">
-                    <th scope="row" className="py-1.5 pr-3 text-left align-top font-normal text-muted-foreground">{r.name}</th>
-                    <td className="py-1.5 text-card-foreground">{r.range}</td>
+                  <tr key={r.name} className="border-t border-border/60 first:border-0 odd:bg-muted/50">
+                    <th scope="row" className="py-1.5 pl-2 pr-3 text-left align-top font-normal text-muted-foreground">{r.name}</th>
+                    <td className="py-1.5 pr-2 tabular-nums text-card-foreground">{r.range}</td>
                   </tr>
                 ))}
               </tbody>
@@ -155,7 +156,7 @@ function LockButton({ disabled, label }: { disabled: boolean; label: string }) {
   const { pending } = useFormStatus();
   return (
     <button disabled={disabled || pending}
-      className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50">
+      className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary-hover hover:shadow-md disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none">
       {pending ? "Locking in…" : label}
     </button>
   );

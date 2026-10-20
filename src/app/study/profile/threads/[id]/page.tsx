@@ -27,7 +27,7 @@ export default async function StudentThreadPage({ params }: { params: { id: stri
       subtitle="Your teacher will reply here. You'll see a marker on your profile when they do."
     >
       <div className="space-y-4">
-        <Link href="/study/profile" className="inline-block text-sm text-brand-700 underline">
+        <Link href="/study/profile" className="inline-block rounded-lg px-3 py-1.5 text-sm font-medium text-brand-700 transition-colors hover:bg-brand-50">
           ‹ Back to your profile
         </Link>
         <Conversation

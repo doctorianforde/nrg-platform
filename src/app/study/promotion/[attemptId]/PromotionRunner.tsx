@@ -65,9 +65,10 @@ export function PromotionRunner({ attemptId, initial, targetName }: { attemptId:
 
   if (state.done) {
     return (
-      <div className="mx-auto max-w-xl rounded-xl border border-border bg-card p-8 text-center shadow-sm">
+      <div className="relative mx-auto max-w-xl overflow-hidden rounded-xl border border-brand-100 bg-card p-8 text-center shadow-sm motion-safe:animate-bounce-in">
+        <span aria-hidden className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-brand-400 via-brand-600 to-brand-400" />
         <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Promotion quiz complete</p>
-        <p className="mt-4 font-heading text-5xl font-bold text-primary">{state.score} / {state.total}</p>
+        <p className="mt-4 font-heading text-5xl font-bold tabular-nums text-gradient-brand">{state.score} / {state.total}</p>
         {state.passed ? (
           <>
             <p className="mt-3 text-lg font-semibold text-green-800">Passed. You are now {targetName}.</p>
@@ -79,7 +80,7 @@ export function PromotionRunner({ attemptId, initial, targetName }: { attemptId:
             <p className="mt-1 text-sm text-muted-foreground">You can try again after 24 hours with a fresh set of questions. Your XP is safe.</p>
           </>
         )}
-        <Link href="/study/profile" className="mt-6 inline-block rounded-md bg-primary px-5 py-2 text-sm font-medium text-primary-foreground hover:bg-primary-hover">
+        <Link href="/study/profile" className="mt-6 inline-block rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary-hover hover:shadow-md">
           Back to your rank
         </Link>
       </div>
@@ -100,29 +101,29 @@ export function PromotionRunner({ attemptId, initial, targetName }: { attemptId:
 
   return (
     <div className="mx-auto max-w-3xl space-y-4">
-      <div className="flex flex-wrap items-center gap-3 rounded-xl border border-border bg-card px-4 py-2.5 shadow-sm">
-        <span className="text-sm font-semibold text-card-foreground">Question {state.position} of {state.total}</span>
+      <div className="flex flex-wrap items-center gap-3 rounded-xl border border-brand-100 bg-card px-4 py-2.5 shadow-sm">
+        <span className="text-sm font-semibold tabular-nums text-card-foreground">Question {state.position} of {state.total}</span>
         <div className="h-1.5 min-w-[6rem] flex-1 overflow-hidden rounded-full bg-muted">
-          <div className="h-full rounded-full bg-primary" style={{ width: `${((state.position - 1) / state.total) * 100}%` }} />
+          <div className="h-full rounded-full bg-gradient-to-r from-brand-400 to-brand-600 transition-[width] duration-300" style={{ width: `${((state.position - 1) / state.total) * 100}%` }} />
         </div>
-        <span className={`font-mono text-lg font-semibold tabular-nums ${low ? "text-red-700" : "text-card-foreground"}`} aria-live="polite" aria-label={`${left} seconds left`}>
+        <span className={`rounded-md px-2 py-0.5 font-mono text-lg font-semibold tabular-nums ring-1 ${low ? "bg-red-100 text-red-800 ring-red-200/70" : "bg-muted text-card-foreground ring-border/70"}`} aria-live="polite" aria-label={`${left} seconds left`}>
           0:{String(left).padStart(2, "0")}
         </span>
       </div>
       <div className="h-1 w-full overflow-hidden rounded-full bg-muted" aria-hidden="true">
-        <div className={`h-full transition-[width] duration-300 ${low ? "bg-red-500" : "bg-brand-500"}`} style={{ width: `${(left / 90) * 100}%` }} />
+        <div className={`h-full rounded-full transition-[width] duration-300 ${low ? "bg-red-500" : "bg-gradient-to-r from-brand-400 to-brand-600"}`} style={{ width: `${(left / 90) * 100}%` }} />
       </div>
 
-      {notice ? <p className="rounded-md border border-amber-300 bg-amber-50 px-3 py-2 text-sm text-amber-900">{notice}</p> : null}
+      {notice ? <p className="rounded-lg border border-amber-300 bg-amber-50 px-3 py-2 text-sm text-amber-900">{notice}</p> : null}
 
-      <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
-        <p className="text-base text-card-foreground">{q.body}</p>
-        <div className="mt-4 space-y-2" role={sata ? "group" : "radiogroup"}>
+      <div className="rounded-2xl border border-brand-100 bg-card p-6 shadow-sm md:p-8">
+        <p className="text-base font-medium leading-relaxed text-card-foreground">{q.body}</p>
+        <div className="mt-5 space-y-2" role={sata ? "group" : "radiogroup"}>
           {q.options.map((o, i) => (
-            <label key={o.id} className="flex cursor-pointer items-start gap-3 rounded-md border border-border bg-card px-4 py-3 text-sm hover:border-primary/50 hover:bg-muted has-[:checked]:border-primary has-[:checked]:bg-brand-50">
-              <input type={sata ? "checkbox" : "radio"} name="option" checked={selected.includes(o.id)} onChange={() => toggle(o.id)} disabled={left === 0} className="mt-0.5" />
-              <span className="font-semibold">{LETTERS[i]}.</span>
-              <span>{o.body}</span>
+            <label key={o.id} className="flex cursor-pointer items-start gap-3 rounded-lg border border-border bg-card px-4 py-3 text-sm transition-colors hover:border-brand-300 hover:bg-muted has-[:checked]:border-primary has-[:checked]:bg-brand-50 has-[:checked]:ring-1 has-[:checked]:ring-primary/30 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ring/40">
+              <input type={sata ? "checkbox" : "radio"} name="option" checked={selected.includes(o.id)} onChange={() => toggle(o.id)} disabled={left === 0} className="sr-only" />
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-100 text-xs font-semibold text-brand-800 ring-1 ring-brand-200/60">{LETTERS[i]}</span>
+              <span className="pt-0.5 text-card-foreground">{o.body}</span>
             </label>
           ))}
         </div>
@@ -131,7 +132,7 @@ export function PromotionRunner({ attemptId, initial, targetName }: { attemptId:
             {left === 0 ? "Time's up, moving on…" : sata ? "Select all that apply. You can't come back to this question." : "You can't come back to this question."}
           </span>
           <button type="button" onClick={submit} disabled={!selected.length || busy || left === 0}
-            className="rounded-lg bg-primary px-5 py-2 text-sm font-medium text-primary-foreground hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50">
+            className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary-hover hover:shadow-md disabled:cursor-not-allowed disabled:opacity-50">
             {busy ? "Saving…" : state.position === state.total ? "Submit and finish" : "Submit answer"}
           </button>
         </div>

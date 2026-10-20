@@ -30,6 +30,52 @@ function LockIcon({ className }: { className?: string }) {
   );
 }
 
+function Icon({ children }: { children: React.ReactNode }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="h-5 w-5"
+      aria-hidden="true"
+    >
+      {children}
+    </svg>
+  );
+}
+
+const HelpCircleIcon = () => (
+  <Icon>
+    <circle cx="12" cy="12" r="10" />
+    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+    <line x1="12" y1="17" x2="12.01" y2="17" />
+  </Icon>
+);
+
+const PlayIcon = () => (
+  <Icon>
+    <circle cx="12" cy="12" r="10" />
+    <polygon points="10 8 16 12 10 16 10 8" />
+  </Icon>
+);
+
+const CheckCircleIcon = () => (
+  <Icon>
+    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+    <polyline points="22 4 12 14.01 9 11.01" />
+  </Icon>
+);
+
+const TrendingUpIcon = () => (
+  <Icon>
+    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+    <polyline points="17 6 23 6 23 12" />
+  </Icon>
+);
+
 export default async function ManageMockExamSetPage({
   params,
 }: {
@@ -144,23 +190,27 @@ export default async function ManageMockExamSetPage({
     >
       <div className="space-y-5">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <StatCard label="Questions" value={questions.length} />
-          <StatCard label="Sessions started" value={sessionList.length} />
-          <StatCard label="Completed attempts" value={completed.length} />
-          <StatCard label="Average score" value={fmtPct(avgScore)} hint="Completed attempts only" />
+          <StatCard label="Questions" value={questions.length} icon={<HelpCircleIcon />} iconTone="purple" />
+          <StatCard label="Sessions started" value={sessionList.length} icon={<PlayIcon />} iconTone="blue" />
+          <StatCard label="Completed attempts" value={completed.length} icon={<CheckCircleIcon />} iconTone="green" />
+          <StatCard label="Average score" value={fmtPct(avgScore)} hint="Completed attempts only" icon={<TrendingUpIcon />} iconTone="amber" />
         </div>
 
         <CohortFatigueCard cohort={cohort} />
 
-        <Card className="rounded-xl border-brand-100">
-          <div className="flex flex-wrap items-start justify-between gap-4">
+        <Card className="relative overflow-hidden">
+          <span
+            aria-hidden
+            className={`absolute inset-y-0 left-0 w-1 ${released ? "bg-gradient-to-b from-green-400 to-green-500" : "bg-gradient-to-b from-amber-300 to-amber-500"}`}
+          />
+          <div className="flex flex-wrap items-start justify-between gap-4 pl-2">
             <div className="min-w-0">
               <div className="flex flex-wrap items-center gap-2">
                 <CardTitle>Rationale release</CardTitle>
                 {released ? (
-                  <Badge tone="green">Rationales released</Badge>
+                  <Badge tone="green" dot>Rationales released</Badge>
                 ) : (
-                  <Badge tone="amber">Rationales locked</Badge>
+                  <Badge tone="amber" dot>Rationales locked</Badge>
                 )}
               </div>
               {released ? (
@@ -182,7 +232,7 @@ export default async function ManageMockExamSetPage({
 
         <div className="grid gap-5 lg:grid-cols-[1fr_22rem]">
           <div className="space-y-4">
-            <Card className="rounded-xl border-brand-100">
+            <Card>
               <CardTitle className="mb-3">Questions in this set</CardTitle>
               {questions.length === 0 ? (
                 <EmptyState
@@ -194,7 +244,7 @@ export default async function ManageMockExamSetPage({
                   {questions.map(({ order, question: q }) => (
                     <li
                       key={q.id}
-                      className="flex items-start gap-3 rounded-xl border border-border p-3 transition-colors hover:border-brand-200"
+                      className="flex items-start gap-3 rounded-xl border border-border p-3 transition-colors hover:border-brand-200 hover:bg-muted/40"
                     >
                       <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-100 text-xs font-semibold text-brand-700">
                         {order}
@@ -211,7 +261,7 @@ export default async function ManageMockExamSetPage({
                         <input type="hidden" name="question_id" value={q.id} />
                         <button
                           type="submit"
-                          className="shrink-0 rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-red-700 transition-colors hover:bg-red-50"
+                          className="shrink-0 rounded-lg border border-red-300 bg-red-50 px-3 py-1.5 text-xs font-medium text-red-700 transition-colors hover:bg-red-100"
                         >
                           Remove
                         </button>
@@ -222,7 +272,7 @@ export default async function ManageMockExamSetPage({
               )}
             </Card>
 
-            <Card className="rounded-xl border-brand-100">
+            <Card>
               <CardTitle className="mb-3">Sessions</CardTitle>
               {sessionList.length === 0 ? (
                 <EmptyState title="No attempts yet" body="Sessions appear here once students start this exam." />
@@ -238,16 +288,16 @@ export default async function ManageMockExamSetPage({
                     </thead>
                     <tbody className="divide-y divide-border">
                       {sessionList.map((s) => (
-                        <tr key={s.id} className="transition-colors hover:bg-brand-50/40">
+                        <tr key={s.id} className="transition-colors odd:bg-muted/40 hover:bg-muted/60">
                           <td className="py-2 pr-4 text-muted-foreground">{fmtDateTime(s.started_at)}</td>
                           <td className="py-2 pr-4">
                             {s.completed_at ? (
-                              <Badge tone="green">Completed</Badge>
+                              <Badge tone="green" dot>Completed</Badge>
                             ) : (
-                              <Badge tone="blue">In progress</Badge>
+                              <Badge tone="blue" dot>In progress</Badge>
                             )}
                           </td>
-                          <td className="py-2 text-card-foreground">
+                          <td className="tabular-nums py-2 text-card-foreground">
                             {s.completed_at
                               ? `${fmtPct(s.score_pct)} (${s.correct_count ?? 0}/${s.total_questions ?? "?"})`
                               : "—"}
@@ -265,7 +315,7 @@ export default async function ManageMockExamSetPage({
           </div>
 
           <aside className="space-y-5 lg:sticky lg:top-4 lg:self-start">
-            <Card className="rounded-xl border-brand-100">
+            <Card>
               <CardTitle className="mb-3">Add questions</CardTitle>
               <QuestionSearch setId={set.id} existingIds={questions.map((q) => q.question.id)} />
             </Card>
@@ -280,7 +330,7 @@ export default async function ManageMockExamSetPage({
 
         <Link
           href="/teacher/mock-exams"
-          className="inline-block rounded-lg border-2 border-brand-700 px-5 py-2 text-sm font-medium text-brand-700 transition-colors hover:bg-brand-50"
+          className="inline-block rounded-lg border border-border bg-card px-4 py-2 text-sm font-medium text-card-foreground transition-colors hover:border-brand-300 hover:bg-muted"
         >
           ‹ Back to mock exams
         </Link>

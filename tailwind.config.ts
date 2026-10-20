@@ -85,6 +85,9 @@ const config: Config = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        // Larger radii follow the theme too, so Teal/Sunset's softer corners carry through to cards and heroes.
+        xl: "calc(var(--radius) + 4px)",
+        "2xl": "calc(var(--radius) + 10px)",
       },
       fontFamily: {
         // --font-body and --font-heading are set per theme (src/lib/theme/themes.ts; all self-hosted, Royal = Inter +

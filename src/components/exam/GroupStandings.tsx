@@ -41,12 +41,16 @@ export function GroupStandings({
       : null;
 
   return (
-    <section className="rounded-2xl border border-brand-100 bg-card p-6 shadow-sm">
+    <section className="relative overflow-hidden rounded-2xl border border-brand-100 bg-card p-6 shadow-sm motion-safe:animate-rise-in">
+      <span
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-brand-400 via-brand-600 to-brand-400 opacity-70"
+      />
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <h3 className="font-heading text-base font-semibold text-card-foreground">{title}</h3>
         {average !== null ? (
           <p className="text-sm text-muted-foreground">
-            Group average <strong className="text-card-foreground">{average}%</strong>
+            Group average <strong className="tabular-nums text-card-foreground">{average}%</strong>
           </p>
         ) : null}
       </div>
@@ -57,21 +61,28 @@ export function GroupStandings({
             key={s.studentId}
             className={cn(
               "flex items-center gap-3 rounded-lg border px-3 py-2.5 text-sm",
-              s.isYou ? "border-brand-300 bg-brand-50/60" : "border-border"
+              s.isYou ? "border-brand-300 bg-brand-50/60 ring-1 ring-brand-200/50" : "border-border bg-card"
             )}
           >
-            <span className="w-5 shrink-0 text-right font-semibold text-muted-foreground">
+            <span
+              className={cn(
+                "flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-semibold tabular-nums",
+                s.completed && i === 0
+                  ? "bg-amber-100 text-amber-800 ring-1 ring-gold/50"
+                  : "bg-muted text-muted-foreground"
+              )}
+            >
               {s.completed ? i + 1 : "–"}
             </span>
-            <span className="truncate text-card-foreground">{s.name}</span>
+            <span className="truncate font-medium text-card-foreground">{s.name}</span>
             {s.badges?.length ? <MiniBadges badges={s.badges} /> : null}
             {s.isYou ? <Badge tone="blue">You</Badge> : null}
             <span className="ml-auto shrink-0 text-right">
               {s.completed && s.scorePct !== null ? (
                 <>
-                  <strong className="text-card-foreground">{Math.round(s.scorePct)}%</strong>
+                  <strong className="tabular-nums text-card-foreground">{Math.round(s.scorePct)}%</strong>
                   {s.total ? (
-                    <span className="ml-1 text-xs text-muted-foreground">
+                    <span className="ml-1 text-xs tabular-nums text-muted-foreground">
                       {s.correct}/{s.total}
                     </span>
                   ) : null}

@@ -15,7 +15,7 @@ export default async function WatermarkPage() {
       eyebrow="Administration"
       subtitle="Found NRG questions posted somewhere? Load the screenshot to see which student account it came from."
     >
-      <Card>
+      <Card className="motion-safe:animate-rise-in">
         <WatermarkReveal />
       </Card>
     </DashboardShell>

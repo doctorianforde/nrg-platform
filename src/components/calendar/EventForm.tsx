@@ -11,7 +11,8 @@ import {
 } from "@/lib/calendar/types";
 import type { StudentOption } from "@/lib/calendar/queries";
 
-const input = "w-full rounded-lg border border-input bg-card px-3 py-2 text-sm text-card-foreground";
+const input =
+  "w-full rounded-lg border border-input bg-card px-3 py-2 text-sm text-card-foreground shadow-sm transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30";
 
 function Save({ label }: { label: string }) {
   const { pending } = useFormStatus();
@@ -19,7 +20,7 @@ function Save({ label }: { label: string }) {
     <button
       type="submit"
       disabled={pending}
-      className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary-hover disabled:opacity-50"
+      className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary-hover hover:shadow-md disabled:opacity-50"
     >
       {pending ? "Saving…" : label}
     </button>
@@ -169,7 +170,7 @@ export function EventForm({
       </label>
 
       {state && "error" in state ? (
-        <p role="alert" className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-800">
+        <p role="alert" className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">
           {state.error}
         </p>
       ) : null}
@@ -179,7 +180,7 @@ export function EventForm({
           <button
             type="button"
             onClick={onDone}
-            className="rounded-lg px-3 py-2 text-sm text-muted-foreground hover:text-card-foreground"
+            className="rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-card-foreground"
           >
             Cancel
           </button>

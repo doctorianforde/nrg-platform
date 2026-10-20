@@ -113,7 +113,10 @@ export default async function Page() {
       eyebrow="Platform Administration"
       subtitle="Cross-platform overview and environment references. Read-only."
     >
-      <h2 className="mb-3 font-heading text-lg font-semibold">Platform overview</h2>
+      <h2 className="mb-3 flex items-center gap-2 font-heading text-lg font-semibold text-foreground">
+        <span aria-hidden className="h-5 w-1 rounded-full bg-gradient-to-b from-brand-400 to-brand-600" />
+        Platform overview
+      </h2>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         <StatCard label="Users" value={totalUsers.toLocaleString()} icon={<UsersIcon />} iconTone="blue" />
         <StatCard
@@ -147,15 +150,25 @@ export default async function Page() {
       </div>
 
       <div className="mt-8 grid gap-4 lg:grid-cols-2">
-        <Card>
+        <Card className="relative overflow-hidden">
+          <span
+            aria-hidden
+            className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-brand-400 via-brand-600 to-brand-400 opacity-70"
+          />
           <CardTitle>Environments</CardTitle>
           <dl className="mt-4 space-y-3 text-sm">
-            <div className="flex items-center justify-between rounded-lg bg-muted px-4 py-3">
-              <dt className="font-medium text-card-foreground">Production</dt>
+            <div className="flex items-center justify-between rounded-lg border border-border/60 bg-muted px-4 py-3">
+              <dt className="flex items-center gap-2 font-medium text-card-foreground">
+                <span aria-hidden className="h-2 w-2 rounded-full bg-red-500" />
+                Production
+              </dt>
               <dd className="font-mono text-xs text-muted-foreground">cdvubijjepwmhhkgppbl</dd>
             </div>
-            <div className="flex items-center justify-between rounded-lg bg-muted px-4 py-3">
-              <dt className="font-medium text-card-foreground">Staging</dt>
+            <div className="flex items-center justify-between rounded-lg border border-border/60 bg-muted px-4 py-3">
+              <dt className="flex items-center gap-2 font-medium text-card-foreground">
+                <span aria-hidden className="h-2 w-2 rounded-full bg-amber-500" />
+                Staging
+              </dt>
               <dd className="font-mono text-xs text-muted-foreground">kwhaqhhwqykckarjbdod</dd>
             </div>
           </dl>
@@ -166,8 +179,8 @@ export default async function Page() {
         </Card>
 
         <Link href="/admin" className="group">
-          <Card className="h-full transition-shadow hover:shadow-md">
-            <CardTitle className="group-hover:text-primary">Admin dashboard →</CardTitle>
+          <Card interactive className="h-full">
+            <CardTitle className="transition-colors group-hover:text-primary">Admin dashboard →</CardTitle>
             <p className="mt-1 text-sm text-muted-foreground">
               User counts, recent signups, and per-domain content overview. Read-only.
             </p>

@@ -70,6 +70,35 @@ const STATUS_ICON: Record<ReviewStatus, () => React.ReactElement> = {
   rejected: XCircleIcon,
 };
 
+const MailIcon = () => (
+  <Icon>
+    <rect x="2" y="4" width="20" height="16" rx="2" />
+    <path d="m22 7-10 6L2 7" />
+  </Icon>
+);
+
+const ClipboardCheckIcon = () => (
+  <Icon>
+    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+    <rect x="8" y="2" width="8" height="4" rx="1" />
+    <path d="m9 14 2 2 4-4" />
+  </Icon>
+);
+
+const ArrowLeftIcon = () => (
+  <Icon>
+    <path d="M19 12H5" />
+    <path d="m12 19-7-7 7-7" />
+  </Icon>
+);
+
+const QUICK_LINK_ICONS: Record<string, () => React.ReactElement> = {
+  "/teacher/review": CheckCircleIcon,
+  "/teacher/messages": MailIcon,
+  "/teacher/mock-exams": ClipboardCheckIcon,
+  "/study": ArrowLeftIcon,
+};
+
 export default async function Page() {
   const { user, profile } = await requireRole("teacher", "/teacher");
   const supabase = createClient();
@@ -138,25 +167,51 @@ export default async function Page() {
     >
       <Link
         href="/teacher/review"
-        className="mb-4 block rounded-lg border border-[hsl(270,15%,88%)] bg-white p-5 hover:border-[hsl(270,60%,35%)]"
+        className="card-lift relative mb-4 block overflow-hidden rounded-xl border border-border/80 bg-card p-5 shadow-sm motion-safe:animate-rise-in"
       >
-        <span className="font-medium text-[hsl(270,60%,35%)]">Review AI-generated questions →</span>
-        <span className="mt-1 block text-sm text-gray-600">
-          {(pending ?? 0).toLocaleString()} question{pending === 1 ? "" : "s"} waiting for review
+        <span
+          aria-hidden
+          className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-brand-400 via-brand-600 to-brand-400"
+        />
+        <span className="flex items-start gap-3 pl-2">
+          <span
+            aria-hidden
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-100 text-brand-700 ring-1 ring-brand-200/60"
+          >
+            <ClockIcon />
+          </span>
+          <span className="min-w-0">
+            <span className="font-heading font-semibold text-gradient-brand">
+              Review AI-generated questions →
+            </span>
+            <span className="mt-1 block text-sm text-muted-foreground">
+              {(pending ?? 0).toLocaleString()} question{pending === 1 ? "" : "s"} waiting for review
+            </span>
+          </span>
         </span>
       </Link>
 
       {unreadMessages > 0 ? (
         <Link
           href="/teacher/messages"
-          className="mb-4 block rounded-lg border border-brand-200 bg-brand-50 p-5 hover:border-brand-500"
+          className="card-lift mb-4 block rounded-xl border border-brand-200 bg-brand-50 p-5 shadow-sm"
         >
-          <span className="font-medium text-brand-800">
-            {unreadMessages.toLocaleString()} unread student{" "}
-            {unreadMessages === 1 ? "message" : "messages"} →
-          </span>
-          <span className="mt-1 block text-sm text-brand-700">
-            Students are waiting on your feedback.
+          <span className="flex items-start gap-3">
+            <span
+              aria-hidden
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-100 text-brand-700 ring-1 ring-brand-200/60"
+            >
+              <MailIcon />
+            </span>
+            <span className="min-w-0">
+              <span className="font-medium text-brand-800">
+                {unreadMessages.toLocaleString()} unread student{" "}
+                {unreadMessages === 1 ? "message" : "messages"} →
+              </span>
+              <span className="mt-1 block text-sm text-brand-700">
+                Students are waiting on your feedback.
+              </span>
+            </span>
           </span>
         </Link>
       ) : null}
@@ -164,19 +219,29 @@ export default async function Page() {
       {needsChanges > 0 ? (
         <Link
           href="/teacher/review?status=needs_changes"
-          className="mb-4 block rounded-lg border border-amber-300 bg-amber-50 p-5 hover:border-amber-500"
+          className="card-lift mb-4 block rounded-xl border border-amber-300/80 bg-amber-50 p-5 shadow-sm"
         >
-          <span className="font-medium text-amber-800">
-            {needsChanges.toLocaleString()} question{needsChanges === 1 ? "" : "s"} flagged needs
-            changes →
-          </span>
-          <span className="mt-1 block text-sm text-amber-700">
-            These were sent back for rework — revisit them before the queue grows.
+          <span className="flex items-start gap-3">
+            <span
+              aria-hidden
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-amber-100 text-amber-700 ring-1 ring-amber-200/60"
+            >
+              <AlertIcon />
+            </span>
+            <span className="min-w-0">
+              <span className="font-medium text-amber-800">
+                {needsChanges.toLocaleString()} question{needsChanges === 1 ? "" : "s"} flagged needs
+                changes →
+              </span>
+              <span className="mt-1 block text-sm text-amber-700">
+                These were sent back for rework — revisit them before the queue grows.
+              </span>
+            </span>
           </span>
         </Link>
       ) : null}
 
-      <h2 className="mb-3 font-heading text-lg font-semibold">AI review queue</h2>
+      <h2 className="mb-3 font-heading text-lg font-semibold text-foreground">AI review queue</h2>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {stats.map(({ status, count }) => {
           const StatusIcon = STATUS_ICON[status];
@@ -192,16 +257,25 @@ export default async function Page() {
         })}
       </div>
 
-      <h2 className="mt-8 mb-3 font-heading text-lg font-semibold">Quick links</h2>
+      <h2 className="mt-8 mb-3 font-heading text-lg font-semibold text-foreground">Quick links</h2>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {quickLinks.map((l) => (
-          <Link key={l.href} href={l.href} className="group">
-            <Card className="h-full transition-shadow hover:shadow-md">
-              <CardTitle className="group-hover:text-primary">{l.title} →</CardTitle>
-              <p className="mt-1 text-sm text-muted-foreground">{l.body}</p>
-            </Card>
-          </Link>
-        ))}
+        {quickLinks.map((l) => {
+          const LinkIcon = QUICK_LINK_ICONS[l.href];
+          return (
+            <Link key={l.href} href={l.href} className="group">
+              <Card interactive className="h-full">
+                <span
+                  aria-hidden
+                  className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-brand-50 text-brand-600 ring-1 ring-brand-100 transition-colors group-hover:bg-brand-100 group-hover:text-brand-700"
+                >
+                  {LinkIcon ? <LinkIcon /> : null}
+                </span>
+                <CardTitle className="transition-colors group-hover:text-primary">{l.title} →</CardTitle>
+                <p className="mt-1 text-sm text-muted-foreground">{l.body}</p>
+              </Card>
+            </Link>
+          );
+        })}
       </div>
     </DashboardShell>
   );

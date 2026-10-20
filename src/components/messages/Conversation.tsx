@@ -17,12 +17,12 @@ function Bubble({ message }: { message: ThreadMessage }) {
           className="mt-1"
         />
       ) : null}
-      <div className={`max-w-[42rem] rounded-2xl px-4 py-3 ${
+      <div className={`max-w-[42rem] rounded-2xl px-4 py-3 shadow-sm motion-safe:animate-fade-in ${
         message.mine
-          ? "bg-primary text-primary-foreground"
+          ? "rounded-br-md bg-primary text-primary-foreground"
           : message.fromStaff
-            ? "border border-brand-200 bg-brand-50 text-card-foreground"
-            : "border border-border bg-card text-card-foreground"
+            ? "rounded-bl-md bg-muted text-card-foreground ring-1 ring-brand-200/60"
+            : "rounded-bl-md bg-muted text-card-foreground"
       }`}
       >
         <div className={`flex flex-wrap items-baseline gap-2 text-xs ${message.mine ? "text-primary-foreground/75" : "text-muted-foreground"}`}>

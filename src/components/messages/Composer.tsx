@@ -10,7 +10,7 @@ function SendButton({ label }: { label: string }) {
     <button
       type="submit"
       disabled={pending}
-      className="rounded-lg bg-primary px-5 py-2 text-sm font-medium text-primary-foreground hover:bg-primary-hover disabled:opacity-50"
+      className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary-hover hover:shadow-md disabled:opacity-50"
     >
       {pending ? "Sending…" : label}
     </button>
@@ -47,10 +47,10 @@ export function Composer({
         maxLength={4000}
         required
         placeholder={placeholder}
-        className="w-full rounded-lg border border-input bg-card px-3 py-2 text-sm text-card-foreground"
+        className="w-full rounded-lg border border-input bg-card px-3 py-2 text-sm text-card-foreground shadow-sm transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
       />
       {state && "error" in state ? (
-        <p role="alert" className="mt-2 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-800">
+        <p role="alert" className="mt-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">
           {state.error}
         </p>
       ) : null}

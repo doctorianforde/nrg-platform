@@ -218,15 +218,16 @@ export default async function Page() {
       eyebrow="Administration"
       subtitle="Approve teacher accounts, manage people, and review platform usage."
     >
-      <h2 className="mb-3 font-heading text-lg font-semibold">
+      <h2 className="mb-3 flex items-center gap-2 font-heading text-lg font-semibold text-foreground">
+        <span aria-hidden className="h-5 w-1 rounded-full bg-gradient-to-b from-brand-400 to-brand-600" />
         Teacher access requests
         {pendingRequests.length > 0 ? (
-          <Badge tone="amber" className="ml-2 align-middle">
+          <Badge tone="amber" dot className="ml-1 align-middle">
             {pendingRequests.length} waiting
           </Badge>
         ) : null}
       </h2>
-      <Card className="mb-8 rounded-xl border-brand-100">
+      <Card className="mb-8 motion-safe:animate-rise-in">
         {pendingRequests.length === 0 ? (
           <EmptyState
             title="Nothing waiting"
@@ -252,8 +253,11 @@ export default async function Page() {
         )}
       </Card>
 
-      <h2 className="mb-3 font-heading text-lg font-semibold">People</h2>
-      <Card className="mb-8 overflow-x-auto rounded-xl border-brand-100">
+      <h2 className="mb-3 flex items-center gap-2 font-heading text-lg font-semibold text-foreground">
+        <span aria-hidden className="h-5 w-1 rounded-full bg-gradient-to-b from-brand-400 to-brand-600" />
+        People
+      </h2>
+      <Card className="mb-8 overflow-x-auto">
         <table className="w-full min-w-[46rem] text-sm">
           <thead>
             <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-muted-foreground">
@@ -265,7 +269,7 @@ export default async function Page() {
           </thead>
           <tbody className="divide-y divide-border">
             {accounts.map((a) => (
-              <tr key={a.id} className="align-top">
+              <tr key={a.id} className="align-top transition-colors odd:bg-muted/40 hover:bg-muted/60">
                 <td className="py-3 pr-3">
                   <div className="flex items-center gap-2.5">
                     <Avatar name={a.name} url={a.avatarUrl} seed={a.id} size={36} />
@@ -310,7 +314,10 @@ export default async function Page() {
         </p>
       </Card>
 
-      <h2 className="mb-3 font-heading text-lg font-semibold">Users</h2>
+      <h2 className="mb-3 flex items-center gap-2 font-heading text-lg font-semibold text-foreground">
+        <span aria-hidden className="h-5 w-1 rounded-full bg-gradient-to-b from-brand-400 to-brand-600" />
+        Users
+      </h2>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         <StatCard label="Total users" value={totalUsers.toLocaleString()} icon={<UsersIcon />} iconTone="blue" />
         <StatCard label="Students" value={students.toLocaleString()} icon={<GradCapIcon />} iconTone="blue" />
@@ -319,7 +326,10 @@ export default async function Page() {
         <StatCard label="Super admins" value={superAdmins.toLocaleString()} icon={<CrownIcon />} iconTone="red" />
       </div>
 
-      <h2 className="mt-8 mb-3 font-heading text-lg font-semibold">Content</h2>
+      <h2 className="mt-8 mb-3 flex items-center gap-2 font-heading text-lg font-semibold text-foreground">
+        <span aria-hidden className="h-5 w-1 rounded-full bg-gradient-to-b from-brand-400 to-brand-600" />
+        Content
+      </h2>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
         <StatCard
           label="Questions"
@@ -361,7 +371,7 @@ export default async function Page() {
                 {recentProfiles.map((p, i) => (
                   <li
                     key={p.id}
-                    className="grid grid-cols-[1fr_auto_auto_auto] items-center gap-3 px-4 py-2.5"
+                    className="grid grid-cols-[1fr_auto_auto_auto] items-center gap-3 px-4 py-2.5 transition-colors odd:bg-muted/40 hover:bg-muted/60"
                   >
                     <div className="flex min-w-0 items-center gap-3">
                       <span
@@ -424,12 +434,16 @@ export default async function Page() {
         </Card>
       </div>
 
-      <Card className="mt-8">
+      <Card className="relative mt-8 overflow-hidden">
+        <span
+          aria-hidden
+          className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-brand-400 via-brand-600 to-brand-400 opacity-70"
+        />
         <CardTitle>Leaked question screenshots</CardTitle>
         <p className="mt-2 text-sm text-muted-foreground">
           Every student page carries a faint watermark naming the account. Load a screenshot to reveal it.
         </p>
-        <Link href="/admin/watermark" className="mt-3 inline-block text-sm font-semibold text-primary hover:underline">
+        <Link href="/admin/watermark" className="mt-3 inline-block rounded-lg px-3 py-1.5 text-sm font-semibold text-brand-700 transition-colors hover:bg-brand-50">
           Reveal a watermark →
         </Link>
       </Card>

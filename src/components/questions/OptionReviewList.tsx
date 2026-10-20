@@ -37,9 +37,9 @@ export function OptionReviewList({
       {ordered.map(({ o, i, t }) => {
         const mine = selectedIds?.includes(o.id) ?? false;
         return (
-          <li key={o.id} className={cn("rounded-md border border-l-4 px-3 py-2 text-sm", t.className)}>
+          <li key={o.id} className={cn("rounded-lg border border-l-4 px-3.5 py-2.5 text-sm shadow-sm", t.className)}>
             {t.label || mine ? (
-              <div className="mb-1 flex flex-wrap items-center gap-2">
+              <div className="mb-1.5 flex flex-wrap items-center gap-2">
                 {t.label ? <span className="text-xs font-semibold uppercase tracking-wide">{t.label}</span> : null}
                 {mine ? <Badge tone="blue">Your answer</Badge> : null}
               </div>
@@ -48,7 +48,7 @@ export function OptionReviewList({
               {LETTERS[i] ?? i + 1}. {o.body}
             </div>
             {o.rationale ? (
-              <p className="mt-1 whitespace-pre-line">{o.rationale.replace(/^CORRECT:\s*/i, "")}</p>
+              <p className="mt-1 whitespace-pre-line leading-relaxed">{o.rationale.replace(/^CORRECT:\s*/i, "")}</p>
             ) : null}
           </li>
         );

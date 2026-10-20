@@ -22,8 +22,20 @@ export function CaseQuestionReview({ q, selectedId, showMeta = true }: { q: Case
         ) : null}
       </div>
       <p className="mt-2 text-sm text-card-foreground">{q.body}</p>
-      <p className="mt-3 text-sm font-semibold text-card-foreground">
-        Answer: {keyLetter}. {key?.body}
+      <p className="mt-3 flex items-start gap-2 rounded-lg border border-green-300 bg-green-50 px-3.5 py-2.5 text-sm font-semibold text-green-900">
+        <svg
+          viewBox="0 0 20 20"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.2"
+          className="mt-0.5 h-4 w-4 shrink-0"
+          aria-hidden="true"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 10.5 3.5 3.5 7.5-8" />
+        </svg>
+        <span>
+          Answer: {keyLetter}. {key?.body}
+        </span>
       </p>
       <OptionReviewList className="mt-3" options={q.options} selectedIds={selectedId ? [selectedId] : undefined} />
       {showMeta ? (

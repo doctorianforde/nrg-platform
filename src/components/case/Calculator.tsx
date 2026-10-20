@@ -74,15 +74,15 @@ export function Calculator({ onClose }: { onClose: () => void }) {
     return () => window.removeEventListener("keydown", onKey, true);
   });
 
-  const key = "rounded-md border border-border bg-card py-2.5 text-base font-medium text-card-foreground hover:bg-muted active:bg-brand-50";
-  const opKey = "rounded-md border border-brand-200 bg-brand-50 py-2.5 text-base font-semibold text-brand-800 hover:bg-brand-100";
+  const key = "rounded-lg border border-border bg-card py-2.5 text-base font-medium text-card-foreground shadow-sm transition hover:bg-muted active:scale-95";
+  const opKey = "rounded-lg border border-brand-200 bg-brand-50 py-2.5 text-base font-semibold text-brand-800 shadow-sm transition hover:bg-brand-100 active:scale-95";
   return (
-    <div role="dialog" aria-label="Calculator" className="w-72 rounded-xl border border-border bg-card p-3 shadow-xl">
+    <div role="dialog" aria-label="Calculator" className="w-72 rounded-xl border border-border/80 bg-card p-3 shadow-xl ring-1 ring-border/50">
       <div className="mb-2 flex items-center justify-between">
         <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Calculator</span>
-        <button type="button" onClick={onClose} aria-label="Close calculator" className="rounded px-2 text-lg leading-none text-muted-foreground hover:bg-muted">×</button>
+        <button type="button" onClick={onClose} aria-label="Close calculator" className="rounded-md px-2 text-lg leading-none text-muted-foreground transition-colors hover:bg-muted hover:text-card-foreground">×</button>
       </div>
-      <div className="mb-3 rounded-md bg-muted px-3 py-2 text-right">
+      <div className="mb-3 rounded-lg bg-muted px-3 py-2 text-right ring-1 ring-border/50">
         <div className="h-4 truncate text-xs text-muted-foreground">{expr}</div>
         <div className="truncate font-mono text-2xl text-card-foreground" aria-live="polite">{display}</div>
       </div>
@@ -100,7 +100,7 @@ export function Calculator({ onClose }: { onClose: () => void }) {
         <button type="button" className={key} onClick={negate} aria-label="Change sign">±</button>
         <button type="button" className={key} onClick={() => digit("0")}>0</button>
         <button type="button" className={key} onClick={() => digit(".")}>.</button>
-        <button type="button" className="rounded-md bg-primary py-2.5 text-base font-semibold text-primary-foreground hover:bg-primary-hover" onClick={equals}>=</button>
+        <button type="button" className="rounded-lg bg-primary py-2.5 text-base font-semibold text-primary-foreground shadow-sm transition hover:bg-primary-hover active:scale-95" onClick={equals}>=</button>
       </div>
     </div>
   );

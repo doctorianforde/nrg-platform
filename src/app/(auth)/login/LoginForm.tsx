@@ -68,7 +68,7 @@ export function LoginForm() {
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">
-      <h1 className="text-lg font-semibold">Sign in</h1>
+      <h1 className="font-heading text-xl font-bold text-card-foreground">Sign in</h1>
 
       {error && (
         <p role="alert" className="text-sm rounded-md bg-red-50 text-red-700 border border-red-200 px-3 py-2">
@@ -77,7 +77,7 @@ export function LoginForm() {
       )}
 
       <label className="block text-sm">
-        <span className="text-gray-700">Email</span>
+        <span className="font-medium text-foreground">Email</span>
         <input
           id="login-email"
           type="email"
@@ -85,12 +85,12 @@ export function LoginForm() {
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[hsl(270,60%,35%)]"
+          className="mt-1 w-full rounded-lg border border-input bg-card px-3 py-2 text-sm text-card-foreground shadow-sm transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
         />
       </label>
 
       <label className="block text-sm">
-        <span className="text-gray-700">Password</span>
+        <span className="font-medium text-foreground">Password</span>
         <input
           id="login-password"
           type="password"
@@ -98,21 +98,21 @@ export function LoginForm() {
           required
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[hsl(270,60%,35%)]"
+          className="mt-1 w-full rounded-lg border border-input bg-card px-3 py-2 text-sm text-card-foreground shadow-sm transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
         />
       </label>
 
       <button
         type="submit"
         disabled={busy}
-        className="w-full rounded-md bg-[hsl(270,60%,35%)] text-white py-2 font-medium disabled:opacity-60"
+        className="w-full rounded-lg bg-primary py-2.5 font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary-hover hover:shadow-md disabled:opacity-60"
       >
         {busy ? "Signing in…" : "Sign in"}
       </button>
 
-      <p className="text-sm text-gray-600 text-center">
+      <p className="text-sm text-muted-foreground text-center">
         New here?{" "}
-        <Link href="/signup" className="text-[hsl(270,60%,35%)] underline">
+        <Link href="/signup" className="font-medium text-primary underline decoration-primary/40 underline-offset-2 hover:decoration-primary">
           Create an account
         </Link>
       </p>

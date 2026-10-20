@@ -27,25 +27,25 @@ export default async function TeacherCaseStudiesPage() {
       {cases.length === 0 ? (
         <EmptyState title="No cases yet" body="Cases are imported with scripts/import-case.ts and appear here for review." />
       ) : (
-        <Card className="p-0">
+        <Card className="overflow-hidden p-0 motion-safe:animate-rise-in">
           <table className="w-full text-sm">
-            <thead className="border-b border-border text-left text-xs uppercase tracking-wide text-muted-foreground">
-              <tr><th className="px-4 py-2">Case</th><th className="px-4 py-2">Condition</th><th className="px-4 py-2">Status</th><th className="px-4 py-2">Validation</th><th className="px-4 py-2">Source</th></tr>
+            <thead className="border-b border-border bg-muted/60 text-left text-xs uppercase tracking-wide text-muted-foreground">
+              <tr><th className="px-4 py-3 font-medium">Case</th><th className="px-4 py-3 font-medium">Condition</th><th className="px-4 py-3 font-medium">Status</th><th className="px-4 py-3 font-medium">Validation</th><th className="px-4 py-3 font-medium">Source</th></tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-border">
               {cases.map((c) => (
-                <tr key={c.id} className="border-b border-border last:border-0">
-                  <td className="px-4 py-2">
+                <tr key={c.id} className="transition-colors odd:bg-muted/40 hover:bg-muted/60">
+                  <td className="px-4 py-3">
                     <Link href={`/teacher/case-studies/${c.id}`} className="font-medium text-primary hover:underline">{c.title}</Link>
-                    <div className="text-xs text-muted-foreground">{c.case_code} · {c.domains?.code ?? "—"} · {c.difficulty ?? "—"}</div>
+                    <div className="mt-0.5 text-xs text-muted-foreground">{c.case_code} · {c.domains?.code ?? "—"} · {c.difficulty ?? "—"}</div>
                   </td>
-                  <td className="px-4 py-2 text-muted-foreground">{c.primary_condition}</td>
-                  <td className="px-4 py-2">
-                    <Badge tone={STATUS_TONE[c.status] ?? "gray"}>{c.status.replace("_", " ")}</Badge>{" "}
+                  <td className="px-4 py-3 text-muted-foreground">{c.primary_condition}</td>
+                  <td className="px-4 py-3">
+                    <Badge tone={STATUS_TONE[c.status] ?? "gray"} dot>{c.status.replace("_", " ")}</Badge>{" "}
                     {c.is_active ? <Badge tone="green">Live</Badge> : null}
                   </td>
-                  <td className="px-4 py-2"><Badge tone={c.validation_status === "validated" ? "green" : "amber"}>{c.validation_status}</Badge></td>
-                  <td className="px-4 py-2 text-muted-foreground">{c.source}</td>
+                  <td className="px-4 py-3"><Badge tone={c.validation_status === "validated" ? "green" : "amber"} dot>{c.validation_status}</Badge></td>
+                  <td className="px-4 py-3 text-muted-foreground">{c.source}</td>
                 </tr>
               ))}
             </tbody>

@@ -23,7 +23,7 @@ export type GroupRow = {
 };
 
 const inputCls =
-  "w-full rounded-lg border border-border bg-white px-3 py-2 text-sm text-card-foreground";
+  "w-full rounded-lg border border-input bg-card px-3 py-2 text-sm text-card-foreground shadow-sm transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30";
 
 function Submit({ label }: { label: string }) {
   const { pending } = useFormStatus();
@@ -31,7 +31,7 @@ function Submit({ label }: { label: string }) {
     <button
       type="submit"
       disabled={pending}
-      className="rounded-lg bg-brand-700 px-4 py-2 text-sm font-semibold text-white disabled:opacity-50"
+      className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary-hover hover:shadow-md disabled:opacity-50"
     >
       {pending ? "Saving…" : label}
     </button>
@@ -63,7 +63,7 @@ export function GroupsPanel({
   return (
     <div className="space-y-5">
       {/* ── time limit ───────────────────────────────────────────────────── */}
-      <section className="rounded-xl border border-brand-100 bg-card p-5">
+      <section className="rounded-xl border border-border/80 bg-card p-5 shadow-sm">
         <h3 className="font-heading text-base font-semibold text-card-foreground">Time limit</h3>
         <p className="mt-1 text-sm text-muted-foreground">
           Applies to every attempt at this paper, solo or group. Leave blank for no limit.
@@ -89,14 +89,14 @@ export function GroupsPanel({
           )}
         </form>
         {durState?.error ? (
-          <p role="alert" className="mt-2 rounded bg-red-50 px-3 py-2 text-sm text-red-800">
+          <p role="alert" className="mt-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">
             {durState.error}
           </p>
         ) : null}
       </section>
 
       {/* ── assign a group ───────────────────────────────────────────────── */}
-      <section className="rounded-xl border border-brand-100 bg-card p-5">
+      <section className="rounded-xl border border-border/80 bg-card p-5 shadow-sm">
         <h3 className="font-heading text-base font-semibold text-card-foreground">
           Set a group exam
         </h3>
@@ -123,8 +123,8 @@ export function GroupsPanel({
                     <li key={s.id}>
                       <label
                         className={cn(
-                          "flex cursor-pointer items-center gap-2 px-3 py-2 text-sm",
-                          on && "bg-brand-50"
+                          "flex cursor-pointer items-center gap-2 px-3 py-2 text-sm transition-colors hover:bg-muted/60",
+                          on && "bg-brand-50 hover:bg-brand-50"
                         )}
                       >
                         <input
@@ -148,19 +148,19 @@ export function GroupsPanel({
           </div>
         </form>
         {assignState?.error ? (
-          <p role="alert" className="mt-2 rounded bg-red-50 px-3 py-2 text-sm text-red-800">
+          <p role="alert" className="mt-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">
             {assignState.error}
           </p>
         ) : null}
       </section>
 
       {/* ── existing groups and their results ────────────────────────────── */}
-      <section className="rounded-xl border border-brand-100 bg-card p-5">
+      <section className="rounded-xl border border-border/80 bg-card p-5 shadow-sm">
         <h3 className="font-heading text-base font-semibold text-card-foreground">
           Groups on this paper
         </h3>
         {startState?.error ? (
-          <p role="alert" className="mt-2 rounded bg-red-50 px-3 py-2 text-sm text-red-800">
+          <p role="alert" className="mt-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">
             {startState.error}
           </p>
         ) : null}
@@ -178,9 +178,10 @@ export function GroupsPanel({
                   ? Math.round(done.reduce((n, m) => n + (m.scorePct ?? 0), 0) / done.length)
                   : null;
               return (
-                <li key={g.id} className="rounded-lg border border-border p-3">
+                <li key={g.id} className="rounded-lg border border-border bg-card p-3 transition-colors hover:border-brand-200">
                   <div className="flex flex-wrap items-center gap-2">
                     <Badge
+                      dot
                       tone={
                         g.status === "finished"
                           ? "green"

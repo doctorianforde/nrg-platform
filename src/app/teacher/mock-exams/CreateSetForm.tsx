@@ -8,7 +8,7 @@ function SubmitButton() {
   return (
     <button
       disabled={pending}
-      className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary-hover disabled:opacity-50"
+      className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary-hover hover:shadow-md disabled:opacity-50"
     >
       {pending ? "Creating…" : "Create exam set"}
     </button>
@@ -16,7 +16,7 @@ function SubmitButton() {
 }
 
 const inputCls =
-  "w-full rounded-md border border-input bg-card px-3 py-2 text-sm text-card-foreground";
+  "w-full rounded-lg border border-input bg-card px-3 py-2 text-sm text-card-foreground shadow-sm transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30";
 
 export function CreateSetForm() {
   const [state, action] = useFormState<CreateSetState, FormData>(createSet, null);
@@ -53,7 +53,7 @@ export function CreateSetForm() {
         </p>
       </div>
       {state?.error ? (
-        <p role="alert" className="rounded bg-red-50 px-3 py-2 text-sm text-red-800">
+        <p role="alert" className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">
           {state.error}
         </p>
       ) : null}

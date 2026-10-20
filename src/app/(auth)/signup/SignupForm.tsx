@@ -60,7 +60,7 @@ export function SignupForm() {
   if (sent) {
     return (
       <div className="space-y-3 text-sm">
-        <h1 className="text-lg font-semibold">Check your inbox</h1>
+        <h1 className="font-heading text-xl font-bold text-card-foreground">Check your inbox</h1>
         <p>
           We sent a confirmation link to <strong>{email}</strong>. Click it to activate
           your NRG account, then sign in.
@@ -71,8 +71,8 @@ export function SignupForm() {
             access while Jade or Ian review the request — we&apos;ve let them know.
           </p>
         )}
-        <p className="text-gray-600">Didn&apos;t get it? Check your spam folder.</p>
-        <Link href="/login" className="inline-block text-[hsl(270,60%,35%)] underline">
+        <p className="text-muted-foreground">Didn&apos;t get it? Check your spam folder.</p>
+        <Link href="/login" className="inline-block font-medium text-primary underline decoration-primary/40 underline-offset-2 hover:decoration-primary">
           Back to sign in
         </Link>
       </div>
@@ -81,7 +81,7 @@ export function SignupForm() {
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">
-      <h1 className="text-lg font-semibold">Create your account</h1>
+      <h1 className="font-heading text-xl font-bold text-card-foreground">Create your account</h1>
 
       {error && (
         <p role="alert" className="text-sm rounded-md bg-red-50 text-red-700 border border-red-200 px-3 py-2">
@@ -90,7 +90,7 @@ export function SignupForm() {
       )}
 
       <label className="block text-sm">
-        <span className="text-gray-700">Full name</span>
+        <span className="font-medium text-foreground">Full name</span>
         <input
           id="signup-name"
           type="text"
@@ -98,12 +98,12 @@ export function SignupForm() {
           required
           value={fullName}
           onChange={(e) => setFullName(e.target.value)}
-          className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[hsl(270,60%,35%)]"
+          className="mt-1 w-full rounded-lg border border-input bg-card px-3 py-2 text-sm text-card-foreground shadow-sm transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
         />
       </label>
 
       <label className="block text-sm">
-        <span className="text-gray-700">Email</span>
+        <span className="font-medium text-foreground">Email</span>
         <input
           id="signup-email"
           type="email"
@@ -111,12 +111,12 @@ export function SignupForm() {
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[hsl(270,60%,35%)]"
+          className="mt-1 w-full rounded-lg border border-input bg-card px-3 py-2 text-sm text-card-foreground shadow-sm transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
         />
       </label>
 
       <fieldset className="block text-sm">
-        <legend className="text-gray-700">I am signing up as a</legend>
+        <legend className="font-medium text-foreground">I am signing up as a</legend>
         <div className="mt-1 grid gap-2 sm:grid-cols-2">
           {[
             { teacher: false, label: "Student", hint: "Study, practise and sit mock exams" },
@@ -124,10 +124,10 @@ export function SignupForm() {
           ].map((opt) => (
             <label
               key={opt.label}
-              className={`cursor-pointer rounded-md border px-3 py-2 ${
+              className={`cursor-pointer rounded-lg border px-3 py-2 transition-colors ${
                 wantsTeacher === opt.teacher
-                  ? "border-[hsl(270,60%,35%)] bg-[hsl(270,60%,97%)]"
-                  : "border-gray-300"
+                  ? "border-primary bg-brand-50 shadow-sm ring-1 ring-primary/30"
+                  : "border-input hover:border-brand-300 hover:bg-muted"
               }`}
             >
               <span className="flex items-center gap-2">
@@ -137,16 +137,16 @@ export function SignupForm() {
                   checked={wantsTeacher === opt.teacher}
                   onChange={() => setWantsTeacher(opt.teacher)}
                 />
-                <span className="font-medium text-gray-800">{opt.label}</span>
+                <span className="font-medium text-card-foreground">{opt.label}</span>
               </span>
-              <span className="mt-0.5 block pl-6 text-xs text-gray-500">{opt.hint}</span>
+              <span className="mt-0.5 block pl-6 text-xs text-muted-foreground">{opt.hint}</span>
             </label>
           ))}
         </div>
       </fieldset>
 
       <label className="block text-sm">
-        <span className="text-gray-700">Password</span>
+        <span className="font-medium text-foreground">Password</span>
         <input
           id="signup-password"
           type="password"
@@ -155,22 +155,22 @@ export function SignupForm() {
           minLength={8}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[hsl(270,60%,35%)]"
+          className="mt-1 w-full rounded-lg border border-input bg-card px-3 py-2 text-sm text-card-foreground shadow-sm transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
         />
-        <span className="text-xs text-gray-500">At least 8 characters.</span>
+        <span className="text-xs text-muted-foreground">At least 8 characters.</span>
       </label>
 
       <button
         type="submit"
         disabled={busy}
-        className="w-full rounded-md bg-[hsl(270,60%,35%)] text-white py-2 font-medium disabled:opacity-60"
+        className="w-full rounded-lg bg-primary py-2.5 font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary-hover hover:shadow-md disabled:opacity-60"
       >
         {busy ? "Creating…" : "Create account"}
       </button>
 
-      <p className="text-sm text-gray-600 text-center">
+      <p className="text-sm text-muted-foreground text-center">
         Already have an account?{" "}
-        <Link href="/login" className="text-[hsl(270,60%,35%)] underline">
+        <Link href="/login" className="font-medium text-primary underline decoration-primary/40 underline-offset-2 hover:decoration-primary">
           Sign in
         </Link>
       </p>

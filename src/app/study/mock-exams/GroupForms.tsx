@@ -28,11 +28,11 @@ export function JoinGroupForm() {
         autoCapitalize="characters"
         spellCheck={false}
         placeholder="7QK2MP"
-        className="w-32 rounded-lg border border-border bg-card px-3 py-2 font-mono text-sm uppercase tracking-widest text-card-foreground placeholder:text-muted-foreground/60"
+        className="w-32 rounded-lg border border-input bg-card px-3 py-2 font-mono text-sm uppercase tracking-widest text-card-foreground shadow-sm transition-colors placeholder:text-muted-foreground/60 focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
       />
       <Submit
         label="Join group"
-        className="rounded-lg border-2 border-brand-700 px-4 py-2 text-sm font-medium text-brand-700 hover:bg-brand-50"
+        className="rounded-lg border border-border bg-card px-4 py-2 text-sm font-medium text-brand-700 transition-colors hover:border-brand-300 hover:bg-brand-50"
       />
       {state?.error ? (
         <p role="alert" className="w-full text-sm text-red-700">
@@ -51,7 +51,7 @@ export function CreateGroupForm({ setId }: { setId: string }) {
       <input type="hidden" name="set_id" value={setId} />
       <Submit
         label="Sit it with a group"
-        className="w-full rounded-lg border-2 border-brand-700 px-4 py-2 text-sm font-medium text-brand-700 hover:bg-brand-50"
+        className="w-full rounded-lg border border-border bg-card px-4 py-2 text-sm font-medium text-brand-700 transition-colors hover:border-brand-300 hover:bg-brand-50"
       />
       {state?.error ? (
         <p role="alert" className="mt-1 text-xs text-red-700">

@@ -82,7 +82,11 @@ export function LobbyView({
 
   return (
     <div className="mx-auto w-full max-w-2xl space-y-5">
-      <section className="rounded-2xl border border-brand-100 bg-card p-6 shadow-sm">
+      <section className="relative overflow-hidden rounded-2xl border border-brand-100 bg-card p-6 shadow-sm motion-safe:animate-rise-in">
+        <span
+          aria-hidden
+          className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-brand-400 via-brand-600 to-brand-400 opacity-70"
+        />
         <div className="flex flex-wrap items-baseline justify-between gap-2">
           <div>
             <h2 className="font-heading text-lg font-semibold text-card-foreground">
@@ -93,23 +97,25 @@ export function LobbyView({
               {durationMinutes ? ` · ${durationMinutes} minutes` : " · untimed"}
             </p>
           </div>
-          <Badge tone="amber">Waiting to start</Badge>
+          <Badge dot tone="amber">Waiting to start</Badge>
         </div>
 
         <div className="mt-5 rounded-xl border border-dashed border-brand-200 bg-brand-50/60 p-4 text-center">
           <p className="text-xs uppercase tracking-wide text-muted-foreground">
             Share this code
           </p>
-          <p className="mt-1 font-mono text-3xl font-bold tracking-[0.3em] text-brand-800">
+          <p className="mt-1 inline-block rounded-lg bg-card px-4 py-1.5 font-mono text-3xl font-bold tracking-[0.3em] text-brand-800 shadow-sm ring-1 ring-brand-200/70">
             {joinCode}
           </p>
-          <button
-            type="button"
-            onClick={copy}
-            className="mt-2 text-xs text-brand-700 underline hover:text-brand-800"
-          >
-            {copied ? "Copied" : "Copy code"}
-          </button>
+          <div>
+            <button
+              type="button"
+              onClick={copy}
+              className="mt-2 rounded-lg px-3 py-1.5 text-xs font-medium text-brand-700 transition-colors hover:bg-brand-100/60"
+            >
+              {copied ? "Copied" : "Copy code"}
+            </button>
+          </div>
         </div>
       </section>
 
@@ -121,12 +127,12 @@ export function LobbyView({
           {members.map((m) => (
             <li
               key={m.studentId}
-              className="flex items-center gap-2 rounded-lg border border-border px-3 py-2 text-sm"
+              className="flex items-center gap-2 rounded-lg border border-border/80 bg-card px-3 py-2 text-sm shadow-sm motion-safe:animate-fade-in"
             >
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-brand-100 text-xs font-semibold text-brand-800">
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-brand-100 to-brand-200 text-xs font-semibold text-brand-800 ring-1 ring-brand-200/60">
                 {m.name.slice(0, 2).toUpperCase()}
               </span>
-              <span className="text-card-foreground">{m.name}</span>
+              <span className="font-medium text-card-foreground">{m.name}</span>
               {m.isYou ? <Badge tone="blue">You</Badge> : null}
               {m.isOwner ? <Badge tone="purple">Owner</Badge> : null}
             </li>
@@ -134,8 +140,9 @@ export function LobbyView({
           {Array.from({ length: Math.max(0, empty) }).map((_, i) => (
             <li
               key={`empty-${i}`}
-              className="rounded-lg border border-dashed border-border px-3 py-2 text-sm text-muted-foreground"
+              className="flex items-center gap-2 rounded-lg border border-dashed border-border bg-muted/30 px-3 py-2 text-sm text-muted-foreground"
             >
+              <span aria-hidden className="flex h-7 w-7 items-center justify-center rounded-full border border-dashed border-border text-muted-foreground/50">·</span>
               Empty seat
             </li>
           ))}
@@ -149,12 +156,12 @@ export function LobbyView({
       </section>
 
       {startState?.error ? (
-        <p role="alert" className="rounded bg-red-50 px-3 py-2 text-sm text-red-800">
+        <p role="alert" className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">
           {startState.error}
         </p>
       ) : null}
       {leaveState?.error ? (
-        <p role="alert" className="rounded bg-red-50 px-3 py-2 text-sm text-red-800">
+        <p role="alert" className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">
           {leaveState.error}
         </p>
       ) : null}
@@ -165,7 +172,7 @@ export function LobbyView({
             <input type="hidden" name="group_id" value={groupId} />
             <SubmitButton
               className={cn(
-                "rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground",
+                "rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary-hover hover:shadow-md",
                 members.length < 2 && "pointer-events-none opacity-50"
               )}
             >
@@ -180,7 +187,7 @@ export function LobbyView({
 
         <form action={leaveAction}>
           <input type="hidden" name="group_id" value={groupId} />
-          <SubmitButton className="rounded-lg border-2 border-border px-4 py-2 text-sm text-muted-foreground hover:bg-muted">
+          <SubmitButton className="rounded-lg border border-border bg-card px-4 py-2 text-sm font-medium text-card-foreground transition-colors hover:border-brand-300 hover:bg-muted">
             Leave group
           </SubmitButton>
         </form>

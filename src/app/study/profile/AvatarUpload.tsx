@@ -109,7 +109,11 @@ export function AvatarUpload({
 
   return (
     <div className="flex items-center gap-4">
-      <Avatar name={name} url={shown} seed={userId} size={64} />
+      <span className="inline-flex shrink-0 rounded-full bg-gradient-to-br from-brand-400 via-brand-500 to-brand-600 p-[3px] shadow-sm">
+        <span className="rounded-full bg-card p-[2px]">
+          <Avatar name={name} url={shown} seed={userId} size={64} />
+        </span>
+      </span>
 
       <div className="min-w-0">
         <input
@@ -128,7 +132,7 @@ export function AvatarUpload({
             type="button"
             disabled={working}
             onClick={() => inputRef.current?.click()}
-            className="rounded-lg border border-brand-700 px-3 py-1.5 text-sm font-medium text-brand-700 hover:bg-brand-50 disabled:opacity-50"
+            className="rounded-lg border border-border bg-card px-3 py-1.5 text-sm font-medium text-brand-700 transition-colors hover:border-brand-300 hover:bg-brand-50 disabled:opacity-50"
           >
             {working ? "Uploading…" : shown ? "Change picture" : "Upload a picture"}
           </button>

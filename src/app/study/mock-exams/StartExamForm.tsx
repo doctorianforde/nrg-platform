@@ -8,7 +8,7 @@ function StartButton() {
   return (
     <button
       disabled={pending}
-      className="w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover disabled:opacity-50"
+      className="w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary-hover hover:shadow-md disabled:opacity-50"
     >
       {pending ? "Starting…" : "Start exam"}
     </button>

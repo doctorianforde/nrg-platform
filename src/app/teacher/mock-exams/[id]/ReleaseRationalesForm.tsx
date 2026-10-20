@@ -9,7 +9,7 @@ function ConfirmButton() {
   return (
     <button
       disabled={pending}
-      className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover disabled:opacity-50"
+      className="rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary-hover hover:shadow-md disabled:opacity-50"
     >
       {pending ? "Releasing…" : "Yes, release rationales"}
     </button>
@@ -30,7 +30,7 @@ export function ReleaseRationalesForm({ setId }: { setId: string }) {
       <button
         type="button"
         onClick={() => setConfirming(true)}
-        className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
+        className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary-hover hover:shadow-md"
       >
         Release rationales
       </button>
@@ -38,9 +38,9 @@ export function ReleaseRationalesForm({ setId }: { setId: string }) {
   }
 
   return (
-    <form action={action} className="space-y-2">
+    <form action={action} className="max-w-md space-y-3 rounded-xl border border-amber-300/80 bg-amber-50 p-4 shadow-sm motion-safe:animate-fade-in">
       <input type="hidden" name="set_id" value={setId} />
-      <p className="text-sm text-card-foreground">
+      <p className="text-sm font-medium text-amber-900">
         Release explanations and option rationales to every student who takes this exam?
         This is a one-way action — only an admin can re-lock them.
       </p>
@@ -49,13 +49,13 @@ export function ReleaseRationalesForm({ setId }: { setId: string }) {
         <button
           type="button"
           onClick={() => setConfirming(false)}
-          className="text-sm text-muted-foreground underline"
+          className="rounded-lg px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-card-foreground"
         >
           Cancel
         </button>
       </div>
       {state?.error ? (
-        <p role="alert" className="rounded bg-red-50 px-3 py-2 text-sm text-red-800">
+        <p role="alert" className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">
           {state.error}
         </p>
       ) : null}

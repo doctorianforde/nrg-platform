@@ -7,10 +7,13 @@ import type { Stage } from "@/lib/case";
 export function StageBlock({ stage, isOpening, isLatest, showNewTag = true }: { stage: Stage; isOpening?: boolean; isLatest?: boolean; showNewTag?: boolean }) {
   const hasData = stage.vitals.length > 0 || stage.assessment.length > 0 || stage.labs.length > 0 || stage.medications.length > 0;
   return (
-    <section className={`rounded-xl border bg-card p-5 shadow-sm ${isLatest ? "border-brand-300" : "border-border"}`}>
-      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-        <span className="font-heading text-sm font-semibold text-card-foreground">{stage.time_label}</span>
-        {!isOpening && showNewTag ? <span className="text-xs font-semibold uppercase tracking-wide text-brand-700">New information</span> : null}
+    <section className={`rounded-xl border bg-card p-5 shadow-sm ${isLatest ? "border-brand-300 ring-1 ring-brand-200/60" : "border-border/80"}`}>
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+        <span className="inline-flex items-center gap-1.5 font-heading text-sm font-semibold text-card-foreground">
+          <span aria-hidden className="h-2 w-2 rounded-full bg-brand-500" />
+          {stage.time_label}
+        </span>
+        {!isOpening && showNewTag ? <span className="rounded-full bg-brand-100 px-2 py-0.5 text-xs font-semibold uppercase tracking-wide text-brand-800">New information</span> : null}
       </div>
       {stage.narrative ? <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-card-foreground">{stage.narrative}</p> : null}
       {hasData ? (
@@ -39,17 +42,17 @@ function MedicationTable({ meds }: { meds: Stage["medications"] }) {
         <caption className="mb-1 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Medications</caption>
         <thead>
           <tr className="text-left text-xs text-muted-foreground">
-            <th className="py-1 pr-3 font-normal">Drug</th><th className="py-1 pr-3 font-normal">Dose and route</th>
+            <th className="py-1 pl-2 pr-3 font-normal">Drug</th><th className="py-1 pr-3 font-normal">Dose and route</th>
             <th className="py-1 pr-3 font-normal">Frequency</th><th className="py-1 font-normal">Status</th>
           </tr>
         </thead>
         <tbody>
           {meds.map((m, i) => (
-            <tr key={i} className="border-t border-border align-top">
-              <td className="py-1.5 pr-3 text-card-foreground">{m.name}</td>
+            <tr key={i} className="border-t border-border/60 align-top odd:bg-muted/50">
+              <td className="py-1.5 pl-2 pr-3 text-card-foreground">{m.name}</td>
               <td className="py-1.5 pr-3 text-card-foreground">{m.dose} {m.route}</td>
               <td className="py-1.5 pr-3 text-card-foreground">{m.frequency}</td>
-              <td className="py-1.5 text-card-foreground">{m.status ?? ""}</td>
+              <td className="py-1.5 pr-2 text-card-foreground">{m.status ?? ""}</td>
             </tr>
           ))}
         </tbody>
@@ -64,9 +67,9 @@ function DataTable({ caption, rows }: { caption: string; rows: string[][] }) {
       <caption className="mb-1 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{caption}</caption>
       <tbody>
         {rows.map(([k, v], i) => (
-          <tr key={i} className="border-t border-border">
-            <th scope="row" className="w-40 py-1.5 pr-3 text-left align-top font-normal text-muted-foreground">{k}</th>
-            <td className="py-1.5 text-card-foreground">{v}</td>
+          <tr key={i} className="border-t border-border/60 odd:bg-muted/50">
+            <th scope="row" className="w-40 py-1.5 pl-2 pr-3 text-left align-top font-normal text-muted-foreground">{k}</th>
+            <td className="py-1.5 pr-2 tabular-nums text-card-foreground">{v}</td>
           </tr>
         ))}
       </tbody>

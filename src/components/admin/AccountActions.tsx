@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { deleteAccount, setRole, setSuspended, type AdminState } from "@/lib/admin/actions";
 
-const BTN = "rounded-lg px-2.5 py-1 text-xs font-medium disabled:opacity-50";
+const BTN = "rounded-lg px-2.5 py-1 text-xs font-medium transition-colors disabled:opacity-50";
 
 function Submit({ className, children }: { className: string; children: React.ReactNode }) {
   const { pending } = useFormStatus();
@@ -99,7 +99,7 @@ export function AccountActions({
       </div>
 
       {confirming ? (
-        <form action={deleteAction} className="rounded-lg border border-red-200 bg-red-50 p-2">
+        <form action={deleteAction} className="rounded-lg border border-red-200 bg-red-50 p-2.5 shadow-sm motion-safe:animate-fade-in">
           <input type="hidden" name="user_id" value={userId} />
           <p className="text-xs text-red-900">
             This permanently deletes the account and their own history. Type{" "}
@@ -110,7 +110,7 @@ export function AccountActions({
               value={typed}
               onChange={(e) => setTyped(e.target.value)}
               placeholder={email}
-              className="rounded border border-red-300 bg-white px-2 py-1 text-xs"
+              className="rounded-lg border border-red-300 bg-card px-2.5 py-1.5 text-xs text-card-foreground shadow-sm transition-colors focus:border-red-400 focus:outline-none focus:ring-2 focus:ring-red-200"
             />
             <button
               type="submit"

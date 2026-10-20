@@ -80,14 +80,48 @@ export default async function StudentProfilePage({
       subtitle="Your details, your progress, and a direct line to your teacher."
     >
       <div className="space-y-5">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <StatCard label="Mock exams completed" value={completed.length} />
-          <StatCard label="Average score" value={fmtPct(avgScore)} hint="Completed attempts only" />
-          <StatCard label="Best score" value={fmtPct(best)} />
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 motion-safe:animate-rise-in">
+          <StatCard
+            label="Mock exams completed"
+            value={completed.length}
+            iconTone="purple"
+            icon={
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5" aria-hidden>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h4M8 4h8a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm1-2h6v4H9V2Z" />
+              </svg>
+            }
+          />
+          <StatCard
+            label="Average score"
+            value={fmtPct(avgScore)}
+            hint="Completed attempts only"
+            iconTone="blue"
+            icon={
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5" aria-hidden>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 19V5m0 14h16M8 15l3-4 3 2 4-6" />
+              </svg>
+            }
+          />
+          <StatCard
+            label="Best score"
+            value={fmtPct(best)}
+            iconTone="green"
+            icon={
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5" aria-hidden>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8 21h8m-4-4v4m-6-17h12v5a6 6 0 0 1-12 0V4Zm-2 2H4a3 3 0 0 0 3 3m13-3h2a3 3 0 0 1-3 3" />
+              </svg>
+            }
+          />
           <StatCard
             label="Unread replies"
             value={unread}
             hint={unread > 0 ? "Your teacher has replied" : "Nothing new"}
+            iconTone={unread > 0 ? "amber" : "purple"}
+            icon={
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5" aria-hidden>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16v12H4V6Zm0 1 8 6 8-6" />
+              </svg>
+            }
           />
         </div>
 

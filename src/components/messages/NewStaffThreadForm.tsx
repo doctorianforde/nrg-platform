@@ -11,14 +11,15 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className="rounded-lg bg-primary px-5 py-2 text-sm font-medium text-primary-foreground hover:bg-primary-hover disabled:opacity-50"
+      className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary-hover hover:shadow-md disabled:opacity-50"
     >
       {pending ? "Sending…" : "Send"}
     </button>
   );
 }
 
-const input = "w-full rounded-lg border border-input bg-card px-3 py-2 text-sm text-card-foreground";
+const input =
+  "w-full rounded-lg border border-input bg-card px-3 py-2 text-sm text-card-foreground shadow-sm transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30";
 
 export function NewStaffThreadForm({ students }: { students: RosterStudent[] }) {
   const [state, action] = useFormState<MessageState, FormData>(createThreadForStudent, null);
@@ -37,7 +38,7 @@ export function NewStaffThreadForm({ students }: { students: RosterStudent[] }) 
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="rounded-lg border-2 border-brand-700 px-4 py-2 text-sm font-medium text-brand-700 hover:bg-brand-50"
+        className="rounded-lg border border-brand-300 bg-card px-4 py-2 text-sm font-medium text-brand-700 shadow-sm transition-colors hover:border-brand-400 hover:bg-brand-50"
       >
         Start a conversation
       </button>
@@ -71,7 +72,7 @@ export function NewStaffThreadForm({ students }: { students: RosterStudent[] }) 
       </label>
 
       {state && "error" in state ? (
-        <p role="alert" className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-800">
+        <p role="alert" className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">
           {state.error}
         </p>
       ) : null}
@@ -80,7 +81,7 @@ export function NewStaffThreadForm({ students }: { students: RosterStudent[] }) 
         <button
           type="button"
           onClick={() => setOpen(false)}
-          className="rounded-lg px-4 py-2 text-sm text-muted-foreground hover:text-card-foreground"
+          className="rounded-lg px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-card-foreground"
         >
           Cancel
         </button>

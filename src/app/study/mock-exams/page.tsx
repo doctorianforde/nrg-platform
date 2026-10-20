@@ -91,7 +91,11 @@ export default async function MockExamsPage() {
       eyebrow="Exam format"
       subtitle="RENR-style mock exams in real exam conditions — no feedback while you answer, and explanations stay locked until your teacher releases them after class review."
     >
-      <section className="mb-5 rounded-2xl border border-brand-100 bg-card p-5 shadow-sm">
+      <section className="relative mb-5 overflow-hidden rounded-2xl border border-brand-100 bg-card p-5 shadow-sm motion-safe:animate-rise-in">
+        <span
+          aria-hidden
+          className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-brand-400 via-brand-600 to-brand-400 opacity-70"
+        />
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <h2 className="font-heading text-base font-semibold text-card-foreground">
@@ -110,21 +114,21 @@ export default async function MockExamsPage() {
           <ul className="mt-4 space-y-2 border-t border-border pt-4">
             {myGroups.map((g) => (
               <li key={g.id} className="flex flex-wrap items-center gap-2 text-sm">
-                <Badge tone={g.status === "running" ? "green" : "amber"}>
+                <Badge dot tone={g.status === "running" ? "green" : "amber"}>
                   {g.status === "running" ? "In progress" : "Waiting"}
                 </Badge>
-                <span className="text-card-foreground">{g.name || "Group exam"}</span>
+                <span className="font-medium text-card-foreground">{g.name || "Group exam"}</span>
                 <span className="text-muted-foreground">
                   · {setTitleById.get(g.set_id) ?? "Mock exam"}
                 </span>
                 {g.status === "lobby" ? (
-                  <span className="font-mono text-xs tracking-widest text-muted-foreground">
+                  <span className="rounded-md bg-brand-50 px-2 py-0.5 font-mono text-xs font-semibold tracking-widest text-brand-700 ring-1 ring-brand-200/60">
                     {g.join_code}
                   </span>
                 ) : null}
                 <Link
                   href={`/study/mock-exams/group/${g.id}`}
-                  className="ml-auto rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground hover:bg-primary-hover"
+                  className="ml-auto rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary-hover hover:shadow-md"
                 >
                   {g.status === "running" ? "Rejoin" : "Open lobby"}
                 </Link>
@@ -148,16 +152,17 @@ export default async function MockExamsPage() {
             return (
               <Card
                 key={set.id}
-                className="flex flex-col rounded-xl border-brand-100 transition-shadow hover:shadow-md"
+                interactive
+                className="flex flex-col rounded-xl border-brand-100"
               >
                 <div className="flex items-start justify-between gap-2">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-100 text-brand-700">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-brand-100 to-brand-200 text-brand-700 ring-1 ring-brand-200/60">
                     <PlayIcon className="h-4 w-4" />
                   </span>
                   {released ? (
-                    <Badge tone="green">Rationales released</Badge>
+                    <Badge dot tone="green">Rationales released</Badge>
                   ) : (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground ring-1 ring-border/70">
                       <LockIcon className="h-3 w-3" /> Rationales locked
                     </span>
                   )}
@@ -184,7 +189,7 @@ export default async function MockExamsPage() {
                         <li key={s.id} className="flex flex-wrap items-center gap-x-2 gap-y-1">
                           {s.completed_at ? (
                             <>
-                              <span className="font-semibold text-brand-700">{fmtPct(s.score_pct)}</span>
+                              <span className="tabular-nums font-semibold text-brand-700">{fmtPct(s.score_pct)}</span>
                               <span className="text-xs text-muted-foreground">
                                 {fmtDateTime(s.completed_at)}
                               </span>
@@ -197,7 +202,7 @@ export default async function MockExamsPage() {
                             </>
                           ) : (
                             <>
-                              <Badge tone="blue">In progress</Badge>
+                              <Badge dot tone="blue">In progress</Badge>
                               <Link
                                 href={`/study/mock-exams/session/${s.id}`}
                                 className="ml-auto text-xs font-medium text-brand-700 underline"

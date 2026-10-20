@@ -28,9 +28,11 @@ export function ThreadList({
     <ul className="divide-y divide-border">
       {threads.map((t) => (
         <li key={t.id}>
-          <Link href={`${basePath}/${t.id}`} className="block px-1 py-3 hover:bg-brand-50/40">
+          <Link href={`${basePath}/${t.id}`} className="block rounded-lg px-2 py-3 transition-colors hover:bg-brand-50/40">
             <div className="flex flex-wrap items-center gap-2">
-              {t.unread ? <span className="h-2 w-2 shrink-0 rounded-full bg-brand-600" aria-label="Unread" /> : null}
+              {t.unread ? (
+                <span className="h-2 w-2 shrink-0 rounded-full bg-brand-600 ring-2 ring-brand-200/70" aria-label="Unread" />
+              ) : null}
               <span className={`text-sm ${t.unread ? "font-semibold text-card-foreground" : "text-card-foreground"}`}>
                 {t.subject}
               </span>

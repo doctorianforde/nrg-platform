@@ -81,7 +81,7 @@ function EventRow({
   }
 
   return (
-    <li className="rounded-xl border border-border bg-card p-3">
+    <li className="rounded-xl border border-border/80 bg-card p-3 shadow-sm">
       <div className="flex flex-wrap items-center gap-2">
         <span className="font-medium text-card-foreground">{event.title}</span>
         <Badge tone={AUDIENCE_TONE[event.audience]}>{AUDIENCE_LABEL[event.audience]}</Badge>
@@ -165,7 +165,7 @@ export function CalendarPanel({
         <div className="mb-3 flex items-center justify-between gap-2">
           <a
             href={`/study/profile?m=${prev}#calendar`}
-            className="rounded-lg border border-border px-2 py-1 text-sm text-card-foreground hover:bg-muted"
+            className="rounded-lg border border-border bg-card px-2.5 py-1 text-sm text-card-foreground shadow-sm transition-colors hover:border-brand-300 hover:bg-muted"
             aria-label="Previous month"
           >
             ‹
@@ -175,7 +175,7 @@ export function CalendarPanel({
           </p>
           <a
             href={`/study/profile?m=${next}#calendar`}
-            className="rounded-lg border border-border px-2 py-1 text-sm text-card-foreground hover:bg-muted"
+            className="rounded-lg border border-border bg-card px-2.5 py-1 text-sm text-card-foreground shadow-sm transition-colors hover:border-brand-300 hover:bg-muted"
             aria-label="Next month"
           >
             ›
@@ -206,13 +206,17 @@ export function CalendarPanel({
                 aria-current={isToday ? "date" : undefined}
                 className={`h-16 rounded-lg border p-1 text-left align-top transition-colors ${
                   isSelected
-                    ? "border-brand-600 bg-brand-50"
+                    ? "border-primary bg-brand-50 ring-1 ring-primary/30"
                     : isToday
-                      ? "border-brand-300 bg-card"
-                      : "border-border bg-card hover:bg-muted"
+                      ? "border-brand-300 bg-card hover:bg-brand-50/50"
+                      : "border-border bg-card hover:border-brand-300 hover:bg-muted"
                 }`}
               >
-                <span className={`text-xs ${isToday ? "font-bold text-brand-700" : "text-card-foreground"}`}>
+                <span
+                  className={`inline-flex h-5 w-5 items-center justify-center rounded-full text-xs tabular-nums ${
+                    isToday ? "bg-primary font-bold text-primary-foreground" : "text-card-foreground"
+                  }`}
+                >
                   {day}
                 </span>
                 <span className="mt-0.5 flex flex-wrap gap-0.5">
@@ -221,7 +225,7 @@ export function CalendarPanel({
                       key={e.id}
                       title={e.title}
                       className={`h-1.5 w-1.5 rounded-full ${
-                        e.audience === "self" ? "bg-gray-400" : "bg-brand-600"
+                        e.audience === "self" ? "bg-muted-foreground/50" : "bg-brand-500"
                       }`}
                     />
                   ))}
@@ -252,7 +256,7 @@ export function CalendarPanel({
             <button
               type="button"
               onClick={() => setAdding(true)}
-              className="rounded-lg border border-brand-700 px-2.5 py-1 text-xs font-medium text-brand-700 hover:bg-brand-50"
+              className="rounded-lg border border-border bg-card px-2.5 py-1 text-xs font-medium text-brand-700 shadow-sm transition-colors hover:border-brand-300 hover:bg-brand-50"
             >
               + Add
             </button>
@@ -271,7 +275,7 @@ export function CalendarPanel({
         ) : null}
 
         {dayEvents.length === 0 && !adding ? (
-          <p className="rounded-xl border border-dashed border-border p-4 text-sm text-muted-foreground">
+          <p className="rounded-xl border border-dashed border-border bg-muted/30 p-4 text-center text-sm text-muted-foreground">
             Nothing on this day.
           </p>
         ) : (

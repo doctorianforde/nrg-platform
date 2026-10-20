@@ -21,19 +21,22 @@ export function RankCardV2({ rank }: { rank: RankV2 }) {
       </div>
 
       <div className="mt-4 flex items-end justify-between gap-3">
-        <p className="font-heading text-4xl font-bold text-brand-700">
-          {rank.xp.toLocaleString()} <span className="text-base font-medium text-muted-foreground">XP</span>
+        <p className="font-heading text-4xl font-bold tabular-nums text-gradient-brand">
+          {rank.xp.toLocaleString()} <span className="bg-none text-base font-medium text-muted-foreground">XP</span>
         </p>
         <Streak days={rank.streak} />
       </div>
-      <p className="text-xs text-muted-foreground">
-        Level {current.level + 1} of {RANK_LADDER.length} · {current.tier}
+      <p className="mt-1 text-xs text-muted-foreground">
+        <span className="rounded-full bg-brand-50 px-2 py-0.5 font-medium text-brand-700 ring-1 ring-brand-200/60">
+          Level {current.level + 1} of {RANK_LADDER.length}
+        </span>{" "}
+        · {current.tier}
       </p>
 
       {next ? (
         <div className="mt-3">
-          <div className="h-2 w-full overflow-hidden rounded bg-muted" role="progressbar" aria-valuenow={rank.pct} aria-valuemin={0} aria-valuemax={100}>
-            <div className="h-full bg-brand-600" style={{ width: `${rank.pct}%` }} />
+          <div className="h-2 w-full overflow-hidden rounded-full bg-muted" role="progressbar" aria-valuenow={rank.pct} aria-valuemin={0} aria-valuemax={100}>
+            <div className="h-full rounded-full bg-gradient-to-r from-brand-400 to-brand-600" style={{ width: `${rank.pct}%` }} />
           </div>
           <p className="mt-1.5 text-xs text-muted-foreground">
             {rank.xpToUnlock > 0
@@ -47,10 +50,10 @@ export function RankCardV2({ rank }: { rank: RankV2 }) {
 
       {next && rank.eligible ? <PromotionCallout rank={rank} nextName={next.name} /> : null}
 
-      <div className="mt-4 flex flex-wrap gap-3 border-t border-border pt-3 text-sm">
-        <Link href="/study/practice" className="text-brand-700 underline">Practise</Link>
-        <Link href="/study/mock-exams" className="text-brand-700 underline">Sit a mock exam</Link>
-        <Link href="/study/submit" className="text-brand-700 underline">Write a question</Link>
+      <div className="mt-4 flex flex-wrap gap-2 border-t border-border pt-3 text-sm">
+        <Link href="/study/practice" className="rounded-lg px-2.5 py-1 font-medium text-brand-700 transition-colors hover:bg-brand-50">Practise</Link>
+        <Link href="/study/mock-exams" className="rounded-lg px-2.5 py-1 font-medium text-brand-700 transition-colors hover:bg-brand-50">Sit a mock exam</Link>
+        <Link href="/study/submit" className="rounded-lg px-2.5 py-1 font-medium text-brand-700 transition-colors hover:bg-brand-50">Write a question</Link>
       </div>
     </Card>
   );
@@ -62,7 +65,7 @@ function PromotionCallout({ rank, nextName }: { rank: RankV2; nextName: string }
     return (
       <div className={`${box} border-amber-300 bg-amber-50 text-amber-900`}>
         <p className="font-medium">Your {nextName} promotion quiz is in progress.</p>
-        <Link href={`/study/promotion/${rank.openAttemptId}`} className="mt-2 inline-block rounded-md bg-primary px-4 py-1.5 font-medium text-primary-foreground hover:bg-primary-hover">
+        <Link href={`/study/promotion/${rank.openAttemptId}`} className="mt-2 inline-block rounded-lg bg-primary px-4 py-1.5 font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary-hover hover:shadow-md">
           Resume the quiz
         </Link>
       </div>
@@ -80,7 +83,7 @@ function PromotionCallout({ rank, nextName }: { rank: RankV2; nextName: string }
     <div className={`${box} border-brand-200 bg-brand-50 text-brand-900`}>
       <p className="font-medium">Promotion quiz available</p>
       <p className="mt-1 text-brand-800">Pass it to move up to {nextName}.</p>
-      <Link href="/study/promotion" className="mt-2 inline-block rounded-md bg-primary px-4 py-1.5 font-medium text-primary-foreground hover:bg-primary-hover">
+      <Link href="/study/promotion" className="mt-2 inline-block rounded-lg bg-primary px-4 py-1.5 font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary-hover hover:shadow-md">
         Take the quiz
       </Link>
     </div>

@@ -60,7 +60,7 @@ export default async function SubmitQuestionPage() {
             ) : (
               <ul className="space-y-3">
                 {submissions.map((s) => (
-                  <li key={s.id} className="rounded-xl border border-border p-3">
+                  <li key={s.id} className="rounded-xl border border-border/80 bg-card p-3 shadow-sm">
                     <div className="flex flex-wrap items-center gap-2">
                       <Badge
                         className={STATUS_BADGE[s.reviewStatus as ReviewStatus] ?? STATUS_BADGE.pending}
@@ -93,7 +93,7 @@ export default async function SubmitQuestionPage() {
             </ul>
             <Link
               href="/study/profile"
-              className="mt-3 inline-block text-sm text-brand-700 underline"
+              className="mt-3 inline-block rounded-lg px-3 py-1.5 text-sm font-medium text-brand-700 transition-colors hover:bg-brand-50"
             >
               See your rank and XP
             </Link>

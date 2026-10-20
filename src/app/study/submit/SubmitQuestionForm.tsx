@@ -6,7 +6,8 @@ import { submitQuestion, type SubmitState } from "@/lib/xp/actions";
 import { COGNITIVE_LEVELS, DIFFICULTIES } from "@/lib/review/filters";
 import { capitalize } from "@/lib/format";
 
-const input = "w-full rounded-lg border border-input bg-card px-3 py-2 text-sm text-card-foreground";
+const input =
+  "w-full rounded-lg border border-input bg-card px-3 py-2 text-sm text-card-foreground shadow-sm transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30";
 const LETTERS = ["a", "b", "c", "d"] as const;
 
 function Submit() {
@@ -15,7 +16,7 @@ function Submit() {
     <button
       type="submit"
       disabled={pending}
-      className="rounded-lg bg-primary px-5 py-2 text-sm font-medium text-primary-foreground hover:bg-primary-hover disabled:opacity-50"
+      className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary-hover hover:shadow-md disabled:opacity-50"
     >
       {pending ? "Submitting…" : "Submit for review"}
     </button>
@@ -137,12 +138,12 @@ export function SubmitQuestionForm({
       </div>
 
       {state && "error" in state ? (
-        <p role="alert" className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-800">
+        <p role="alert" className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">
           {state.error}
         </p>
       ) : null}
       {state && "ok" in state ? (
-        <p className="rounded-lg bg-green-50 px-3 py-2 text-sm text-green-800">{state.ok}</p>
+        <p className="rounded-lg border border-green-200 bg-green-50 px-3 py-2 text-sm text-green-800 motion-safe:animate-fade-in">{state.ok}</p>
       ) : null}
 
       <div className="flex items-center justify-between gap-3">

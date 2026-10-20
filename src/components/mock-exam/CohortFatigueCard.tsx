@@ -24,10 +24,10 @@ function Band({
     <div>
       <div className="flex items-baseline justify-between gap-2">
         <span className="text-xs text-muted-foreground">{label}</span>
-        <span className={`font-heading text-lg font-bold ${text}`}>{count}</span>
+        <span className={`font-heading text-lg font-bold tabular-nums ${text}`}>{count}</span>
       </div>
-      <div className="mt-1 h-1.5 w-full overflow-hidden rounded bg-muted">
-        <div className={`h-full ${bar}`} style={{ width: `${share}%` }} />
+      <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-muted">
+        <div className={`h-full rounded-full ${bar}`} style={{ width: `${share}%` }} />
       </div>
     </div>
   );
@@ -66,7 +66,7 @@ export function CohortFatigueCard({ cohort }: { cohort: CohortFatigue | null }) 
             {attempts === 1 ? "attempt" : "attempts"}.
           </p>
         </div>
-        <Badge tone={medianDrop >= COHORT_HIGH_DROP ? "red" : medianDrop >= COHORT_MODERATE_DROP ? "amber" : "green"}>
+        <Badge dot tone={medianDrop >= COHORT_HIGH_DROP ? "red" : medianDrop >= COHORT_MODERATE_DROP ? "amber" : "green"}>
           Median {medianDrop >= 0 ? "−" : "+"}
           {Math.abs(medianDrop)} points
         </Badge>

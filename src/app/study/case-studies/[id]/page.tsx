@@ -31,12 +31,12 @@ export default async function CaseStudyPage({ params, searchParams }: { params: 
         ← All case studies
       </Link>
       {!header.is_active ? (
-        <p className="mb-4 rounded-md border border-amber-300 bg-amber-50 px-3 py-2 text-sm text-amber-900">
+        <p className="mb-4 rounded-lg border border-amber-300 bg-amber-50 px-4 py-2.5 text-sm text-amber-900">
           Staff preview: this case is {header.status.replace("_", " ")} and not visible to students.
         </p>
       ) : null}
       {searchParams.error ? (
-        <p className="mb-4 rounded-md border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-900">{searchParams.error}</p>
+        <p className="mb-4 rounded-lg border border-red-300 bg-red-50 px-4 py-2.5 text-sm text-red-900">{searchParams.error}</p>
       ) : null}
       {children}
     </DashboardShell>
@@ -79,7 +79,7 @@ export default async function CaseStudyPage({ params, searchParams }: { params: 
           </ul>
           <form action={startCase} className="mt-4">
             <input type="hidden" name="caseId" value={header.id} />
-            <button className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary-hover">Start the case</button>
+            <button className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary-hover hover:shadow-md">Start the case</button>
           </form>
         </Card>
       </div>
@@ -145,7 +145,7 @@ export default async function CaseStudyPage({ params, searchParams }: { params: 
         </div>
         <ul className="mt-3 grid gap-2 sm:grid-cols-2">
           {steps.map((s) => (
-            <li key={s.position} className="flex items-center justify-between gap-2 rounded-md border border-border px-3 py-2 text-sm">
+            <li key={s.position} className="flex items-center justify-between gap-2 rounded-lg border border-border/80 bg-card px-3.5 py-2.5 text-sm shadow-sm">
               <span>Q{s.position} · {s.step}</span>
               <span className="flex items-center gap-2">
                 {s.ms !== null ? <span className="font-mono text-xs text-muted-foreground" title="Time on this question">{formatDuration(s.ms)}</span> : null}
@@ -156,12 +156,12 @@ export default async function CaseStudyPage({ params, searchParams }: { params: 
         </ul>
         <form action={startCase} className="mt-4">
           <input type="hidden" name="caseId" value={header.id} />
-          <button className="rounded-lg border border-border px-4 py-2 text-sm font-medium hover:bg-muted">Try the case again</button>
+          <button className="rounded-lg border border-border bg-card px-4 py-2 text-sm font-medium text-card-foreground transition-colors hover:border-brand-300 hover:bg-muted">Try the case again</button>
         </form>
       </Card>
 
-      <details className="rounded-xl border border-border bg-card p-4">
-        <summary className="cursor-pointer font-heading font-semibold">The full case record</summary>
+      <details className="rounded-xl border border-border/80 bg-card p-5 shadow-sm">
+        <summary className="cursor-pointer font-heading font-semibold text-card-foreground transition-colors hover:text-primary">The full case record</summary>
         <div className="mt-4 space-y-4">
           {stages.map((s) => <StageBlock key={s.id} stage={s} isOpening={s.stage_order === 0} />)}
         </div>

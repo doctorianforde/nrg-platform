@@ -76,8 +76,11 @@ export default async function TrophiesPage() {
                 const summit = t.key === "expert" ? byCode.get("trophy-summit") : null;
                 return (
                   <section key={t.key}>
-                    <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t.name}</h3>
-                    <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-7">
+                    <div className="mb-2 flex items-center gap-2">
+                      <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t.name}</h3>
+                      <span aria-hidden className="h-px flex-1 bg-gradient-to-r from-border to-transparent" />
+                    </div>
+                    <div className="grid grid-cols-3 gap-2 rounded-xl border border-border/60 bg-muted/30 p-2 sm:grid-cols-4 md:grid-cols-7">
                       {trophy ? tile(trophy) : null}
                       {row.map((d) => tile(d))}
                       {summit ? tile(summit) : null}
@@ -96,8 +99,11 @@ export default async function TrophiesPage() {
                 if (!list.length) return null;
                 return (
                   <section key={a.category}>
-                    <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">{a.title}</h3>
-                    <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5">{list.map((d) => tile(d))}</div>
+                    <div className="mb-2 flex items-center gap-2">
+                      <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{a.title}</h3>
+                      <span aria-hidden className="h-px flex-1 bg-gradient-to-r from-border to-transparent" />
+                    </div>
+                    <div className="grid grid-cols-3 gap-2 rounded-xl border border-border/60 bg-muted/30 p-2 sm:grid-cols-4 md:grid-cols-5">{list.map((d) => tile(d))}</div>
                   </section>
                 );
               })}
@@ -106,11 +112,12 @@ export default async function TrophiesPage() {
         </div>
 
         <div className="space-y-5">
-          <Card className="rounded-xl border-brand-100">
+          <Card className="relative overflow-hidden rounded-xl border-brand-100">
+            <span aria-hidden className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-gold via-brand-500 to-gold opacity-70" />
             <CardTitle>Your collection</CardTitle>
-            <p className="mt-2 font-heading text-3xl font-bold text-brand-700">{earned.size} <span className="text-base font-medium text-muted-foreground">of {defs.length}</span></p>
-            <div className="mt-2 h-2 w-full overflow-hidden rounded bg-muted" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}>
-              <div className="h-full bg-brand-600" style={{ width: `${pct}%` }} />
+            <p className="mt-2 font-heading text-3xl font-bold tabular-nums text-brand-700">{earned.size} <span className="text-base font-medium text-muted-foreground">of {defs.length}</span></p>
+            <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-muted" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}>
+              <div className="h-full rounded-full bg-gradient-to-r from-brand-400 to-brand-600" style={{ width: `${pct}%` }} />
             </div>
             <form action={setShowBadges} className="mt-4 border-t border-border pt-3">
               <input type="hidden" name="show" value={showing ? "0" : "1"} />
@@ -118,7 +125,7 @@ export default async function TrophiesPage() {
               <p className="mt-0.5 text-xs text-muted-foreground">
                 {showing ? "On: classmates can see your badges and the ones you earn this week. Teachers always can." : "Off: only you and your teachers can see your badges."}
               </p>
-              <button className={`mt-2 rounded-lg border px-3 py-1.5 text-sm font-medium ${showing ? "border-border hover:bg-muted" : "border-brand-300 bg-brand-50 text-brand-800 hover:bg-brand-100"}`}>
+              <button className={`mt-2 rounded-lg border px-3 py-1.5 text-sm font-medium transition-colors ${showing ? "border-border bg-card text-card-foreground hover:border-brand-300 hover:bg-muted" : "border-brand-300 bg-brand-50 text-brand-800 hover:bg-brand-100"}`}>
                 {showing ? "Turn off" : "Turn on"}
               </button>
             </form>

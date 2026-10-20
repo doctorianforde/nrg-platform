@@ -16,6 +16,15 @@
   h1, h2, h3, h4 {
     @apply font-heading;
   }
+  /* One focus story everywhere: the theme's ring colour, offset so it reads on any surface. */
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+  ::selection {
+    background: hsl(var(--primary) / 0.18);
+    color: inherit;
+  }
 }
 
 /* A theme switch cross-fades colours briefly (ThemeSync adds the class for ~350 ms); never with reduced motion. */
@@ -29,8 +38,34 @@
   }
 }
 
+@layer components {
+  /* Interactive card: a gentle lift. Motion-gated; colours/shadows still respond without motion. */
+  .card-lift {
+    @apply transition-all duration-200 ease-out hover:border-brand-200 hover:shadow-lg motion-safe:hover:-translate-y-0.5;
+  }
+  /* Headline accent: brand gradient text. Uses mid→strong brand steps so it reads on every theme. */
+  .text-gradient-brand {
+    @apply bg-gradient-to-r from-brand-500 via-brand-600 to-brand-800 bg-clip-text text-transparent;
+  }
+  /* Hero decoration: soft light blooms for the page-header band (opaque surfaces only — never the page background,
+     which the content-protection watermark paints on). */
+  .hero-ornament {
+    background-image:
+      radial-gradient(42rem 20rem at 85% -20%, hsl(var(--header-muted) / 0.16), transparent 60%),
+      radial-gradient(30rem 16rem at 12% 120%, hsl(var(--header-muted) / 0.1), transparent 60%);
+  }
+  /* Dot lattice over hero surfaces, in the band's own text colour at a whisper. */
+  .hero-dots {
+    background-image: radial-gradient(hsl(var(--header-foreground) / 0.14) 1px, transparent 1.5px);
+    background-size: 22px 22px;
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
   }
 }

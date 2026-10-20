@@ -8,6 +8,12 @@ const ACCURACY_TEXT = {
   red: "text-red-600",
 } as const;
 
+const ACCURACY_BAR = {
+  green: "bg-green-500",
+  amber: "bg-amber-500",
+  red: "bg-red-500",
+} as const;
+
 function TrendingDownIcon({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className={className} aria-hidden>
@@ -38,7 +44,7 @@ function SegmentCard({ segment, isFirst }: { segment: FatigueSegment; isFirst: b
   const tone = accuracyTone(segment.pct);
 
   return (
-    <div className="rounded-xl border border-border bg-card p-4">
+    <div className="rounded-xl border border-border/80 bg-card p-4 shadow-sm">
       <div className="flex items-center justify-between gap-2">
         <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
           {segment.name}
@@ -58,9 +64,18 @@ function SegmentCard({ segment, isFirst }: { segment: FatigueSegment; isFirst: b
         ) : null}
       </div>
 
-      <p className={`mt-2 font-heading text-3xl font-bold ${scored ? ACCURACY_TEXT[tone] : "text-muted-foreground"}`}>
-        {scored ? `${segment.pct}%` : "—"}
-      </p>
+      <div className="mt-2 flex items-end gap-3">
+        <p className={`font-heading text-3xl font-bold tabular-nums ${scored ? ACCURACY_TEXT[tone] : "text-muted-foreground"}`}>
+          {scored ? `${segment.pct}%` : "—"}
+        </p>
+        {/* Tiny accuracy bar: the quarter's share of a full column, in its threshold colour. */}
+        <span aria-hidden className="mb-1 flex h-8 w-2 items-end overflow-hidden rounded-full bg-muted">
+          <span
+            className={`block w-full rounded-full ${scored ? ACCURACY_BAR[tone] : "bg-muted"}`}
+            style={{ height: `${scored ? Math.max(6, segment.pct) : 0}%` }}
+          />
+        </span>
+      </div>
 
       <p className="mt-1 text-xs text-muted-foreground">
         {scored
@@ -118,7 +133,9 @@ export function FatigueAnalysis({ report }: { report: FatigueReport }) {
 
       {flagged ? (
         <div className="mt-4 flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3">
-          <TrendingDownIcon className="mt-0.5 h-5 w-5 shrink-0 text-red-600" />
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-red-100 ring-1 ring-red-200/70">
+            <TrendingDownIcon className="h-4 w-4 text-red-700" />
+          </span>
           <div>
             <p className="text-sm font-semibold text-red-900">
               Your accuracy dropped in the later part of this exam

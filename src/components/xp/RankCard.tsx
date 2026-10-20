@@ -21,17 +21,20 @@ export function RankCard({ xp }: { xp: XpSummary }) {
         <Badge tone={TIER_TONE[xp.tier]}>{xp.rank}</Badge>
       </div>
 
-      <p className="mt-4 font-heading text-4xl font-bold text-brand-700">
-        {xp.xp.toLocaleString()} <span className="text-base font-medium text-muted-foreground">XP</span>
+      <p className="mt-4 font-heading text-4xl font-bold tabular-nums text-gradient-brand">
+        {xp.xp.toLocaleString()} <span className="bg-none text-base font-medium text-muted-foreground">XP</span>
       </p>
-      <p className="text-xs text-muted-foreground">
-        Level {xp.level + 1} of {RANK_LADDER.length} · {xp.tier}
+      <p className="mt-1 text-xs text-muted-foreground">
+        <span className="rounded-full bg-brand-50 px-2 py-0.5 font-medium text-brand-700 ring-1 ring-brand-200/60">
+          Level {xp.level + 1} of {RANK_LADDER.length}
+        </span>{" "}
+        · {xp.tier}
         {xp.streak > 0 ? ` · ${xp.streak}-day streak` : ""}
       </p>
 
       <div className="mt-3">
-        <div className="h-2 w-full overflow-hidden rounded bg-muted">
-          <div className="h-full bg-brand-600" style={{ width: `${xp.pct}%` }} />
+        <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
+          <div className="h-full rounded-full bg-gradient-to-r from-brand-400 to-brand-600" style={{ width: `${xp.pct}%` }} />
         </div>
         <p className="mt-1.5 text-xs text-muted-foreground">
           {xp.nextRank
@@ -74,18 +77,18 @@ export function RankCard({ xp }: { xp: XpSummary }) {
                   {XP_REASON_LABEL[r.reason] ?? r.reason}
                   <span className="ml-1 text-xs">×{r.count}</span>
                 </dt>
-                <dd className="font-medium text-card-foreground">+{r.amount.toLocaleString()}</dd>
+                <dd className="font-medium tabular-nums text-card-foreground">+{r.amount.toLocaleString()}</dd>
               </div>
             ))}
           </dl>
         )}
       </div>
 
-      <div className="mt-3 flex flex-wrap gap-3 text-sm">
-        <Link href="/study/mock-exams" className="text-brand-700 underline">
+      <div className="mt-3 flex flex-wrap gap-2 text-sm">
+        <Link href="/study/mock-exams" className="rounded-lg px-2.5 py-1 font-medium text-brand-700 transition-colors hover:bg-brand-50">
           Sit a mock exam
         </Link>
-        <Link href="/study/submit" className="text-brand-700 underline">
+        <Link href="/study/submit" className="rounded-lg px-2.5 py-1 font-medium text-brand-700 transition-colors hover:bg-brand-50">
           Write a question
         </Link>
       </div>

@@ -94,7 +94,7 @@ export function WatermarkReveal() {
   return (
     <div>
       <div className="flex flex-wrap items-center gap-4">
-        <label className="inline-flex cursor-pointer items-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary-hover">
+        <label className="inline-flex cursor-pointer items-center rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary-hover hover:shadow-md">
           Choose a screenshot
           <input type="file" accept="image/*" className="sr-only" onChange={(e) => onFile(e.target.files?.[0])} />
         </label>
@@ -114,14 +114,14 @@ export function WatermarkReveal() {
             <button
               type="button"
               onClick={download}
-              className="rounded-md border border-border px-3 py-2 text-sm font-medium text-card-foreground hover:bg-muted"
+              className="rounded-lg border border-border bg-card px-4 py-2 text-sm font-medium text-card-foreground transition-colors hover:border-brand-300 hover:bg-muted"
             >
               Download result
             </button>
           </>
         ) : null}
       </div>
-      {error ? <p className="mt-3 text-sm text-red-700">{error}</p> : null}
+      {error ? <p className="mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p> : null}
       <p className="mt-3 text-sm text-muted-foreground">
         The image is processed in this browser and never uploaded. Look on plain backgrounds (margins, between answer
         options) for repeated, tilted text: name · email · first 8 characters of the account id · date. The id is the
@@ -130,7 +130,7 @@ export function WatermarkReveal() {
       <canvas
         ref={canvasRef}
         data-testid="watermark-canvas"
-        className={img ? "mt-4 h-auto max-w-full rounded-md border border-border" : "hidden"}
+        className={img ? "mt-4 h-auto max-w-full rounded-lg border border-border shadow-sm" : "hidden"}
       />
     </div>
   );

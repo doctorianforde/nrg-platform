@@ -48,7 +48,7 @@ export default async function CaseStudiesPage() {
       subtitle="Unfolding patient cases: recognise cues, prioritise, act, and evaluate as new information arrives. Rationales and a teaching review follow each case."
     >
       {!allowed ? (
-        <p className="mb-4 rounded-md border border-brand-200 bg-brand-50 px-3 py-2 text-sm text-brand-900">
+        <p className="mb-4 rounded-lg border border-brand-200 bg-brand-50 px-4 py-2.5 text-sm text-brand-900">
           Case studies are part of the Standard and Premium plans. You can browse the list; ask your administrator about upgrading to work through them.
         </p>
       ) : null}
@@ -61,16 +61,22 @@ export default async function CaseStudiesPage() {
             const st = status(cs.id);
             const n = count(cs.id);
             const card = (
-              <Card className="flex h-full flex-col rounded-xl border-brand-100 transition-shadow hover:shadow-md">
+              <Card interactive={allowed} className="flex h-full flex-col">
                 <div className="flex flex-wrap items-center gap-2">
                   {domain ? <Badge tone="purple">{domain.name}</Badge> : null}
                   {cs.difficulty ? <Badge tone="gray" className="capitalize">{cs.difficulty}</Badge> : null}
-                  {st ? <Badge tone={st.tone}>{st.text}</Badge> : null}
+                  {st ? <Badge tone={st.tone} dot>{st.text}</Badge> : null}
                   {!allowed ? <Badge tone="gray">Locked</Badge> : null}
                 </div>
-                <h3 className="mt-3 font-heading font-semibold text-card-foreground group-hover:text-primary">{cs.title}</h3>
+                <h3 className="mt-3 font-heading font-semibold text-card-foreground transition-colors group-hover:text-primary">{cs.title}</h3>
                 {cs.setting ? <p className="mt-1 text-sm text-muted-foreground">{cs.setting}</p> : null}
-                <p className="mt-auto pt-4 text-xs text-muted-foreground">{n} {n === 1 ? "question" : "questions"}</p>
+                <p className="mt-auto flex items-center gap-1.5 pt-4 text-xs tabular-nums text-muted-foreground">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-3.5 w-3.5" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.6 9a3.4 3.4 0 1 1 4.9 3c-.9.5-1.5 1.1-1.5 2v.5M12 17.5h.01" />
+                    <circle cx="12" cy="12" r="9.25" />
+                  </svg>
+                  {n} {n === 1 ? "question" : "questions"}
+                </p>
               </Card>
             );
             return allowed ? (

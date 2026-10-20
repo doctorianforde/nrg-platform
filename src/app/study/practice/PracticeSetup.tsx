@@ -12,6 +12,13 @@ type Topic = { id: number; name: string };
 
 const COUNTS = [5, 10, 20, 50];
 
+const CHIP_ON =
+  "rounded-full bg-primary px-4 py-1.5 text-sm font-semibold text-primary-foreground shadow-sm ring-1 ring-primary/30 transition-colors";
+const CHIP_OFF =
+  "rounded-full border border-border bg-card px-4 py-1.5 text-sm text-card-foreground transition-colors hover:border-brand-300 hover:bg-brand-50";
+const SELECT_CLASS =
+  "w-full rounded-lg border border-input bg-card px-3 py-2 text-sm text-card-foreground shadow-sm transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30";
+
 export function PracticeSetup({ domains }: { domains: Domain[] }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -80,7 +87,7 @@ export function PracticeSetup({ domains }: { domains: Domain[] }) {
                 <select
                   value={domainId}
                   onChange={(e) => setDomainId(e.target.value ? Number(e.target.value) : "")}
-                  className="w-full rounded-md border border-input bg-card px-3 py-2 text-sm"
+                  className={SELECT_CLASS}
                 >
                   <option value="">All domains</option>
                   {domains.map((d) => (
@@ -97,7 +104,7 @@ export function PracticeSetup({ domains }: { domains: Domain[] }) {
                   value={topicId}
                   onChange={(e) => setTopicId(e.target.value ? Number(e.target.value) : "")}
                   disabled={!domainId || topics.length === 0}
-                  className="w-full rounded-md border border-input bg-card px-3 py-2 text-sm disabled:opacity-50"
+                  className={`${SELECT_CLASS} disabled:opacity-50`}
                 >
                   <option value="">
                     {!domainId ? "Pick a domain first" : "All topics in domain"}
@@ -124,8 +131,8 @@ export function PracticeSetup({ domains }: { domains: Domain[] }) {
                   onClick={() => setCount(n)}
                   className={
                     count === n
-                      ? "rounded-full bg-primary px-4 py-1.5 text-sm font-medium text-primary-foreground"
-                      : "rounded-full border border-border bg-card px-4 py-1.5 text-sm text-card-foreground hover:border-brand-300 hover:bg-brand-50"
+                      ? CHIP_ON
+                      : CHIP_OFF
                   }
                 >
                   {n}
@@ -144,8 +151,8 @@ export function PracticeSetup({ domains }: { domains: Domain[] }) {
                 onClick={() => setCognitive("")}
                 className={
                   !cognitive
-                    ? "rounded-full bg-primary px-4 py-1.5 text-sm font-medium text-primary-foreground"
-                    : "rounded-full border border-border bg-card px-4 py-1.5 text-sm text-card-foreground hover:border-brand-300 hover:bg-brand-50"
+                    ? CHIP_ON
+                    : CHIP_OFF
                 }
               >
                 Mixed (all)
@@ -157,8 +164,8 @@ export function PracticeSetup({ domains }: { domains: Domain[] }) {
                   onClick={() => setCognitive(l)}
                   className={
                     cognitive === l
-                      ? "rounded-full bg-primary px-4 py-1.5 text-sm font-medium text-primary-foreground"
-                      : "rounded-full border border-border bg-card px-4 py-1.5 text-sm text-card-foreground hover:border-brand-300 hover:bg-brand-50"
+                      ? CHIP_ON
+                      : CHIP_OFF
                   }
                 >
                   {capitalize(l)}
@@ -177,8 +184,8 @@ export function PracticeSetup({ domains }: { domains: Domain[] }) {
                 onClick={() => setDifficulty("")}
                 className={
                   !difficulty
-                    ? "rounded-full bg-primary px-4 py-1.5 text-sm font-medium text-primary-foreground"
-                    : "rounded-full border border-border bg-card px-4 py-1.5 text-sm text-card-foreground hover:border-brand-300 hover:bg-brand-50"
+                    ? CHIP_ON
+                    : CHIP_OFF
                 }
               >
                 Any
@@ -190,8 +197,8 @@ export function PracticeSetup({ domains }: { domains: Domain[] }) {
                   onClick={() => setDifficulty(d)}
                   className={
                     difficulty === d
-                      ? "rounded-full bg-primary px-4 py-1.5 text-sm font-medium text-primary-foreground"
-                      : "rounded-full border border-border bg-card px-4 py-1.5 text-sm text-card-foreground hover:border-brand-300 hover:bg-brand-50"
+                      ? CHIP_ON
+                      : CHIP_OFF
                   }
                 >
                   {capitalize(d)}
@@ -202,7 +209,11 @@ export function PracticeSetup({ domains }: { domains: Domain[] }) {
         </div>
       </Card>
 
-      <Card className="lg:col-span-2 lg:sticky lg:top-24">
+      <Card className="relative overflow-hidden lg:col-span-2 lg:sticky lg:top-24">
+        <span
+          aria-hidden
+          className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-brand-400 via-brand-600 to-brand-400"
+        />
         <h3 className="font-heading font-semibold">Session summary</h3>
         <dl className="mt-4 space-y-3 text-sm">
           <div className="flex justify-between gap-4">
@@ -241,7 +252,7 @@ export function PracticeSetup({ domains }: { domains: Domain[] }) {
         <button
           type="button"
           onClick={start}
-          className="mt-6 w-full rounded-lg bg-primary px-5 py-3 text-sm font-medium text-primary-foreground hover:bg-primary-hover"
+          className="mt-6 w-full rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary-hover hover:shadow-md"
         >
           ▶ Start session
         </button>

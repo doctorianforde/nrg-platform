@@ -33,6 +33,34 @@ function CheckIcon({ className }: { className?: string }) {
   );
 }
 
+/** Decorative score ring: a muted track with a brand-gradient arc for the score share. */
+function ScoreRing({ pct }: { pct: number }) {
+  const r = 56;
+  const c = 2 * Math.PI * r;
+  const share = Math.max(0, Math.min(100, pct));
+  return (
+    <svg viewBox="0 0 128 128" className="h-36 w-36 -rotate-90" aria-hidden>
+      <defs>
+        <linearGradient id="score-ring-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="rgb(var(--brand-400))" />
+          <stop offset="100%" stopColor="rgb(var(--brand-600))" />
+        </linearGradient>
+      </defs>
+      <circle cx="64" cy="64" r={r} fill="none" strokeWidth="10" className="stroke-muted" />
+      <circle
+        cx="64"
+        cy="64"
+        r={r}
+        fill="none"
+        strokeWidth="10"
+        strokeLinecap="round"
+        stroke="url(#score-ring-grad)"
+        strokeDasharray={`${(share / 100) * c} ${c}`}
+      />
+    </svg>
+  );
+}
+
 /**
  * Post-exam results. Correctness is only shown AFTER submission — never during
  * the exam. Explanations and option rationales render exclusively when the
@@ -78,14 +106,21 @@ export function ResultsView({
   return (
     <div className="space-y-5">
       {/* Score hero */}
-      <div className="rounded-2xl border border-brand-100 bg-card p-8 text-center shadow-sm">
+      <div className="relative overflow-hidden rounded-2xl border border-brand-100 bg-card p-8 text-center shadow-sm motion-safe:animate-rise-in">
+        <span
+          aria-hidden
+          className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-brand-400 via-brand-600 to-brand-400 opacity-70"
+        />
         <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
           Your score — {setTitle}
         </p>
-        <p className="mt-2 font-heading text-6xl font-bold text-brand-700">
-          {fmtPct(session.score_pct)}
-        </p>
-        <p className="mt-2 text-sm text-muted-foreground">
+        <div className="relative mx-auto mt-4 h-36 w-36">
+          <ScoreRing pct={session.score_pct ?? 0} />
+          <p className="absolute inset-0 flex items-center justify-center font-heading text-3xl font-bold tabular-nums text-brand-700">
+            {fmtPct(session.score_pct)}
+          </p>
+        </div>
+        <p className="mt-4 text-sm tabular-nums text-muted-foreground">
           {session.correct_count ?? 0} of {total} correct · completed{" "}
           {fmtDateTime(session.completed_at)}
         </p>
@@ -93,7 +128,9 @@ export function ResultsView({
 
       {!rationaleReleased ? (
         <div className="flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3">
-          <LockIcon className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" />
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-amber-100 ring-1 ring-amber-200/70">
+            <LockIcon className="h-4 w-4 text-amber-700" />
+          </span>
           <div>
             <p className="text-sm font-semibold text-amber-900">Rationales are locked</p>
             <p className="text-sm text-amber-800">
@@ -103,7 +140,9 @@ export function ResultsView({
         </div>
       ) : (
         <div className="flex items-start gap-3 rounded-xl border border-green-200 bg-green-50 px-4 py-3">
-          <CheckIcon className="mt-0.5 h-5 w-5 shrink-0 text-green-600" />
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-green-100 ring-1 ring-green-200/70">
+            <CheckIcon className="h-4 w-4 text-green-700" />
+          </span>
           <div>
             <p className="text-sm font-semibold text-green-900">Rationales released</p>
             <p className="text-sm text-green-800">
@@ -207,13 +246,13 @@ export function ResultsView({
       <div className="flex flex-wrap gap-3">
         <Link
           href="/study/mock-exams"
-          className="inline-block rounded-lg border-2 border-brand-700 px-5 py-2 text-sm font-medium text-brand-700 transition-colors hover:bg-brand-50"
+          className="inline-block rounded-lg border border-border bg-card px-5 py-2 text-sm font-medium text-brand-700 transition-colors hover:border-brand-300 hover:bg-brand-50"
         >
           ‹ Back to mock exams
         </Link>
         <Link
           href={`/study/profile?attach=${session.id}`}
-          className="inline-block rounded-lg bg-primary px-5 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary-hover"
+          className="inline-block rounded-lg bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary-hover hover:shadow-md"
         >
           Ask your teacher about this attempt
         </Link>

@@ -31,11 +31,11 @@ export default async function TeacherThreadPage({ params }: { params: { id: stri
       subtitle="Your reply goes straight to the student's profile."
     >
       <div className="space-y-4">
-        <Link href="/teacher/messages" className="inline-block text-sm text-brand-700 underline">
+        <Link href="/teacher/messages" className="inline-block rounded-lg px-3 py-1.5 text-sm font-medium text-brand-700 transition-colors hover:bg-brand-50">
           ‹ Back to the inbox
         </Link>
         {strip.length ? (
-          <div className="flex flex-wrap items-center gap-2 rounded-lg border border-brand-100 bg-white px-3 py-2 text-sm">
+          <div className="flex flex-wrap items-center gap-2 rounded-xl border border-border/80 bg-card px-3 py-2 text-sm shadow-sm">
             <span className="text-muted-foreground">Badges</span>
             <MiniBadges badges={strip} size={28} />
           </div>
