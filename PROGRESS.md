@@ -50,7 +50,7 @@ submissions, the review queue `/teacher/review`. Content: 460 live questions (Ja
 | Colour-coded rationales | Practice tutor + released mock review show typed options (correct / close / priority / incorrect / not asked); untyped questions fall back to plain | 2026-10-17 entry |
 | Content protection | Students: faint watermark (5%, 3.5% on Midnight), no copy/print, blur on focus loss / screenshot keys (`NEXT_PUBLIC_CONTENT_PROTECTION`, on by default); staff reveal tool `/admin/watermark` | 2026-10-17 entry; 2026-10-19 entry |
 | AI-bank dedup | 610 duplicates retired; pending AI queue 1,987 → 1,377 | 2026-10-17 entry; `docs/phase-1/DEDUP_REPORT.md` |
-| Generation requests | Prompted and automatic modes for the MCQ generator and the case planner; shared request/plan/interpreter in `src/lib/generation/`; CLI `scripts/generation-request.ts`; queue table `generation_requests`. UI waits for the redesign | 2026-10-20 entry; `docs/phase-1/GENERATION_REQUESTS.md` |
+| Generation requests | Prompted and automatic modes for the MCQ generator and the case planner; shared request/plan/interpreter in `src/lib/generation/`; CLI `scripts/generation-request.ts`; queue table `generation_requests`; teacher UI `/teacher/generate` (+ review-queue `run` filter) | 2026-10-20 entry; `docs/phase-1/GENERATION_REQUESTS.md` |
 | Student themes | Royal (default), Teal (id `lagoon`), Midnight (dark), Sunset, each with its own heading + body font; picker on profile + header switcher; saved in `profiles.theme` | 2026-10-17 themes entry; 2026-10-19 entry |
 
 ### Waiting for prod, in this order (see "Ranking v2 — prod go-live plan")
@@ -2774,3 +2774,20 @@ the same shell/vocabulary as the verified teacher pages. Note while testing: `.e
 
 **For Ian to review on staging** (as `ian-paid-student`, all 4 themes, plus teacher/admin accounts): overall look,
 the banner overlap on every page, Midnight (dark) contrast, and that content protection still watermarks correctly.
+
+### Generation requests — teacher UI (Claude, 2026-10-20, after the redesign landed)
+- `/teacher/generate` on the redesign's components: *Questions / Case studies* × *Describe it / Choose it*, a live
+  interpretation panel, the same controls for checking a prompt as for choosing directly, a summary with the plan, and
+  *Queue it* (the server action re-validates and inserts with the teacher's token). A requests sidebar shows status,
+  *Cancel*, and links to the review queue filtered to that run (new `run` filter in `src/lib/review/filters.ts`).
+  Linked from the teacher dashboard's quick links, not the header nav. `generation_requests` was added to
+  `src/lib/supabase/types.ts` by hand.
+- Bugs found by the browser test and fixed: the form kept the last request's selections after queueing (it now remounts
+  per queue), and switching to *Choose it* could send an earlier prompt the teacher could no longer see (automatic mode now
+  has a visible "note to the writer" bound to the same text).
+- Verified: tsc, lint, build clean; 49/49 offline tests; 21/21 Playwright checks on a local dev server pointed at staging
+  (details in `GENERATION_REQUESTS.md`); rows checked in the database; a UI-created request run through the CLI with the mock
+  provider. Logins and the CLI hit this machine's intermittent "fetch failed" to Supabase and needed retries. All UI test rows
+  are cancelled on staging.
+- **Not done:** not committed or pushed (the staging site doesn't have it yet). Prod needs `20261020120000` before the
+  merge to `main`.

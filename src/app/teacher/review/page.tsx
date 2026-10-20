@@ -65,6 +65,14 @@ export default async function ReviewListPage({ searchParams }: { searchParams: R
   return (
     <DashboardShell profile={profile} email={user.email} title="Review questions">
       <div className="space-y-5 text-foreground">
+        {f.run ? (
+          <p className="rounded-lg border border-brand-200 bg-brand-50 px-4 py-2.5 text-sm text-brand-800">
+            Showing only questions from generator run <code className="text-xs">{f.run}</code>.{" "}
+            <Link href={`/teacher/review${filtersToQuery({ ...f, run: null, page: 1 })}`} className="font-medium underline">
+              Show the whole queue
+            </Link>
+          </p>
+        ) : null}
         <section className="rounded-xl border border-border/80 bg-card p-5 shadow-sm motion-safe:animate-rise-in">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <p className="tabular-nums text-sm text-card-foreground">

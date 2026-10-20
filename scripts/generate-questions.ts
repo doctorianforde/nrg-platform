@@ -35,6 +35,10 @@
  *   --temperature T sampling temperature (ignored for anthropic: current Claude models reject it)
  *   --prompt-out P  write the full system prompt + per-batch specs to P and exit (for agent mode)
  *   --input P       with --provider file: the {"items":[...]} JSON the agent produced
+ *   --request P     a generation request (kind "mcq", src/lib/generation/request.ts) in place of or on top of
+ *                   --config: its count, title, selections (domain/taxonomy/cluster/topic/difficulty) and Jade's
+ *                   prompt drive the run. Prompted requests must be interpreted and confirmed first
+ *                   (scripts/generation-request.ts does both).
  *
  * Keys come from the environment / .env.local only. Never hardcode them.
  */
@@ -44,29 +48,13 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { checkMcq, jacc, loadRules, tok, type Rules } from "./lib/mcq-standard";
+import { CLUSTERS as CLUSTER_LIST, DOMAINS as DOMAIN_LIST, TAXONOMY as TAXONOMY_LIST } from "../src/lib/generation/taxonomy";
+import { describeRequest, mixWeights, readyToRun, validateRequest, type McqRequest, type McqSelections, type Mix } from "../src/lib/generation/request";
+import { buildMcqPlan, type McqSpec } from "../src/lib/generation/plan";
 
 // ─── Fixed RENR references (from the client's template) ──────────────────────
-const DOMAINS = [
-  { code: "NP",   name: "Nursing Practice",                             pct: 30 },
-  { code: "CDM",  name: "Clinical Decision Making and Intervention",    pct: 20 },
-  { code: "NLM",  name: "Nursing Leadership and Management",            pct: 15 },
-  { code: "PC",   name: "Professional Conduct",                         pct: 10 },
-  { code: "HPMW", name: "Health Promotion and Maintenance of Wellness", pct: 10 },
-  { code: "COM",  name: "Communication",                                pct: 10 },
-  { code: "PD",   name: "Professional Development",                     pct: 5  },
-];
-const TAXONOMY = [
-  { code: "AP",  name: "Application",                        pct: 50, db: "application" },
-  { code: "ASE", name: "Analysis / Synthesis / Evaluation",  pct: 30, db: "analysis" },
-  { code: "KC",  name: "Knowledge / Comprehension",          pct: 20, db: "knowledge" },
-];
-const CLUSTERS = [
-  { code: "MEDSURG",  name: "Medical-surgical and community health priorities", pct: 30, examples: "cardiac, endocrine, renal, respiratory, infectious disease, trauma, cancer" },
-  { code: "SAFETY",   name: "Safety, infection control, and core procedures",   pct: 22, examples: "PPE, medication safety, dosage calculation, IV therapy, oxygen, CPR, wound care" },
-  { code: "MATCHILD", name: "Maternal-child and family nursing",                pct: 22, examples: "antenatal, obstetric emergencies, postpartum, newborn, growth and development, pediatrics" },
-  { code: "MGMT",     name: "Management, legal, and professionalism",           pct: 14, examples: "nursing process, assessment, prioritization, delegation, ethics, legal practice" },
-  { code: "PSYCHSOC", name: "Psychosocial and therapeutic communication",       pct: 12, examples: "therapeutic responses, psychosis, anxiety, substance use, family counselling, culture" },
-];
+// Shared with the teacher UI: src/lib/generation/taxonomy.ts.
+const DOMAINS = DOMAIN_LIST, TAXONOMY = TAXONOMY_LIST, CLUSTERS = CLUSTER_LIST;
 
 // ─── Config (mirrors "Information to fill in before you generate") ───────────
 type Config = {
@@ -106,6 +94,23 @@ loadDotEnvLocal();
 
 const cfgPath = flag("config");
 const cfg: Config = cfgPath ? JSON.parse(readFileSync(resolve(cfgPath), "utf8")) : ({} as Config);
+const REQUEST = loadRequest(flag("request"));
+function loadRequest(p?: string): McqRequest | undefined {
+  if (!p) return undefined;
+  const v = validateRequest(JSON.parse(readFileSync(resolve(p), "utf8")));
+  if (!v.ok) { console.error(`Invalid request ${p}:\n  - ${v.errors.join("\n  - ")}`); process.exit(2); }
+  if (v.request.kind !== "mcq") { console.error(`${p} is a ${v.request.kind} request; this script writes stand-alone MCQs`); process.exit(2); }
+  const blocked = readyToRun(v.request);
+  if (blocked) { console.error(`Request not ready: ${blocked}`); process.exit(2); }
+  v.warnings.forEach(w => console.log(`  ! request: ${w}`));
+  return v.request;
+}
+if (REQUEST) {
+  cfg.total = REQUEST.count;
+  cfg.title = REQUEST.title ?? cfg.title ?? `Generated set ${new Date().toISOString().slice(0, 10)}`;
+  cfg.audience ??= "RENR candidates (final-year nursing students, Trinidad & Tobago and the wider Caribbean)";
+  if (REQUEST.selections.exclusions) cfg.exclusions = [cfg.exclusions, REQUEST.selections.exclusions].filter(Boolean).join("; ");
+}
 if (flag("total")) cfg.total = Number(flag("total"));
 if (flag("title")) cfg.title = flag("title")!;
 if (flag("audience")) cfg.audience = flag("audience")!;
@@ -138,47 +143,26 @@ const sha = (s: string) => createHash("sha256").update(s.toLowerCase().replace(/
 const RULES: Rules = loadRules(flag("rules") ?? "scripts/generation-rules.json");
 const SW = RULES.switches_pending_jade;
 
-// ─── Distribution planner (largest-remainder rounding) ───────────────────────
-function apportion(total: number, weights: { code: string; pct: number }[]): Record<string, number> {
-  const sum = weights.reduce((a, w) => a + w.pct, 0);
-  const raw = weights.map(w => ({ code: w.code, exact: (total * w.pct) / sum }));
-  const out: Record<string, number> = {};
-  let used = 0;
-  for (const r of raw) { out[r.code] = Math.floor(r.exact); used += out[r.code]; }
-  raw.sort((a, b) => (b.exact - Math.floor(b.exact)) - (a.exact - Math.floor(a.exact)));
-  for (let i = 0; used < total; i++, used++) out[raw[i % raw.length].code]++;
-  return out;
+// ─── Distribution planner (src/lib/generation/plan.ts) ───────────────────────
+// Config weight overrides keep their old meaning (percentages summing to 100); a --request's selections go in as-is.
+function overrideMix(name: string, o?: Record<string, number>) {
+  if (!o) return undefined;
+  const s = Object.values(o).reduce((a, b) => a + b, 0);
+  if (Math.abs(s - 100) > 0.01) throw new Error(`${name} override weights must sum to 100 (got ${s})`);
+  return o;
 }
-function applyOverride<T extends { code: string; pct: number }>(base: T[], override?: Record<string, number>): T[] {
-  if (!override) return base;
-  const s = Object.values(override).reduce((a, b) => a + b, 0);
-  if (Math.abs(s - 100) > 0.01) throw new Error(`override weights must sum to 100 (got ${s})`);
-  return base.map(b => ({ ...b, pct: override[b.code] ?? 0 }));
-}
-// Deterministic interleave so each axis' totals are exact and the mix is spread evenly
-function spread(counts: Record<string, number>): string[] {
-  const out: string[] = [];
-  const pool = Object.entries(counts).map(([code, n]) => ({ code, n, acc: 0 }));
-  const total = pool.reduce((a, p) => a + p.n, 0);
-  for (let i = 0; i < total; i++) {
-    for (const p of pool) p.acc += p.n;
-    const pick = pool.reduce((a, b) => (b.acc > a.acc ? b : a));
-    pick.acc -= total; out.push(pick.code);
-  }
-  return out;
-}
-type Spec = { n: number; domain: string; taxonomy: string; cluster: string };
-function buildPlan(total: number) {
-  const dCounts = apportion(total, applyOverride(DOMAINS, cfg.domain_weights));
-  const tCounts = apportion(total, applyOverride(TAXONOMY, cfg.taxonomy_weights));
-  const cCounts = apportion(total, applyOverride(CLUSTERS, cfg.cluster_weights));
-  const d = spread(dCounts), t = spread(tCounts), c = spread(cCounts);
-  // rotate the secondary axes so the same domain doesn't always get the same taxonomy
-  const rot = (arr: string[], k: number) => arr.slice(k).concat(arr.slice(0, k));
-  const t2 = rot(t, Math.floor(total / 3)), c2 = rot(c, Math.floor(total / 2));
-  const specs: Spec[] = d.map((domain, i) => ({ n: i + 1, domain, taxonomy: t2[i], cluster: c2[i] }));
-  return { dCounts, tCounts, cCounts, specs };
-}
+const SELECTIONS: McqSelections = REQUEST?.selections ?? {
+  domains: overrideMix("domain", cfg.domain_weights) as McqSelections["domains"],
+  taxonomy: overrideMix("taxonomy", cfg.taxonomy_weights) as McqSelections["taxonomy"],
+  clusters: overrideMix("cluster", cfg.cluster_weights) as McqSelections["clusters"],
+};
+type Spec = McqSpec;
+const buildPlan = (total: number) => buildMcqPlan(total, SELECTIONS, { withDifficulty: !SW.drop_difficulty });
+// Weights shown in the system prompt: the request's mix where it sets one, else the blueprint.
+const shown = <C extends string, T extends { code: C; pct: number }>(base: readonly T[], mix?: Mix<C>) => {
+  const w = mixWeights(base, mix), sum = w.reduce((a, x) => a + x.pct, 0);
+  return base.map((b, i) => ({ ...b, pct: Math.round((100 * w[i].pct) / (sum || 1)) }));
+};
 
 // ─── Prompt (the master prompt, with the fields filled from config) ──────────
 function standardBlock(): string {
@@ -189,7 +173,7 @@ function standardBlock(): string {
 4. Units: give blood glucose in mg/dL (Caribbean practice), never mmol/L, e.g. 54 mg/dL, not 3.0 mmol/L.${SW.block_nursing_diagnosis_items ? '\n5. Do not write nursing-diagnosis (NANDA / "nursing diagnosis") items.' : ""}${SW.regional_wording_not_tt ? "\n6. Regional wording: where practice differs by territory, test the regionally accepted practice, not a Trinidad and Tobago-specific policy. This overrides any earlier instruction to use Trinidad and Tobago context." : ""}${SW.enforce_abbreviation_rule ? "\n7. Abbreviations: give the full name before its abbreviation on first use." : ""}`;
 }
 function systemPrompt(): string {
-  const dw = applyOverride(DOMAINS, cfg.domain_weights), tw = applyOverride(TAXONOMY, cfg.taxonomy_weights), cw = applyOverride(CLUSTERS, cfg.cluster_weights);
+  const dw = shown(DOMAINS, SELECTIONS.domains), tw = shown(TAXONOMY, SELECTIONS.taxonomy), cw = shown(CLUSTERS, SELECTIONS.clusters);
   return `Act as an expert NRG nursing item writer and RENR-style examination designer (Registered Nurse examination, Trinidad & Tobago / Caribbean context).
 
 You are generating items for: ${cfg.title}. Primary audience: ${cfg.audience}.
@@ -215,7 +199,12 @@ NRG item-writing rules:
 ${maybeFile(cfg.item_writing_rules) || "- Stems are clinically realistic, complete, and answerable without the options.\n- One best answer; distractors are plausible, homogeneous in length and grammar, and represent common errors.\n- Use Caribbean/Trinidad & Tobago context, units and reference ranges where relevant.\n- No trick questions, no double negatives, no 'all of the above' / 'none of the above'."}
 
 Exclusions: ${cfg.exclusions ?? "none"}.
-
+${REQUEST?.prompt ? `
+TEACHER'S REQUEST (from the course lead, in their words). Follow it for content, focus and style. It never overrides the MCQ authoring standard below or the spec assigned to each item; where they disagree, the standard and the spec win.
+"""
+${REQUEST.prompt}
+"""
+` : ""}
 ${standardBlock()}
 
 For every item, internally ensure the domain tag and taxonomy tag match what the stem actually demands, the scenario is clinically realistic, only one answer is best, and distractors are plausible and level-appropriate.
@@ -226,9 +215,10 @@ OUTPUT: respond with a single JSON object and nothing else — no prose, no mark
 function batchPrompt(specs: Spec[]): string {
   const lines = specs.map(s => {
     const d = DOMAINS.find(x => x.code === s.domain)!, t = TAXONOMY.find(x => x.code === s.taxonomy)!, c = CLUSTERS.find(x => x.code === s.cluster)!;
-    return `- spec ${s.n}: domain ${d.code} (${d.name}); taxonomy ${t.code} (${t.name}); cluster ${c.code} (${c.name}: ${c.examples})`;
+    return `- spec ${s.n}: domain ${d.code} (${d.name}); taxonomy ${t.code} (${t.name}); cluster ${c.code} (${c.name}: ${c.examples})${s.topic ? `; topic "${s.topic.name}" (set "topic" to exactly this)` : ""}${s.difficulty ? `; difficulty ${s.difficulty}` : ""}`;
   });
-  return `Write ${specs.length} items, one per spec, in the JSON schema from your instructions. Each item must use exactly the domain, taxonomy and cluster assigned to its spec. Vary the topics within each cluster; do not repeat a scenario.\n\n${lines.join("\n")}`;
+  const extra = specs.some(s => s.topic || s.difficulty);
+  return `Write ${specs.length} items, one per spec, in the JSON schema from your instructions. Each item must use exactly the domain, taxonomy and cluster assigned to its spec${extra ? ", and the topic and difficulty where given" : ""}. ${extra ? "Vary the scenarios within each topic" : "Vary the topics within each cluster"}; do not repeat a scenario.\n\n${lines.join("\n")}`;
 }
 
 // ─── Providers (plain fetch, no SDKs) ────────────────────────────────────────
@@ -334,10 +324,11 @@ function validateItem(raw: any, spec: Spec): { ok: true; item: Item; warnings: s
   if (String(raw.domain).toUpperCase() !== spec.domain) w.push(`domain ${raw.domain}→${spec.domain}`);
   if (String(raw.taxonomy).toUpperCase() !== spec.taxonomy) w.push(`taxonomy ${raw.taxonomy}→${spec.taxonomy}`);
   if (String(raw.cluster).toUpperCase() !== spec.cluster) w.push(`cluster ${raw.cluster}→${spec.cluster}`);
-  const difficulty = ["easy", "medium", "hard"].includes(String(raw.difficulty).toLowerCase()) ? String(raw.difficulty).toLowerCase() : "medium";
+  if (spec.difficulty && String(raw.difficulty).toLowerCase() !== spec.difficulty) w.push(`difficulty ${raw.difficulty}→${spec.difficulty}`);
+  const difficulty = spec.difficulty ?? (["easy", "medium", "hard"].includes(String(raw.difficulty).toLowerCase()) ? String(raw.difficulty).toLowerCase() : "medium");
   return { ok: true, warnings: w, item: {
     spec: spec.n, ...r.item,
-    topic: String(raw.topic ?? "").trim() || CLUSTERS.find(c => c.code === spec.cluster)!.name,
+    topic: spec.topic?.name ?? (String(raw.topic ?? "").trim() || CLUSTERS.find(c => c.code === spec.cluster)!.name),
     domain: spec.domain, taxonomy: spec.taxonomy, cluster: spec.cluster, difficulty: SW.drop_difficulty ? undefined : (difficulty as Item["difficulty"]),
   } };
 }
@@ -360,6 +351,9 @@ async function main() {
   console.log("  domains  :", Object.entries(plan.dCounts).map(([k, v]) => `${k}=${v}`).join("  "));
   console.log("  taxonomy :", Object.entries(plan.tCounts).map(([k, v]) => `${k}=${v}`).join("  "));
   console.log("  clusters :", Object.entries(plan.cCounts).map(([k, v]) => `${k}=${v}`).join("  "));
+  if (plan.topicCounts) console.log("  topics   :", Object.entries(plan.topicCounts).map(([k, v]) => `${k}=${v}`).join("  "));
+  if (plan.difficultyCounts) console.log("  difficulty:", Object.entries(plan.difficultyCounts).map(([k, v]) => `${k}=${v}`).join("  "));
+  if (REQUEST) describeRequest(REQUEST).forEach(l => console.log("  request  :", l));
   if (PROMPT_OUT) {
     const batches: string[] = [];
     for (let i = 0; i < plan.specs.length; i += cfg.batch!) batches.push(`### Batch ${batches.length + 1}\n\n${batchPrompt(plan.specs.slice(i, i + cfg.batch!))}`);
@@ -436,7 +430,7 @@ async function main() {
 
   // ── Save JSON + Markdown review sheet ──
   mkdirSync(dirname(resolve(OUT)), { recursive: true });
-  const outJson = { run_id: RUN_ID, config: { ...cfg }, plan: { domains: plan.dCounts, taxonomy: plan.tCounts, clusters: plan.cCounts }, api_calls: calls, checks, items, failures, warnings };
+  const outJson = { run_id: RUN_ID, config: { ...cfg }, ...(REQUEST ? { request: REQUEST } : {}), plan: { domains: plan.dCounts, taxonomy: plan.tCounts, clusters: plan.cCounts, ...(plan.topicCounts ? { topics: plan.topicCounts } : {}), ...(plan.difficultyCounts ? { difficulty: plan.difficultyCounts } : {}) }, api_calls: calls, checks, items, failures, warnings };
   writeFileSync(resolve(OUT), JSON.stringify(outJson, null, 2));
   const md = [`# ${cfg.title}`, ``, `Generated ${RUN_ID} · ${cfg.provider}/${cfg.model ?? "default"} · ${items.length}/${cfg.total} items · status: PENDING TEACHER REVIEW`, ``,
     `Plan — domains: ${Object.entries(plan.dCounts).map(([k, v]) => `${k} ${v}`).join(", ")} · taxonomy: ${Object.entries(plan.tCounts).map(([k, v]) => `${k} ${v}`).join(", ")} · clusters: ${Object.entries(plan.cCounts).map(([k, v]) => `${k} ${v}`).join(", ")}`, ``,
@@ -458,8 +452,10 @@ async function main() {
   const clusterId = new Map((clusters ?? []).map(c => [c.code as string, c.id as number]));
   const { data: topics } = await db.from("topics").select("id, name");
   const topicId = new Map((topics ?? []).map(t => [String(t.name).toLowerCase(), t.id as number]));
+  const specTopic = new Map(plan.specs.filter(s => s.topic?.id !== undefined).map(s => [s.n, s.topic!.id!]));
   for (const it of items) {
     const k = it.topic.toLowerCase();
+    if (specTopic.has(it.spec)) { topicId.set(k, specTopic.get(it.spec)!); continue; }
     if (topicId.has(k)) continue;
     const { data, error } = await db.from("topics").upsert({ name: it.topic, slug: `${it.cluster.toLowerCase()}-${slug(it.topic)}`, cluster_id: clusterId.get(it.cluster) ?? null, is_active: true }, { onConflict: "slug" }).select("id").single();
     if (!error && data) topicId.set(k, data.id);

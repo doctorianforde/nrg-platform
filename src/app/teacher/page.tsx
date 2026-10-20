@@ -92,7 +92,14 @@ const ArrowLeftIcon = () => (
   </Icon>
 );
 
+const SparkIcon = () => (
+  <Icon>
+    <path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M5.6 18.4l2.8-2.8M15.6 8.4l2.8-2.8" />
+  </Icon>
+);
+
 const QUICK_LINK_ICONS: Record<string, () => React.ReactElement> = {
+  "/teacher/generate": SparkIcon,
   "/teacher/review": CheckCircleIcon,
   "/teacher/messages": MailIcon,
   "/teacher/mock-exams": ClipboardCheckIcon,
@@ -139,6 +146,11 @@ export default async function Page() {
       href: "/teacher/review",
       title: "Review queue",
       body: "Work through the AI-generated questions waiting for clinical review.",
+    },
+    {
+      href: "/teacher/generate",
+      title: "Generate content",
+      body: "Ask for new questions or case studies, in your own words or by domain, topic and taxonomy.",
     },
     {
       href: "/teacher/messages",

@@ -111,6 +111,14 @@ medical diagnosis.
 10. **Gender.** Use the client's name and say "the client". Use he or she only when the scenario needs a sex (pregnancy,
     for example), and then stay consistent.
 
+## Jade's request (`teacher_request`)
+A CASE_REQUEST planned from a generation request (`scripts/generation-request.ts`) may carry `teacher_request`: Jade's
+own words. Follow it for content, focus and style: what to emphasise, which decisions to test, the patient's story.
+It never overrides this brief, V3 or the addendum. If it asks for something they forbid (critical-care management,
+glucose in mmol/L, a medical-diagnosis key, an image), follow the standard and say so in `quality_report`. A condition
+that is not in the catalog arrives with an empty population, setting or endpoint: choose realistic ones and note them
+in `quality_report`.
+
 ## Fields
 Fill `CaseDoc` exactly as in NRG-MH-001:
 - **From the request:** `case_code`, `primary_condition`, `primary_domain` and `difficulty`.

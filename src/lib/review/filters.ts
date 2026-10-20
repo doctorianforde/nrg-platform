@@ -42,6 +42,8 @@ export type Filters = {
   cognitive: string | null;
   difficulty: string | null;
   q: string;
+  /** A generator run id (questions.source_id is `ai:<run_id>:<spec>`), linked from /teacher/generate. */
+  run: string | null;
   page: number;
 };
 
@@ -65,6 +67,7 @@ export function parseFilters(sp: SearchParams): Filters {
     cognitive: oneOf(first(sp.cognitive), COGNITIVE_LEVELS),
     difficulty: oneOf(first(sp.difficulty), DIFFICULTIES),
     q: (first(sp.q) ?? "").trim().slice(0, 200),
+    run: /^[0-9A-Za-z-]{10,40}$/.test(first(sp.run) ?? "") ? first(sp.run)! : null,
     page: intOrNull(first(sp.page)) ?? 1,
   };
 }
@@ -80,6 +83,7 @@ export function filtersToQuery(f: Filters, override: Partial<Filters> = {}): str
   if (m.cognitive) p.set("cognitive", m.cognitive);
   if (m.difficulty) p.set("difficulty", m.difficulty);
   if (m.q) p.set("q", m.q);
+  if (m.run) p.set("run", m.run);
   if (m.page > 1) p.set("page", String(m.page));
   const s = p.toString();
   return s ? `?${s}` : "";
@@ -107,6 +111,7 @@ export function applyFilters<T>(query: T, f: Filters): T {
   if (f.cluster) q = q.eq("topics.cluster_id", f.cluster);
   if (f.cognitive) q = q.eq("cognitive_level", f.cognitive);
   if (f.difficulty) q = q.eq("difficulty", f.difficulty);
+  if (f.run) q = q.like("source_id", `ai:${f.run}:%`);
   if (f.q) q = q.ilike("body", `%${f.q.replace(/[\\%_]/g, "\\$&")}%`);
   return q as T;
 }
