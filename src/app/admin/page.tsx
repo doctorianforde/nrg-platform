@@ -286,6 +286,11 @@ export default async function Page() {
                 </td>
                 <td className="py-3 pr-3">
                   <Badge tone={ROLE_TONE[a.role] ?? "gray"}>{a.role.replace("_", " ")}</Badge>
+                  {a.role === "student" ? (
+                    <Badge tone={a.tier === "free" ? "gray" : "green"} className="ml-1 capitalize">
+                      {a.tier}
+                    </Badge>
+                  ) : null}
                   {a.suspended ? (
                     <Badge tone="red" className="ml-1">
                       Suspended
@@ -298,6 +303,7 @@ export default async function Page() {
                     userId={a.id}
                     email={a.email}
                     role={a.role}
+                    tier={a.tier}
                     suspended={a.suspended}
                     canManage={a.id !== user.id && (isSuper || a.role !== "super_admin")}
                     canMakeAdmin={isSuper}
@@ -308,7 +314,8 @@ export default async function Page() {
           </tbody>
         </table>
         <p className="mt-3 text-xs text-muted-foreground">
-          Changing a role and suspending sign-in are both reversible. Deleting is not — it removes
+          Changing a role or a student&apos;s plan and suspending sign-in are all reversible. While free-tier limits
+          are switched on, free students get a daily practice limit and no mock exams. Deleting is not — it removes
           the account and its own history, though questions they wrote stay in the bank.
           {isSuper ? "" : " Only a super admin can create admins or change another super admin."}
         </p>

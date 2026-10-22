@@ -5,6 +5,7 @@ import { getSession } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 import { adminClient } from "@/lib/supabase/admin";
 import { notifyAdmins } from "./email";
+import { TIERS } from "@/lib/auth/roles";
 
 export type AdminState = { error: string } | { ok: string } | null;
 
@@ -123,6 +124,23 @@ export async function setRole(_prev: AdminState, fd: FormData): Promise<AdminSta
 
   refresh();
   return { ok: `${found.target.full_name ?? "That account"} is now a ${role.replace("_", " ")}.` };
+}
+
+/** Move a student between plans. Until there is a checkout, this is how a student is upgraded. */
+export async function setTier(_prev: AdminState, fd: FormData): Promise<AdminState> {
+  const actor = await requireAdmin();
+  if ("error" in actor) return actor;
+  const found = await targetFor(actor, field(fd, "user_id"));
+  if ("error" in found) return found;
+
+  const tier = field(fd, "tier");
+  if (!(TIERS as readonly string[]).includes(tier)) return { error: "Unknown plan." };
+
+  const { error } = await adminClient.from("profiles").update({ subscription_tier: tier }).eq("id", found.target.id);
+  if (error) return { error: `Could not change that plan: ${error.message}` };
+
+  refresh();
+  return { ok: `${found.target.full_name ?? "That account"} is now on the ${tier} plan.` };
 }
 
 /** Suspend at the auth layer (blocks sign-in) and record it where the app can see it. */

@@ -8,6 +8,8 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { fmtDateTime, fmtPct } from "@/lib/mock-exam/utils";
 import { StartExamForm } from "./StartExamForm";
 import { CreateGroupForm, JoinGroupForm } from "./GroupForms";
+import { getAllowance } from "@/lib/tier/allowance";
+import { UpgradeNotice } from "@/components/tier/UpgradeNotice";
 
 export const dynamic = "force-dynamic";
 
@@ -40,7 +42,7 @@ export default async function MockExamsPage() {
   const { user, profile } = await requireRole("student", "/study/mock-exams");
   const supabase = createClient();
 
-  const [{ data: sets }, { data: sessions }, { data: myGroupRows }] = await Promise.all([
+  const [{ data: sets }, { data: sessions }, { data: myGroupRows }, allowance] = await Promise.all([
     supabase
       .from("mock_exam_sets")
       .select(
@@ -60,7 +62,10 @@ export default async function MockExamsPage() {
       .select("group_id, exam_groups!inner(id, name, status, set_id, join_code)")
       .eq("student_id", user.id)
       .in("exam_groups.status", ["lobby", "running"]),
+    getAllowance(),
   ]);
+  // Free tier: no new mock exams (the database refuses them too). Past attempts stay open for review.
+  const canStart = allowance.mockExams;
 
   // The embedded join comes back as an object (or, defensively, an array).
   type GroupLite = {
@@ -91,6 +96,14 @@ export default async function MockExamsPage() {
       eyebrow="Exam format"
       subtitle="RENR-style mock exams in real exam conditions — no feedback while you answer, and explanations stay locked until your teacher releases them after class review."
     >
+      {canStart ? null : (
+        <UpgradeNotice
+          className="mb-5"
+          title="Mock exams are part of a paid plan"
+          body="Full RENR-style mock exams, solo or with your group, come with Standard and Premium. Any attempts you've already made stay here for review."
+        />
+      )}
+      {canStart || myGroups.length > 0 ? (
       <section className="relative mb-5 overflow-hidden rounded-2xl border border-brand-100 bg-card p-5 shadow-sm motion-safe:animate-rise-in">
         <span
           aria-hidden
@@ -107,7 +120,7 @@ export default async function MockExamsPage() {
               you placed at the end.
             </p>
           </div>
-          <JoinGroupForm />
+          {canStart ? <JoinGroupForm /> : null}
         </div>
 
         {myGroups.length > 0 ? (
@@ -137,6 +150,7 @@ export default async function MockExamsPage() {
           </ul>
         ) : null}
       </section>
+      ) : null}
 
       {(!sets || sets.length === 0) ? (
         <EmptyState
@@ -175,10 +189,12 @@ export default async function MockExamsPage() {
                   {count} question{count === 1 ? "" : "s"}
                   {set.duration_minutes ? ` · ${set.duration_minutes} min` : ""}
                 </p>
-                <div className="mt-4 space-y-2">
-                  <StartExamForm setId={set.id} />
-                  <CreateGroupForm setId={set.id} />
-                </div>
+                {canStart ? (
+                  <div className="mt-4 space-y-2">
+                    <StartExamForm setId={set.id} />
+                    <CreateGroupForm setId={set.id} />
+                  </div>
+                ) : null}
                 {past.length > 0 && (
                   <div className="mt-4 border-t border-border pt-3">
                     <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">

@@ -8,7 +8,7 @@ for *what actually happened*, this file is for *what's left and who does it*.
 ## Status legend
 `done` · `pending` · `needs-verify` (marked done before, not re-confirmed) · `blocked`
 
-**Updated 2026-10-20.** **Prod is up to date** (go-live steps 1–4 done 2026-10-20): staging and prod both hold all 48
+**Updated 2026-10-22** (review session, then free-tier limits built on staging — see the new row and "Unbuilt features from the original brief"). **Prod is up to date** (go-live steps 1–4 done 2026-10-20): staging and prod both hold all 48
 migrations and run the same code (`ebbafd8`). Deploys: branch `staging` → staging site, branch `main` → prod. Ranking v2 and
 trophies are **live on staging** (`rules_live = 1`, flag on) and in shadow on prod (`rules_live = 0`, flag unset).
 The one-page summary of where everything stands is `PROGRESS.md` → "Current state (as of 2026-10-20)".
@@ -29,7 +29,11 @@ actually needs to do it.
 | Student themes (4: Royal, Teal, Midnight, Sunset) | **Done on staging** (Claude, 2026-10-17); per-theme fonts + Lagoon renamed Teal (2026-10-19, Ian's N1 note) — **Ian**: re-test N1 | Migration `20261017180000_profile_theme` must reach prod before the merge. |
 | Whole-app UI redesign ("visually stunning", Ian 2026-10-20) | **Done on staging** (Claude, 2026-10-20) — **Ian**: review the look on staging (all 4 themes, student + teacher + admin pages, watermark still intact) | Visual-only pass: shared chrome (shell, nav, banner, primitives), landing/auth, and every page restyled on the token system; no logic, gating or copy changed; `tsc`/lint/build clean. Details in `PROGRESS.md` → "Session 2026-10-20 … UI redesign". No migration; ships to prod with the normal merge. |
 | Generation requests: prompted vs automatic mode for every generator (Ian, 2026-10-20) | **Live on staging and prod** (Claude, 2026-10-20): `/teacher/generate` — **Jade**: queue a real request; **Ian**: who runs the queue (agent sessions now, or a paid server worker later) | One request shape for MCQs and case studies. *Automatic*: Jade picks domain / cluster / topic / taxonomy / difficulty (cases: specialty, condition, patient, domains). *Prompted*: his words are interpreted into the same selections (offline heuristic, model or agent), he confirms them, and the prompt goes to the author as guidance that can't override the standard. Queue table `generation_requests` (staging only; RLS verified). `docs/phase-1/GENERATION_REQUESTS.md`; tests `npx tsx scripts/test-generation-requests.ts` (49). |
-| Launch testing checklist | **Ian** | https://claude.ai/artifact/1cwn7szyUHL1ZsKinSpShA — 36 checks, synced; Claude reads failures from it. |
+| Launch testing checklist | **Ian** | https://claude.ai/artifact/1cwn7szyUHL1ZsKinSpShA — 36 checks, synced; Claude reads failures from it. As of 2026-10-22: 9 pass, 2 fail (N1, R3), P1–P5 done by the go-live, ~20 not started. |
+| Free-tier limits (10 practice questions/day, no mock exams) | **Built, staging DB only** (Claude, 2026-10-22): migration applied, 26/26 tests; code **not committed/pushed** — **Ian**: OK to push to `staging`, then Claude sets `limits_live = 1` there and Ian tests as `case-test-student` (free); **Ian/Jade**: confirm the numbers, whether promotion quiz + flashcards stay free, and when to switch on for prod | `PROGRESS.md` → 2026-10-22 free-tier entry. Prod needs `20261022120000` before the next merge (lands switched off). Admins upgrade students with **Set plan** on `/admin` until a checkout exists. |
+| Checklist N1: theme switching lags between choices (Ian, 2026-10-20) | **Claude** — pending | Probably the per-theme font loading (`preload: false`) or the optimistic save + cookie round-trip; profile first. |
+| Checklist R3: Roman numerals off-centre on trophy art (Ian, 2026-10-20) | **Claude** — pending | Rank-badge art / overlay alignment in the trophy case and ceremony. |
+| Checklist R4/R5: needs a fresh promotion quiz | **Claude** sets it up on `ian-paid-student` (staging), **Ian** tests | Ian: "open a new quiz let me check". |
 | Promotion quiz topic-specific / harder by level? | **Ian / Jade** (decision) | Built 2026-10-12/13 as one blueprint-weighted pool for all 24 levels. Changing it is a contained edit to `start_promotion_quiz()`. |
 | Answer keys hidden from user tokens | **Done on staging** (Claude, 2026-10-12) | Students and teachers could read every key and explanation through the API (promotion quiz and mock exams exposed). Now keys reach the browser only after answering (practice), after finishing (mock, case), or on staff pages. 14/14 tests. Goes to prod as step 4 of the go-live plan. |
 | Trophies, badges and celebrations (Jade's request) | **Live on staging** (Claude, 2026-10-13): art (37 images), award engine 28/28, celebrations, trophy case, classmates' wall, privacy switch; launch steps rehearsed (backfill + pre-mark seen). Decided (Ian): no XP for badges, visible to classmates (opt-out), backfill where data exists, pre-launch badges pre-marked seen; badge list approved by Jade — **Ian**: review on staging; prod launch rides with the ranking v2 go-live | `docs/phase-1/TROPHY_PLAN.md`: 24 rank badges (one per promotion, tier and summit trophies at levels 5/10/15/20/24) + ~20 accomplishments; awarded in the database at the moment earned; rank-up ceremony, reveal card or toast; trophy case on the profile. Rank badges go live with ranking v2. |
@@ -63,6 +67,22 @@ actually needs to do it.
 | Analytics / rank system (reference: AnalyticsPage, RankSystemPage) | **Rank: superseded by Ranking v2** (row above). **Analytics/leaderboards: you** (decision) | `question_attempts` (ranking v2) now records every answer, which is the data an analytics page needs. Jade asked for rank-only for students, so topic states and a Next Best Action card stay out unless he asks. |
 | T16 — verify email templates | **AI** (Kimi) | Low-stakes dashboard check. |
 | Three unreviewed docx files in Jade's RENR folder | **You** (decision), then **AI** (processing) | Need your read on what Jade actually wants before any script touches them — could be new content, could be duplicate drafts. |
+
+### Unbuilt features from the original brief (reviewed 2026-10-22)
+Full comparison table in `PROGRESS.md` → "Original feature list vs. what is built". Not started; each needs Ian's go-ahead
+(and, where marked, a decision) before Claude builds it.
+
+| Feature | Blocked on |
+|---|---|
+| ~~Free-tier limits~~ | Built on staging 2026-10-22 (row in the table above); topic-review limit waits for topic reviews |
+| Topic reviews (15 decks ready) + cross-linking question ↔ review | Nothing — highest value per effort |
+| Mock exam regulator to v2 rules (100 q / 150 min, blueprint ±2/±3 %, no back-nav, breaks) | Ian/Jade: should every mock be forced to this shape? |
+| Analytics dashboard (student + instructor, at-risk learners) | Ian/Jade: what students see given "rank-only" |
+| AI grader for student-submitted questions (+ 24 h author gate, Q-gen leaderboard) | Whether to spend on an API, or run it as an agent-queue like generation requests |
+| 2FA, 15-min idle logout, school/university field, login lockout | Ian: 2FA via email OTP only (no SMS provider)? school field needs a privacy/consent line |
+| Live study lobby, leaderboards, Google Meet debriefs | Realtime build; leaderboards conflict with "rank-only" |
+| Adaptive difficulty / personalised study plan / topic Elo | After analytics |
+| Evidence-base research agent | Low priority |
 
 The pattern across all of these: **AI can build anything mechanical or well-specified;
 only you (or Jade) can make the content-accuracy and product-policy calls that decide

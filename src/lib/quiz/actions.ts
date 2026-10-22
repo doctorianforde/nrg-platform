@@ -2,6 +2,7 @@
 
 import { getSession } from "@/lib/auth/session";
 import { adminClient } from "@/lib/supabase/admin";
+import { createClient } from "@/lib/supabase/server";
 import { loadAnswerKeys, type KeyRow } from "@/lib/quiz/answer-keys";
 
 export type RevealedAnswer = {
@@ -47,6 +48,18 @@ export async function revealPracticeAnswer(questionId: string): Promise<Revealed
       : Promise.resolve({ count: 0 }),
   ]);
   if ((inQuiz ?? 0) > 0 || (inMock ?? 0) > 0) return { error: "That question is part of an exam you are sitting." };
+
+  // Free tier: counts against today's limit (a question already revealed today doesn't count twice). Claimed last, so
+  // a refused question above never uses one up. A database without the migration has no such function: nothing is limited.
+  const { data: claim, error: claimError } = await createClient().rpc("claim_practice_reveal", { p_question: questionId });
+  if (claimError && claimError.code !== "PGRST202" && claimError.code !== "42883") {
+    return { error: "Could not load the answer. Try again." };
+  }
+  if (!claimError && claim && typeof claim === "object" && !Array.isArray(claim) && claim.allowed === false) {
+    return {
+      error: `You've used today's ${claim.limit ?? ""} free practice questions. Upgrade for unlimited practice, or come back tomorrow.`,
+    };
+  }
 
   return {
     correctIds: q.question_options.filter((o) => o.is_correct).map((o) => o.id),

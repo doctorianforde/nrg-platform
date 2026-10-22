@@ -11,7 +11,7 @@ refer to the tracker in `PLAN.md`.
 
 ---
 
-## Current state (as of 2026-10-20)
+## Current state (as of 2026-10-22)
 
 Read this section first; everything below it is the dated log of how we got here.
 
@@ -21,10 +21,11 @@ Read this section first; everything below it is the dated log of how we got here
 | Supabase project | `kwhaqhhwqykckarjbdod` | `cdvubijjepwmhhkgppbl` |
 | Site | https://nrg-platform-staging.vercel.app | the `nrg-platform` Vercel project |
 | Git branch that deploys it | `staging` | `main` |
-| Migrations applied | all 48 in `supabase/migrations/` | all 48 (**since 2026-10-20**) |
+| Migrations applied | all 49 in `supabase/migrations/` (`20261022120000` free-tier limits added 2026-10-22) | 48 (**since 2026-10-20**); `20261022120000` not yet |
 | App | `ebbafd8` | `ebbafd8` (same code, **since 2026-10-20**) |
 | `NEXT_PUBLIC_RANKING_V2` | `1` | unset |
 | `ranking_config.rules_live` | `1` (**live since 2026-10-13**) | `0` (shadow: prod students keep today's XP) |
+| `tier_config.limits_live` (free-tier limits) | `0` until the code is on the staging site, then `1` | table not on prod yet |
 
 - Work is pushed with `git branch -f staging main && git push origin staging`; push `main` only after any new migration is
   applied to prod (CLAUDE.md, "Branches and deploys"). Since the 2026-10-20 go-live, `main` = `staging` = `origin/main`.
@@ -54,6 +55,7 @@ submissions, the review queue `/teacher/review`. Content: 460 live questions (Ja
 | Content protection | Students: faint watermark (5%, 3.5% on Midnight), no copy/print, blur on focus loss / screenshot keys (`NEXT_PUBLIC_CONTENT_PROTECTION`, on by default); staff reveal tool `/admin/watermark` | 2026-10-17 entry; 2026-10-19 entry |
 | AI-bank dedup | 610 duplicates retired; pending AI queue 1,987 → 1,377 | 2026-10-17 entry; `docs/phase-1/DEDUP_REPORT.md` |
 | Generation requests | Prompted and automatic modes for the MCQ generator and the case planner; shared request/plan/interpreter in `src/lib/generation/`; CLI `scripts/generation-request.ts`; queue table `generation_requests`; teacher UI `/teacher/generate` (+ review-queue `run` filter) | 2026-10-20 entry; `docs/phase-1/GENERATION_REQUESTS.md` |
+| Free-tier limits | Free students: 10 practice questions a day (counted at "Check answer"), no mock exams (solo, group, teacher-assigned); admins set a student's plan on `/admin`. Enforced in the database; switch `tier_config.limits_live`. Code not yet committed/deployed | 2026-10-22 entry |
 | Student themes | Royal (default), Teal (id `lagoon`), Midnight (dark), Sunset, each with its own heading + body font; picker on profile + header switcher; saved in `profiles.theme` | 2026-10-17 themes entry; 2026-10-19 entry |
 
 ### Waiting for prod, in this order (see "Ranking v2 — prod go-live plan")
@@ -67,6 +69,8 @@ Steps 1–4 **done 2026-10-20** (go-live entry at the end of this file). Left: 5
 4. Then `20261012170000_hide_answer_keys` (it breaks the *old* prod code, so it must follow step 3), checked with
    `CONFIRM_PROD=1 node scripts/test-answer-keys.mjs --target prod` (`--pre` before it); then `20261017120000_revoke_unneeded_grants`
    and `node scripts/test-write-paths.mjs`-style smoke checks.
+4b. (2026-10-22) `20261022120000_free_tier_limits` before the next merge to `main` (the app tolerates its absence, but
+   apply it first per the usual order). It lands with `limits_live = 0`: nothing changes for prod users until Ian switches it.
 5. AI-bank port SQL (`PROD_PORT_RUNBOOK.md`) when Ian approves the content, then `data/review/prod-port/dedup-v1-prod.sql`
    (must follow the port).
 6. Ranking + trophies: 1–2 weeks of shadow comparison, then announce (everyone restarts at level 0), set the prod flag,
@@ -90,6 +94,7 @@ Steps 1–4 **done 2026-10-20** (go-live entry at the end of this file). Left: 5
 | Promotion quiz: same pool for every level, blueprint-weighted, not topic-specific or harder by level. Change it? | Ian / Jade |
 | Miskeyed-looking AI block spec1586–1605 (9 still pending) and contradictory keys between AI items (boggy fundus, croup, catheter infection, T&T 6-week vaccines, suicide-risk replies) | Jade |
 | Subscription service Phase 0 (payout route, processor, prices) | Ian / Jade |
+| Free-tier limits: confirm v2 numbers (10/day, no mocks); whether the promotion quiz and flashcards stay open to free students (they do now); when to switch limits on for prod (no checkout exists, so free students can only be upgraded by an admin) | Ian / Jade |
 | T33 human read-and-verify; T35 tell Jade M2 is delivered | Ian |
 | Jade's prod teacher account; custom SMTP before real signups | Ian |
 
@@ -102,7 +107,7 @@ promotion quiz is open), `case-test-teacher@…` / `case-test-student@…` (free
 `node scripts/test-ranking-phase1.mjs` (19), `node scripts/test-ranking-phase2.mjs` (47), `node scripts/test-answer-keys.mjs`
 (14; `--target prod` with `CONFIRM_PROD=1`, `--pre` before the hide migration), `node scripts/test-trophies-phase1.mjs` (28),
 `node scripts/e2e-rls-test.mjs` (T34, 15; fixed 2026-10-17, it had been failing 9/15 silently), `node scripts/test-write-paths.mjs`
-(38: every app write path a user token uses). The two ranking suites hold
+(38: every app write path a user token uses), `node scripts/test-free-tier.mjs` (26; turns `limits_live` on for the run and restores it). The two ranking suites hold
 `rules_live` at 0 while their shadow checks run and put back the starting value afterwards. Content gates: `npx tsx scripts/review-bank.ts --check`,
 `npx tsx scripts/import-case.ts --check`, `npx tsx scripts/plan-cases.ts --report`.
 
@@ -111,6 +116,44 @@ promotion quiz is open), `case-test-teacher@…` / `case-test-student@…` (free
    `ian-paid-student`), then approves the prod go-live plan.
 2. Jade's reviews (bank fix pass, case studies, config values) — the AI queue is now 1,377 after dedup; flag spec1586–1605 keys to him.
 3. More AI cases once the 6 are reviewed (`npx tsx scripts/plan-cases.ts --count N`, then the generator and reviewer briefs).
+4. (2026-10-22) Fix the two open checklist failures: **N1** theme switching lags between choices, **R3** Roman numerals
+   off-centre on the trophy art. Set up a fresh promotion quiz on `ian-paid-student` so Ian can test **R4** (failed-quiz
+   retake lock) and **R5** (celebrations don't replay).
+
+### Launch checklist status (artifact "NRG Launch Test Run", read 2026-10-22)
+Pass: N1b, N2, N5, N6, N7, N8, R1, R2, R6. **Fail:** N1 ("now it lags between choices"), R3 ("Roman numerals on the
+trophies are off centered"). Waiting on Claude: R4, R5 (Ian: "open a new quiz let me check"). N3 untested-but-noted
+(screenshot taken, watermark present — expected). Not started: N2b, N4, N9, N10, N11, R7, R8, R9, C1, C2, Q1–Q3, A1–A3,
+P6–P8. P1–P5 were done in the 2026-10-20 go-live.
+
+### Original feature list vs. what is built (reviewed 2026-10-22)
+Sources: `OKComputer_NRG_Website/NurseBrain_Programme_Brief.docx` (10 points + 3 launch blockers) and
+`NRG_Complete_Template_Package_v2.docx` (16 templates; v2 wins where they disagree). That folder is gitignored, so this
+table is the travelling record.
+
+| Feature (source) | State |
+|---|---|
+| Backend, accounts, persistence (brief blocker 1) | **Done** — Supabase, RLS, roles, teacher approval, hidden answer keys |
+| Question bank by domain/taxonomy/topic (brief 2, T1, T2, T4) | **Done**; content gate is Jade's review (454 live on prod; AI bank port waiting) |
+| Case studies, 8-phase (brief 3) | **Built** (slide-show player, generator); 6 cases in_review, **0 on prod** until Jade validates |
+| Mock exams (brief 4, T6) | **Done** (solo, group, timer, rationale release, fatigue). **Not done:** v2 regulator rules — always 100 q / 150 min, domain ±2 %, taxonomy ±3 %, stem-length ratio, no back-navigation, 2 × 5 min breaks |
+| Analytics dashboard (brief 5, T5) | **Not built.** Per-answer data exists (`question_attempts`); Jade asked for rank-only for students, so needs Ian/Jade to say what students vs. teachers see |
+| Study lobby / group study (brief 6, T13) | **Partly**: group mock exams (up to 5). **Not built:** live synchronised lobby, leaderboards, Google Meet debriefs |
+| Student question generation + AI evaluation (brief 7, T3) | **Partly**: students submit, teacher approves, XP paid. **Not built:** the AI 0–100 grader, 3 progress bars, "author 1 question per 24 h" gate, Q-gen leaderboard |
+| Rank & achievements (brief 8) | **Done** as Benner 24-level ladder (not Bronze→Diamond), ranking v2 + promotion quiz + trophies; live on staging, shadow on prod |
+| Instructor dashboard (brief 9) | **Partly**: dashboard, review queue, mock builder, fatigue cohort card, messaging, generate. **Not built:** at-risk learners, class trend analytics |
+| Caribbean content (brief 10) | Ongoing (mg/dL rule, regional practice note open with Jade) |
+| Real AI integration (brief blocker 2) | **Partly**: generation pipeline + teacher request queue (agent-session mode). **Not built:** adaptive difficulty, personalised study plan, topic Elo |
+| Payments / subscriptions (brief blocker 3, T8) | **Free-tier limits built on staging 2026-10-22** (10 q/day, no mocks; topic-review limit waits for topic reviews). **Checkout not built** — blocked on Phase 0 (processor, payout, prices); admins upgrade students by hand meanwhile |
+| Login & auth (T7) | **Partly**: email/password, verification, role routing, instructor approval. **Not built:** 2FA (premium/instructor/admin), 15-min idle logout, school/university field, login rate-limit/lockout beyond Supabase defaults, custom SMTP (T16 unverified) |
+| Topic reviews (T9) | **Not built** — 15 decks ready in the prototype folder; best content-per-effort item left |
+| Fatigue analysis (T10) | **Done** |
+| Visual content & animations (T11) | Partly (redesign, celebrations); no topic animations |
+| Evidence-base research agent (T12) | **Not built** |
+| Website design (T14) | **Done** (2026-10-20 redesign, 4 themes) |
+| Nursing Knowledge block (T15) | **Built** (133 facts); waiting on Jade's clinical sign-off |
+| Cross-linking question ↔ topic review (T16) | **Not built** — needs topic reviews first |
+| Content protection (Ian's addition) | **Done** |
 
 ---
 
@@ -2817,3 +2860,44 @@ Not done (decisions, not technical steps): **5** the AI-bank port (Ian approves 
 trophies launch (shadow comparison, student announcement, everyone restarts at level 0, flag + `rules_live`, badge backfill).
 Prod migrations were applied in this order rather than by timestamp. All 48 are now recorded, so a future
 `supabase db push` sees nothing older pending.
+
+## Session 2026-10-22 (Claude): review and hand-off
+No code or database changes. Read PROGRESS/PLAN, the launch checklist results, and Jade's original brief + template
+package v2; wrote "Launch checklist status" and "Original feature list vs. what is built" into "Current state" above,
+and a matching section in PLAN.md. Found: two open checklist failures (N1 theme-switch lag, R3 trophy numerals
+off-centre); R4/R5 need a fresh quiz set up; free-tier limits are not enforced anywhere even though `subscription_tier`
+is stored. Housekeeping noted: five `worktree-agent-*` local branches from the 2026-10-17 parallel agents are still
+around; the `QUEUE TEST:` row on staging `generation_requests` is still there.
+
+## Session 2026-10-22 (Claude): free-tier limits — staging DB, code not yet committed
+Ian: "Implement free-tier limits". Followed Jade's v2 templates (7.1 / 8.1; v2 wins over v1's 50/day): free students get
+**10 practice questions a day** and **no mock exams**. Standard and premium students, and all staff, are unlimited. Case
+studies were already standard/premium only. Topic-review and Q-gen limits wait for those features.
+- **Migration `20261022120000_free_tier_limits`** (applied to **staging** 2026-10-22 through the pooler with the staging
+  password from `.env.local`, recorded in `schema_migrations`; the connector's `execute_sql` was declined): `tier_config`
+  (same shape as `ranking_config`: `limits_live` 0/1, `free_practice_per_day` 10, `free_mock_exams` 0; admins can update),
+  `tcfg()`, `is_tier_limited(user)`, `practice_reveals` (one row per question per Trinidad day, own-read only),
+  `practice_allowance()` and `claim_practice_reveal(question)` for the app. Triggers refuse, for a limited student: a
+  `mock_exam_sessions` insert, an `exam_group_members` insert (create / join / teacher-assign, so a free member can't make a
+  group's start fail for everyone), and a practice `question_attempts` row for a question not revealed to them in the last
+  day (stops XP farming through `record_practice_answers`). Nothing existing altered; rollback in the header.
+- **What counts**: a question counts when its answer is revealed ("Check answer", the only way a student gets a key);
+  re-checking the same question that day is free; a refused reveal (exam in progress, inactive question) never uses one.
+- **App**: `revealPracticeAnswer` claims before returning the key (treats a missing function as "no limits", any other
+  error as a retryable failure); `src/lib/tier/allowance.ts` + `src/components/tier/UpgradeNotice.tsx`; practice page shows
+  "N of 10 free questions left today"; a practice session is capped to what's left, or shows the notice at 0; mock exams
+  page hides start / create / join for free students (past attempts stay reviewable, open groups still listed); `/admin`
+  People table shows each student's plan with a **Set plan** control (`setTier`), since there is no checkout yet.
+- **Verified**: tsc, lint, build clean; `node scripts/test-free-tier.mjs` 26/26 on staging (limits off → nobody limited;
+  on → 10 claims then refusal, re-check free, own-read RLS, no direct writes, mock/group/assign refused, premium + staff
+  unaffected, config knobs, upgrade lifts limits; restores `limits_live`). Regression: write paths 38/38, ranking 1 19/19,
+  ranking 2 47/47, trophies 28/28, T34 15/15, answer keys 14/14.
+- **Not done**: not committed or pushed, so the staging site doesn't have the UI yet; `limits_live` stays **0 on staging**
+  until it does (the deployed code doesn't claim reveals, so switching on early would make free students' practice XP
+  recording fail). Then: `update tier_config set value = 1 where key = 'limits_live';` on staging and test as
+  `case-test-student@…` (the one free student). Not browser-tested. Prod untouched. The old (flag-off) practice path
+  `record_practice_session` trusts the browser's counts as before, so on prod the XP side isn't gated until ranking v2 is on.
+- Housekeeping: the regression run left one more test teacher + mock set each from `test-trophies-phase1` and
+  `test-ranking-phase2` (`troph-teacher-5e55761a@…`, `rank2-teacher-e8c68295@…`). Those two suites leak a teacher whose
+  mock set / group blocks the user delete on every run (pre-existing; ~20 "test set" mock sets now on staging). Worth fixing in
+  their `finally` blocks; not touched here.

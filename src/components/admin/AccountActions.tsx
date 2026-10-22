@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
-import { deleteAccount, setRole, setSuspended, type AdminState } from "@/lib/admin/actions";
+import { deleteAccount, setRole, setSuspended, setTier, type AdminState } from "@/lib/admin/actions";
+import { TIERS } from "@/lib/auth/roles";
 
 const BTN = "rounded-lg px-2.5 py-1 text-xs font-medium transition-colors disabled:opacity-50";
 
@@ -28,7 +29,7 @@ function Feedback({ state }: { state: AdminState }) {
 }
 
 /**
- * Per-account controls. Three levels, weakest first: change role (reversible),
+ * Per-account controls. Three levels, weakest first: change role or a student's plan (reversible),
  * suspend sign-in (reversible), delete (permanent, and typed-confirmation gated).
  * The server re-checks every one of these; nothing here is the real guard.
  */
@@ -36,6 +37,7 @@ export function AccountActions({
   userId,
   email,
   role,
+  tier,
   suspended,
   canManage,
   canMakeAdmin,
@@ -43,12 +45,15 @@ export function AccountActions({
   userId: string;
   email: string;
   role: string;
+  /** Subscription plan; only students get the plan control (staff are never limited). */
+  tier: string;
   suspended: boolean;
   /** False for your own row and, unless you're a super admin, for other super admins. */
   canManage: boolean;
   canMakeAdmin: boolean;
 }) {
   const [roleState, roleAction] = useFormState<AdminState, FormData>(setRole, null);
+  const [tierState, tierAction] = useFormState<AdminState, FormData>(setTier, null);
   const [suspendState, suspendAction] = useFormState<AdminState, FormData>(setSuspended, null);
   const [deleteState, deleteAction] = useFormState<AdminState, FormData>(deleteAccount, null);
   const [confirming, setConfirming] = useState(false);
@@ -72,6 +77,28 @@ export function AccountActions({
             </Submit>
           </form>
         ))}
+
+        {role === "student" ? (
+          <form action={tierAction} className="flex items-center gap-1">
+            <input type="hidden" name="user_id" value={userId} />
+            <label className="sr-only" htmlFor={`tier-${userId}`}>
+              Plan
+            </label>
+            <select
+              id={`tier-${userId}`}
+              name="tier"
+              defaultValue={tier}
+              className="rounded-lg border border-border bg-card px-2 py-1 text-xs capitalize text-card-foreground"
+            >
+              {TIERS.map((t) => (
+                <option key={t} value={t}>
+                  {t}
+                </option>
+              ))}
+            </select>
+            <Submit className="border border-border bg-card text-card-foreground hover:bg-muted">Set plan</Submit>
+          </form>
+        ) : null}
 
         <form action={suspendAction}>
           <input type="hidden" name="user_id" value={userId} />
@@ -134,6 +161,7 @@ export function AccountActions({
       ) : null}
 
       <Feedback state={roleState} />
+      <Feedback state={tierState} />
       <Feedback state={suspendState} />
       <Feedback state={deleteState} />
     </div>

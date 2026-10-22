@@ -4,6 +4,8 @@ import { fetchQuizQuestions } from "@/lib/quiz/fetch";
 import { TutorSession } from "@/components/questions/TutorSession";
 import { recordPracticeAnswers, recordPracticeSession } from "@/lib/xp/actions";
 import { flags } from "@/lib/flags";
+import { getAllowance } from "@/lib/tier/allowance";
+import { UpgradeNotice } from "@/components/tier/UpgradeNotice";
 
 export const dynamic = "force-dynamic";
 
@@ -21,7 +23,27 @@ export default async function PracticeSessionPage({
 }) {
   const { user, profile } = await requireRole("student", "/study/practice/session");
   const sp = searchParams;
-  const count = Math.min(int(sp.count) ?? 10, 100);
+  const allowance = await getAllowance();
+  // Free tier: never serve more questions than are left today (the reveal step enforces it either way).
+  const count = Math.min(int(sp.count) ?? 10, 100, allowance.limited ? allowance.remaining ?? 0 : 100);
+
+  if (count === 0) {
+    return (
+      <DashboardShell
+        profile={profile}
+        email={user.email}
+        title="Practice session"
+        eyebrow="Tutor mode"
+        subtitle="Instant feedback with explanations and option rationales after every answer."
+      >
+        <UpgradeNotice
+          className="mx-auto max-w-3xl"
+          title="That's today's free practice done"
+          body={`You've answered your ${allowance.limit} free questions for today. Your allowance resets at midnight (Trinidad time).`}
+        />
+      </DashboardShell>
+    );
+  }
 
   const questions = await fetchQuizQuestions({
     domainId: int(sp.domain),
