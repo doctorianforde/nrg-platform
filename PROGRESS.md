@@ -22,10 +22,10 @@ Read this section first; everything below it is the dated log of how we got here
 | Site | https://nrg-platform-staging.vercel.app | the `nrg-platform` Vercel project |
 | Git branch that deploys it | `staging` | `main` |
 | Migrations applied | all 49 in `supabase/migrations/` (`20261022120000` free-tier limits added 2026-10-22) | 48 (**since 2026-10-20**); `20261022120000` not yet |
-| App | `ebbafd8` | `ebbafd8` (same code, **since 2026-10-20**) |
+| App | `5513c1b` (free-tier limits, 2026-10-22) | `ebbafd8` (since 2026-10-20) |
 | `NEXT_PUBLIC_RANKING_V2` | `1` | unset |
 | `ranking_config.rules_live` | `1` (**live since 2026-10-13**) | `0` (shadow: prod students keep today's XP) |
-| `tier_config.limits_live` (free-tier limits) | `0` until the code is on the staging site, then `1` | table not on prod yet |
+| `tier_config.limits_live` (free-tier limits) | `0` — **Ian to switch to 1** (code deployed 2026-10-22; Claude's write was blocked by the auto-mode guard) | table not on prod yet |
 
 - Work is pushed with `git branch -f staging main && git push origin staging`; push `main` only after any new migration is
   applied to prod (CLAUDE.md, "Branches and deploys"). Since the 2026-10-20 go-live, `main` = `staging` = `origin/main`.
@@ -55,7 +55,7 @@ submissions, the review queue `/teacher/review`. Content: 460 live questions (Ja
 | Content protection | Students: faint watermark (5%, 3.5% on Midnight), no copy/print, blur on focus loss / screenshot keys (`NEXT_PUBLIC_CONTENT_PROTECTION`, on by default); staff reveal tool `/admin/watermark` | 2026-10-17 entry; 2026-10-19 entry |
 | AI-bank dedup | 610 duplicates retired; pending AI queue 1,987 → 1,377 | 2026-10-17 entry; `docs/phase-1/DEDUP_REPORT.md` |
 | Generation requests | Prompted and automatic modes for the MCQ generator and the case planner; shared request/plan/interpreter in `src/lib/generation/`; CLI `scripts/generation-request.ts`; queue table `generation_requests`; teacher UI `/teacher/generate` (+ review-queue `run` filter) | 2026-10-20 entry; `docs/phase-1/GENERATION_REQUESTS.md` |
-| Free-tier limits | Free students: 10 practice questions a day (counted at "Check answer"), no mock exams (solo, group, teacher-assigned); admins set a student's plan on `/admin`. Enforced in the database; switch `tier_config.limits_live`. Code not yet committed/deployed | 2026-10-22 entry |
+| Free-tier limits | Free students: 10 practice questions a day (counted at "Check answer"), no mock exams (solo, group, teacher-assigned); admins set a student's plan on `/admin`. Enforced in the database; switch `tier_config.limits_live` (still 0 on staging). Deployed to the staging site as `5513c1b` | 2026-10-22 entry |
 | Student themes | Royal (default), Teal (id `lagoon`), Midnight (dark), Sunset, each with its own heading + body font; picker on profile + header switcher; saved in `profiles.theme` | 2026-10-17 themes entry; 2026-10-19 entry |
 
 ### Waiting for prod, in this order (see "Ranking v2 — prod go-live plan")
@@ -2869,7 +2869,7 @@ off-centre); R4/R5 need a fresh quiz set up; free-tier limits are not enforced a
 is stored. Housekeeping noted: five `worktree-agent-*` local branches from the 2026-10-17 parallel agents are still
 around; the `QUEUE TEST:` row on staging `generation_requests` is still there.
 
-## Session 2026-10-22 (Claude): free-tier limits — staging DB, code not yet committed
+## Session 2026-10-22 (Claude): free-tier limits — on staging (`5513c1b`), switch still off
 Ian: "Implement free-tier limits". Followed Jade's v2 templates (7.1 / 8.1; v2 wins over v1's 50/day): free students get
 **10 practice questions a day** and **no mock exams**. Standard and premium students, and all staff, are unlimited. Case
 studies were already standard/premium only. Topic-review and Q-gen limits wait for those features.
@@ -2892,9 +2892,9 @@ studies were already standard/premium only. Topic-review and Q-gen limits wait f
   on → 10 claims then refusal, re-check free, own-read RLS, no direct writes, mock/group/assign refused, premium + staff
   unaffected, config knobs, upgrade lifts limits; restores `limits_live`). Regression: write paths 38/38, ranking 1 19/19,
   ranking 2 47/47, trophies 28/28, T34 15/15, answer keys 14/14.
-- **Not done**: not committed or pushed, so the staging site doesn't have the UI yet; `limits_live` stays **0 on staging**
-  until it does (the deployed code doesn't claim reveals, so switching on early would make free students' practice XP
-  recording fail). Then: `update tier_config set value = 1 where key = 'limits_live';` on staging and test as
+- **Committed and pushed to `staging`** as `5513c1b` (Ian's go-ahead); Vercel staging deploy `dpl_EARB4kqrBg6PRTmh2GHFGR6oZE8d`
+  READY. `main` not pushed: prod needs the migration first. Switching `limits_live` on was **blocked by Claude Code's
+  auto-mode guard** (feature-flag write), so it is still 0 on staging. Ian runs, in the staging SQL Editor: `update tier_config set value = 1 where key = 'limits_live';` on staging and test as
   `case-test-student@…` (the one free student). Not browser-tested. Prod untouched. The old (flag-off) practice path
   `record_practice_session` trusts the browser's counts as before, so on prod the XP side isn't gated until ranking v2 is on.
 - Housekeeping: the regression run left one more test teacher + mock set each from `test-trophies-phase1` and
