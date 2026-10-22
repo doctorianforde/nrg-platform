@@ -1,3 +1,4 @@
+import type { EvaluationView } from "@/components/grading/EvaluationCard";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/lib/supabase/types";
 import { rankFor, type RankProgress } from "./ranks";
@@ -51,13 +52,15 @@ export type SubmissionRow = {
   reviewNotes: string | null;
   createdAt: string;
   optionCount: number;
+  /** The AI grade (20261022180000), when there is one. */
+  evaluation: EvaluationView | null;
 };
 
 /** A student's own submitted questions, newest first. */
 export async function loadMySubmissions(supabase: Db, userId: string): Promise<SubmissionRow[]> {
   const { data } = await supabase
     .from("questions")
-    .select("id, body, review_status, review_notes, created_at, question_options(id)")
+    .select("id, body, review_status, review_notes, created_at, question_options(id), question_evaluations(status, pathway, overall, passed, result)")
     .eq("created_by", userId)
     .eq("is_ai_generated", false)
     .order("created_at", { ascending: false })
@@ -70,5 +73,19 @@ export async function loadMySubmissions(supabase: Db, userId: string): Promise<S
     reviewNotes: q.review_notes,
     createdAt: q.created_at,
     optionCount: q.question_options.length,
+    evaluation: evaluationOf((q as { question_evaluations?: unknown }).question_evaluations),
   }));
+}
+
+/** The embedded question_evaluations row (one-to-one, but PostgREST may return an array), or null. */
+export function evaluationOf(v: unknown): EvaluationView | null {
+  const e = (Array.isArray(v) ? v[0] : v) as Record<string, unknown> | null | undefined;
+  if (!e || typeof e !== "object") return null;
+  return {
+    status: (e.status as EvaluationView["status"]) ?? "queued",
+    pathway: e.pathway === "api" ? "api" : "agent",
+    overall: typeof e.overall === "number" ? e.overall : null,
+    passed: typeof e.passed === "boolean" ? e.passed : null,
+    result: (e.result as EvaluationView["result"]) ?? null,
+  };
 }

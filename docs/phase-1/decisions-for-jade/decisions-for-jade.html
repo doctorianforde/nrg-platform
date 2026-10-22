@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Decisions for Jade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  @page { size: Letter; margin: 0.7in 0.75in 0.8in; }
+  :root { --plum: #4a1d6a; --purple: #6b2d8b; --lilac: #efe7f7; --line: #e2dce9; --ink: #1f1a29; --soft: #5d536b; --green: #1f7a4a; }
+  * { box-sizing: border-box; }
+  body { font-family: Inter, system-ui, sans-serif; font-size: 10.2pt; line-height: 1.45; color: var(--ink); margin: 0; }
+  h1, h2, h3 { font-family: Poppins, Inter, sans-serif; margin: 0; }
+  .cover { height: 9.2in; display: flex; flex-direction: column; justify-content: space-between; page-break-after: always; }
+  .cover .band { background: linear-gradient(135deg, #4a1d6a, #6b2d8b 60%, #8b6ba8); color: #fff; border-radius: 14px; padding: 40px 38px; }
+  .cover .eyebrow { letter-spacing: .14em; text-transform: uppercase; font-size: 9pt; opacity: .85; }
+  .cover h1 { font-size: 34pt; line-height: 1.05; margin: 14px 0 10px; }
+  .cover .sub { font-size: 12pt; opacity: .92; max-width: 5.2in; }
+  .cover .meta { margin-top: 26px; font-size: 9.5pt; opacity: .9; }
+  .how { border: 1px solid var(--line); border-radius: 12px; padding: 18px 22px; }
+  .how h2 { font-size: 12pt; color: var(--plum); margin-bottom: 6px; }
+  .how ol { margin: 6px 0 0; padding-left: 18px; }
+  .how li { margin: 3px 0; }
+  .legend { display: flex; gap: 18px; margin-top: 10px; font-size: 9pt; color: var(--soft); }
+  .pill { display: inline-block; font-size: 8pt; font-weight: 600; padding: 1px 8px; border-radius: 99px; background: var(--lilac); color: var(--purple); vertical-align: 1px; }
+  .pill.task { background: #e3f3ea; color: var(--green); }
+  .pill.joint { background: #fbf0d6; color: #8a6100; }
+  .summary { page-break-after: always; }
+  .summary h2 { font-size: 16pt; color: var(--plum); margin-bottom: 4px; }
+  .summary p { color: var(--soft); margin: 0 0 12px; }
+  table { width: 100%; border-collapse: collapse; font-size: 9pt; }
+  th { text-align: left; background: var(--purple); color: #fff; padding: 5px 8px; font-weight: 600; }
+  td { padding: 4px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr.sec td { background: var(--lilac); font-weight: 600; color: var(--plum); }
+  td.n { width: 34px; font-weight: 600; color: var(--purple); }
+  td.box { width: 22px; }
+  .sq { display: inline-block; width: 11px; height: 11px; border: 1.3px solid var(--purple); border-radius: 2px; vertical-align: -1px; }
+  section.part { page-break-before: always; }
+  section.part:first-of-type { page-break-before: auto; }
+  .part > h2 { font-size: 17pt; color: var(--plum); padding-bottom: 6px; border-bottom: 2px solid var(--purple); margin-bottom: 12px; }
+  .part > p.intro { color: var(--soft); margin: -4px 0 12px; }
+  .d { border: 1px solid var(--line); border-left: 4px solid var(--purple); border-radius: 10px; padding: 12px 16px 10px; margin: 0 0 12px; break-inside: avoid; }
+  .d h3 { font-size: 11.5pt; color: var(--ink); }
+  .d h3 .num { color: var(--purple); margin-right: 6px; }
+  .d .why { margin: 5px 0 7px; }
+  .opts { list-style: none; margin: 0; padding: 0; }
+  .opts li { display: flex; gap: 8px; margin: 4px 0; }
+  .opts li .sq { flex: none; margin-top: 3px; }
+  .rec { margin-top: 7px; background: #f6f2fa; border-radius: 8px; padding: 6px 10px; font-size: 9.4pt; }
+  .rec b { color: var(--purple); }
+  .where { margin-top: 5px; font-size: 8.6pt; color: var(--soft); }
+  .notes { margin-top: 8px; border-bottom: 1px dotted #b9aecb; height: 18px; font-size: 8.5pt; color: #9b90ab; }
+  .closing { margin-top: 18px; border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px; break-inside: avoid; }
+  .closing h3 { font-size: 12pt; color: var(--plum); margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="band">
+    <div class="eyebrow">NRG Platform · Phase 1</div>
+    <h1>Decisions for Jade</h1>
+    <div class="sub">Everything on the platform that is waiting on your call — content approvals, teaching policy and product choices — with the options, what we recommend, and room for your answer.</div>
+    <div class="meta">22 October 2026 · Prepared by Dr. Ian A. Forde II · 31 items</div>
+  </div>
+  <div class="how">
+    <h2>How to use this</h2>
+    <ol>
+      <li>Each item has tick boxes. Tick one option (or write your own on the notes line).</li>
+      <li>Our recommendation is a suggestion, not the default — every item is yours to decide.</li>
+      <li>Items marked <span class="pill task">Review</span> are reading or checking rather than choosing; those marked <span class="pill joint">With Ian</span> we'll settle together.</li>
+      <li>Send it back marked up, or answer by number in a message (for example "D1: C, D7: teachers only"). Anything you're unsure of, we can talk through.</li>
+    </ol>
+    <div class="legend"><span>Items D1–D8 are new this week. The page after this one lists all 31 on one page.</span></div>
+  </div>
+</div>
+
+<div class="summary">
+  <h2>All decisions at a glance</h2>
+  <p>Tick the box once an item is settled.</p>
+  <table>
+    <tr><th></th><th>#</th><th>Decision</th><th>Type</th></tr>
+    <tr class="sec"><td colspan="4">A. New this week: student questions and what students see</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D1</td><td>How student questions are graded: instant (paid) or queued (subscription)</td><td>Choice</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D2</td><td>What an AI "pass" means</td><td>Choice</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D3</td><td>Is the student's rationale optional (+5) or required?</td><td>Choice</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D4</td><td>Which scoring weights in your template are right</td><td>Choice</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D5</td><td>The "one question every 24 hours" rule</td><td>Choice</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D6</td><td>Required questions after practice and after a topic review</td><td>Choice</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D7</td><td>The question-writers' leaderboard</td><td>Choice</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D8</td><td>What students see of their own analytics</td><td>Choice</td></tr>
+    <tr class="sec"><td colspan="4">B. Topic reviews</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D9</td><td>Read and publish the 15 topic reviews</td><td>Review · with Ian</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D10</td><td>Minimum reading time before a review pays 30 XP</td><td>Choice</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D11</td><td>Glucose in mmol/L in the Endocrine review, and two deck fixes</td><td>Review</td></tr>
+    <tr class="sec"><td colspan="4">C. Question bank content</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D12</td><td>The 377 rewritten AI questions, 71 changed keys, 177 retirements</td><td>Review</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D13</td><td>461 suggested edits to your own questions (and 55 flags)</td><td>Review</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D14</td><td>AI questions that look miskeyed or contradict each other</td><td>Review</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D15</td><td>Six live questions switched off pending your answer key</td><td>Review</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D16</td><td>Three live questions with glucose in mmol/L</td><td>Review</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D17</td><td>Spot-check the duplicate clean-up</td><td>Review</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D18</td><td>The 269 held-back questions with copyright concerns</td><td>Choice · with Ian</td></tr>
+    <tr class="sec"><td colspan="4">D. Question format policy</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D19</td><td>I / II / III combination questions</td><td>Choice</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D20</td><td>Numeric dose-calculation questions</td><td>Choice</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D21</td><td>Your two review notes: "regional practice" and "taxonomy not difficulty"</td><td>Choice</td></tr>
+    <tr class="sec"><td colspan="4">E. Case studies</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D22</td><td>Validate the six pilot case studies</td><td>Review</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D23</td><td>Reference ranges in cases: keep the panel or remove it</td><td>Choice</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D24</td><td>Prohibited stem verbs, case domain weights, lithium example fixes</td><td>Review</td></tr>
+    <tr class="sec"><td colspan="4">F. Ranking and practice settings</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D25</td><td>Four ranking values still marked "proposed"</td><td>Choice</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D26</td><td>Promotion quiz: same pool at every level, or harder as students rise</td><td>Choice</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D27</td><td>Rank names: Benner (Novice to Expert) or Bronze to Diamond</td><td>Choice</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D28</td><td>Mock exams to your v2 rules (always 100 questions, 2.5 hours…)</td><td>Choice</td></tr>
+    <tr class="sec"><td colspan="4">G. Plans, payments and accounts</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D29</td><td>Free plan limits</td><td>Choice</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D30</td><td>Subscriptions: payout, payment processor and prices</td><td>Choice · with Ian</td></tr>
+    <tr><td class="box"><span class="sq"></span></td><td class="n">D31</td><td>Sign-in security and the school/university field</td><td>Choice · with Ian</td></tr>
+  </table>
+</div>
+
+<section class="part">
+  <h2>A. New this week: student questions and what students see</h2>
+  <p class="intro">Your Template 3 is now built on the test site. A student gets an assignment the platform picks (topic, domain, taxonomy level, stem length), writes the stem, four options and an optional rationale, and an AI grader scores it — Stem /30, Options /45, fit to the assignment /25, rationale bonus up to +5, 75 to pass — with warm, specific feedback on each bar. These choices decide how it runs.</p>
+
+  <div class="d">
+    <h3><span class="num">D1</span>How should student questions be graded?</h3>
+    <p class="why">Both ways are built and use the same rubric and feedback. The difference is cost and speed.</p>
+    <ul class="opts">
+      <li><span class="sq"></span><span><b>Instant, through the paid AI service.</b> Feedback within a minute of submitting. Costs roughly 3–5 US cents per question (about US$30–50 per 1,000 questions). Needs an API account with a card on file.</span></li>
+      <li><span class="sq"></span><span><b>Queued, on the AI subscriptions we already pay for.</b> No cost per question. Questions wait in a queue and are graded in batches when Ian (or an assistant) runs the grader — typically the same day. Students see "waiting for grading" until then.</span></li>
+      <li><span class="sq"></span><span><b>Start queued, switch to instant</b> once paying students make same-minute feedback worth the cost. Switching is one setting; nothing else changes.</span></li>
+      <li><span class="sq"></span><span><b>No AI grading</b> — teachers review student questions as before.</span></li>
+    </ul>
+    <div class="rec"><b>Our recommendation:</b> option 3. If the instant service is ever down, questions fall back to the queue automatically, so none goes ungraded.</div>
+    <div class="notes">Notes:</div>
+  </div>
+
+  <div class="d">
+    <h3><span class="num">D2</span>What does an AI "pass" mean?</h3>
+    <p class="why">Your template says a question scoring 75+ "enters the student question bank". Today a teacher still approves every question before students can see it, and XP is paid on that approval.</p>
+    <ul class="opts">
+      <li><span class="sq"></span><span><b>The grade is advice.</b> A teacher approves every question; the AI grade and feedback sit beside it on the review page.</span></li>
+      <li><span class="sq"></span><span><b>A pass goes straight into a separate "student questions" bank</b> that students can practise from, labelled as student-written; teachers spot-check later.</span></li>
+    </ul>
+    <div class="rec"><b>Our recommendation:</b> advice only for now. The grader is good, but a wrong answer key reaching students costs more trust than a teacher's minute. The grader never passes a question whose key it believes is wrong.</div>
+    <div class="notes">Notes:</div>
+  </div>
+
+  <div class="d">
+    <h3><span class="num">D3</span>Should the rationale be optional or required?</h3>
+    <p class="why">Your template makes it optional (+5 bonus). Before this week the form required it, because an approved question needs an explanation for students.</p>
+    <ul class="opts">
+      <li><span class="sq"></span><span><b>Optional, +5 bonus</b> (your template; how it works now). Teachers write or ask for one before approving.</span></li>
+      <li><span class="sq"></span><span><b>Required</b> for every submission (the bonus still rewards a strong one).</span></li>
+    </ul>
+    <div class="notes">Notes:</div>
+  </div>
+
+  <div class="d">
+    <h3><span class="num">D4</span>Which scoring weights are right?</h3>
+    <p class="why">Template 3 gives two versions: section 3.3 says Stem 20% and Options 40%; section 3.5 gives Stem 30, Options 45 and Alignment 25 points. We used 3.5 because its bands are detailed.</p>
+    <ul class="opts">
+      <li><span class="sq"></span><span><b>Keep 30 / 45 / 25</b> (section 3.5, as built).</span></li>
+      <li><span class="sq"></span><span><b>Use different weights:</b> ______________________</span></li>
+    </ul>
+    <div class="notes">Notes:</div>
+  </div>
+
+  <div class="d">
+    <h3><span class="num">D5</span>The "one question every 24 hours" rule</h3>
+    <p class="why">Your prototype required students to write a question every 24 hours to keep access. It is built and switched off. When on, a student who hasn't written one in 24 hours (after their first day) is asked to write one before practice or a new mock exam opens.</p>
+    <ul class="opts">
+      <li><span class="sq"></span><span><b>Off.</b></span></li>
+      <li><span class="sq"></span><span><b>On, as a reminder only</b> — a banner, nothing blocked.</span></li>
+      <li><span class="sq"></span><span><b>On, enforced</b> — practice and new mock exams wait until today's question is written.</span></li>
+    </ul>
+    <div class="rec"><b>Our recommendation:</b> start with the reminder for a few weeks and watch whether students write; enforce later if they don't. Blocking study the night before an exam can push students away.</div>
+    <div class="notes">Notes:</div>
+  </div>
+
+  <div class="d">
+    <h3><span class="num">D6</span>Required questions after practice and after a topic review</h3>
+    <p class="why">Your Methods 2 and 3: after a practice session the student writes a question on the topic they found hardest; after a topic review, a question on that topic. Both are built as an optional "write a question" button at the end.</p>
+    <ul class="opts">
+      <li><span class="sq"></span><span><b>Optional button</b> (as built).</span></li>
+      <li><span class="sq"></span><span><b>Required</b> before the next session or review.</span></li>
+      <li><span class="sq"></span><span><b>Required after topic reviews only.</b></span></li>
+    </ul>
+    <div class="notes">Notes:</div>
+  </div>
+
+  <div class="d">
+    <h3><span class="num">D7</span>The question-writers' leaderboard</h3>
+    <p class="why">Built to your Template 3.8 (10 points per approved question, 15 for an AI score of 90+, +5 for an excellent rationale, streak bonuses for 3 and 5 in a row). You asked earlier for students to see only their own rank, so it is switched off.</p>
+    <ul class="opts">
+      <li><span class="sq"></span><span><b>Off.</b></span></li>
+      <li><span class="sq"></span><span><b>Teachers only.</b></span></li>
+      <li><span class="sq"></span><span><b>Students too.</b> Students who hide their badges from classmates appear as "A student".</span></li>
+    </ul>
+    <div class="rec"><b>Our recommendation:</b> teachers only to begin with; it shows who is engaging without public comparison.</div>
+    <div class="notes">Notes:</div>
+  </div>
+
+  <div class="d">
+    <h3><span class="num">D8</span>What should students see of their own analytics?</h3>
+    <p class="why">Your Template 5 describes a full analytics dashboard. Earlier you asked that students see only their rank. The platform now records every answer, so a dashboard can be built either way. Teachers see the cohort's analytics in every option.</p>
+    <ul class="opts">
+      <li><span class="sq"></span><span><b>Rank only</b> (today).</span></li>
+      <li><span class="sq"></span><span><b>Rank plus their own private analytics:</b> strengths and weaknesses by domain and taxonomy, their weakest topics with links to the matching topic review and practice, and exam stamina — never compared with classmates.</span></li>
+      <li><span class="sq"></span><span><b>Full Template 5,</b> including comparison with the class average.</span></li>
+    </ul>
+    <div class="rec"><b>Our recommendation:</b> option 2. It turns a mistake into a next step without the pressure of comparison.</div>
+    <div class="notes">Notes:</div>
+  </div>
+</section>
+
+<section class="part">
+  <h2>B. Topic reviews</h2>
+  <p class="intro">Your 15 slide decks are now readable reviews on the test site, laid out for phones, each with its practice question, a "practise questions on this topic" button and related reviews. Questions on a reviewed topic link to it after the student answers. All 15 are drafts until published.</p>
+
+  <div class="d">
+    <h3><span class="num">D9</span>Read and publish the 15 reviews <span class="pill task">Review</span> <span class="pill joint">With Ian</span></h3>
+    <p class="why">As a teacher: Study → Topic reviews → open each → "Publish for students". The import kept every word of your slides; please check the layout reads well and nothing is out of order.</p>
+    <div class="notes">Published so far:</div>
+  </div>
+
+  <div class="d">
+    <h3><span class="num">D10</span>When does reading a review earn its 30 XP?</h3>
+    <p class="why">Your XP spec pays 30 XP for reading a review. It counts once a student reaches the end of a review and at least a minimum time has passed since they opened it, so scrolling straight to the bottom doesn't pay.</p>
+    <ul class="opts">
+      <li><span class="sq"></span><span><b>3 minutes</b> (proposed; set now).</span></li>
+      <li><span class="sq"></span><span><b>5 minutes.</b></span></li>
+      <li><span class="sq"></span><span><b>Another time:</b> ______</span></li>
+    </ul>
+    <div class="notes">Notes:</div>
+  </div>
+
+  <div class="d">
+    <h3><span class="num">D11</span>Three fixes in the decks <span class="pill task">Review</span></h3>
+    <ul class="opts">
+      <li><span class="sq"></span><span><b>Endocrine:</b> fasting glucose reads "70–100 mg/dL (3.9–5.6 mmol/L)". The platform rule is mg/dL only — remove the mmol/L?</span></li>
+      <li><span class="sq"></span><span><b>Heart Failure, Signs and Symptoms:</b> the third column's heading repeats its first bullet ("Acute pulmonary edema: pink frothy sputum…"). What should the heading be (e.g. "Life-threatening")?</span></li>
+      <li><span class="sq"></span><span><b>Hypertension:</b> the practice question has no "why the other options are wrong" (the other 14 do). Add one?</span></li>
+    </ul>
+    <div class="notes">Notes:</div>
+  </div>
+</section>
+
+<section class="part">
+  <h2>C. Question bank content</h2>
+  <p class="intro">These are reading and checking jobs. Nothing below reaches students until you approve it. Each has a checklist on the test site's review queue or a document Ian can send.</p>
+
+  <div class="d">
+    <h3><span class="num">D12</span>The 377 rewritten AI questions <span class="pill task">Review</span></h3>
+    <p class="why">The fix pass rewrote 377 questions to your item-writing standard and retired 177. In 71 of the rewrites the correct answer changed, so those need a clinician's eye first. Checklist: <i>FIX_JADE_CHECKLIST</i>.</p>
+    <div class="notes">Progress:</div>
+  </div>
+
+  <div class="d">
+    <h3><span class="num">D13</span>Suggested edits to your own questions <span class="pill task">Review</span></h3>
+    <p class="why">A careful pass over your 516 questions proposed 461 small revisions and flagged 55 (31 possible key problems, 14 needing your judgement, 4 scope, 4 duplicates, 3 negative stems). None has been applied — they are your questions.</p>
+    <div class="notes">Notes:</div>
+  </div>
+
+  <div class="d">
+    <h3><span class="num">D14</span>AI questions that look miskeyed or contradict each other <span class="pill task">Review</span></h3>
+    <p class="why">One block of AI questions (spec1586–1605) looks systematically miskeyed; 9 are still waiting: 1586, 1591, 1593, 1594, 1597, 1600, 1602, 1603, 1604. Separately, some AI questions give opposite answers to the same situation: boggy fundus, croup, catheter infection, Trinidad and Tobago 6-week vaccines, and replies to suicide risk (one conflicts with your question q41 in the "new 100" set).</p>
+    <div class="notes">Notes:</div>
+  </div>
+
+  <div class="d">
+    <h3><span class="num">D15</span>Six live questions switched off <span class="pill task">Review</span></h3>
+    <p class="why">On 5 October six of your soft-launch mock questions were found keyed to a wrong option (five of them unsafe) and switched off on the live site: q35, q50, q66, q70, q71 and q75. The right answer is one of each question's existing options. Confirm the keys and they go back on.</p>
+    <div class="notes">Keys:</div>
+  </div>
+
+  <div class="d">
+    <h3><span class="num">D16</span>Three live questions with glucose in mmol/L <span class="pill task">Review</span></h3>
+    <p class="why">The platform rule is mg/dL. Three of your live questions use mmol/L: "new 100" q1 and q10, and "restart master 15" q2. Convert them (we can draft the conversion for you to approve)?</p>
+    <ul class="opts">
+      <li><span class="sq"></span><span><b>Yes, draft the conversions for me to approve.</b></span></li>
+      <li><span class="sq"></span><span><b>I'll edit them myself.</b></span></li>
+    </ul>
+    <div class="notes">Notes:</div>
+  </div>
+
+  <div class="d">
+    <h3><span class="num">D17</span>Spot-check the duplicate clean-up <span class="pill task">Review</span></h3>
+    <p class="why">610 AI questions that duplicated another question (or one of yours) were retired, keeping your original wherever there was one. A random check found every one a true duplicate; a look at five or ten in the review queue (filter "rejected", note "dedup") would confirm it.</p>
+    <div class="notes">Notes:</div>
+  </div>
+
+  <div class="d">
+    <h3><span class="num">D18</span>The 269 held-back questions <span class="pill joint">With Ian</span></h3>
+    <p class="why">In the prototype bank, 145 questions are marked "paraphrased from Saunders" and 124 are word-for-word classic NCLEX items without rationales. They have never been shown to anyone.</p>
+    <ul class="opts">
+      <li><span class="sq"></span><span><b>Drop them.</b></span></li>
+      <li><span class="sq"></span><span><b>Rewrite them</b> into original questions on the same topics.</span></li>
+      <li><span class="sq"></span><span><b>Keep them</b> (only with permission from the publishers).</span></li>
+    </ul>
+    <div class="rec"><b>Our recommendation:</b> drop them. The bank has plenty of original material on the same topics.</div>
+    <div class="notes">Notes:</div>
+  </div>
+</section>
+
+<section class="part">
+  <h2>D. Question format policy</h2>
+
+  <div class="d">
+    <h3><span class="num">D19</span>I / II / III combination questions</h3>
+    <p class="why">The CXC RENR sample test uses "Which of the following: I, II, III — A. I and II only…". About 15 bank items use the format and are flagged; some appear in promotion quizzes on the test site.</p>
+    <ul class="opts">
+      <li><span class="sq"></span><span><b>Allow them</b>, as the RENR does (a small share of the bank).</span></li>
+      <li><span class="sq"></span><span><b>Convert them</b> to single-best-answer questions.</span></li>
+      <li><span class="sq"></span><span><b>Retire them.</b></span></li>
+    </ul>
+    <div class="rec"><b>Our recommendation:</b> allow a small share, so students meet the format before the real exam.</div>
+    <div class="notes">Notes:</div>
+  </div>
+
+  <div class="d">
+    <h3><span class="num">D20</span>Numeric dose-calculation questions</h3>
+    <p class="why">Some questions ask for a calculated dose. They are flagged and held until you decide.</p>
+    <ul class="opts">
+      <li><span class="sq"></span><span><b>Allow them</b> (the case-study player already has a calculator; practice could get one too).</span></li>
+      <li><span class="sq"></span><span><b>Exclude them</b> — the RENR doesn't test arithmetic this way.</span></li>
+    </ul>
+    <div class="notes">Notes:</div>
+  </div>
+
+  <div class="d">
+    <h3><span class="num">D21</span>Your two review notes</h3>
+    <p class="why">From your early reviews: <i>"regionally accepted practices rather than Trinidad and Tobago"</i> and <i>"questions should be in a taxonomy rather than a difficulty"</i>. Both change how future questions are written and tagged.</p>
+    <ul class="opts">
+      <li><span class="sq"></span><span><b>Regional practice:</b> write to practice accepted across CARICOM, naming a country only when the question is about that country's system (e.g. a T&amp;T immunisation schedule). Or: ______________</span></li>
+      <li><span class="sq"></span><span><b>Taxonomy:</b> tag every question by RENR level (Knowledge/Comprehension, Application, Analysis) and stop using easy/medium/hard. Or keep both.</span></li>
+    </ul>
+    <div class="notes">Notes:</div>
+  </div>
+</section>
+
+<section class="part">
+  <h2>E. Case studies</h2>
+
+  <div class="d">
+    <h3><span class="num">D22</span>Validate the six pilot cases <span class="pill task">Review</span></h3>
+    <p class="why">Your lithium case and five AI-written cases are on the test site in the teacher's case-study review, each with a short list of what to confirm clinically. Once validated they can be published.</p>
+    <div class="notes">Validated:</div>
+  </div>
+
+  <div class="d">
+    <h3><span class="num">D23</span>Reference ranges in cases</h3>
+    <p class="why">The case player has a panel of normal lab ranges. Addendum #2 of your case request says not to give ranges; section 5.3 of your V3 standard includes them.</p>
+    <ul class="opts">
+      <li><span class="sq"></span><span><b>Keep the panel.</b></span></li>
+      <li><span class="sq"></span><span><b>Remove it</b> (students must know normal values, as in the exam).</span></li>
+    </ul>
+    <div class="notes">Notes:</div>
+  </div>
+
+  <div class="d">
+    <h3><span class="num">D24</span>Three gaps in the case standard <span class="pill task">Review</span></h3>
+    <ul class="opts">
+      <li><span class="sq"></span><span><b>Prohibited stem verbs:</b> section 7.6 refers to a list shown only as an image we couldn't read. Could you send the list?</span></li>
+      <li><span class="sq"></span><span><b>Domain weights for the case bank:</b> the same RENR blueprint as the question bank, or different?</span></li>
+      <li><span class="sq"></span><span><b>Lithium example:</b> Q4 and Q5 share the same key, Q6 evaluates an intervention the case never shows, and three distractors are implausible. Revise?</span></li>
+    </ul>
+    <div class="notes">Notes:</div>
+  </div>
+</section>
+
+<section class="part">
+  <h2>F. Ranking and practice settings</h2>
+
+  <div class="d">
+    <h3><span class="num">D25</span>Four ranking values still marked "proposed"</h3>
+    <ul class="opts">
+      <li><span class="sq"></span><span><b>Retaking a mock exam you've already sat pays ×0.25 XP</b> (same as a repeated practice question). Or: ______</span></li>
+      <li><span class="sq"></span><span><b>Promotion quiz: 5 seconds' grace</b> on each 90-second question for slow connections. Or: ______</span></li>
+      <li><span class="sq"></span><span><b>24 hours' wait</b> before retaking a failed promotion quiz. Or: ______</span></li>
+      <li><span class="sq"></span><span><b>The quiz leaves out questions the student answered in the last 14 days.</b> Or: ______</span></li>
+    </ul>
+    <div class="notes">Notes:</div>
+  </div>
+
+  <div class="d">
+    <h3><span class="num">D26</span>Should promotion quizzes get harder?</h3>
+    <p class="why">Today every promotion quiz draws 25 questions from the whole live bank, weighted to the RENR blueprint, for every one of the 24 promotions.</p>
+    <ul class="opts">
+      <li><span class="sq"></span><span><b>Keep one pool for every level.</b></span></li>
+      <li><span class="sq"></span><span><b>More Analysis-level questions as students rise</b> (e.g. Expert tier mostly Analysis).</span></li>
+      <li><span class="sq"></span><span><b>Focus each quiz on the student's weakest topics.</b></span></li>
+    </ul>
+    <div class="notes">Notes:</div>
+  </div>
+
+  <div class="d">
+    <h3><span class="num">D27</span>Rank names</h3>
+    <p class="why">The programme brief says Bronze to Diamond; your rank system file uses Benner's Novice to Expert, which is what's built (25 levels, five per tier).</p>
+    <ul class="opts">
+      <li><span class="sq"></span><span><b>Benner: Novice → Advanced Beginner → Competent Candidate → Proficient Candidate → Expert Candidate</b> (as built).</span></li>
+      <li><span class="sq"></span><span><b>Bronze → Silver → Gold → Platinum → Diamond.</b></span></li>
+    </ul>
+    <div class="notes">Notes:</div>
+  </div>
+
+  <div class="d">
+    <h3><span class="num">D28</span>Mock exams to your v2 rules</h3>
+    <p class="why">Your Mock Exam Regulator template: always 100 questions in 2.5 hours, domain mix within 2% of the blueprint and taxonomy within 3%, stem lengths 2:1:1:1, no going back, two 5-minute breaks with the clock running. Today teachers build mocks of any length.</p>
+    <ul class="opts">
+      <li><span class="sq"></span><span><b>All mocks follow the v2 rules.</b></span></li>
+      <li><span class="sq"></span><span><b>Add an "official RENR mock" type that follows them;</b> teachers can still build shorter practice mocks.</span></li>
+      <li><span class="sq"></span><span><b>Leave mocks as they are.</b></span></li>
+    </ul>
+    <div class="rec"><b>Our recommendation:</b> option 2, so teachers keep short class quizzes.</div>
+    <div class="notes">Notes:</div>
+  </div>
+</section>
+
+<section class="part">
+  <h2>G. Plans, payments and accounts</h2>
+
+  <div class="d">
+    <h3><span class="num">D29</span>Free plan limits</h3>
+    <p class="why">Your v2 template is built (switched off until payments exist): 10 practice questions a day, no mock exams, one topic review a day for 5 minutes. Your earlier v1 said 50 questions a day and one mock a week.</p>
+    <ul class="opts">
+      <li><span class="sq"></span><span><b>v2: 10 a day, no mocks, one 5-minute review a day</b> (as built).</span></li>
+      <li><span class="sq"></span><span><b>v1: 50 a day, one mock a week.</b></span></li>
+      <li><span class="sq"></span><span><b>Other:</b> ______________________</span></li>
+    </ul>
+    <div class="notes">Notes:</div>
+  </div>
+
+  <div class="d">
+    <h3><span class="num">D30</span>Subscriptions <span class="pill joint">With Ian</span></h3>
+    <p class="why">Nothing is built until these are known. The build plan is ready.</p>
+    <ul class="opts">
+      <li><span class="sq"></span><span><b>Where payments go:</b> your Schwab account (we need to confirm Schwab accepts payouts from the processor) or ______</span></li>
+      <li><span class="sq"></span><span><b>Payment processor:</b> WiPay (recurring billing to be confirmed) / PayPal Subscriptions / other ______</span></li>
+      <li><span class="sq"></span><span><b>Prices:</b> monthly US$____ · full programme (about 3 months) US$____ · student or school discount? ____</span></li>
+      <li><span class="sq"></span><span><b>Registered business / tax status</b> for the merchant account: ______</span></li>
+    </ul>
+    <div class="notes">Notes:</div>
+  </div>
+
+  <div class="d">
+    <h3><span class="num">D31</span>Sign-in security and the school field <span class="pill joint">With Ian</span></h3>
+    <p class="why">Your Login template asks for two-step sign-in (a code) for premium students, teachers and admins, automatic sign-out after 15 minutes idle, and a required school/university field "for the marketing database".</p>
+    <ul class="opts">
+      <li><span class="sq"></span><span><b>Two-step sign-in by emailed code</b> (no SMS provider needed) for premium students, teachers and admins / teachers and admins only / not yet.</span></li>
+      <li><span class="sq"></span><span><b>15-minute idle sign-out</b> / 60 minutes / none (shared devices are the reason for it).</span></li>
+      <li><span class="sq"></span><span><b>School/university field:</b> required with a clear consent line / optional / leave out.</span></li>
+    </ul>
+    <div class="rec"><b>Our recommendation:</b> emailed codes for teachers and admins first; 60-minute idle sign-out; school field optional with a consent line — collecting it for marketing needs the student's agreement.</div>
+    <div class="notes">Notes:</div>
+  </div>
+
+  <div class="closing">
+    <h3>What happens next</h3>
+    <p>Most of these are a setting or a short change once you've decided, and nothing reaches the live site until it has been tested on the test site first. Send back whatever you've settled — even a handful at a time helps — and Ian will confirm what changed.</p>
+  </div>
+</section>
+
+</body>
+</html>

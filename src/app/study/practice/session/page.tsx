@@ -5,6 +5,8 @@ import { TutorSession } from "@/components/questions/TutorSession";
 import { recordPracticeAnswers, recordPracticeSession } from "@/lib/xp/actions";
 import { flags } from "@/lib/flags";
 import { getAllowance } from "@/lib/tier/allowance";
+import { dailyQuestionDue } from "@/lib/grading/daily";
+import { DailyQuestionGate } from "@/components/grading/DailyQuestionGate";
 import { UpgradeNotice } from "@/components/tier/UpgradeNotice";
 import { getReview, publishedReviewLinks, reviewQuestionIds } from "@/lib/topic-reviews/queries";
 
@@ -24,7 +26,14 @@ export default async function PracticeSessionPage({
 }) {
   const { user, profile } = await requireRole("student", "/study/practice/session");
   const sp = searchParams;
-  const allowance = await getAllowance();
+  const [allowance, due] = await Promise.all([getAllowance(), dailyQuestionDue()]);
+  if (due) {
+    return (
+      <DashboardShell profile={profile} email={user.email} title="Practice session" eyebrow="Tutor mode">
+        <DailyQuestionGate />
+      </DashboardShell>
+    );
+  }
   // Free tier: never serve more questions than are left today (the reveal step enforces it either way).
   const count = Math.min(int(sp.count) ?? 10, 100, allowance.limited ? allowance.remaining ?? 0 : 100);
 
@@ -84,6 +93,7 @@ export default async function PracticeSessionPage({
         backHref={review ? `/study/reviews/${review.slug}` : "/study/practice"}
         backLabel={review ? "Back to the topic review" : "Change filters"}
         reviewLinks={reviewLinks}
+        finishLink={{ href: "/study/submit?from=practice", label: "Write a question on the topic you found hardest →" }}
         onComplete={async (total, correct, answers) => {
           "use server";
           // Ranking v2 sends the choices for the server to grade; with the flag off, the original tally path runs.

@@ -36,6 +36,7 @@ export function TutorSession({
   backLabel = "Back to practice setup",
   onComplete,
   reviewLinks,
+  finishLink,
 }: {
   questions: QuizQuestion[];
   title?: string;
@@ -47,6 +48,8 @@ export function TutorSession({
   onComplete?: (total: number, correct: number, answers: PracticeAnswer[]) => void | Promise<void>;
   /** Published topic reviews; after "Check answer" the question links to the one it belongs to. */
   reviewLinks?: ReviewLink[];
+  /** An extra next step on the finish screen (practice: write a question on the topic you found hardest). */
+  finishLink?: { href: string; label: string };
 }) {
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<string[]>([]);
@@ -119,6 +122,11 @@ export function TutorSession({
             {backLabel}
           </Link>
         </div>
+        {finishLink ? (
+          <Link href={finishLink.href} className="mt-4 inline-block text-sm font-medium text-brand-700 underline">
+            {finishLink.label}
+          </Link>
+        ) : null}
       </div>
     );
   }

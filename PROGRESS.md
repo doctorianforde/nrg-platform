@@ -21,8 +21,8 @@ Read this section first; everything below it is the dated log of how we got here
 | Supabase project | `kwhaqhhwqykckarjbdod` | `cdvubijjepwmhhkgppbl` |
 | Site | https://nrg-platform-staging.vercel.app | the `nrg-platform` Vercel project |
 | Git branch that deploys it | `staging` | `main` |
-| Migrations applied | all 50 in `supabase/migrations/` (2026-10-22: `20261022120000` free-tier limits, `20261022140000` topic reviews) | 48 (**since 2026-10-20**); the two 2026-10-22 ones not yet |
-| App | `5513c1b` (free-tier limits, 2026-10-22) | `ebbafd8` (since 2026-10-20) |
+| Migrations applied | all 52 in `supabase/migrations/` (2026-10-22: `20261022120000` free-tier limits, `20261022140000` topic reviews, `20261022160000` review reading, `20261022180000` question grading) | 48 (**since 2026-10-20**); the four 2026-10-22 ones not yet |
+| App | the 2026-10-22 grading commit (free tier, topic reviews, reading XP, AI grading) | `ebbafd8` (since 2026-10-20) |
 | `NEXT_PUBLIC_RANKING_V2` | `1` | unset |
 | `ranking_config.rules_live` | `1` (**live since 2026-10-13**) | `0` (shadow: prod students keep today's XP) |
 | `tier_config.limits_live` (free-tier limits) | `0` — **Ian to switch to 1** (code deployed 2026-10-22; Claude's write was blocked by the auto-mode guard) | table not on prod yet |
@@ -97,6 +97,7 @@ Steps 1–4 **done 2026-10-20** (go-live entry at the end of this file). Left: 5
 | Subscription service Phase 0 (payout route, processor, prices) | Ian / Jade |
 | ~~Who publishes topic reviews; XP for reading; free-tier partial view~~ — **decided 2026-10-22**: Ian + Jade publish; yes to 30 XP for reading; yes to the free-tier 1-review / 5-minute view (both queued for Claude in PLAN.md) | Ian |
 | Free-tier limits: confirm v2 numbers (10/day, no mocks); whether the promotion quiz and flashcards stay open to free students (they do now); when to switch limits on for prod (no checkout exists, so free students can only be upgraded by an admin) | Ian / Jade |
+| **Everything waiting on Jade** is collected, with options and recommendations, in `docs/phase-1/Decisions_for_Jade.pdf` (31 items, 2026-10-22); keep it in step with this table | Ian sends |
 | T33 human read-and-verify; T35 tell Jade M2 is delivered | Ian |
 | Jade's prod teacher account; custom SMTP before real signups | Ian |
 
@@ -109,7 +110,7 @@ promotion quiz is open), `case-test-teacher@…` / `case-test-student@…` (free
 `node scripts/test-ranking-phase1.mjs` (19), `node scripts/test-ranking-phase2.mjs` (47), `node scripts/test-answer-keys.mjs`
 (14; `--target prod` with `CONFIRM_PROD=1`, `--pre` before the hide migration), `node scripts/test-trophies-phase1.mjs` (28),
 `node scripts/e2e-rls-test.mjs` (T34, 15; fixed 2026-10-17, it had been failing 9/15 silently), `node scripts/test-write-paths.mjs`
-(38: every app write path a user token uses), `node scripts/test-free-tier.mjs` (26; turns `limits_live` on for the run and restores it), `node scripts/test-topic-reviews.mjs` (17; restores every review's status). Content gate: `npx tsx scripts/import-topic-reviews.ts` (fails if any source word is lost). The two ranking suites hold
+(38: every app write path a user token uses), `node scripts/test-free-tier.mjs` (26; turns `limits_live` on for the run and restores it), `node scripts/test-topic-reviews.mjs` (17; restores every review's status), `node scripts/test-topic-review-reading.mjs` (30; reading XP + free-tier window, restores statuses and `limits_live`), `node scripts/test-question-grading.mjs` (21; needs an empty grading queue, restores `qgen_config`). Content gate: `npx tsx scripts/import-topic-reviews.ts` (fails if any source word is lost). The two ranking suites hold
 `rules_live` at 0 while their shadow checks run and put back the starting value afterwards. Content gates: `npx tsx scripts/review-bank.ts --check`,
 `npx tsx scripts/import-case.ts --check`, `npx tsx scripts/plan-cases.ts --report`.
 
@@ -118,8 +119,8 @@ promotion quiz is open), `case-test-teacher@…` / `case-test-student@…` (free
    `ian-paid-student`), then approves the prod go-live plan.
 2. Jade's reviews (bank fix pass, case studies, config values) — the AI queue is now 1,377 after dedup; flag spec1586–1605 keys to him.
 3. More AI cases once the 6 are reviewed (`npx tsx scripts/plan-cases.ts --count N`, then the generator and reviewer briefs).
-4. (2026-10-22) Topic reviews: build XP for reading and the free-tier 1-review / 5-minute view (both approved by Ian); Ian + Jade
-   read and publish the 15 drafts.
+4. (2026-10-22) Send Jade `docs/phase-1/Decisions_for_Jade.pdf`; Ian + Jade read and publish the 15 topic reviews; Ian runs
+   the grading queue while mode is `agent`; checklist F1–F6, T1–T9 on staging.
 5. (2026-10-22) Fix the two open checklist failures: **N1** theme switching lags between choices, **R3** Roman numerals
    off-centre on the trophy art. Set up a fresh promotion quiz on `ian-paid-student` so Ian can test **R4** (failed-quiz
    retake lock) and **R5** (celebrations don't replay).
@@ -143,7 +144,7 @@ table is the travelling record.
 | Mock exams (brief 4, T6) | **Done** (solo, group, timer, rationale release, fatigue). **Not done:** v2 regulator rules — always 100 q / 150 min, domain ±2 %, taxonomy ±3 %, stem-length ratio, no back-navigation, 2 × 5 min breaks |
 | Analytics dashboard (brief 5, T5) | **Not built.** Per-answer data exists (`question_attempts`); Jade asked for rank-only for students, so needs Ian/Jade to say what students vs. teachers see |
 | Study lobby / group study (brief 6, T13) | **Partly**: group mock exams (up to 5). **Not built:** live synchronised lobby, leaderboards, Google Meet debriefs |
-| Student question generation + AI evaluation (brief 7, T3) | **Partly**: students submit, teacher approves, XP paid. **Not built:** the AI 0–100 grader, 3 progress bars, "author 1 question per 24 h" gate, Q-gen leaderboard |
+| Student question generation + AI evaluation (brief 7, T3) | **Built on staging 2026-10-22**: platform-assigned topic/domain/taxonomy/stem length, AI grader (both pathways), feedback per bar, 24 h rule + leaderboard (off). Jade chooses the pathway and policies (decisions PDF D1–D7) |
 | Rank & achievements (brief 8) | **Done** as Benner 24-level ladder (not Bronze→Diamond), ranking v2 + promotion quiz + trophies; live on staging, shadow on prod |
 | Instructor dashboard (brief 9) | **Partly**: dashboard, review queue, mock builder, fatigue cohort card, messaging, generate. **Not built:** at-risk learners, class trend analytics |
 | Caribbean content (brief 10) | Ongoing (mg/dL rule, regional practice note open with Jade) |
@@ -2949,3 +2950,72 @@ Ian: "Topic reviews (15 slide decks already written), linked from related questi
   refuses today). Staging has only 111 live questions, so "Practise" offers 0–9 per review until the AI bank is approved.
   Not built from Template 9/16: free-tier partial view (1 review, 5 min), 30 XP for reading, mandatory Q-gen after a review,
   links from mock results / analytics / group study.
+
+## Session 2026-10-22 (Claude): topic reviews — reading XP and the free tier's daily review — on staging
+Ian approved both (30 XP for reading, from Jade's XP spec; free tier 1 review, partial, 5-minute timer, from the v2 templates).
+- **Migration `20261022160000_topic_review_reading`** (staging, via the pooler script). Config: `ranking_config.review_read_xp`
+  30 (confirmed), `review_min_seconds` 180 (**proposed**, Jade to confirm); `tier_config.free_reviews_per_day` 1,
+  `free_review_minutes` 5. `xp_events.reason` and `xp_shadow.kind` CHECKs gain `topic_review`. Tables `topic_review_opens`
+  (one row per review per Trinidad day) and `topic_review_reads` (once per review per student; its id is the XP source, so
+  the existing `(reason, source_id)` index pays once). Functions: `topic_review_list()` (titles for everyone, with
+  opened-today / read flags), `topic_review_access(slug)`, `open_topic_review(slug)` (free students spend their allowance
+  here; staff never recorded), `complete_topic_review(slug)` (needs today's open ≥ 180 s ago; pays via `award_xp_detail`
+  while `rules_live = 1`, else logs to `xp_shadow`; outside the practice daily cap). The `topic_reviews` SELECT policy now
+  also requires `topic_review_unlocked(id)`: a limited free student can read a review's content only within 5 minutes of
+  opening it that day, so the lock is in the database, not just the page.
+- **App**: unlimited students open a review just by visiting (starts the reading clock); free students see a "Start my free
+  review" card (a click, so links and prefetch can't spend it), then a sticky 5:00 countdown; at zero the page refreshes to
+  an upgrade notice. List: free-plan banner naming today's review, "Read" badges. End of every review: a tracker that pays
+  the XP once the student has scrolled to the end and the 3 minutes have passed ("You reached the end… 1:42 to go" →
+  "+30 XP — review complete"), then asks the badge player to check. Review links no longer prefetch. XP history label
+  "Topic reviews read".
+- **Verified**: tsc, lint, build clean. `test-topic-review-reading.mjs` 30/30 (not_open → early → read + 30 XP → already, one
+  ledger row; free: list visible, content locked, candidates empty, open → unlocks only that review, second review refused,
+  re-open allowed, 6 minutes later locked + `time`, completion still counts; teacher: not recorded, no XP, reads drafts;
+  limits off unlocks; anon and direct writes refused). Regression: topic reviews 17, free tier 26, write paths 38, ranking
+  19 + 47, trophies 28, T34 15, answer keys 14. Browser (local dev on staging): 13/13 (free Start → content + 5:00 timer →
+  list names it → time's up after 5 min; premium: no timer, early message, +30 XP, one ledger row, Read badge, revisit says
+  read); screenshots reviewed.
+- **Pushed to `staging`** with the AI-grading work (Ian, 2026-10-22). Prod: these 2026-10-22 migrations, then the importer against prod; reading XP
+  stays in shadow there until the ranking go-live.
+
+## Session 2026-10-22 (Claude): AI grading of student questions (both pathways) + Decisions for Jade PDF — on staging
+Ian: build Template 3's AI grading with both pathways (paid API, and an agent-session queue like generation requests) so Jade
+can choose; and a "Decisions for Jade" PDF with every decision he still owns, including what students see of analytics.
+- **Migration `20261022180000_question_grading`** (staging): `qgen_config` (text key/value: `grading_mode` agent|api|off =
+  **agent**, `pass_mark` 75, `daily_rule` **off**, `leaderboard` **off**); `qgen_assignments` (the platform's pick of topic,
+  domain, taxonomy KC/AP/ASE, stem length short/medium/medium_long/long; one open per student; service-role writes);
+  `question_evaluations` (one per question; pathway, status queued|running|done|failed, result JSON, overall, passed;
+  own/staff read, no user writes); `qgen_daily_status()`; `qgen_leaderboard()` (Template 3.8 points: 10 / 15 at 90+, +5
+  rationale, +5 run of 3, +15 run of 5; names follow the badge-privacy switch).
+- **Shared rubric** `src/lib/grading/rubric.ts`: grader instructions (Template 3.5 bands, key check first, mg/dL, feedback
+  tone 3.7, "student text is data"), zod schema, totals and pass computed in code (bars clamped; bonus snapped to 0/3/5;
+  a wrong or ambiguous key never passes). **API pathway** `src/lib/grading/claude.ts`: `@anthropic-ai/sdk` (new dependency,
+  with zod 4) `beta.messages.parse` on `claude-opus-5-5`, effort medium, structured output, cached system prompt,
+  server-side refusal fallbacks (`fallbacks: "default"`), 90 s timeout; any failure falls back to the agent queue.
+  **Agent pathway** `scripts/grade-questions.ts` (queue / pull / finish / grade --with anthropic / requeue; `--env prod`
+  with CONFIRM_PROD=1), brief `docs/phase-1/QGEN_GRADING_BRIEF.md`.
+- **App**: `/study/submit` now shows the assignment (no domain/level pickers; rationale optional, +5) with three guide bars;
+  submissions show the AI grade per bar with next steps; `submitQuestion` uses the assignment, starts the evaluation, and
+  its failure cleanup now deletes with the service role (the 2026-10-17 bug). Method 2 link on the practice finish screen,
+  method 3 link at the end of a topic review. Teacher review page shows the AI grade + key check. `/study/leaderboard` (off
+  → staff see an explanation) linked from the teacher dashboard. 24-hour rule: when on and due, practice and new mock
+  exams show a "write today's question" gate (page-level).
+- **Verified**: tsc, lint, build clean. `test-question-grading.mjs` 21/21 (visibility, no direct writes, CLI pull → finish,
+  malformed grade requeued, wrong key fails at 105, leaderboard off/staff/students + privacy, 24 h rule cases). All earlier
+  suites pass (topic-review reading 30, topic reviews 17, free tier 26, write paths 38, ranking 19 + 47, trophies 28,
+  T34 15, answer keys 14). Browser on a local dev server (staging): 13 checks across two phases; **a real agent-graded
+  batch**: Claude (this session) pulled two submitted questions and graded them by the brief (74/100 with full rationale
+  bonus, 41/100), stored via `finish`; the student saw per-bar feedback, the teacher the grade. API mode with no key fell
+  back to the queue and told the student. Test users and questions deleted.
+- **Not tested**: the API pathway against the real API (no `ANTHROPIC_API_KEY` here; subscriptions-first). Cost estimate
+  (~3–5 US cents per question) is from token arithmetic, not a measured run.
+- **Decisions for Jade**: `docs/phase-1/Decisions_for_Jade.pdf` (15 pages, 31 items in 7 sections: new this week D1–D8
+  incl. grading pathway and student analytics; topic reviews; bank content; format policy; case studies; ranking settings;
+  plans/payments/accounts), each with options, a recommendation and tick boxes; source HTML + renderer in
+  `docs/phase-1/decisions-for-jade/`.
+- **Pushed to `staging`** on Ian's go-ahead. Prod needs, in order, `20261022120000`, `20261022140000`, `20261022160000`,
+  `20261022180000` (then the topic-review importer pointed at prod) before the next merge to `main`; all four land with their
+  switches off (`limits_live` 0, reviews as drafts, `grading_mode` agent queues only, daily rule and leaderboard off).
+- **Housekeeping**: `npm i` pruned the ad-hoc `pg` package the session's staging helper used (it lives in the scratchpad now);
+  `js-yaml` (importer) is still present as a transitive dependency.

@@ -7,7 +7,7 @@
 // 20261009003423 (case study platform: case_stages, case_attempts, case_attempt_responses, questions.context, RPCs),
 // 20261012124123 (case_stages.medications), 20261012150000 (question_attempts, record_practice_answers),
 // 20261012160000–160600 (ranking v2: config, shadow, rules, mock attempts, promotion quiz), 20261013120000 (trophies),
-// 20261020120000 (generation_requests), 20261022120000 (free-tier limits: practice_allowance, claim_practice_reveal), 20261022140000 (topic_reviews).
+// 20261020120000 (generation_requests), 20261022120000 (free-tier limits: practice_allowance, claim_practice_reveal), 20261022140000 (topic_reviews), 20261022160000 (topic-review reading + free-tier view), 20261022180000 (question grading).
 // Regenerate after every migration (questions review_* columns added by hand for 20260919010000): npx supabase gen types typescript --project-id cdvubijjepwmhhkgppbl > src/lib/supabase/types.ts
 export type Json =
   | string
@@ -157,6 +157,24 @@ export type Database = {
         Insert: { id?: string; slug: string; title: string; system: string; slides: Json; question?: Json | null; keywords?: string[]; exclude?: string[]; related?: string[]; status?: string; published_at?: string | null; published_by?: string | null; sort_order?: number; source?: string | null; created_at?: string; updated_at?: string }
         Update: { id?: string; slug?: string; title?: string; system?: string; slides?: Json; question?: Json | null; keywords?: string[]; exclude?: string[]; related?: string[]; status?: string; published_at?: string | null; published_by?: string | null; sort_order?: number; source?: string | null; created_at?: string; updated_at?: string }
         Relationships: []
+      }
+      qgen_config: {
+        Row: { key: string; value: string; confirmed: boolean; note: string; updated_at: string }
+        Insert: { key: string; value: string; confirmed: boolean; note: string; updated_at?: string }
+        Update: { key?: string; value?: string; confirmed?: boolean; note?: string; updated_at?: string }
+        Relationships: []
+      }
+      qgen_assignments: {
+        Row: { id: string; user_id: string; method: string; review_slug: string | null; domain_id: number; topic_id: number | null; topic: string; taxonomy: string; stem_length: string; created_at: string; question_id: string | null; used_at: string | null }
+        Insert: { id?: string; user_id: string; method: string; review_slug?: string | null; domain_id: number; topic_id?: number | null; topic: string; taxonomy: string; stem_length: string; created_at?: string; question_id?: string | null; used_at?: string | null }
+        Update: { id?: string; user_id?: string; method?: string; review_slug?: string | null; domain_id?: number; topic_id?: number | null; topic?: string; taxonomy?: string; stem_length?: string; created_at?: string; question_id?: string | null; used_at?: string | null }
+        Relationships: [{ foreignKeyName: "qgen_assignments_domain_id_fkey"; columns: ["domain_id"]; isOneToOne: false; referencedRelation: "domains"; referencedColumns: ["id"] }]
+      }
+      question_evaluations: {
+        Row: { id: string; question_id: string; user_id: string; assignment: Json; pathway: string; status: string; result: Json | null; overall: number | null; passed: boolean | null; model: string | null; error: string | null; created_at: string; started_at: string | null; finished_at: string | null }
+        Insert: { id?: string; question_id: string; user_id: string; assignment: Json; pathway: string; status?: string; result?: Json | null; overall?: number | null; passed?: boolean | null; model?: string | null; error?: string | null; created_at?: string; started_at?: string | null; finished_at?: string | null }
+        Update: { id?: string; question_id?: string; user_id?: string; assignment?: Json; pathway?: string; status?: string; result?: Json | null; overall?: number | null; passed?: boolean | null; model?: string | null; error?: string | null; created_at?: string; started_at?: string | null; finished_at?: string | null }
+        Relationships: [{ foreignKeyName: "question_evaluations_question_id_fkey"; columns: ["question_id"]; isOneToOne: true; referencedRelation: "questions"; referencedColumns: ["id"] }]
       }
       generation_requests: {
         Row: { created_at: string; error: string | null; finished_at: string | null; id: string; kind: string; mode: string; request: Json; requested_by: string; result: Json | null; started_at: string | null; status: string; updated_at: string }
@@ -318,6 +336,12 @@ export type Database = {
       practice_allowance: { Args: Record<PropertyKey, never>; Returns: Json }
       claim_practice_reveal: { Args: { p_question: string }; Returns: Json }
       topic_review_candidates: { Args: { p_slug: string }; Returns: { id: string; body: string; topic_name: string | null }[] }
+      topic_review_list: { Args: Record<PropertyKey, never>; Returns: { id: string; slug: string; title: string; system: string; status: string; keywords: string[]; exclude: string[]; related: string[]; sort_order: number; opened_today: boolean; read: boolean }[] }
+      topic_review_access: { Args: { p_slug: string }; Returns: Json }
+      open_topic_review: { Args: { p_slug: string }; Returns: Json }
+      complete_topic_review: { Args: { p_slug: string }; Returns: Json }
+      qgen_daily_status: { Args: Record<PropertyKey, never>; Returns: Json }
+      qgen_leaderboard: { Args: Record<PropertyKey, never>; Returns: { user_id: string; display_name: string; points: number; approved: number; is_me: boolean }[] }
       start_promotion_quiz: { Args: Record<PropertyKey, never>; Returns: string }
       promotion_current: { Args: { p_attempt: string }; Returns: Json }
       promotion_answer: { Args: { p_attempt: string; p_position: number; p_option_ids: string[] }; Returns: Json }

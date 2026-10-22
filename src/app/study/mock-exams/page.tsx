@@ -9,6 +9,8 @@ import { fmtDateTime, fmtPct } from "@/lib/mock-exam/utils";
 import { StartExamForm } from "./StartExamForm";
 import { CreateGroupForm, JoinGroupForm } from "./GroupForms";
 import { getAllowance } from "@/lib/tier/allowance";
+import { dailyQuestionDue } from "@/lib/grading/daily";
+import { DailyQuestionGate } from "@/components/grading/DailyQuestionGate";
 import { UpgradeNotice } from "@/components/tier/UpgradeNotice";
 
 export const dynamic = "force-dynamic";
@@ -42,7 +44,7 @@ export default async function MockExamsPage() {
   const { user, profile } = await requireRole("student", "/study/mock-exams");
   const supabase = createClient();
 
-  const [{ data: sets }, { data: sessions }, { data: myGroupRows }, allowance] = await Promise.all([
+  const [{ data: sets }, { data: sessions }, { data: myGroupRows }, allowance, due] = await Promise.all([
     supabase
       .from("mock_exam_sets")
       .select(
@@ -63,9 +65,11 @@ export default async function MockExamsPage() {
       .eq("student_id", user.id)
       .in("exam_groups.status", ["lobby", "running"]),
     getAllowance(),
+    dailyQuestionDue(),
   ]);
   // Free tier: no new mock exams (the database refuses them too). Past attempts stay open for review.
-  const canStart = allowance.mockExams;
+  // The 24-hour rule also holds back new attempts (open ones can still be resumed).
+  const canStart = allowance.mockExams && !due;
 
   // The embedded join comes back as an object (or, defensively, an array).
   type GroupLite = {
@@ -96,7 +100,8 @@ export default async function MockExamsPage() {
       eyebrow="Exam format"
       subtitle="RENR-style mock exams in real exam conditions — no feedback while you answer, and explanations stay locked until your teacher releases them after class review."
     >
-      {canStart ? null : (
+      {due ? <DailyQuestionGate className="mb-5" /> : null}
+      {allowance.mockExams ? null : (
         <UpgradeNotice
           className="mb-5"
           title="Mock exams are part of a paid plan"

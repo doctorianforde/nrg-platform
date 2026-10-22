@@ -76,6 +76,7 @@ export const XP_REASON_LABEL: Record<string, string> = {
   mock_exam: "Mock exams",
   question_approved: "Approved questions",
   practice_session: "Practice sessions",
+  topic_review: "Topic reviews read",
 };
 
 export type RankProgress = {

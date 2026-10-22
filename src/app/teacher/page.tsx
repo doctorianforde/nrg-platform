@@ -103,6 +103,7 @@ const QUICK_LINK_ICONS: Record<string, () => React.ReactElement> = {
   "/teacher/review": CheckCircleIcon,
   "/teacher/messages": MailIcon,
   "/teacher/mock-exams": ClipboardCheckIcon,
+  "/study/leaderboard": CheckCircleIcon,
   "/study": ArrowLeftIcon,
 };
 
@@ -151,6 +152,11 @@ export default async function Page() {
       href: "/teacher/generate",
       title: "Generate content",
       body: "Ask for new questions or case studies, in your own words or by domain, topic and taxonomy.",
+    },
+    {
+      href: "/study/leaderboard",
+      title: "Question writers' leaderboard",
+      body: "Students ranked by approved questions (Template 3.8). Hidden from students until Jade switches it on.",
     },
     {
       href: "/teacher/messages",

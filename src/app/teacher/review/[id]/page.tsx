@@ -15,6 +15,8 @@ const STATUS_TONE: Record<ReviewStatus, "gray" | "green" | "amber" | "red"> = {
 };
 import { findNextId, findPosition } from "@/lib/review/queue";
 import { ReviewForm } from "./ReviewForm";
+import { EvaluationCard } from "@/components/grading/EvaluationCard";
+import { evaluationOf } from "@/lib/xp/queries";
 
 export const dynamic = "force-dynamic";
 
@@ -46,7 +48,13 @@ export default async function ReviewQuestionPage({
   // neither and is not reviewed here.
   if (!q || !(q.is_ai_generated || q.source === STUDENT_SOURCE)) notFound();
 
-  const [nextId, pos] = await Promise.all([findNextId(supabase, f, q.id), findPosition(supabase, f, q.id)]);
+  const [nextId, pos, { data: evRow }] = await Promise.all([
+    findNextId(supabase, f, q.id),
+    findPosition(supabase, f, q.id),
+    adminClient.from("question_evaluations").select("status, pathway, overall, passed, result, assignment").eq("question_id", q.id).maybeSingle(),
+  ]);
+  const evaluation = evaluationOf(evRow);
+  const asg = (evRow?.assignment ?? null) as { topic?: string; domainCode?: string; taxonomy?: string; stemLength?: string } | null;
 
   const status = q.review_status as ReviewStatus;
   const inSet = f.status === "all" || f.status === status;
@@ -72,6 +80,17 @@ export default async function ReviewQuestionPage({
           )}
         </div>
         {saved && <p className="mb-4 rounded-lg border border-green-200 bg-green-50 px-3 py-2 text-sm text-green-800">Edits saved.</p>}
+        {evaluation ? (
+          <div className="mb-4 rounded-xl border border-brand-200 bg-card p-4 shadow-sm">
+            <p className="text-xs font-semibold uppercase tracking-widest text-brand-700">AI grade (advice — you decide)</p>
+            {asg ? (
+              <p className="mt-1 text-xs text-muted-foreground">
+                Assignment: {asg.topic} · {asg.domainCode} · {asg.taxonomy} · {asg.stemLength?.replace("_", "-")} stem
+              </p>
+            ) : null}
+            <EvaluationCard ev={evaluation} staff open />
+          </div>
+        ) : null}
         <ReviewForm
           key={q.updated_at}
           question={{
