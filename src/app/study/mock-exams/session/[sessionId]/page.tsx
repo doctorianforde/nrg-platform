@@ -8,6 +8,7 @@ import { ResultsView } from "./ResultsView";
 import { GroupStandings, type Standing } from "@/components/exam/GroupStandings";
 import { flags } from "@/lib/flags";
 import { loadBadgeStrips } from "@/lib/badges/queries";
+import { publishedReviewLinks } from "@/lib/topic-reviews/queries";
 
 export const dynamic = "force-dynamic";
 
@@ -125,6 +126,7 @@ export default async function MockExamSessionPage({
           }>}
           rationaleReleased={set.rationale_released_at != null}
           groupStillSitting={groupStillSitting}
+          reviewLinks={set.rationale_released_at != null && !groupStillSitting ? await publishedReviewLinks() : []}
         />
       </DashboardShell>
     );

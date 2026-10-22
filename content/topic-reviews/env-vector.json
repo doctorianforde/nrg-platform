@@ -1,0 +1,626 @@
+{
+ "slug": "env-vector",
+ "title": "Environmental and Vector-Borne Threats",
+ "system": "Multi-System / Environmental Health System",
+ "slides": [
+  {
+   "kind": "anp",
+   "title": "Normal Anatomy & Physiology",
+   "subtitle": "System of Focus: Multi-System / Environmental Health",
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Key Concepts</strong>",
+        "html": "<ul><li>Vector-borne diseases transmitted by mosquitoes, ticks, fleas</li><li>Aedes aegypti: dengue, chikungunya, Zika, yellow fever - daytime biter</li><li>Anopheles: malaria - nighttime biter</li><li>Climate change expanding vector habitats globally</li><li>Caribbean: dengue endemic; malaria eliminated from most islands; leptospirosis risk after flooding</li><li>Rodents transmit leptospirosis, hantavirus</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Normal Values</strong>",
+        "html": "<ul><li>Dengue incubation: 4-10 days</li><li>Malaria incubation: 7-30 days (P. falciparum shorter)</li><li>Platelets in dengue: often &lt;100,000 (thrombocytopenia)</li><li>Hematocrit in dengue: rises &gt;20% = plasma leakage (critical phase)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>What the Nurse Must Know</strong>",
+        "html": "<ul><li>Dengue: NO aspirin/NSAIDs (bleeding risk) - use acetaminophen for fever</li><li>Malaria: falciparum can be fatal within 24-48 hours if untreated</li><li>Dengue warning signs: abdominal pain, persistent vomiting, mucosal bleeding, lethargy, hepatomegaly, rising HCT with falling platelets</li><li>Leptospirosis: harvest fever in agricultural workers, contact with rat urine-contaminated water</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "dysfunction",
+   "title": "Dysfunction: What Goes Wrong",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>NORMAL FUNCTION</strong>",
+        "html": "<ul><li>Intact skin/mucosa barriers</li><li>Normal immune response to pathogens</li><li>No vector exposure or effective prevention</li><li>Normal fluid and electrolyte balance</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>DYSFUNCTION</strong>",
+        "html": "<ul><li>Viral infection: dengue virus enters via mosquito, replicates in monocytes</li><li>Parasitic infection: Plasmodium sporozoites enter liver, then RBCs</li><li>Bacterial infection: Leptospira enters through broken skin/mucosa</li><li>Endothelial dysfunction: capillary leakage (dengue), hemolysis (malaria)</li><li>Organ involvement: liver, kidney, CNS</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#9888; Risk Factors (Non-Modifiable)",
+        "html": "<ul><li>Living in/traveling to endemic areas</li><li>Genetic factors (dengue: HLA types)</li><li>Age extremes (severe dengue more common in children and elderly)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161; Risk Factors (Modifiable)",
+        "html": "<ul><li>Mosquito bites (stagnant water breeding sites)</li><li>No vector control measures</li><li>Agricultural/occupational water exposure (leptospirosis)</li><li>Flood exposure</li><li>Poor sanitation and waste management</li><li>No vaccination/prophylaxis</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128293; Complications",
+        "html": "<p>Dengue: plasma leakage, shock, severe bleeding, organ impairment &bull; Malaria: cerebral malaria, severe anemia, AKI, pulmonary edema, hypoglycemia &bull; Leptospirosis: Weil disease (jaundice + renal failure), pulmonary hemorrhage &bull; Chikungunya: chronic arthralgia (months to years) &bull; Zika: microcephaly (congenital), Guillain-Barre syndrome</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Opposite:</strong> Vector/pathogen exposure leads to infection, endothelial/organ damage, bleeding/shock/organ failure</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "patho",
+   "title": "Step-by-Step Pathophysiology",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.65,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p>1. Vector bite or environmental exposure introduces pathogen</p><p>2. Local replication and spread to bloodstream</p><p>3. Systemic infection triggers inflammatory response</p><p><strong>4. Endothelial/cellular damage:</strong> capillary leakage, hemolysis, organ injury</p><p><strong>5. Host immune response:</strong> antibody-dependent enhancement (dengue), cytokine storm</p><p>6. Recovery or progression to severe disease</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.35,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Key Detail</strong>",
+        "html": "<p>Dengue: 4 serotypes (DENV 1-4). Secondary infection with different serotype = antibody-dependent enhancement (ADE) leading to severe dengue. Malaria: P. falciparum (most severe), P. vivax/ovale (relapse from hypnozoites), P. malariae (nephrotic syndrome). Leptospira interrogans: spirochete in rodent urine, enters through mucosa/broken skin.</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": "<strong>Clinical Result</strong>",
+        "html": "<p>Dengue: febrile phase to critical phase (defervescence days 3-7: plasma leakage, bleeding) to recovery. Warning signs appear during defervescence. Malaria: RBC hemolysis leads to anemia, hemoglobinuria (blackwater fever), cerebral sequestration. Leptospirosis: biphasic - septicemic phase (fever, myalgia, conjunctival suffusion) to immune phase (meningitis, Weil disease, pulmonary hemorrhage).</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Sequencing:</strong> Each step leads to the next — understand the cascade to predict S/S and management</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "signs",
+   "title": "Signs and Symptoms",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Early / Mild</strong>",
+        "html": "<ul><li>Dengue: sudden high fever, severe headache, retro-orbital pain, myalgia, arthralgia, rash</li><li>Malaria: fever paroxysms (chills, fever, sweating every 48-72h), headache, myalgia</li><li>Leptospirosis: fever, severe myalgia (calves), headache, conjunctival suffusion</li><li>Chikungunya: fever, severe joint pain (symmetric, debilitating)</li><li>Zika: low-grade fever, maculopapular rash, conjunctivitis, arthralgia</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Severe</strong>",
+        "html": "<ul><li>Dengue: abdominal pain, persistent vomiting, mucosal bleeding, lethargy, hepatomegaly</li><li>Malaria: altered consciousness (cerebral malaria), severe anemia, jaundice, dark urine</li><li>Leptospirosis: jaundice, oliguria, pulmonary hemorrhage</li><li>Chikungunya: chronic debilitating arthralgia</li><li>Zika: Guillain-Barre syndrome ascending paralysis</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Dengue shock syndrome: narrow pulse pressure, cold clammy skin, tachycardia</strong>",
+        "html": "<ul><li>Dengue shock syndrome: narrow pulse pressure, cold clammy skin, tachycardia</li><li>Cerebral malaria: seizures, coma</li><li>Weil disease: jaundice + acute renal failure</li><li>Severe pulmonary hemorrhage (leptospirosis)</li><li>THIS IS A MEDICAL EMERGENCY</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Diagnostic / Assessment Findings</strong>",
+        "html": "<ul><li>Dengue NS1 antigen (days 1-5), IgM/IgG serology</li><li>Malaria: thick and thin blood smear (gold standard), RDT</li><li>Leptospirosis: MAT (microscopic agglutination test), PCR</li><li>CBC: thrombocytopenia (dengue), anemia (malaria)</li><li>LFTs: elevated transaminases</li><li>Creatinine: renal involvement</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Link Patho to S/S</strong>",
+        "html": "<p>Dengue fever &rarr; Fever, headache, retro-orbital pain, myalgia (breakbone fever)</p><p>Plasma leakage &rarr; Rising HCT, falling platelets, pleural effusion, ascites</p><p>Malaria hemolysis &rarr; Anemia, jaundice, dark urine, splenomegaly</p><p>Leptospirosis Weil &rarr; Jaundice + renal failure + hemorrhage</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "assessment",
+   "title": "Nursing Assessment",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Cardiovascular</strong>",
+        "html": "<ul><li>BP, HR (tachycardia, narrow pulse pressure = shock)</li><li>Capillary refill, skin temp</li><li>Signs of bleeding (petechiae, ecchymoses, mucosal)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Respiratory</strong>",
+        "html": "<ul><li>RR, SpO2 (pleural effusion, pulmonary hemorrhage)</li><li>Cough, hemoptysis</li><li>Work of breathing</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Neurological</strong>",
+        "html": "<ul><li>Mental status (cerebral malaria, leptospirosis meningitis)</li><li>Headache severity</li><li>Seizure activity</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.67,
+      "blocks": [
+       {
+        "type": "table",
+        "heading": "<strong>Key Laboratory & Diagnostic Tests</strong>",
+        "header": [
+         "Test",
+         "Normal Value",
+         "Significance"
+        ],
+        "rows": [
+         [
+          "CBC",
+          "Normal",
+          "Dengue: thrombocytopenia; Malaria: anemia, hemolysis"
+         ],
+         [
+          "Hematocrit",
+          "36-48%",
+          "&gt;20% rise from baseline = dengue plasma leakage"
+         ],
+         [
+          "LFTs",
+          "Normal",
+          "Elevated in dengue, leptospirosis, malaria"
+         ],
+         [
+          "Creatinine",
+          "0.6-1.2",
+          "Elevated in severe dengue, leptospirosis, malaria"
+         ],
+         [
+          "Malaria smear/RDT",
+          "Negative",
+          "Thick/thin smear = gold standard; RDT for rapid screening"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Priority Actions</strong>",
+        "html": "<p>Dengue: daily CBC and HCT monitoring (critical phase days 3-7). Strict fluid management - aggressive hydration during critical phase, then careful to avoid overload. NO aspirin/NSAIDs. Malaria: identify species (falciparum vs vivax). Monitor for cerebral involvement. Leptospirosis: early antibiotics (doxycycline, penicillin) reduce severity.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "management",
+   "title": "Nursing Management",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "table",
+        "heading": "&#128138; <strong>Pharmacology - Nursing Monitoring</strong>",
+        "header": [
+         "Class",
+         "Example",
+         "Mechanism",
+         "Nursing Monitoring"
+        ],
+        "rows": [
+         [
+          "Acetaminophen",
+          "500-1000 mg PO",
+          "Fever and pain (dengue - safe with thrombocytopenia)",
+          "AVOID aspirin/NSAIDs in dengue"
+         ],
+         [
+          "IV Fluids",
+          "Isotonic crystalloid",
+          "Dengue critical phase: plasma leakage replacement",
+          "Monitor for fluid overload - reduce when HCT falls, platelets rise"
+         ],
+         [
+          "Antimalarial",
+          "Artemisinin-based combination (ACT)",
+          "First-line for uncomplicated falciparum",
+          "3-day course; complete all doses"
+         ],
+         [
+          "Primaquine",
+          "15-30 mg daily x 14 days",
+          "Radical cure of P. vivax/ovale (hypnozoites)",
+          "G6PD testing REQUIRED - causes hemolysis if deficient"
+         ],
+         [
+          "Doxycycline",
+          "100 mg PO BID",
+          "Leptospirosis: early treatment reduces severity",
+          "Also malaria prophylaxis for travelers"
+         ],
+         [
+          "Blood transfusion",
+          "PRBCs, platelets",
+          "Severe anemia or bleeding",
+          "Platelets only for active bleeding or invasive procedures"
+         ]
+        ]
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Dengue Critical Phase & Malaria Species Alert</strong>",
+        "html": "<p>Dengue critical phase occurs during DEFERVESCENCE (days 3-7) - this is when plasma leakage and bleeding occur. Daily CBC/HCT essential. HCT rising &gt;20% from baseline with falling platelets = plasma leakage. Malaria: ALWAYS identify species - P. falciparum is medical emergency; P. vivax/ovale require primaquine for radical cure (G6PD test first).</p>",
+        "tone": "warn"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Lifestyle & Patient Education</strong>",
+        "html": "<ul><li>Vector control: eliminate stagnant water (breeding sites), use bed nets, repellents (DEET)</li><li>Dengue vaccine: available for seropositive individuals 9-45 years (Dengvaxia)</li><li>Malaria prophylaxis for travelers to endemic areas</li><li>Protective clothing during peak mosquito hours</li><li>Leptospirosis: protective gear for agricultural workers, rodent control</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>&#128680; Report Immediately:</strong> Severe abdominal pain | Persistent vomiting | Mucosal bleeding | Altered consciousness | Oliguria &lt;400 mL/day | Temperature &gt;40C unresponsive</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "careplan",
+   "title": "Care Plan Connection",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Nursing Diagnosis</strong>",
+        "html": "<p>Deficient fluid volume related to plasma leakage secondary to dengue fever as evidenced by rising hematocrit (52%), thrombocytopenia (45,000), and narrow pulse pressure</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Goal / Outcome</strong>",
+        "html": "<p>Patient will maintain hemodynamic stability with adequate tissue perfusion throughout the critical phase (days 3-7).</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Interventions</strong>",
+        "html": "<ul><li>Aggressive isotonic IV fluid resuscitation per protocol</li><li>Vital signs and capillary refill q1-2h</li><li>Daily CBC, HCT, platelet count</li><li>Strict I&O, daily weight</li><li>Monitor for bleeding (petechiae, gum bleeding, melena)</li><li>NO aspirin or NSAIDs - acetaminophen only</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Rationale</strong>",
+        "html": "<p>Plasma leakage during dengue critical phase causes hemoconcentration and hypovolemia. Isotonic fluids replace intravascular volume. HCT monitoring guides fluid therapy - rising HCT = continue fluids; falling HCT = reduce fluids to prevent overload. NSAIDs increase bleeding risk in thrombocytopenic patients.</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": "<strong>Evaluation</strong>",
+        "html": "<p>HCT decreased from 52% to 44%. Platelets increased to 85,000. BP 108/72, HR 88. Urine output 0.8 mL/kg/hr. No active bleeding. Entering recovery phase.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Care Plan Formula:</strong> Problem → Goal → Interventions → Rationale → Evaluation</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "renr",
+   "title": "RENR Exam Thinking",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>What system is being tested?</strong></p><p>Multi-System / Environmental - vector-borne infection and organ involvement</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>What is the priority?</strong></p><p>Fluid management (dengue critical phase) + species identification (malaria) + NO NSAIDs</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><span class=\"tr-warn\"><strong>What is unsafe?</strong></span></p><p>Aspirin/NSAIDs in dengue, missing critical phase timing, no G6PD test before primaquine</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><span class=\"tr-good\"><strong>What restores function?</strong></span></p><p>Supportive care + fluid management allows recovery; ACT cures malaria; doxycycline for leptospirosis</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161; <strong>Key Memory Aids for RENR</strong>",
+        "html": "<ul><li><strong>NO NSAIDs in dengue:</strong> Aspirin/ibuprofen increase bleeding risk - acetaminophen ONLY</li><li><strong>Critical phase timing:</strong> Days 3-7 during defervescence - plasma leakage and bleeding occur NOW</li><li><strong>HCT rise = plasma leak:</strong> Hematocrit rising &gt;20% with falling platelets = critical phase warning</li><li><strong>Primaquine + G6PD:</strong> ALWAYS test G6PD before primaquine - causes hemolysis in deficiency</li><li><strong>Species identification:</strong> ALWAYS identify malaria species - falciparum = emergency; vivax needs primaquine</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG System Focus Formula:</strong> Vector-Borne Disease leads to Multi-System infection + endothelial damage causing Fluid leakage/hemolysis. Priority: Fluid management + species ID + NO NSAIDs</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  }
+ ],
+ "question": {
+  "stem": "<p><strong>A patient with confirmed dengue fever has a temperature of 38.5C and requests medication for fever relief. The platelet count is 55,000. Which medication should the nurse administer?</strong></p>",
+  "options": [
+   {
+    "letter": "A",
+    "html": "Aspirin 325 mg orally for its antipyretic and anti-inflammatory effects"
+   },
+   {
+    "letter": "B",
+    "html": "Ibuprofen 400 mg orally to reduce fever and musculoskeletal pain"
+   },
+   {
+    "letter": "C",
+    "html": "Acetaminophen 650 mg orally for fever reduction"
+   },
+   {
+    "letter": "D",
+    "html": "Diclofenac 50 mg orally for pain and fever control"
+   }
+  ],
+  "answer": "C",
+  "rationale": "<p>Dengue fever causes thrombocytopenia (platelets 55,000 in this case), which increases bleeding risk. NSAIDs (aspirin, ibuprofen, diclofenac) all have antiplatelet effects and increase the risk of hemorrhage - they are CONTRAINDICATED in dengue. Acetaminophen (paracetamol) is the ONLY safe antipyretic/analgesic for dengue patients because it does not affect platelet function or increase bleeding risk. This is a standard nursing safety rule in dengue-endemic regions.</p>",
+  "why": [
+   {
+    "letter": "A",
+    "html": "Aspirin is contraindicated in dengue - antiplatelet effect increases bleeding risk"
+   },
+   {
+    "letter": "B",
+    "html": "Ibuprofen is an NSAID - contraindicated with thrombocytopenia"
+   },
+   {
+    "letter": "D",
+    "html": "Diclofenac is an NSAID - increases bleeding risk in dengue"
+   }
+  ]
+ },
+ "source": "nrg_medical_surgical_reviews/env_vector_review.pptd"
+}

@@ -1,0 +1,626 @@
+{
+ "slug": "meningitis",
+ "title": "Meningitis and Neurologic Infections",
+ "system": "Neurological / Infectious Disease System",
+ "slides": [
+  {
+   "kind": "anp",
+   "title": "Normal Anatomy & Physiology",
+   "subtitle": "System of Focus: Neurological / Infectious Disease",
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Key Concepts</strong>",
+        "html": "<ul><li>Meninges: dura, arachnoid, pia mater surround brain and spinal cord</li><li>CSF circulates in subarachnoid space — cushions and nourishes CNS</li><li>Blood-brain barrier protects CNS from pathogens and toxins</li><li>Normal CSF: clear, colorless, 0-5 WBC/mm³, glucose 60-70% serum</li><li>Bacterial meningitis: acute, life-threatening</li><li>Viral meningitis: usually self-limited</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Normal Values</strong>",
+        "html": "<ul><li>CSF WBC: 0-5 cells/mm³</li><li>CSF glucose: 40-70 mg/dL (60-70% serum)</li><li>CSF protein: 15-45 mg/dL</li><li>Opening pressure: 70-180 mmH₂O</li><li>ICP normal: 5-15 mmHg</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>What the Nurse Must Know</strong>",
+        "html": "<ul><li>Bacterial meningitis: CSF cloudy, high WBC (&gt;1000), low glucose, high protein</li><li>Viral meningitis: CSF clear, WBC 10-500, normal glucose, mildly elevated protein</li><li>Kernig sign: pain on knee extension with hip flexed</li><li>Brudzinski sign: involuntary hip/knee flexion on neck flexion</li><li>Petechial rash = meningococcemia until proven otherwise</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "dysfunction",
+   "title": "Dysfunction: What Goes Wrong",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>NORMAL FUNCTION</strong>",
+        "html": "<ul><li>Meninges intact, CSF sterile</li><li>Normal ICP</li><li>Blood-brain barrier functional</li><li>No CNS inflammation</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>DYSFUNCTION</strong>",
+        "html": "<ul><li>Pathogen crosses BBB → infects meninges</li><li>Inflammatory response → meningismus</li><li>Increased ICP from edema and exudate</li><li>Vasculitis and thrombosis → infarction</li><li>Septic shock (meningococcemia)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#9888; Risk Factors (Non-Modifiable)",
+        "html": "<ul><li>Age &lt;5 (immature immune system)</li><li>Age &gt;65 (waning immunity)</li><li>Complement deficiency (meningococcal risk)</li><li>Sickle cell disease (Salmonella)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161; Risk Factors (Modifiable)",
+        "html": "<ul><li>Close quarters (dorms, military barracks)</li><li>Skull fracture, CSF leak, neurosurgery</li><li>Immunosuppression</li><li>No vaccination (Hib, pneumococcal, meningococcal)</li><li>Recent respiratory infection</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128293; Complications",
+        "html": "<p>Hearing loss (8-30% of survivors) &bull; Seizures, hydrocephalus &bull; Cerebral edema/herniation &bull; Septic shock/DIC (meningococcus) &bull; Neurocognitive deficits &bull; Death (10-15% bacterial even with treatment)</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Opposite:</strong> Meninges infected → inflammation → increased ICP + neurological deficits → disability or death</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "patho",
+   "title": "Step-by-Step Pathophysiology",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.65,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p>1. Pathogen colonizes nasopharynx (most common route)</p><p>2. Bacteremia → crosses blood-brain barrier</p><p>3. CSF infection triggers inflammatory cascade</p><p>4. Exudate and edema increase ICP</p><p>5. Vasculitis and thrombosis cause infarction</p><p>6. Purulent CSF fills subarachnoid space</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.35,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Key Detail</strong>",
+        "html": "<p>Bacterial: Streptococcus pneumoniae (adults), Neisseria meningitidis (young adults/adolescents), Haemophilus influenzae type b (children — now rare with vaccine), Group B strep (neonates). Viral: Enteroviruses most common, HSV, VZV. Fungal: Cryptococcus neoformans (HIV, CD4 &lt;100).</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": "<strong>Clinical Result</strong>",
+        "html": "<p>Bacterial: Purulent CSF, high neutrophils, low glucose, high protein. Rapid progression to increased ICP, seizures, coma. Mortality 10-15% even with antibiotics. Viral: Lymphocytic pleocytosis, normal glucose. Usually self-limited. Fungal (cryptococcal): India ink positive, high opening pressure, chronic subacute course.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Sequencing:</strong> Each step leads to the next — understand the cascade to predict S/S and management</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "signs",
+   "title": "Signs and Symptoms",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Early / Mild</strong>",
+        "html": "<ul><li>Fever, headache</li><li>Nuchal rigidity (stiff neck)</li><li>Photophobia</li><li>Nausea, vomiting</li><li>Altered mental status (lethargy, irritability)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Severe</strong>",
+        "html": "<ul><li>Severe headache, projectile vomiting</li><li>Kernig and Brudzinski signs positive</li><li>Seizures</li><li>Purpuric/petechial rash (meningococcemia)</li><li>Cranial nerve palsies</li><li>Focal neurological deficits</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Decreased LOC → coma</strong>",
+        "html": "<ul><li>Decreased LOC → coma</li><li>Cushing's triad (HTN, bradycardia, irregular respirations)</li><li>Dilated fixed pupil (herniation)</li><li>Septic shock with DIC (Waterhouse-Friderichsen syndrome)</li><li>THIS IS A MEDICAL EMERGENCY — antibiotics within 30 minutes</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Diagnostic / Assessment Findings</strong>",
+        "html": "<ul><li>LP: opening pressure, cell count, glucose, protein, Gram stain, culture</li><li>CSF analysis: WBC, differential, glucose, protein, Gram stain</li><li>Blood cultures (before antibiotics if possible)</li><li>CT head before LP if: papilledema, focal deficits, seizures, immunocompromise</li><li>PCR for viral/bacterial DNA</li><li>Latex agglutination for bacterial antigens</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Link Patho to S/S</strong>",
+        "html": "<p>Meningeal irritation &rarr; Headache, nuchal rigidity, photophobia</p><p>Increased ICP &rarr; Vomiting, altered LOC, papilledema</p><p>Meningococcemia &rarr; Petechial rash, septic shock, DIC</p><p>Vasculitis &rarr; Cranial nerve palsies, focal deficits</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "assessment",
+   "title": "Nursing Assessment",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Cardiovascular</strong>",
+        "html": "<ul><li>BP (shock if meningococcemia)</li><li>HR, capillary refill</li><li>Skin: petechiae, purpura, rash</li><li>Peripheral perfusion</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Respiratory</strong>",
+        "html": "<ul><li>Respiratory pattern (Cheyne-Stokes = bilateral)</li><li>Airway protection if decreased LOC</li><li>SpO2</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Neurological</strong>",
+        "html": "<ul><li>Glasgow Coma Scale</li><li>Kernig and Brudzinski signs</li><li>Cranial nerve assessment</li><li>Pupil size and reaction</li><li>Focal neurological deficits</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.67,
+      "blocks": [
+       {
+        "type": "table",
+        "heading": "<strong>Key Laboratory & Diagnostic Tests</strong>",
+        "header": [
+         "Test",
+         "Normal Value",
+         "Significance"
+        ],
+        "rows": [
+         [
+          "CSF Analysis",
+          "WBC 0-5, Glu 40-70, Prot 15-45",
+          "Bacterial: &gt;1000 WBC, low glucose, high protein"
+         ],
+         [
+          "Blood cultures",
+          "No growth",
+          "Positive in 50-70% if before antibiotics"
+         ],
+         [
+          "CT Head",
+          "Normal",
+          "Before LP if signs of increased ICP/focal deficits"
+         ],
+         [
+          "CBC",
+          "WBC normal",
+          "Leukocytosis with left shift in bacterial"
+         ],
+         [
+          "CMP",
+          "Normal",
+          "Baseline; hyponatremia common (SIADH)"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Priority Actions</strong>",
+        "html": "<p>EMERGENCY: Blood cultures + empiric antibiotics within 30 minutes (do NOT wait for CT/LP). Dexamethasone 10-15 min BEFORE antibiotics (reduces hearing loss and mortality). If CT needed before LP, give antibiotics immediately after blood cultures — do not delay for imaging.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "management",
+   "title": "Nursing Management",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "table",
+        "heading": "&#128138; <strong>Pharmacology - Nursing Monitoring</strong>",
+        "header": [
+         "Class",
+         "Example",
+         "Mechanism",
+         "Nursing Monitoring"
+        ],
+        "rows": [
+         [
+          "Empiric antibiotics",
+          "Ceftriaxone + Vancomycin",
+          "Broad coverage until cultures return",
+          "Adjust based on culture/sensitivity"
+         ],
+         [
+          "Dexamethasone",
+          "0.15 mg/kg q6h x 4 days",
+          "Reduces inflammation, hearing loss, mortality",
+          "MUST be given 10-15 min BEFORE antibiotics"
+         ],
+         [
+          "Acyclovir",
+          "10 mg/kg IV q8h",
+          "If HSV encephalitis suspected",
+          "Adjusted for renal function"
+         ],
+         [
+          "Mannitol",
+          "0.25-1 g/kg IV",
+          "Reduce ICP if herniation risk",
+          "Monitor electrolytes, osmolality"
+         ],
+         [
+          "Anticonvulsant",
+          "Phenytoin, Levetiracetam",
+          "Seizure prophylaxis/treatment",
+          "Therapeutic drug monitoring"
+         ],
+         [
+          "Vancomycin",
+          "Dosed by level",
+          "MRSA coverage, adjunct to ceftriaxone",
+          "Monitor trough levels"
+         ]
+        ]
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Timing Alert: Antibiotics Within 30 Minutes</strong>",
+        "html": "<p>BACTERIAL MENINGITIS IS A TIME-CRITICAL EMERGENCY. Empiric antibiotics must be given within 30 minutes of arrival. Dexamethasone 10-15 minutes BEFORE antibiotics reduces mortality and neurological sequelae. Do NOT delay antibiotics for CT scan or lumbar puncture — obtain blood cultures, then treat immediately.</p>",
+        "tone": "warn"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Lifestyle & Patient Education</strong>",
+        "html": "<ul><li>Vaccination: Hib, pneumococcal, meningococcal (conjugate + polysaccharide)</li><li>Prophylaxis for close contacts of meningococcal/Hib cases (rifampin, ciprofloxacin, ceftriaxone)</li><li>Hearing test for all survivors (8-30% hearing loss)</li><li>Neurocognitive assessment post-recovery</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>&#128680; Report Immediately:</strong> Decreased LOC | Seizures | Petechial/purpuric rash | Herniation signs | Septic shock | Temperature &gt;39.5°C unresponsive to treatment</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "careplan",
+   "title": "Care Plan Connection",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Nursing Diagnosis</strong>",
+        "html": "<p>Risk for infection transmission related to bacterial meningitis as evidenced by fever 39.2°C, nuchal rigidity, positive Kernig sign, and altered mental status</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Goal / Outcome</strong>",
+        "html": "<p>Patient will receive empiric antibiotics within 30 minutes and show clinical improvement (afebrile, improved LOC) within 48 hours.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Interventions</strong>",
+        "html": "<ul><li>Initiate airborne/droplet precautions per pathogen</li><li>Blood cultures x2, then empiric antibiotics IMMEDIATELY</li><li>Dexamethasone 10-15 min BEFORE antibiotics</li><li>Lumbar puncture for CSF analysis</li><li>Seizure precautions, neurological checks q1-2h</li><li>ICP monitoring if indicated</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Rationale</strong>",
+        "html": "<p>Early antibiotics are the single most important intervention — every hour of delay increases mortality. Dexamethasone before antibiotics reduces inflammation-mediated damage. LP confirms diagnosis and guides targeted therapy. Seizure precautions protect from injury.</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": "<strong>Evaluation</strong>",
+        "html": "<p>Afebrile at 36 hours. GCS improved from 10 to 14. CSF cultures positive for S. pneumoniae — antibiotics narrowed to ceftriaxone. No seizures. Hearing test scheduled for discharge.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Care Plan Formula:</strong> Problem → Goal → Interventions → Rationale → Evaluation</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "renr",
+   "title": "RENR Exam Thinking",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>What system is being tested?</strong></p><p>Neurological / Infectious — meningeal inflammation and increased ICP</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>What is the priority?</strong></p><p>Empiric antibiotics within 30 min + dexamethasone before antibiotics + ICP management</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><span class=\"tr-warn\"><strong>What is unsafe?</strong></span></p><p>Delaying antibiotics for CT/LP, missing dexamethasone timing, not isolating meningococcus</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><span class=\"tr-good\"><strong>What restores function?</strong></span></p><p>Early antibiotics eradicate infection; dexamethasone reduces inflammatory damage</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161; <strong>Key Memory Aids for RENR</strong>",
+        "html": "<ul><li><strong>30-minute rule:</strong> Empiric antibiotics within 30 minutes — do NOT wait for CT/LP</li><li><strong>Dexamethasone FIRST:</strong> Give 10-15 minutes BEFORE antibiotics — reduces mortality and hearing loss</li><li><strong>Meningococcemia rash:</strong> Petechial/purpuric rash = meningococcemia until proven otherwise — isolate immediately</li><li><strong>LP contraindications:</strong> Papilledema, focal deficits, seizures, immunocompromise → CT first, but do NOT delay antibiotics</li><li><strong>CSF glucose low:</strong> Bacterial meningitis — CSF glucose &lt;40 mg/dL; viral = normal glucose</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG System Focus Formula:</strong> Meningitis → Neurological → Meningeal infection → Increased ICP + neurological deficits → Priority: Antibiotics within 30 min + Dexamethasone + ICP management</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  }
+ ],
+ "question": {
+  "stem": "<p><strong>A 19-year-old college student is brought to the emergency department with fever 40°C, severe headache, stiff neck, and confusion. Petechial rash is noted on the trunk and extremities. Which nursing action is the highest priority?</strong></p>",
+  "options": [
+   {
+    "letter": "A",
+    "html": "Perform a lumbar puncture immediately to confirm the diagnosis"
+   },
+   {
+    "letter": "B",
+    "html": "Obtain blood cultures and administer empiric antibiotics immediately"
+   },
+   {
+    "letter": "C",
+    "html": "Apply cooling blankets and administer acetaminophen to reduce the fever"
+   },
+   {
+    "letter": "D",
+    "html": "Place the patient in a negative pressure isolation room for airborne precautions"
+   }
+  ],
+  "answer": "B",
+  "rationale": "<p>This is classic meningococcal meningitis (fever, headache, stiff neck, confusion, petechial rash = meningococcemia). This is a time-critical emergency — empiric antibiotics must be administered within 30 minutes of arrival. Blood cultures should be obtained first if possible, but antibiotics must not be delayed. Option A (LP first) delays critical treatment — LP can be performed after antibiotics are started. Option C addresses comfort but not the life-threatening infection. Option D is incorrect — meningococcus requires droplet precautions (NOT airborne) for 24 hours after starting effective antibiotics.</p>",
+  "why": [
+   {
+    "letter": "A",
+    "html": "LP should not delay antibiotic administration — treat first, investigate second"
+   },
+   {
+    "letter": "C",
+    "html": "Fever management is supportive but does not address the life-threatening infection"
+   },
+   {
+    "letter": "D",
+    "html": "Meningococcus requires droplet precautions, not airborne — for 24h after antibiotics"
+   }
+  ]
+ },
+ "source": "nrg_medical_surgical_reviews/meningitis_review.pptd"
+}

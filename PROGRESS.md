@@ -21,7 +21,7 @@ Read this section first; everything below it is the dated log of how we got here
 | Supabase project | `kwhaqhhwqykckarjbdod` | `cdvubijjepwmhhkgppbl` |
 | Site | https://nrg-platform-staging.vercel.app | the `nrg-platform` Vercel project |
 | Git branch that deploys it | `staging` | `main` |
-| Migrations applied | all 49 in `supabase/migrations/` (`20261022120000` free-tier limits added 2026-10-22) | 48 (**since 2026-10-20**); `20261022120000` not yet |
+| Migrations applied | all 50 in `supabase/migrations/` (2026-10-22: `20261022120000` free-tier limits, `20261022140000` topic reviews) | 48 (**since 2026-10-20**); the two 2026-10-22 ones not yet |
 | App | `5513c1b` (free-tier limits, 2026-10-22) | `ebbafd8` (since 2026-10-20) |
 | `NEXT_PUBLIC_RANKING_V2` | `1` | unset |
 | `ranking_config.rules_live` | `1` (**live since 2026-10-13**) | `0` (shadow: prod students keep today's XP) |
@@ -56,6 +56,7 @@ submissions, the review queue `/teacher/review`. Content: 460 live questions (Ja
 | AI-bank dedup | 610 duplicates retired; pending AI queue 1,987 → 1,377 | 2026-10-17 entry; `docs/phase-1/DEDUP_REPORT.md` |
 | Generation requests | Prompted and automatic modes for the MCQ generator and the case planner; shared request/plan/interpreter in `src/lib/generation/`; CLI `scripts/generation-request.ts`; queue table `generation_requests`; teacher UI `/teacher/generate` (+ review-queue `run` filter) | 2026-10-20 entry; `docs/phase-1/GENERATION_REQUESTS.md` |
 | Free-tier limits | Free students: 10 practice questions a day (counted at "Check answer"), no mock exams (solo, group, teacher-assigned); admins set a student's plan on `/admin`. Enforced in the database; switch `tier_config.limits_live` (still 0 on staging). Deployed to the staging site as `5513c1b` | 2026-10-22 entry |
+| Topic reviews | Jade's 15 decks at `/study/reviews`, **all drafts** (Ian + Jade read and publish); cross-links: "Review this topic" after Check answer and in released mock review, "Practise N questions" + related topics on each review; lobby card. On the staging site | 2026-10-22 topic-reviews entry |
 | Student themes | Royal (default), Teal (id `lagoon`), Midnight (dark), Sunset, each with its own heading + body font; picker on profile + header switcher; saved in `profiles.theme` | 2026-10-17 themes entry; 2026-10-19 entry |
 
 ### Waiting for prod, in this order (see "Ranking v2 — prod go-live plan")
@@ -94,6 +95,7 @@ Steps 1–4 **done 2026-10-20** (go-live entry at the end of this file). Left: 5
 | Promotion quiz: same pool for every level, blueprint-weighted, not topic-specific or harder by level. Change it? | Ian / Jade |
 | Miskeyed-looking AI block spec1586–1605 (9 still pending) and contradictory keys between AI items (boggy fundus, croup, catheter infection, T&T 6-week vaccines, suicide-risk replies) | Jade |
 | Subscription service Phase 0 (payout route, processor, prices) | Ian / Jade |
+| ~~Who publishes topic reviews; XP for reading; free-tier partial view~~ — **decided 2026-10-22**: Ian + Jade publish; yes to 30 XP for reading; yes to the free-tier 1-review / 5-minute view (both queued for Claude in PLAN.md) | Ian |
 | Free-tier limits: confirm v2 numbers (10/day, no mocks); whether the promotion quiz and flashcards stay open to free students (they do now); when to switch limits on for prod (no checkout exists, so free students can only be upgraded by an admin) | Ian / Jade |
 | T33 human read-and-verify; T35 tell Jade M2 is delivered | Ian |
 | Jade's prod teacher account; custom SMTP before real signups | Ian |
@@ -107,7 +109,7 @@ promotion quiz is open), `case-test-teacher@…` / `case-test-student@…` (free
 `node scripts/test-ranking-phase1.mjs` (19), `node scripts/test-ranking-phase2.mjs` (47), `node scripts/test-answer-keys.mjs`
 (14; `--target prod` with `CONFIRM_PROD=1`, `--pre` before the hide migration), `node scripts/test-trophies-phase1.mjs` (28),
 `node scripts/e2e-rls-test.mjs` (T34, 15; fixed 2026-10-17, it had been failing 9/15 silently), `node scripts/test-write-paths.mjs`
-(38: every app write path a user token uses), `node scripts/test-free-tier.mjs` (26; turns `limits_live` on for the run and restores it). The two ranking suites hold
+(38: every app write path a user token uses), `node scripts/test-free-tier.mjs` (26; turns `limits_live` on for the run and restores it), `node scripts/test-topic-reviews.mjs` (17; restores every review's status). Content gate: `npx tsx scripts/import-topic-reviews.ts` (fails if any source word is lost). The two ranking suites hold
 `rules_live` at 0 while their shadow checks run and put back the starting value afterwards. Content gates: `npx tsx scripts/review-bank.ts --check`,
 `npx tsx scripts/import-case.ts --check`, `npx tsx scripts/plan-cases.ts --report`.
 
@@ -116,7 +118,9 @@ promotion quiz is open), `case-test-teacher@…` / `case-test-student@…` (free
    `ian-paid-student`), then approves the prod go-live plan.
 2. Jade's reviews (bank fix pass, case studies, config values) — the AI queue is now 1,377 after dedup; flag spec1586–1605 keys to him.
 3. More AI cases once the 6 are reviewed (`npx tsx scripts/plan-cases.ts --count N`, then the generator and reviewer briefs).
-4. (2026-10-22) Fix the two open checklist failures: **N1** theme switching lags between choices, **R3** Roman numerals
+4. (2026-10-22) Topic reviews: build XP for reading and the free-tier 1-review / 5-minute view (both approved by Ian); Ian + Jade
+   read and publish the 15 drafts.
+5. (2026-10-22) Fix the two open checklist failures: **N1** theme switching lags between choices, **R3** Roman numerals
    off-centre on the trophy art. Set up a fresh promotion quiz on `ian-paid-student` so Ian can test **R4** (failed-quiz
    retake lock) and **R5** (celebrations don't replay).
 
@@ -146,13 +150,13 @@ table is the travelling record.
 | Real AI integration (brief blocker 2) | **Partly**: generation pipeline + teacher request queue (agent-session mode). **Not built:** adaptive difficulty, personalised study plan, topic Elo |
 | Payments / subscriptions (brief blocker 3, T8) | **Free-tier limits built on staging 2026-10-22** (10 q/day, no mocks; topic-review limit waits for topic reviews). **Checkout not built** — blocked on Phase 0 (processor, payout, prices); admins upgrade students by hand meanwhile |
 | Login & auth (T7) | **Partly**: email/password, verification, role routing, instructor approval. **Not built:** 2FA (premium/instructor/admin), 15-min idle logout, school/university field, login rate-limit/lockout beyond Supabase defaults, custom SMTP (T16 unverified) |
-| Topic reviews (T9) | **Not built** — 15 decks ready in the prototype folder; best content-per-effort item left |
+| Topic reviews (T9) | **Built on staging 2026-10-22** (15 reviews as drafts). Not built: the 5-min free-tier partial view, 30 XP for reading, the mandatory Q-gen after a review, more decks (Template 9 lists 50 topics) |
 | Fatigue analysis (T10) | **Done** |
 | Visual content & animations (T11) | Partly (redesign, celebrations); no topic animations |
 | Evidence-base research agent (T12) | **Not built** |
 | Website design (T14) | **Done** (2026-10-20 redesign, 4 themes) |
 | Nursing Knowledge block (T15) | **Built** (133 facts); waiting on Jade's clinical sign-off |
-| Cross-linking question ↔ topic review (T16) | **Not built** — needs topic reviews first |
+| Cross-linking question ↔ topic review (T16) | **Built on staging 2026-10-22** for practice, released mock review, review → practice and related topics. Not built: mock-results "Improve [domain]" links, analytics links, group-study links, click tracking |
 | Content protection (Ian's addition) | **Done** |
 
 ---
@@ -2901,3 +2905,47 @@ studies were already standard/premium only. Topic-review and Q-gen limits wait f
   `test-ranking-phase2` (`troph-teacher-5e55761a@…`, `rank2-teacher-e8c68295@…`). Those two suites leak a teacher whose
   mock set / group blocks the user delete on every run (pre-existing; ~20 "test set" mock sets now on staging). Worth fixing in
   their `finally` blocks; not touched here.
+
+## Session 2026-10-22 (Claude): topic reviews + cross-links — on staging
+Ian: "Topic reviews (15 slide decks already written), linked from related questions". Also added the free-tier checks
+(F1–F6) and topic-review checks (T1–T6) to the launch checklist artifact.
+- **Content** (`scripts/import-topic-reviews.ts` → `content/topic-reviews/<slug>.json`, committed because the prototype folder
+  is gitignored): the decks are Kimi `.pptd` slides (1280×720, absolutely positioned). Element ids are semantic, so the text
+  is recovered exactly: `x-title`/`-label`/`-header-text` paired with the body below it, pipe-text tables, `stepN-text`
+  flows, `*-strip/seq/opposite/report/sys-text` callouts, the practice question (stem, 4 options, answer, rationale, why the
+  others are wrong). Re-laid out as rows/columns that stack on a phone. **Completeness gate**: every source word (multiset,
+  text values only) must reach the output or the run fails. Found and fixed on the way: bare `<0.04` / `>400` in lab values
+  made the tag stripper delete whole table rows (now escaped). Deck typos normalised, not edited: "• 2." in numbered
+  pathophysiology lists. Red alert tint only for real alarms (toxicity, unsafe, report immediately), not the ⚠ on risk factors.
+- **Migration `20261022140000_topic_reviews`** (staging, via the pooler script): `topic_reviews` (slides/question JSONB,
+  keywords, exclude, related, status draft|published). RLS: students read published, teaching staff read all; staff may
+  UPDATE `status` only (column grant); a trigger stamps `published_at`/`published_by`; no user insert/delete.
+  `topic_review_candidates(slug)` (SECURITY INVOKER, so a draft yields nothing to a student): live standalone questions
+  whose stem or topic name contains a keyword. Imported 15 reviews, **all draft**.
+- **Linking rule** (`src/lib/topic-reviews/catalog.ts`, one source for app + DB): whole-word keywords per review;
+  acronyms (2+ capitals: MI, FAST, ART, PEP) case-sensitive; score = 2×topic-name hits + stem hits, link at ≥2; `exclude`
+  vetoes (pregnancy terms for hypertension, sickle/acute chest syndrome for ACS). Measured on staging's whole bank:
+  1,901 of 7,314 standalone questions link (26%), 34 of the 111 live; samples read for every review. The SQL prefilter and
+  the TS rule agree exactly per review.
+- **App**: `/study/reviews` (list; staff see drafts with a banner) and `/study/reviews/[slug]` (sections, interactive
+  practice question, sticky contents, "Practise N questions" → `/study/practice/session?review=slug`, related topics,
+  staff Publish/Unpublish). Content protection on for students. `RationalePanel` takes a `review` link: shown after Check
+  answer in practice and in released mock review (only published reviews link). Lobby card with a new generated image
+  (`public/images/feature-topic-reviews.jpg`, local model, no text).
+- **Also fixed**: every student page overflowed 10px on a 390px phone (header Sign out pushed off); header gaps tighten and
+  "Platform" hides below `sm`.
+- **Verified**: tsc, lint, build clean; `test-topic-reviews.mjs` 17/17; free tier 26/26; write paths 38/38. Browser
+  (Playwright, local dev server over HTTPS on staging, throwaway teacher + student, statuses restored): 16 checks — list,
+  reader (9 sections, tables, `<100 pg/mL` intact), slide question, publish from the page, student sees only published,
+  draft 404s for students, practise button → titled session → "Review this topic" link after Check answer, phone width
+  390 with no page overflow; screenshots reviewed (desktop reader, phone reader with watermark, practice link).
+- **For Jade** (his text, not edited): Endocrine gives fasting glucose as "70–100 mg/dL (3.9–5.6 mmol/L)" (project rule:
+  mg/dL only); Heart Failure's third Signs column is headed by its own first bullet; the HTN deck's practice question has no
+  "why the others are wrong". Existing lobby/flashcard art (`topic-anatomy.jpg`, `feature-analytics.jpg`) has garbled
+  AI-generated labels.
+- **Pushed to `staging`** on Ian's go-ahead. Decisions the same day: Ian + Jade publish; yes to XP for reading; yes to the
+  free-tier partial view (both queued in PLAN.md).
+- **Not done**: prod untouched (needs `20261022140000` then the importer pointed at prod, which it
+  refuses today). Staging has only 111 live questions, so "Practise" offers 0–9 per review until the AI bank is approved.
+  Not built from Template 9/16: free-tier partial view (1 review, 5 min), 30 XP for reading, mandatory Q-gen after a review,
+  links from mock results / analytics / group study.

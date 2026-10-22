@@ -1,0 +1,626 @@
+{
+ "slug": "cancer",
+ "title": "Neoplastic Disorders and Cancer Nursing",
+ "system": "Multi-System / Oncology System",
+ "slides": [
+  {
+   "kind": "anp",
+   "title": "Normal Anatomy & Physiology",
+   "subtitle": "System of Focus: Multi-System / Oncology",
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Key Concepts</strong>",
+        "html": "<ul><li>Cell cycle: G1 → S (DNA synthesis) → G2 → M (mitosis)</li><li>Oncogenes: promote cell division (accelerator)</li><li>Tumor suppressor genes: inhibit division, promote apoptosis (brakes)</li><li>Apoptosis: programmed cell death — defective in cancer</li><li>Angiogenesis: tumor grows new blood vessels for nutrients</li><li>Metastasis: spread via lymphatic or hematogenous routes</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Normal Values</strong>",
+        "html": "<ul><li>TNM staging: Tumor size, Node involvement, Metastasis</li><li>Performance status: ECOG 0-4 or Karnofsky 100-0</li><li>CBC with differential before each chemo cycle</li><li>Absolute neutrophil count (ANC): normal &gt;2500</li><li>Platelets: &gt;100,000 for most chemotherapy</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>What the Nurse Must Know</strong>",
+        "html": "<ul><li>Cancer is the 2nd leading cause of death globally; #1 in some Caribbean countries</li><li>Leading cancers in Caribbean: prostate, breast, cervical, colorectal, lung</li><li>Cervical cancer highly preventable with HPV vaccine and screening</li><li>Chemotherapy kills rapidly dividing cells — cancer AND normal (mucosa, hair, bone marrow)</li><li>Neutropenia (ANC &lt;500) = highest infection risk — neutropenic precautions</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "dysfunction",
+   "title": "Dysfunction: What Goes Wrong",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>NORMAL FUNCTION</strong>",
+        "html": "<ul><li>Controlled cell division regulated by oncogenes and tumor suppressors</li><li>Normal cell cycle checkpoints</li><li>Functional apoptosis</li><li>No abnormal growth or invasion</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>DYSFUNCTION</strong>",
+        "html": "<ul><li>Genetic mutations: oncogenes activated, tumor suppressors inactivated</li><li>Uncontrolled cell proliferation</li><li>Loss of apoptosis → immortal cells</li><li>Angiogenesis: tumor recruits blood supply</li><li>Invasion and metastasis</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#9888; Risk Factors (Non-Modifiable)",
+        "html": "<ul><li>Age (cumulative mutations)</li><li>Family history (BRCA1/2, Lynch syndrome)</li><li>Genetic syndromes</li><li>Previous cancer treatment (radiation, alkylating agents)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161; Risk Factors (Modifiable)",
+        "html": "<ul><li>Tobacco use (#1 preventable cause — lung, oral, bladder, pancreatic)</li><li>Alcohol consumption (oral, esophageal, liver, breast)</li><li>HPV infection (cervical, oropharyngeal) — VACCINE PREVENTABLE</li><li>Hepatitis B/C (liver cancer)</li><li>Obesity (breast, endometrial, colorectal)</li><li>UV exposure (skin cancer)</li><li>Diet (red/processed meat, low fiber)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128293; Complications",
+        "html": "<p>Metastasis to bone, liver, lung, brain &bull; Superior vena cava syndrome &bull; Spinal cord compression &bull; Tumor lysis syndrome (electrolyte emergency) &bull; Cachexia &bull; Paraneoplastic syndromes</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Opposite:</strong> Cell growth control lost → uncontrolled proliferation → invasion → metastasis → organ failure</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "patho",
+   "title": "Step-by-Step Pathophysiology",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.65,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>1. Initiation:</strong> carcinogen causes DNA mutation in proto-oncogene or tumor suppressor</p><p><strong>2. Promotion:</strong> mutated cell clonally expands</p><p><strong>3. Progression:</strong> additional mutations accumulate</p><p><strong>4. Angiogenesis:</strong> tumor secretes VEGF to recruit blood vessels</p><p><strong>5. Invasion:</strong> loss of cell adhesion, matrix metalloproteinase activity</p><p><strong>6. Metastasis:</strong> cells enter lymphatics/bloodstream, seed distant organs</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.35,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Key Detail</strong>",
+        "html": "<p>Carcinogenesis is a multi-step process requiring multiple genetic hits. Hallmarks of cancer: sustained proliferative signaling, evading growth suppressors, resisting cell death, enabling replicative immortality, inducing angiogenesis, activating invasion and metastasis, reprogramming energy metabolism, evading immune destruction.</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": "<strong>Clinical Result</strong>",
+        "html": "<p>Local effects: mass compression, obstruction, ulceration, bleeding. Systemic effects: paraneoplastic syndromes (SIADH, hypercalcemia, Cushing's), cachexia (TNF-alpha mediated), anemia. Metastatic effects vary by site: bone (pain, fracture, hypercalcemia), liver (jaundice, ascites), lung (dyspnea, cough), brain (headache, seizures, focal deficits).</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Sequencing:</strong> Each step leads to the next — understand the cascade to predict S/S and management</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "signs",
+   "title": "Signs and Symptoms",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Early / Mild</strong>",
+        "html": "<ul><li>Often ASYMPTOMATIC in early stages</li><li>Screening-detected (mammogram, Pap smear, PSA, colonoscopy)</li><li>Vague symptoms: fatigue, weight loss, change in bowel/bladder habits</li><li>Non-healing sore or ulcer</li><li>Unusual bleeding or discharge</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Severe</strong>",
+        "html": "<ul><li>Obstruction symptoms (GI, urinary, airway)</li><li>Severe pain (bone metastasis)</li><li>Neurological deficits (brain metastasis)</li><li>Jaundice, ascites (liver metastasis)</li><li>Pathological fracture</li><li>Superior vena cava syndrome (facial swelling, dyspnea)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Tumor lysis syndrome: K+, PO₄, uric acid spike → cardiac arrest, renal failure</strong>",
+        "html": "<ul><li>Tumor lysis syndrome: K+, PO₄, uric acid spike → cardiac arrest, renal failure</li><li>Spinal cord compression: paralysis risk</li><li>Superior vena cava syndrome</li><li>SVC syndrome with airway compromise</li><li>Neutropenic sepsis (fever in ANC &lt;500)</li><li>THIS IS A MEDICAL EMERGENCY</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Diagnostic / Assessment Findings</strong>",
+        "html": "<ul><li>TNM staging determines prognosis and treatment</li><li>Biopsy: histological diagnosis (gold standard)</li><li>Tumor markers: PSA, CA-125, CEA, AFP (screening NOT diagnostic)</li><li>Imaging: CT, MRI, PET-CT for staging</li><li>Bone marrow biopsy (hematologic malignancies)</li><li>Genetic testing: BRCA, Lynch syndrome</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Link Patho to S/S</strong>",
+        "html": "<p>Local tumor growth &rarr; Mass effect, obstruction, bleeding</p><p>Paraneoplastic &rarr; SIADH (hyponatremia), hypercalcemia (bone mets), Cushing's (ACTH)</p><p>Cachexia &rarr; Weight loss, muscle wasting, anorexia</p><p>Bone metastasis &rarr; Pain, pathological fracture, hypercalcemia</p><p>Treatment effects &rarr; Mucositis, alopecia, myelosuppression, neuropathy</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "assessment",
+   "title": "Nursing Assessment",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Cardiovascular</strong>",
+        "html": "<ul><li>BP (orthostatic if dehydrated)</li><li>HR (tachycardia from anemia, sepsis)</li><li>Signs of bleeding, bruising, infection</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Respiratory</strong>",
+        "html": "<ul><li>RR, SpO2 (lung mets, infection)</li><li>Cough, hemoptysis</li><li>Breath sounds</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Neurological</strong>",
+        "html": "<ul><li>Mental status</li><li>Pain assessment (0-10, location, quality)</li><li>Focal deficits (brain mets)</li><li>Peripheral neuropathy (chemo-induced)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.67,
+      "blocks": [
+       {
+        "type": "table",
+        "heading": "<strong>Key Laboratory & Diagnostic Tests</strong>",
+        "header": [
+         "Test",
+         "Normal Value",
+         "Significance"
+        ],
+        "rows": [
+         [
+          "CBC with differential",
+          "Hgb 12-16, ANC &gt;2500",
+          "Myelosuppression: anemia, neutropenia, thrombocytopenia"
+         ],
+         [
+          "CMP",
+          "Normal",
+          "Renal/hepatic function for drug dosing"
+         ],
+         [
+          "Tumor markers",
+          "Variable",
+          "Monitor response to treatment, detect recurrence"
+         ],
+         [
+          "Calcium",
+          "8.5-10.5",
+          "Elevated with bone mets or PTHrP"
+         ],
+         [
+          "LDH, Uric acid",
+          "Normal",
+          "Elevated in tumor lysis syndrome, hematologic cancers"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Priority Actions</strong>",
+        "html": "<p>Neutropenic fever (ANC &lt;500 + temp &gt;38°C) = ONCOLOGIC EMERGENCY — broad-spectrum antibiotics within 60 minutes. Tumor lysis syndrome prevention: hydration, allopurinol, rasburicase. Pain assessment and management. Psychosocial support.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "management",
+   "title": "Nursing Management",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "table",
+        "heading": "&#128138; <strong>Pharmacology - Nursing Monitoring</strong>",
+        "header": [
+         "Class",
+         "Example",
+         "Mechanism",
+         "Nursing Monitoring"
+        ],
+        "rows": [
+         [
+          "Chemotherapy",
+          "Various agents",
+          "Kill rapidly dividing cells",
+          "Myelosuppression, mucositis, alopecia, nausea — varies by agent"
+         ],
+         [
+          "Antiemetic",
+          "Ondansetron, Dexamethasone, Aprepitant",
+          "Prevent CINV (chemo-induced nausea/vomiting)",
+          "5-HT3 antagonist + steroid standard"
+         ],
+         [
+          "Growth factor",
+          "Filgrastim (G-CSF)",
+          "Stimulate neutrophil production",
+          "Bone pain; start 24-72h after chemo"
+         ],
+         [
+          "Bisphosphonate",
+          "Zoledronic acid",
+          "Reduce skeletal-related events",
+          "Osteonecrosis of jaw, renal impairment"
+         ],
+         [
+          "Opioid",
+          "Morphine, Oxycodone",
+          "Cancer pain management",
+          "Constipation prevention essential"
+         ],
+         [
+          "TLS prophylaxis",
+          "Allopurinol, Rasburicase",
+          "Prevent tumor lysis syndrome",
+          "Rasburicase for high tumor burden — check G6PD first"
+         ]
+        ]
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Neutropenic Fever & Tumor Lysis Syndrome Alert</strong>",
+        "html": "<p>NEUTROPENIC FEVER (ANC &lt;500 + temp ≥38.3°C once or ≥38°C sustained): Broad-spectrum antibiotics (cefepime or piperacillin-tazobactam) within 60 minutes. This is an oncologic emergency — mortality increases with every hour of delay. TUMOR LYSIS SYNDROME: High K+, PO₄, uric acid, low Ca²⁺. Prevent with aggressive hydration, allopurinol. Treat with rasburicase.</p>",
+        "tone": "warn"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Lifestyle & Patient Education</strong>",
+        "html": "<ul><li>Infection prevention during neutropenia: hand hygiene, avoid crowds, no raw foods</li><li>Nutritional support: high protein, high calorie</li><li>Mouth care for mucositis prevention</li><li>Psychological support and counseling</li><li>Regular exercise as tolerated</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>&#128680; Report Immediately:</strong> Temperature ≥38°C with ANC &lt;500 | Severe uncontrolled pain | Signs of bleeding | Confusion or altered LOC | Severe vomiting unable to tolerate PO | Shortness of breath</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "careplan",
+   "title": "Care Plan Connection",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Nursing Diagnosis</strong>",
+        "html": "<p>Risk for infection related to immunosuppression (ANC 280) secondary to chemotherapy as evidenced by neutropenia and recent myelosuppressive treatment cycle</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Goal / Outcome</strong>",
+        "html": "<p>Patient will remain free of infection throughout the neutropenic period (ANC &lt;500) and maintain ANC &gt;1000 within 14 days.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Interventions</strong>",
+        "html": "<ul><li>Neutropenic precautions: private room, HEPA filter, restrict visitors</li><li>Vital signs q4h, assess for fever</li><li>Oral care q2h with soft toothbrush</li><li>Avoid IM injections, rectal temps, suppositories</li><li>Nutritional support — no fresh fruits/vegetables/raw foods</li><li>Administer filgrastim as prescribed</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Rationale</strong>",
+        "html": "<p>Neutropenic precautions reduce exposure to pathogens. Frequent assessment detects infection early. Oral care prevents mucositis-related infection portals. Avoiding invasive procedures prevents skin breakdown. Filgrastim shortens neutropenic duration.</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": "<strong>Evaluation</strong>",
+        "html": "<p>Afebrile throughout neutropenic period. ANC recovered to 1200 at day 10. No signs of infection. Oral mucosa intact. Tolerating oral diet.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Care Plan Formula:</strong> Problem → Goal → Interventions → Rationale → Evaluation</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "renr",
+   "title": "RENR Exam Thinking",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>What system is being tested?</strong></p><p>Multi-System — uncontrolled cell growth and treatment effects</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>What is the priority?</strong></p><p>Neutropenic fever = antibiotics within 60 min + TLS prevention + pain management</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><span class=\"tr-warn\"><strong>What is unsafe?</strong></span></p><p>Delaying antibiotics in neutropenic fever, missing TLS signs, inadequate pain control</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><span class=\"tr-good\"><strong>What restores function?</strong></span></p><p>Chemotherapy/radiation/surgery target cancer; G-CSF restores neutrophils; TLS prophylaxis prevents metabolic crisis</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161; <strong>Key Memory Aids for RENR</strong>",
+        "html": "<ul><li><strong>Neutropenic fever:</strong> ANC &lt;500 + temp ≥38°C = EMERGENCY — antibiotics within 60 minutes</li><li><strong>Tumor lysis syndrome:</strong> High K+, PO₄, uric acid + low Ca²⁺ — prevent with hydration + allopurinol</li><li><strong>CINV prophylaxis:</strong> Ondansetron + dexamethasone BEFORE chemo — prevention better than treatment</li><li><strong>Filgrastim timing:</strong> Start 24-72 hours after chemo — not same day</li><li><strong>HPV vaccine:</strong> Prevents cervical and oropharyngeal cancer — recommend for all eligible patients</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG System Focus Formula:</strong> Cancer → Multi-System → Uncontrolled growth + treatment effects → Priority: Neutropenic fever response + TLS prevention + pain management</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  }
+ ],
+ "question": {
+  "stem": "<p><strong>A patient receiving chemotherapy for acute lymphoblastic leukemia completes treatment today. The nurse checks the laboratory results and notes: WBC 1.2 (ANC 280), K+ 5.8, phosphate 6.2, uric acid 12.5, calcium 7.2. The patient's temperature is 37.8°C. Which nursing action is the highest priority?</strong></p>",
+  "options": [
+   {
+    "letter": "A",
+    "html": "Notify the physician and prepare for emergency dialysis"
+   },
+   {
+    "letter": "B",
+    "html": "Initiate tumor lysis syndrome protocol with aggressive hydration and rasburicase"
+   },
+   {
+    "letter": "C",
+    "html": "Place the patient in neutropenic precautions and start broad-spectrum antibiotics"
+   },
+   {
+    "letter": "D",
+    "html": "Administer oral allopurinol and recheck electrolytes in 4 hours"
+   }
+  ],
+  "answer": "B",
+  "rationale": "<p>This is tumor lysis syndrome (TLS): high K+ (5.8), high phosphate (6.2), high uric acid (12.5), low calcium (7.2) — the classic metabolic triad in a patient with high tumor burden (leukemia) after chemotherapy. TLS is an oncologic emergency that can cause cardiac arrest (from hyperkalemia) and renal failure (from uric acid crystallization). The priority is immediate TLS protocol: aggressive IV hydration, rasburicase (converts uric acid to allantoin), and cardiac monitoring. Option A (dialysis) may be needed later but medical management is first-line. Option C (neutropenic precautions) is important but not the priority when TLS is present. Option D (oral allopurinol) is insufficient — IV rasburicase is preferred for established TLS.</p>",
+  "why": [
+   {
+    "letter": "A",
+    "html": "Dialysis is reserved for refractory cases — medical management first"
+   },
+   {
+    "letter": "C",
+    "html": "Neutropenic precautions are important but TLS is immediately life-threatening"
+   },
+   {
+    "letter": "D",
+    "html": "Oral allopurinol is for prevention; rasburicase is treatment for established TLS"
+   }
+  ]
+ },
+ "source": "nrg_medical_surgical_reviews/cancer_review.pptd"
+}

@@ -6,6 +6,7 @@ import { recordPracticeAnswers, recordPracticeSession } from "@/lib/xp/actions";
 import { flags } from "@/lib/flags";
 import { getAllowance } from "@/lib/tier/allowance";
 import { UpgradeNotice } from "@/components/tier/UpgradeNotice";
+import { getReview, publishedReviewLinks, reviewQuestionIds } from "@/lib/topic-reviews/queries";
 
 export const dynamic = "force-dynamic";
 
@@ -45,13 +46,22 @@ export default async function PracticeSessionPage({
     );
   }
 
-  const questions = await fetchQuizQuestions({
-    domainId: int(sp.domain),
-    topicId: int(sp.topic),
-    cognitive: typeof sp.cognitive === "string" && sp.cognitive ? sp.cognitive : null,
-    difficulty: typeof sp.difficulty === "string" && sp.difficulty ? sp.difficulty : null,
-    limit: count,
-  });
+  // From a topic review's "Practise" button: questions that belong to that review instead of the filters.
+  const reviewSlug = typeof sp.review === "string" ? sp.review : null;
+  const review = reviewSlug ? await getReview(reviewSlug) : null;
+  const reviewIds = review ? (await reviewQuestionIds(review)).slice(0, count) : null;
+
+  const loadQuestions = () => {
+    if (reviewIds) return reviewIds.length ? fetchQuizQuestions({ ids: reviewIds, limit: count }) : Promise.resolve([]);
+    return fetchQuizQuestions({
+      domainId: int(sp.domain),
+      topicId: int(sp.topic),
+      cognitive: typeof sp.cognitive === "string" && sp.cognitive ? sp.cognitive : null,
+      difficulty: typeof sp.difficulty === "string" && sp.difficulty ? sp.difficulty : null,
+      limit: count,
+    });
+  };
+  const [questions, reviewLinks] = await Promise.all([loadQuestions(), publishedReviewLinks()]);
 
   const scope = [
     int(sp.domain) ? "domain" : null,
@@ -70,9 +80,10 @@ export default async function PracticeSessionPage({
     >
       <TutorSession
         questions={questions}
-        title={scope > 0 ? "Filtered practice" : "Mixed practice"}
-        backHref="/study/practice"
-        backLabel="Change filters"
+        title={review ? review.title : scope > 0 ? "Filtered practice" : "Mixed practice"}
+        backHref={review ? `/study/reviews/${review.slug}` : "/study/practice"}
+        backLabel={review ? "Back to the topic review" : "Change filters"}
+        reviewLinks={reviewLinks}
         onComplete={async (total, correct, answers) => {
           "use server";
           // Ranking v2 sends the choices for the server to grade; with the flag off, the original tally path runs.

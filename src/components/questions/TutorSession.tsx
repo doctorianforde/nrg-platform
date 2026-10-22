@@ -9,6 +9,7 @@ import { QuestionMetaBadges } from "@/components/questions/QuestionMetaBadges";
 import { RationalePanel } from "@/components/questions/RationalePanel";
 import { Badge } from "@/components/ui/Badge";
 import { revealPracticeAnswer, type RevealedAnswer } from "@/lib/quiz/actions";
+import { reviewForQuestion, type ReviewLink } from "@/lib/topic-reviews/catalog";
 
 /** One answered question as sent to the server, which grades it against the key. */
 export type PracticeAnswer = { question_id: string; option_ids: string[] };
@@ -34,6 +35,7 @@ export function TutorSession({
   backHref = "/study/practice",
   backLabel = "Back to practice setup",
   onComplete,
+  reviewLinks,
 }: {
   questions: QuizQuestion[];
   title?: string;
@@ -43,6 +45,8 @@ export function TutorSession({
   /** Called once when a run finishes, so practice can be recorded and XP awarded. `answers` holds what was chosen
    *  for each question, for the server to grade (ranking v2). Case studies leave it unset and record nothing. */
   onComplete?: (total: number, correct: number, answers: PracticeAnswer[]) => void | Promise<void>;
+  /** Published topic reviews; after "Check answer" the question links to the one it belongs to. */
+  reviewLinks?: ReviewLink[];
 }) {
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<string[]>([]);
@@ -234,6 +238,7 @@ export function TutorSession({
               distractor_type: key.types?.[o.id] ?? null,
             }))}
             selectedIds={selected}
+            review={reviewLinks?.length ? reviewForQuestion(q, reviewLinks) : null}
           />
         ) : null}
         {checkError ? <p className="mt-3 text-sm text-red-700">{checkError}</p> : null}

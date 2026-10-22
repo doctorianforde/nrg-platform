@@ -1,0 +1,620 @@
+{
+ "slug": "trauma",
+ "title": "Trauma Emergencies",
+ "system": "Multi-System System",
+ "slides": [
+  {
+   "kind": "anp",
+   "title": "Normal Anatomy & Physiology",
+   "subtitle": "System of Focus: Multi-System",
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Key Concepts</strong>",
+        "html": "<ul><li>Primary survey: ABCDE — Airway, Breathing, Circulation, Disability, Exposure</li><li>Hypovolemic shock: loss of intravascular volume → inadequate tissue perfusion</li><li>Shock classes: I (&lt;15%), II (15-30%), III (30-40%), IV (&gt;40% blood loss)</li><li>Tension pneumothorax: one-way valve → increased intrapleural pressure → mediastinal shift</li><li>Cardiac tamponade: blood in pericardium → impaired ventricular filling → obstructive shock</li><li>Massive hemothorax: &gt;1500 mL blood in hemithorax</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Normal Values</strong>",
+        "html": "<ul><li>SBP &gt;90 mmHg (until Class III shock)</li><li>HR &lt;100 (Class I), 100-120 (II), 120-140 (III), &gt;140 (IV)</li><li>MAP &gt;65 mmHg (minimum for organ perfusion)</li><li>Urine output: 0.5-1 mL/kg/hr</li><li>Lactate &lt;2 mmol/L</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>What the Nurse Must Know</strong>",
+        "html": "<ul><li>Tension pneumothorax: immediate needle decompression (2nd ICS, midclavicular line)</li><li>FAST exam: Focused Assessment with Sonography for Trauma — evaluates pericardium, hepatorenal, splenorenal, suprapubic</li><li>Pelvic fracture: major source of occult blood loss — stabilize with binder</li><li>C-spine immobilization until cleared clinically and radiographically</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "dysfunction",
+   "title": "Dysfunction: What Goes Wrong",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>NORMAL FUNCTION</strong>",
+        "html": "<ul><li>Intact airway, patent breathing</li><li>Stable hemodynamics, adequate perfusion</li><li>Intact CNS function</li><li>No active bleeding, no fractures</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>DYSFUNCTION</strong>",
+        "html": "<ul><li>Airway obstruction: tongue, blood, vomitus, foreign body</li><li>Tension pneumothorax: mediastinal shift, cardiovascular collapse</li><li>Hemorrhagic shock: blood loss → inadequate perfusion</li><li>Head injury: increased ICP, altered LOC</li><li>Spinal cord injury: neurogenic shock, paralysis</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#9888; Risk Factors (Non-Modifiable)",
+        "html": "<ul><li>Male gender (higher trauma incidence)</li><li>Age extremes (pediatric, elderly)</li><li>Anticoagulant use (worsens bleeding)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161; Risk Factors (Modifiable)",
+        "html": "<ul><li>Motor vehicle accidents (leading cause)</li><li>Falls (especially elderly)</li><li>Penetrating trauma (stab, gunshot)</li><li>Alcohol and drug intoxication</li><li>Occupational hazards</li><li>Violence and assault</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128293; Complications",
+        "html": "<p>Multi-organ dysfunction syndrome (MODS) &bull; Acute respiratory distress syndrome (ARDS) &bull; Disseminated intravascular coagulation (DIC) &bull; Infection/sepsis &bull; Permanent neurological deficit &bull; Post-traumatic stress disorder</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Opposite:</strong> Trauma disrupts multiple systems → blood loss + organ damage → shock + disability</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "patho",
+   "title": "Step-by-Step Pathophysiology",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.65,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>1. Mechanism of injury determines pattern:</strong> blunt vs penetrating</p><p><strong>2. Primary injury:</strong> direct tissue damage at moment of impact</p><p><strong>3. Hemorrhage:</strong> external or internal blood loss</p><p><strong>4. Shock:</strong> inadequate tissue perfusion from hypovolemia</p><p><strong>5. Secondary injury:</strong> hypoxia, hypotension, inflammation worsen primary damage</p><p>6. Systemic inflammatory response → MODS if uncontrolled</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.35,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Key Detail</strong>",
+        "html": "<p>Blunt trauma: MVC, falls, assault — causes shearing, compression, deceleration injuries. Penetrating trauma: stab, GSW — direct tissue disruption along wound track. Primary brain injury occurs at moment of impact; secondary injury (hypoxia, hypotension) is preventable and must be minimized. Damage control resuscitation: permissive hypotension, early blood products, prevent coagulopathy.</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": "<strong>Clinical Result</strong>",
+        "html": "<p>Hemorrhagic shock progresses through classes: Class I (&lt;750 mL, 15%) — compensated; Class II (750-1500 mL, 15-30%) — tachycardia, anxiety; Class III (1500-2000 mL, 30-40%) — hypotension, confusion, oliguria; Class IV (&gt;2000 mL, &gt;40%) — profound hypotension, lethargy, anuria. Without intervention, progresses to irreversible shock and death.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Sequencing:</strong> Each step leads to the next — understand the cascade to predict S/S and management</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "signs",
+   "title": "Signs and Symptoms",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Early / Mild</strong>",
+        "html": "<ul><li>Tachycardia (first compensatory sign)</li><li>Anxiety, restlessness</li><li>Cool, clammy skin</li><li>Delayed capillary refill</li><li>Narrowed pulse pressure</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Severe</strong>",
+        "html": "<ul><li>Hypotension (SBP &lt;90)</li><li>Altered mental status (confusion, lethargy)</li><li>Tachypnea (compensatory)</li><li>Oliguria (&lt;0.5 mL/kg/hr)</li><li>Pale, mottled skin</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Profound hypotension, unresponsive</strong>",
+        "html": "<ul><li>Profound hypotension, unresponsive</li><li>Anuria</li><li>Coma (GCS &lt;8)</li><li>Dilated fixed pupils (herniation)</li><li>THIS IS A MEDICAL EMERGENCY — Activate massive transfusion protocol</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Diagnostic / Assessment Findings</strong>",
+        "html": "<ul><li>FAST exam: free fluid in peritoneum, pericardial effusion</li><li>CT scan: definitive imaging once stable</li><li>C-spine X-ray/CT: fracture/subluxation</li><li>Pelvis X-ray: fracture pattern</li><li>Chest X-ray: pneumothorax, hemothorax, widened mediastinum</li><li>ABG: acidosis, base deficit, lactate</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Link Patho to S/S</strong>",
+        "html": "<p>Blood loss &rarr; Tachycardia, hypotension, cool clammy skin</p><p>Brain injury &rarr; Altered LOC, pupillary changes, focal deficits</p><p>Tension pneumothorax &rarr; Dyspnea, hypotension, tracheal deviation, JVD</p><p>Spinal cord injury &rarr; Neurogenic shock (warm dry skin, bradycardia), paralysis</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "assessment",
+   "title": "Nursing Assessment",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Cardiovascular</strong>",
+        "html": "<ul><li>Carotid/femoral/radial pulses (absent = severe shock)</li><li>BP both arms (discrepancy = aortic dissection)</li><li>HR, rhythm</li><li>Capillary refill, skin color/temp</li><li>External bleeding control</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Respiratory</strong>",
+        "html": "<ul><li>Airway patency (listen for stridor, gurgling)</li><li>Breathing rate, effort, symmetry</li><li>Tracheal deviation (tension pneumo)</li><li>Chest excursion</li><li>SpO2</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Neurological</strong>",
+        "html": "<ul><li>GCS (E___V___M___ = total ___)</li><li>Pupil size and reaction</li><li>Lateralizing signs</li><li>Spinal assessment: motor/sensory level</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.67,
+      "blocks": [
+       {
+        "type": "table",
+        "heading": "<strong>Key Laboratory & Diagnostic Tests</strong>",
+        "header": [
+         "Test",
+         "Normal Value",
+         "Significance"
+        ],
+        "rows": [
+         [
+          "Hemoglobin / Hematocrit",
+          "Hgb 12-16, Hct 36-48%",
+          "May be normal initially (fluid shift takes time)"
+         ],
+         [
+          "Lactate",
+          "&lt;2 mmol/L",
+          "&gt;4 = severe tissue hypoperfusion"
+         ],
+         [
+          "ABG",
+          "pH 7.35-7.45",
+          "Acidosis indicates shock severity"
+         ],
+         [
+          "PT/INR, aPTT",
+          "Normal",
+          "Coagulopathy from blood loss/dilution/hypothermia"
+         ],
+         [
+          "Type & Crossmatch",
+          "N/A",
+          "Prepare for transfusion"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Priority Actions</strong>",
+        "html": "<p>PRIMARY SURVEY — ABCDE: Airway with C-spine control, Breathing, Circulation (bleeding control, 2 large-bore IVs), Disability (GCS, pupils), Exposure (undress, prevent hypothermia). Control external hemorrhage with direct pressure. Pelvic binder if unstable pelvis. FAST exam. Do NOT get distracted by obvious injuries — life-threatening conditions first.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "management",
+   "title": "Nursing Management",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "table",
+        "heading": "&#128138; <strong>Pharmacology - Nursing Monitoring</strong>",
+        "header": [
+         "Class",
+         "Example",
+         "Mechanism",
+         "Nursing Monitoring"
+        ],
+        "rows": [
+         [
+          "Fluid resuscitation",
+          "Crystalloid (LR/NS)",
+          "Restore intravascular volume",
+          "3:1 rule (3 mL crystalloid per 1 mL blood lost); beware of dilutional coagulopathy"
+         ],
+         [
+          "Blood products",
+          "PRBCs, FFP, Platelets",
+          "Restore oxygen-carrying capacity and coagulation",
+          "1:1:1 ratio in massive transfusion"
+         ],
+         [
+          "Tranexamic acid",
+          "1 g IV over 10 min",
+          "Antifibrinolytic — reduces bleeding mortality",
+          "Give within 3 hours of injury"
+         ],
+         [
+          "Analgesic",
+          "Fentanyl, Morphine",
+          "Pain management",
+          "Titrate carefully in hemodynamically unstable patients"
+         ],
+         [
+          "Antibiotic",
+          "Cefazolin",
+          "Prevent infection in open fractures",
+          "Continue 24h for clean open fracture"
+         ]
+        ]
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Hypothermia & TRIAD of Death Alert</strong>",
+        "html": "<p>Trauma TRIAD of death: Hypothermia + Acidosis + Coagulopathy — vicious cycle that worsens bleeding. Prevent hypothermia: warm fluids, blankets, ambient temperature &gt;28°C. Do NOT over-resuscitate with crystalloids — causes hemodilution, edema, and compartment syndrome. Permissive hypotension (SBP 80-90) acceptable in penetrating trauma until definitive control.</p>",
+        "tone": "warn"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Lifestyle & Patient Education</strong>",
+        "html": "<ul><li>Rehabilitation: physical, occupational, speech therapy</li><li>Psychological support: PTSD screening and treatment</li><li>Fall prevention strategies (elderly)</li><li>Road safety education</li><li>Violence prevention programs</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>&#128680; Report Immediately:</strong> GCS &lt;8 | SBP &lt;90 | SpO2 &lt;90% | Signs of herniation | Uncontrolled bleeding | Tension pneumothorax</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "careplan",
+   "title": "Care Plan Connection",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Nursing Diagnosis</strong>",
+        "html": "<p>Deficient fluid volume related to hemorrhage from multiple trauma as evidenced by SBP 78/52, HR 128, cool clammy skin, and lactate 4.8 mmol/L</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Goal / Outcome</strong>",
+        "html": "<p>Patient will achieve hemodynamic stability (SBP &gt;90, HR &lt;100, urine output &gt;0.5 mL/kg/hr, lactate &lt;2) within 4 hours of resuscitation.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Interventions</strong>",
+        "html": "<ul><li>Two large-bore IVs (14-16 gauge) or intraosseous access</li><li>Fluid resuscitation per protocol (crystalloid then blood products)</li><li>Apply warmed blankets, warm IV fluids</li><li>External hemorrhage control with direct pressure</li><li>Foley catheter for accurate urine output</li><li>Prepare for OR if hemodynamically unstable</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Rationale</strong>",
+        "html": "<p>Large-bore IVs allow rapid fluid administration. Warmed fluids prevent hypothermia (part of lethal triad). Direct pressure controls external bleeding. Urine output is the best indicator of end-organ perfusion. Unstable patients need definitive surgical control of bleeding.</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": "<strong>Evaluation</strong>",
+        "html": "<p>SBP 104/68, HR 96. Urine output 45 mL/hr. Lactate 1.8 mmol/L. Warm, dry skin. Patient transferred to OR for exploratory laparotomy.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Care Plan Formula:</strong> Problem → Goal → Interventions → Rationale → Evaluation</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "renr",
+   "title": "RENR Exam Thinking",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>What system is being tested?</strong></p><p>Multi-System — trauma affects multiple body systems simultaneously</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>What is the priority?</strong></p><p>ABCDE primary survey + C-spine + hemorrhage control + massive transfusion if needed</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><span class=\"tr-warn\"><strong>What is unsafe?</strong></span></p><p>Getting distracted by obvious injuries, missing tension pneumothorax, over-resuscitating with crystalloids</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><span class=\"tr-good\"><strong>What restores function?</strong></span></p><p>Definitive hemorrhage control (OR/angio) + blood products + damage control resuscitation</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161; <strong>Key Memory Aids for RENR</strong>",
+        "html": "<ul><li><strong>ABCDE:</strong> Airway, Breathing, Circulation, Disability, Exposure — NEVER skip order</li><li><strong>Tension pneumothorax:</strong> Immediate needle decompression 2nd ICS midclavicular — do NOT wait for X-ray</li><li><strong>Lethal triad:</strong> Hypothermia + Acidosis + Coagulopathy — prevent at all costs</li><li><strong>Tranexamic acid:</strong> 1 g IV within 3 hours of injury — reduces mortality from bleeding</li><li><strong>Tachycardia FIRST:</strong> Tachycardia is the FIRST sign of shock — hypotension is a LATE sign</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG System Focus Formula:</strong> Trauma → Multi-System → Hemorrhage + organ damage → Shock → Priority: ABCDE survey + hemorrhage control + massive transfusion</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  }
+ ],
+ "question": {
+  "stem": "<p><strong>A 35-year-old patient arrives in the emergency department after a motor vehicle accident. The primary survey reveals: patent airway, bilateral breath sounds, HR 132, BP 82/50, RR 28, GCS 14. There is obvious deformity of the left thigh and abdominal distension. What is the nurse's priority intervention?</strong></p>",
+  "options": [
+   {
+    "letter": "A",
+    "html": "Splint the femur fracture and prepare for orthopedic surgery"
+   },
+   {
+    "letter": "B",
+    "html": "Insert a nasogastric tube to decompress the abdomen"
+   },
+   {
+    "letter": "C",
+    "html": "Establish two large-bore IVs and initiate fluid resuscitation with warmed crystalloids"
+   },
+   {
+    "letter": "D",
+    "html": "Perform a focused abdominal ultrasound to identify the source of bleeding"
+   }
+  ],
+  "answer": "C",
+  "rationale": "<p>The patient is in Class III hemorrhagic shock (HR 132, SBP 82/50, RR 28 compensatory) with multiple sources of blood loss (femur fracture can lose 1-2 L; abdominal distension suggests intra-abdominal bleeding). The priority is immediate large-bore IV access and fluid resuscitation. Femur fractures can lose 1-2 liters of blood into the thigh. Two large-bore IVs (14-16 gauge) allow rapid fluid administration. Option A (splinting) is important but does not address the life-threatening hemorrhage. Option B (NG tube) is not a priority in hemorrhagic shock. Option D (FAST exam) is important for diagnosis but should not delay resuscitation — resuscitate and examine simultaneously.</p>",
+  "why": [
+   {
+    "letter": "A",
+    "html": "Splinting addresses the fracture but not the life-threatening hemorrhage"
+   },
+   {
+    "letter": "B",
+    "html": "NG tube is not priority in hemorrhagic shock"
+   },
+   {
+    "letter": "D",
+    "html": "FAST is diagnostic but should not delay resuscitation"
+   }
+  ]
+ },
+ "source": "nrg_medical_surgical_reviews/trauma_review.pptd"
+}

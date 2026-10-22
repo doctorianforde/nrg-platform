@@ -1,0 +1,599 @@
+{
+ "slug": "hypertension",
+ "title": "Hypertension and Cardiovascular Risk",
+ "system": "CARDIOVASCULAR RISK",
+ "slides": [
+  {
+   "kind": "anp",
+   "title": "Normal Anatomy & Physiology",
+   "subtitle": "System of Focus: Cardiovascular",
+   "rows": [
+    [
+     {
+      "width": 0.47,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128170;</span> <strong>BP Formula</strong>",
+        "html": "<p><strong>BP = Cardiac Output x Peripheral Vascular Resistance</strong></p><p>CO = Heart Rate x Stroke Volume</span></p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.53,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>Normal BP Regulation</strong></p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.56,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#9989;</span> <strong>Normal Values</strong>",
+        "html": "<p><strong>Normal BP:</strong> <span class=\"tr-good\">&lt;120/80 mmHg</span></p><p><strong>Elevated:</strong> 120-129 / &lt;80 mmHg</p><p><strong>Stage 1 HTN:</strong> 130-139 / 80-89 mmHg</p><p><strong>Stage 2 HTN:</strong> &ge;140 / &ge;90 mmHg</p>",
+        "tone": "good"
+       }
+      ]
+     },
+     {
+      "width": 0.44,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p>Baroreceptors detect BP changes</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p>Brain adjusts HR & vessel tone</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.56,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161;</span> <strong>What the Nurse Must Know</strong>",
+        "html": "<ul><li>Heart pumps blood through arteries to deliver O&#8322; to tissues</li><li><strong>Baroreceptors</strong> in carotid sinus & aortic arch regulate BP</li><li><strong>RAAS:</strong> Kidneys release renin to control BP</li><li>Blood vessels <strong>vasodilate</strong> and <strong>vasoconstrict</strong></li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.44,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p>RAAS regulates long-term BP control</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>Normal BP Maintained: &lt;120/80</strong></p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "dysfunction",
+   "title": "Dysfunction: What Goes Wrong",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>NORMAL FUNCTION</strong>",
+        "html": "<ul><li>Blood vessels are <strong>relaxed</strong></li><li>Blood flows <strong>freely</strong> to all tissues</li><li>BP stays within <strong>normal range</strong></li><li>Heart pumps at <strong>normal workload</strong></li><li>Baroreceptors maintain <strong>homeostasis</strong></li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>DYSFUNCTION</strong>",
+        "html": "<ul><li><strong>Chronic vasoconstriction</strong></li><li>Increased <strong>vascular resistance</strong></li><li>Heart must pump <strong>harder</strong></li><li><strong>Endothelial damage</strong> occurs</li><li>Baroreceptors <strong>reset to higher BP</strong></li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#9888;</span> <strong>Risk Factors (Non-Modifiable)</strong>",
+        "html": "<ul><li>Family history of hypertension</li><li>Age &gt;55 years</li><li>African Caribbean ethnicity</li><li>Male gender (until menopause)</li><li>Chronic kidney disease</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161;</span> <strong>Risk Factors (Modifiable)</strong>",
+        "html": "<ul><li>Obesity / high sodium intake</li><li>Physical inactivity</li><li>Smoking / excess alcohol</li><li>Diabetes / high cholesterol</li><li>Chronic stress</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128293;</span> <strong>Uncontrolled HTN Leads To:</strong>",
+        "html": "<p><span class=\"tr-warn\"><strong>Heart Failure</strong></span> &bull; <span class=\"tr-warn\"><strong>Stroke</strong></span> &bull; <span class=\"tr-warn\"><strong>Myocardial Infarction</strong></span> &bull; <span class=\"tr-warn\"><strong>CKD</strong></span> &bull; <span class=\"tr-warn\"><strong>Vision Loss</strong></span> &bull; <span class=\"tr-warn\"><strong>Aortic Aneurysm</strong></span></p><p>NRG Opposite: High pressure damages vessel walls &rarr; atherosclerosis &rarr; organ damage</span></p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "patho",
+   "title": "Step-by-Step Pathophysiology",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "flow",
+        "items": [
+         "<strong>1. Trigger:</strong> Genetics + Lifestyle",
+         "<strong>2.</strong> SNS Activation &rarr; Vasoconstriction",
+         "<strong>3.</strong> Increased Vascular Resistance",
+         "<strong>4.</strong> Baroreceptors Reset Higher",
+         "<strong>5.</strong> RAAS Activation (Renin Release)",
+         "<strong>6.</strong> Angiotensin II + Aldosterone"
+        ]
+       }
+      ]
+     },
+     {
+      "width": 0.67,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#9889;</span> <strong>RAAS Cascade Detail</strong>",
+        "html": "<p><strong>Renin</strong> (from kidneys) converts angiotensinogen &rarr; <strong>Angiotensin I</strong></p><p>ACE (angiotensin-converting enzyme) converts ATI &rarr; <strong>Angiotensin II</strong></p><p>Angiotensin II causes:</p><ul><li><strong>Potent vasoconstriction</strong> (raises BP directly)</li><li><strong>Aldosterone release</strong> (Na&#8314;/H&#8322;O retention)</li><li><strong>ADH release</strong> (further fluid retention)</li></ul>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": "&#127919;</span> <strong>Result: Sustained Hypertension</strong>",
+        "html": "<ul><li><strong>Increased blood volume</strong> (Na&#8314;/H&#8322;O retention)</li><li><strong>Chronic vasoconstriction</strong> &rarr; sustained high BP</li><li><strong>Endothelial damage</strong> &rarr; atherosclerosis</li><li><strong>Left ventricular hypertrophy</strong> &rarr; heart failure risk</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "signs",
+   "title": "Signs and Symptoms",
+   "subtitle": "Hypertension is the \"silent killer\" — often asymptomatic until organ damage",
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Early / Mild HTN</strong>",
+        "html": "<ul><li>Headaches (esp. morning)</li><li>Dizziness / lightheadedness</li><li>Blurred vision</li><li>Epistaxis (nosebleeds)</li><li>Tinnitus (ringing in ears)</li><li>Often: <strong>no symptoms at all</strong></li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Severe HTN</strong>",
+        "html": "<ul><li>Chest pain / dyspnea</li><li>Severe headache</li><li>Confusion / altered LOC</li><li>Hematuria</li><li>S4 gallop on auscultation</li><li>Displaced PMI</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>HTN Crisis (BP &gt;180/120)</strong>",
+        "html": "<ul><li>Altered level of consciousness</li><li>Pulmonary edema</li><li>Acute kidney injury</li><li><strong>Papilledema</strong> (on fundoscopy)</li><li><strong>This is a medical emergency</strong></li></ul><p><span class=\"tr-warn\"><strong>Assess for organ damage NOW</strong></span></p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.48,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128065;</span> <strong>Fundoscopic Changes (HTN Severity)</strong>",
+        "html": "<ul><li>Grade 1: <strong>Arteriolar narrowing</strong></li><li>Grade 2: Arteriolar narrowing + <strong>AV nicking</strong></li><li>Grade 3: Above + <strong>cotton-wool spots</strong>, hemorrhages</li><li>Grade 4: Above + <strong>papilledema</strong> (malignant HTN)</li></ul><p><em>Retinal changes indicate HTN duration and severity</em></span></p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.52,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128296;</span> <strong>Link Patho to S/S</strong>",
+        "html": "<p><strong>Vessel damage</strong> &rarr; Headache, vision changes</p><p><strong>LV strain</strong> &rarr; Chest pain, S4 gallop</p><p><strong>Fluid overload</strong> &rarr; Dyspnea, edema</p><p><strong>Renal damage</strong> &rarr; Hematuria, elevated Cr</p><p><strong>Cerebral edema</strong> &rarr; Confusion, seizures</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Rule:</strong> S/S reflect pathophysiology. Ask: \"What body system is affected? What is the priority?\"</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "assessment",
+   "title": "Nursing Assessment",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Cardiovascular</strong>",
+        "html": "<ul><li>BP in <strong>both arms</strong> (5 min rest)</li><li>Proper <strong>cuff size</strong></li><li>Apical pulse, heart sounds</li><li>Check for <strong>edema, JVD</strong></li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Respiratory</strong>",
+        "html": "<ul><li>Lung sounds (<strong>crackles</strong> = fluid)</li><li>Respiratory rate</li><li>SpO&#8322;, dyspnea</li><li>Work of breathing</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Neurological</strong>",
+        "html": "<ul><li>Level of consciousness</li><li>Headache severity</li><li>Visual changes</li><li>Speech assessment</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p>&#128300;</span> <strong>Laboratory & Diagnostic Tests</strong></p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>NRG Priority:</strong> Accurate BP technique &rarr; 5 min rest, seated, arm at heart level, correct cuff size. Then assess all affected body systems.</p><p><strong>Fundoscopy:</strong> Retinal changes indicate HTN severity. Always check in severe/long-standing HTN.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "management",
+   "title": "Nursing Management",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p>&#128138;</span> <strong>Antihypertensives &mdash; Nursing Monitoring</strong></p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Beta-Blocker Alert: Metoprolol</strong>",
+        "html": "<p><strong>Always check apical pulse before giving.</strong> Hold if HR &lt;60 bpm. Also hold if SBP &lt;90 mmHg. Monitor for bradycardia, hypotension, fatigue.</p>",
+        "tone": "warn"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>DASH Diet & Lifestyle</strong>",
+        "html": "<p>Low sodium (&lt;2g/day), high K&#8314;/Mg&#8314;, fruits/vegetables. Weight loss, regular exercise, smoking cessation, limit alcohol. Teach medication adherence.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128680;</span> <strong>Report Immediately</strong>",
+        "html": "<p><span class=\"tr-warn\"><strong>BP &gt;180/120 mmHg</strong></span> &bull; Severe headache &bull; Chest pain &bull; Vision changes &bull; Dyspnea &bull; Altered LOC &bull; Decreased urine output</p><p><strong>NRG Safety Rule:</strong> All medications as prescribed &bull; Monitor therapeutic and adverse effects &bull; Document all findings</span></p>",
+        "tone": "warn"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "careplan",
+   "title": "Care Plan Connection",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "flow",
+        "items": [
+         "<strong>1. ASSESSMENT</strong> — BP 160/100, headache</span>",
+         "<strong>2. NURSING DX</strong> — Ineffective tissue perfusion</span>",
+         "<strong>3. GOAL</strong> — BP &lt;140/90 in 24h</span>",
+         "<strong>4. INTERVENTIONS</strong> — Meds + Teaching</span>",
+         "<strong>5. EVAL</strong> — BP 138/86</span>"
+        ]
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Nursing Diagnosis</strong>",
+        "html": "<p><strong>Ineffective tissue perfusion</strong> (cardiopulmonary) <strong>related to</strong> increased vascular resistance <strong>as evidenced by</strong> BP 160/100 mmHg, headache, dizziness</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Goal / Outcome</strong>",
+        "html": "<p>BP will decrease to <strong>&lt;140/90 mmHg</strong> within 24 hours of medication administration. Patient will verbalize 3 lifestyle modifications.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Interventions</strong>",
+        "html": "<ul><li>Administer prescribed antihypertensives</li><li>Monitor BP q4h</li><li>Teach DASH diet principles</li><li>Encourage weight loss & exercise</li><li>Assess medication adherence</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Rationale</strong>",
+        "html": "<p>Reducing vascular resistance and blood volume decreases cardiac workload and prevents end-organ damage. Lifestyle modifications address root causes of HTN.</p><p><strong>Evaluation:</strong> BP 138/86. Patient verbalizes understanding of DASH diet and medication regimen. Follow-up scheduled.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Care Plan Formula:</strong> Problem related to cause as evidenced by S/S &rarr; Goal &rarr; Interventions &rarr; Rationale &rarr; Evaluation</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "renr",
+   "title": "RENR Exam Thinking",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>What system is being tested?</strong>",
+        "html": "<p><strong>Cardiovascular</strong> — BP regulation and tissue perfusion</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>What is the priority?</strong>",
+        "html": "<p>Accurate BP assessment + meds + <strong>lifestyle teaching</strong></p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>What is unsafe?</strong>",
+        "html": "<p>Giving antihypertensives <strong>without checking BP</strong>; not holding beta-blockers when HR &lt;60</p>",
+        "tone": "warn"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>What restores function?</strong>",
+        "html": "<p><strong>Vasodilation + reduced volume</strong> = lower BP + improved perfusion</p>",
+        "tone": "good"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161;</span> <strong>Key Memory Aids for RENR</strong>",
+        "html": "<p><span class=\"tr-warn\"><strong>HTN Crisis:</strong></span> BP &gt;180/120 = assess for organ damage (neuro, cardiac, renal, vision)</p><p><strong>ACE Inhibitors:</strong></span> \"ACE inhibitors cause the ACE cough\" + hyperkalemia + angioedema</p><p><strong>Thiazide Diuretics:</strong></span> \"hypoK\" (hypokalemia) + hyperglycemia + hyperuricemia</p><p><strong>Beta-Blockers:</strong></span> Always check <strong>apical pulse</strong> before giving</p><p><strong>African Caribbean patients:</strong></span> CCBs and thiazides are first-line</p><p><strong>JNC 8:</strong></span> &lt;150/90 (age &gt;60) or &lt;140/90 (age &lt;60 + diabetes/CKD)</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG System Focus Formula:</strong> HTN &rarr; Cardiovascular &rarr; Vessel resistance &rarr; End-organ damage risk &rarr; Priority: BP control + organ protection</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  }
+ ],
+ "question": {
+  "stem": "<p>A patient with hypertension is prescribed <strong>lisinopril</strong>. The nurse should monitor for which potential adverse effect?</p>",
+  "options": [
+   {
+    "letter": "A",
+    "html": "Peripheral edema"
+   },
+   {
+    "letter": "B",
+    "html": "Dry cough"
+   },
+   {
+    "letter": "C",
+    "html": "Bradycardia"
+   },
+   {
+    "letter": "D",
+    "html": "Hypokalemia"
+   }
+  ],
+  "answer": "B",
+  "rationale": "<p>ACE inhibitors like lisinopril block angiotensin-converting enzyme, which can cause a <strong>dry, nonproductive cough</strong> in 5-20% of patients. This is a class effect. If the cough becomes intolerable, the patient may be switched to an ARB.</p><p><strong>Why the others are wrong:</strong></p><p>A.</span> Peripheral edema = <strong>calcium channel blocker</strong> side effect</p><p>C.</span> Bradycardia = <strong>beta-blocker</strong> side effect (check pulse before giving)</p><p>D.</span> Hypokalemia = <strong>thiazide diuretic</strong> side effect; ACE inhibitors cause <strong>hyperkalemia</strong></p>",
+  "why": []
+ },
+ "source": "nrg_htn_review/nrg_htn_review.pptd"
+}

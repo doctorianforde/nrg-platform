@@ -55,17 +55,17 @@ export function DashboardShell({
     // so it must keep a plain colour: no decorative background-image here, ever.
     <div className="min-h-screen bg-muted" data-page-background="">
       <header className="sticky top-0 z-20 border-b border-border/70 bg-card/90 shadow-sm backdrop-blur-md supports-[backdrop-filter]:bg-card/75">
-        <div className="mx-auto flex h-16 max-w-6xl items-center gap-6 px-4">
+        <div className="mx-auto flex h-16 max-w-6xl items-center gap-3 px-4 sm:gap-6">
           <Link href="/" className="group flex items-center gap-2.5 font-brand font-bold tracking-tight text-brand-800">
             <span className="relative flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-brand-500 to-brand-800 p-[5px] shadow-sm transition-transform motion-safe:group-hover:scale-105">
               <Image src="/images/nrg-logo.png" alt="NRG" width={28} height={28} className="rounded-sm" />
             </span>
             <span className="leading-tight">
-              NRG <span className="font-normal opacity-70">Platform</span>
+              NRG <span className="hidden font-normal opacity-70 sm:inline">Platform</span>
             </span>
           </Link>
           <NavLinks items={navItems} />
-          <div className="ml-auto flex items-center gap-3 text-xs">
+          <div className="ml-auto flex items-center gap-2 text-xs sm:gap-3">
             {profile.role === "student" ? <ThemeQuickSwitch /> : null}
             <span className="rounded-full bg-gradient-to-br from-brand-400 to-brand-700 p-[2px]">
               <Avatar

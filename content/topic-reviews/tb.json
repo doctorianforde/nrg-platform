@@ -1,0 +1,626 @@
+{
+ "slug": "tb",
+ "title": "Tuberculosis",
+ "system": "Respiratory / Infectious Disease System",
+ "slides": [
+  {
+   "kind": "anp",
+   "title": "Normal Anatomy & Physiology",
+   "subtitle": "System of Focus: Respiratory / Infectious Disease",
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Key Concepts</strong>",
+        "html": "<ul><li>Mycobacterium tuberculosis: acid-fast bacillus, aerobic</li><li>Transmitted via airborne droplet nuclei (1-5 microns)</li><li>Inhaled into alveoli → macrophages engulf but cannot destroy</li><li>Granuloma formation: caseating necrosis central, fibrous capsule</li><li>Latent TB: contained infection, no symptoms, not contagious</li><li>Active TB: reactivation or primary progressive disease</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Normal Values</strong>",
+        "html": "<ul><li>PPD/Mantoux: induration &gt;10 mm positive (HIV: &gt;5 mm)</li><li>IGRA (QuantiFERON): positive = latent or active</li><li>Sputum AFB smear: rapid but insensitive</li><li>Sputum culture: gold standard (takes 2-8 weeks)</li><li>GeneXpert MTB/RIF: rapid PCR, detects rifampin resistance</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>What the Nurse Must Know</strong>",
+        "html": "<ul><li>TB is AIRBORNE — NOT droplet. N95 respirator required. Standard surgical masks are inadequate</li><li>Latent TB cannot be diagnosed by sputum — only by PPD/IGRA</li><li>Directly Observed Therapy (DOT) is standard of care for active TB</li><li>RIPE regimen: Rifampin, Isoniazid, Pyrazinamide, Ethambutol</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "dysfunction",
+   "title": "Dysfunction: What Goes Wrong",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>NORMAL FUNCTION</strong>",
+        "html": "<ul><li>Intact alveolar macrophages destroy pathogens</li><li>No granuloma formation</li><li>Normal lung parenchyma</li><li>Clear airways and alveoli</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>DYSFUNCTION</strong>",
+        "html": "<ul><li>M. tuberculosis survives in macrophages → granuloma formation</li><li>Caseating necrosis destroys lung tissue</li><li>Cavity formation in upper lobes (high O₂)</li><li>Spread via lymphatics and bloodstream (miliary TB)</li><li>Immune reconstitution inflammatory syndrome (IRIS) in HIV</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#9888; Risk Factors (Non-Modifiable)",
+        "html": "<ul><li>HIV infection (20-30x risk)</li><li>Immunosuppression (steroids, TNF inhibitors)</li><li>Diabetes mellitus (3x risk)</li><li>Silicosis, CKD, malnutrition</li><li>Age &lt;5 or &gt;65</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161; Risk Factors (Modifiable)",
+        "html": "<ul><li>Close contact with active TB patient</li><li>Overcrowded living conditions (relevant in Caribbean)</li><li>Healthcare workers</li><li>Substance abuse (alcohol, IV drugs)</li><li>Travel to/endemic from TB-endemic countries</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128293; Complications",
+        "html": "<p>Hemoptysis (cavitary erosion into vessel) &bull; Pneumothorax (cavity rupture) &bull; Miliary TB (hematogenous spread) &bull; TB meningitis &bull; Pott disease (spinal TB) &bull; Chronic respiratory failure</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Opposite:</strong> Immune system cannot contain TB → granulomas destroy lung tissue → cavitation → transmission</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "patho",
+   "title": "Step-by-Step Pathophysiology",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.65,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>1. Inhalation:</strong> droplet nuclei reach terminal alveoli</p><p><strong>2. Macrophage engulfment:</strong> TB survives and multiplies intracellularly</p><p><strong>3. Granuloma:</strong> immune cells wall off infection (Ghon focus)</p><p><strong>4. Latent TB:</strong> contained indefinitely (90% of infected)</p><p><strong>5. Reactivation:</strong> immunosuppression allows replication (5-10% lifetime)</p><p><strong>6. Cavitation:</strong> necrotic center liquefies → coughed out → transmission</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.35,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Key Detail</strong>",
+        "html": "<p>M. tuberculosis cell wall is rich in mycolic acids, making it acid-fast and resistant to destruction by macrophages. The granuloma (Ghon complex) contains the infection but also protects the bacteria from antibiotics. Cavitation occurs in the upper lobes where O₂ tension is highest (TB is strictly aerobic).</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": "<strong>Clinical Result</strong>",
+        "html": "<p>Active pulmonary TB: productive cough &gt;2-3 weeks, hemoptysis, fever, night sweats, weight loss. Cavitary lesions visible on CXR (upper lobe infiltrates). Highly contagious via airborne route. Extrapulmonary TB can affect meninges, spine, kidneys, lymph nodes.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Sequencing:</strong> Each step leads to the next — understand the cascade to predict S/S and management</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "signs",
+   "title": "Signs and Symptoms",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Early / Mild</strong>",
+        "html": "<ul><li>Productive cough &gt;2-3 weeks</li><li>Low-grade fever, night sweats</li><li>Unexplained weight loss, anorexia</li><li>Fatigue, malaise</li><li>Hemoptysis (bloody sputum)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Severe</strong>",
+        "html": "<ul><li>Massive hemoptysis</li><li>Severe dyspnea</li><li>Pleural effusion</li><li>Cavitary disease on imaging</li><li>Miliary pattern on CXR (widespread dissemination)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Massive hemoptysis: airway obstruction, asphyxiation</strong>",
+        "html": "<ul><li>Massive hemoptysis: airway obstruction, asphyxiation</li><li>TB meningitis: altered LOC, cranial nerve deficits</li><li>Respiratory failure</li><li>THIS IS A MEDICAL EMERGENCY</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Diagnostic / Assessment Findings</strong>",
+        "html": "<ul><li>Chest X-ray: upper lobe infiltrates, cavitation, Ghon complex</li><li>Sputum AFB smear: rapid screening (3 samples)</li><li>Sputum GeneXpert: rapid PCR with rifampin resistance</li><li>Sputum culture: gold standard (2-8 weeks)</li><li>PPD/IGRA: positive indicates infection (latent or active)</li><li>HIV test: all TB patients should be tested</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Link Patho to S/S</strong>",
+        "html": "<p>Alveolar destruction &rarr; Cough, hemoptysis</p><p>Systemic inflammation &rarr; Fever, night sweats, weight loss</p><p>Cavitation &rarr; Hemoptysis, highly contagious</p><p>Extrapulmonary spread &rarr; Varies by site: back pain (spine), headache (meninges)</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "assessment",
+   "title": "Nursing Assessment",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Cardiovascular</strong>",
+        "html": "<ul><li>HR (tachycardia from fever/anemia)</li><li>BP (hypotension if septic)</li><li>Signs of malnutrition/cachexia</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Respiratory</strong>",
+        "html": "<ul><li>Cough: frequency, duration, sputum amount/color</li><li>Hemoptysis: amount, frequency</li><li>Respiratory rate, SpO2</li><li>Lung sounds (crackles, bronchial breathing)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Neurological</strong>",
+        "html": "<ul><li>Mental status (TB meningitis)</li><li>Back pain, neurological deficits (Pott disease)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.67,
+      "blocks": [
+       {
+        "type": "table",
+        "heading": "<strong>Key Laboratory & Diagnostic Tests</strong>",
+        "header": [
+         "Test",
+         "Normal Value",
+         "Significance"
+        ],
+        "rows": [
+         [
+          "Sputum AFB smear",
+          "Negative",
+          "Rapid but insensitive — need 3 samples"
+         ],
+         [
+          "GeneXpert MTB/RIF",
+          "Negative",
+          "Rapid PCR — detects rifampin resistance in 2 hours"
+         ],
+         [
+          "Sputum culture",
+          "No growth",
+          "Gold standard — takes 2-8 weeks"
+         ],
+         [
+          "PPD / IGRA",
+          "Negative",
+          "Positive = infection; does not distinguish latent vs active"
+         ],
+         [
+          "HIV test",
+          "Negative",
+          "All TB patients must be tested for HIV"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Priority Actions</strong>",
+        "html": "<p>Airborne isolation IMMEDIATELY (negative pressure room, N95 respirator). Collect 3 sputum samples (early morning preferred) for AFB smear, culture, and GeneXpert. Assess for hemoptysis risk. Screen for HIV. DOT for medication adherence.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "management",
+   "title": "Nursing Management",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "table",
+        "heading": "&#128138; <strong>Pharmacology - Nursing Monitoring</strong>",
+        "header": [
+         "Class",
+         "Example",
+         "Mechanism",
+         "Nursing Monitoring"
+        ],
+        "rows": [
+         [
+          "RIPE (intensive)",
+          "Rifampin + INH + PZA + Ethambutol",
+          "Bactericidal combination, prevents resistance",
+          "2 months intensive phase"
+         ],
+         [
+          "RI (continuation)",
+          "Rifampin + INH",
+          "Complete eradication",
+          "4 months continuation phase (total 6 months)"
+         ],
+         [
+          "Rifampin SE",
+          "Orange body fluids, hepatotoxicity",
+          "Induces hepatic enzymes — interacts with many drugs",
+          "Warn patient about discoloration"
+         ],
+         [
+          "INH SE",
+          "Peripheral neuropathy, hepatotoxicity",
+          "Give pyridoxine (B6) to prevent neuropathy",
+          "Monitor LFTs monthly"
+         ],
+         [
+          "PZA SE",
+          "Hepatotoxicity, hyperuricemia",
+          "Kills semi-dormant bacilli",
+          "Monitor uric acid"
+         ],
+         [
+          "Ethambutol SE",
+          "Optic neuritis (color vision loss)",
+          "Bacteriostatic",
+          "Test visual acuity and color vision monthly"
+         ]
+        ]
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Rifampin & Hepatotoxicity Alert</strong>",
+        "html": "<p>Rifampin: Orange discoloration of ALL body fluids (urine, tears, sweat) — harmless but stains contact lenses. INH + Rifampin + PZA all cause hepatotoxicity — monitor LFTs monthly. STOP all TB meds if ALT &gt;3x ULN with symptoms or &gt;5x ULN without symptoms. Pyridoxine (B6) 25-50 mg daily with INH prevents peripheral neuropathy.</p>",
+        "tone": "warn"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Lifestyle & Patient Education</strong>",
+        "html": "<ul><li>DIRECTLY OBSERVED THERAPY (DOT) — gold standard for adherence</li><li>Cough etiquette and respiratory isolation until sputum-negative</li><li>Nutritional support (high protein, high calorie)</li><li>Adequate rest and gradual activity</li><li>Contact tracing and screening</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>&#128680; Report Immediately:</strong> Hemoptysis &gt;50 mL | Severe dyspnea | Jaundice (hepatotoxicity) | Vision changes (ethambutol) | Severe abdominal pain | Confusion (TB meningitis)</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "careplan",
+   "title": "Care Plan Connection",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Nursing Diagnosis</strong>",
+        "html": "<p>Ineffective airway clearance related to excessive mucus production and pulmonary cavitation as evidenced by productive cough, hemoptysis, and abnormal lung sounds</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Goal / Outcome</strong>",
+        "html": "<p>Patient will demonstrate effective airway clearance and complete the full 6-month TB treatment regimen without missed doses.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Interventions</strong>",
+        "html": "<ul><li>Airborne isolation — negative pressure room</li><li>Collect 3 sputum samples for AFB/culture/GeneXpert</li><li>Administer RIPE regimen per DOT protocol</li><li>Monitor LFTs monthly</li><li>Provide nutritional support</li><li>Educate on medication adherence and side effects</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Rationale</strong>",
+        "html": "<p>Airborne isolation prevents transmission. Three sputum samples improve diagnostic yield. DOT ensures adherence and prevents drug resistance. Monthly LFTs detect hepatotoxicity early. Nutritional support aids immune function and recovery.</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": "<strong>Evaluation</strong>",
+        "html": "<p>Sputum AFB negative after 2 months of treatment. LFTs within normal limits. Patient reports no vision changes. Weight stable. Understanding of medication regimen and side effects. DOT compliance 100%.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Care Plan Formula:</strong> Problem → Goal → Interventions → Rationale → Evaluation</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "renr",
+   "title": "RENR Exam Thinking",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>What system is being tested?</strong></p><p>Respiratory / Infectious Disease — airborne transmission, granuloma formation</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>What is the priority?</strong></p><p>Airborne isolation + sputum collection + RIPE therapy + DOT</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><span class=\"tr-warn\"><strong>What is unsafe?</strong></span></p><p>Droplet precautions instead of airborne; missing LFT monitoring; incomplete treatment course</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><span class=\"tr-good\"><strong>What restores function?</strong></span></p><p>Complete 6-month RIPE regimen with DOT eradicates infection</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161; <strong>Key Memory Aids for RENR</strong>",
+        "html": "<ul><li><strong>AIRBORNE not droplet:</strong> N95 respirator required — surgical mask inadequate</li><li><strong>RIPE regimen:</strong> Rifampin, Isoniazid, Pyrazinamide, Ethambutol — 2 months intensive + 4 months continuation</li><li><strong>Orange fluids:</strong> Rifampin causes harmless orange urine/tears/sweat — warn patient</li><li><strong>INH + B6:</strong> Always give pyridoxine 25-50 mg with isoniazid to prevent neuropathy</li><li><strong>GeneXpert:</strong> Rapid PCR — results in 2 hours including rifampin resistance detection</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG System Focus Formula:</strong> TB → Respiratory → Granuloma formation + cavitation → Airborne transmission → Priority: Airborne isolation + RIPE + DOT</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  }
+ ],
+ "question": {
+  "stem": "<p><strong>A 34-year-old patient newly diagnosed with pulmonary tuberculosis is started on RIPE therapy. During the second week of treatment, the patient reports that their urine has turned bright orange-red and they have noticed yellow discoloration of their contact lenses. What is the nurse's best response?</strong></p>",
+  "options": [
+   {
+    "letter": "A",
+    "html": "Instruct the patient to stop the rifampin immediately and come for liver function testing"
+   },
+   {
+    "letter": "B",
+    "html": "Reassure the patient this is an expected, harmless side effect of rifampin — switch to glasses during treatment"
+   },
+   {
+    "letter": "C",
+    "html": "Tell the patient to increase fluid intake to flush the medication and reduce discoloration"
+   },
+   {
+    "letter": "D",
+    "html": "Order an urgent ophthalmology referral for the contact lens discoloration"
+   }
+  ],
+  "answer": "B",
+  "rationale": "<p>Rifampin causes harmless orange-red discoloration of all body fluids (urine, tears, sweat, saliva) and can permanently stain soft contact lenses. This is a well-known, expected side effect that does NOT indicate toxicity. The nurse should reassure the patient, advise switching to glasses during treatment, and continue therapy. Stopping rifampin (Option A) would interrupt directly observed therapy, risking treatment failure and multidrug resistance. Increasing fluids (Option C) is a comfort measure but doesn't address the core educational need. An urgent ophthalmology referral (Option D) is unnecessary — this is a known medication effect, not an eye pathology.</p>",
+  "why": [
+   {
+    "letter": "A",
+    "html": "Inappropriately interrupts TB therapy — orange fluids are expected, not toxic"
+   },
+   {
+    "letter": "C",
+    "html": "Comfort measure but doesn't address the educational need"
+   },
+   {
+    "letter": "D",
+    "html": "Unnecessary — known medication effect, not eye pathology"
+   }
+  ]
+ },
+ "source": "nrg_medical_surgical_reviews/tb_review.pptd"
+}

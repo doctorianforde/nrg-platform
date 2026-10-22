@@ -1,0 +1,626 @@
+{
+ "slug": "copd",
+ "title": "COPD and Chronic Respiratory Disease",
+ "system": "Respiratory System",
+ "slides": [
+  {
+   "kind": "anp",
+   "title": "Normal Anatomy & Physiology",
+   "subtitle": "System of Focus: Respiratory",
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Key Concepts</strong>",
+        "html": "<ul><li>Airways branch from trachea → bronchi → bronchioles → alveoli</li><li>Alveoli: gas exchange surface (70 m² total surface area)</li><li>Type I pneumocytes: gas exchange</li><li>Type II pneumocytes: surfactant production</li><li>Surfactant reduces surface tension, prevents alveolar collapse</li><li>Elastic recoil of lungs + chest wall expansion drives ventilation</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Normal Values</strong>",
+        "html": "<ul><li>FEV1/FVC ratio: &gt;0.70 normal</li><li>FEV1: &gt;80% predicted normal</li><li>PaO2: 80-100 mmHg</li><li>PaCO2: 35-45 mmHg</li><li>pH: 7.35-7.45</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>What the Nurse Must Know</strong>",
+        "html": "<ul><li>COPD = chronic bronchitis (blue bloater) + emphysema (pink puffer) — often overlap</li><li>Chronic bronchitis: productive cough &gt;3 months x 2 years</li><li>Emphysema: alveolar wall destruction → loss of elastic recoil</li><li>Barrel chest: increased AP diameter from air trapping</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "dysfunction",
+   "title": "Dysfunction: What Goes Wrong",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>NORMAL FUNCTION</strong>",
+        "html": "<ul><li>Airways open, alveoli intact</li><li>Efficient gas exchange</li><li>Normal airway resistance</li><li>Adequate surfactant prevents collapse</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>DYSFUNCTION</strong>",
+        "html": "<ul><li>Chronic inflammation → airway narrowing, mucus hypersecretion</li><li>Alveolar wall destruction → loss of surface area for gas exchange</li><li>Loss of elastic recoil → airway collapse during expiration</li><li>Air trapping → hyperinflation → barrel chest</li><li>Hypoxic drive in chronic CO2 retainers</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#9888; Risk Factors (Non-Modifiable)",
+        "html": "<ul><li>Age &gt;40</li><li>Alpha-1 antitrypsin deficiency (genetic)</li><li>Childhood respiratory infections</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161; Risk Factors (Modifiable)",
+        "html": "<ul><li>Cigarette smoking (80-90% of COPD cases)</li><li>Biomass fuel exposure (relevant in Caribbean)</li><li>Occupational dust/chemicals</li><li>Secondhand smoke</li><li>Air pollution</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128293; Complications",
+        "html": "<p>Respiratory failure (type I or II) &bull; Pulmonary hypertension → cor pulmonale &bull; Lung cancer (shared risk factor: smoking) &bull; Pneumonia (impaired clearance) &bull; Pneumothorax (bullae rupture in emphysema) &bull; Acute exacerbations (infections, pollutants)</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Opposite:</strong> Airway narrowing + alveolar destruction → air trapping → poor gas exchange → hypoxemia + hypercapnia</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "patho",
+   "title": "Step-by-Step Pathophysiology",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.65,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>1. Chronic irritant exposure:</strong> smoke, biomass, pollution</p><p><strong>2. Inflammatory cascade:</strong> neutrophils, macrophages, CD8+ T cells</p><p><strong>3. Mucus hypersecretion (chronic bronchitis):</strong> clogged airways</p><p><strong>4. Protease-antiprotease imbalance:</strong> alveolar wall destruction (emphysema)</p><p><strong>5. Loss of elastic recoil:</strong> small airway collapse on expiration</p><p>6. Air trapping, hyperinflation, V/Q mismatch</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.35,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Key Detail</strong>",
+        "html": "<p>In emphysema, destruction of alveolar walls reduces surface area for gas exchange and destroys the elastic recoil that holds small airways open. In chronic bronchitis, goblet cell hyperplasia and hypertrophy produce excessive mucus, inflamed airways narrow, and impaired ciliary function prevents clearance.</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": "<strong>Clinical Result</strong>",
+        "html": "<p>V/Q mismatch: some alveoli ventilated but not perfused, others perfused but not ventilated. Chronic hypoxemia stimulates erythropoietin → polycythemia. Chronic hypercapnia shifts pH buffering to kidneys (compensated respiratory acidosis). Hypoxic pulmonary vasoconstriction → pulmonary hypertension → right heart failure (cor pulmonale).</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Sequencing:</strong> Each step leads to the next — understand the cascade to predict S/S and management</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "signs",
+   "title": "Signs and Symptoms",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Early / Mild</strong>",
+        "html": "<ul><li>Progressive dyspnea on exertion</li><li>Chronic productive cough (clear to purulent)</li><li>Wheezing, chest tightness</li><li>Frequent respiratory infections</li><li>Reduced exercise tolerance</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Severe</strong>",
+        "html": "<ul><li>Dyspnea at rest</li><li>Prolonged expiratory phase, pursed-lip breathing</li><li>Accessory muscle use (sternocleidomastoid, intercostals)</li><li>Tripod position (leaning forward on knees)</li><li>Cyanosis (chronic bronchitis), weight loss (emphysema)</li><li>Peripheral edema, JVD (cor pulmonale)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Acute exacerbation: severe dyspnea, increased sputum purulence/volume</strong>",
+        "html": "<ul><li>Acute exacerbation: severe dyspnea, increased sputum purulence/volume</li><li>Respiratory failure: somnolence, confusion (CO2 narcosis)</li><li>Acute-on-chronic respiratory acidosis (pH &lt;7.30)</li><li>THIS IS A MEDICAL EMERGENCY</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Diagnostic / Assessment Findings</strong>",
+        "html": "<ul><li>Spirometry: FEV1/FVC &lt;0.70 confirms obstruction</li><li>FEV1 % predicted determines GOLD stage</li><li>Chest X-ray: hyperinflation, flattened diaphragms, bullae</li><li>ABG: hypoxemia ± hypercapnia ± respiratory acidosis</li><li>CBC: polycythemia (Hct &gt;50% from chronic hypoxia)</li><li>ECG: right axis deviation, P pulmonale (R atrial enlargement)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Link Patho to S/S</strong>",
+        "html": "<p>Airway narrowing &rarr; Wheezing, dyspnea, cough</p><p>Alveolar destruction &rarr; Reduced exercise tolerance, weight loss</p><p>Air trapping &rarr; Barrel chest, tripod position</p><p>V/Q mismatch &rarr; Hypoxemia, cyanosis</p><p>Cor pulmonale &rarr; Peripheral edema, JVD, hepatomegaly</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "assessment",
+   "title": "Nursing Assessment",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Cardiovascular</strong>",
+        "html": "<ul><li>HR, BP (tachycardia common)</li><li>JVD (cor pulmonale)</li><li>Peripheral edema</li><li>Precordial heave (right ventricular hypertrophy)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Respiratory</strong>",
+        "html": "<ul><li>Respiratory rate, pattern, effort</li><li>Auscultation: wheezes, crackles, diminished breath sounds</li><li>SpO2 (target 88-92% for CO2 retainers)</li><li>Sputum: amount, color, consistency</li><li>Chest shape: barrel chest?</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Neurological</strong>",
+        "html": "<ul><li>Mental status (CO2 narcosis → confusion, somnolence)</li><li>Anxiety level</li><li>Ability to complete sentences</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.67,
+      "blocks": [
+       {
+        "type": "table",
+        "heading": "<strong>Key Laboratory & Diagnostic Tests</strong>",
+        "header": [
+         "Test",
+         "Normal Value",
+         "Significance"
+        ],
+        "rows": [
+         [
+          "Spirometry",
+          "FEV1/FVC &gt;0.70",
+          "&lt;0.70 = obstruction; FEV1 determines GOLD stage"
+         ],
+         [
+          "ABG",
+          "PaO2 80-100, PaCO2 35-45",
+          "Hypoxemia + hypercapnia in severe disease"
+         ],
+         [
+          "CBC",
+          "Hgb 12-16 g/dL",
+          "Polycythemia Hct &gt;50% from chronic hypoxia"
+         ],
+         [
+          "Chest X-ray",
+          "Normal",
+          "Hyperinflation, flattened diaphragms, bullae"
+         ],
+         [
+          "Alpha-1 AT",
+          "Normal levels",
+          "Deficiency testing if early onset, non-smoker"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Priority Actions</strong>",
+        "html": "<p>Accurate ABG to assess CO2 retention. Identify exacerbation trigger (infection, non-adherence, pollution). Target SpO2 88-92% for chronic CO2 retainers — higher O2 suppresses hypoxic drive. Assess work of breathing and accessory muscle use.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "management",
+   "title": "Nursing Management",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "table",
+        "heading": "&#128138; <strong>Pharmacology - Nursing Monitoring</strong>",
+        "header": [
+         "Class",
+         "Example",
+         "Mechanism",
+         "Nursing Monitoring"
+        ],
+        "rows": [
+         [
+          "Bronchodilator (SABA)",
+          "Salbutamol (Ventolin)",
+          "Beta-2 agonist → smooth muscle relaxation",
+          "Tremors, tachycardia — use spacer"
+         ],
+         [
+          "Bronchodilator (LABA)",
+          "Salmeterol, Formoterol",
+          "Long-acting maintenance bronchodilation",
+          "Never use as monotherapy — combine with ICS"
+         ],
+         [
+          "Anticholinergic",
+          "Ipratropium, Tiotropium",
+          "Block vagal tone → bronchodilation",
+          "Dry mouth, urinary retention"
+         ],
+         [
+          "Corticosteroid (ICS)",
+          "Fluticasone, Budesonide",
+          "Reduce airway inflammation",
+          "Oral candidiasis — rinse mouth after use"
+         ],
+         [
+          "Combination",
+          "Seretide (Salmeterol + Fluticasone)",
+          "Dual bronchodilation + anti-inflammatory",
+          "Most effective maintenance therapy"
+         ],
+         [
+          "Mucolytic",
+          "Carbocisteine",
+          "Reduce sputum viscosity",
+          "Nausea, GI upset"
+         ]
+        ]
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Oxygen & Corticosteroid Alert</strong>",
+        "html": "<p>Oxygen: Target SpO2 88-92% for chronic CO2 retainers. Higher O2 suppresses hypoxic drive, causing CO2 retention and respiratory acidosis. Never give high-flow O2 without ABG. ICS: Always rinse mouth after use to prevent oral candidiasis. Never use LABA as monotherapy.</p>",
+        "tone": "warn"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Lifestyle & Patient Education</strong>",
+        "html": "<ul><li>SMOKING CESSATION — single most effective intervention</li><li>Pursed-lip breathing: slows expiration, prevents airway collapse</li><li>Diaphragmatic breathing exercises</li><li>Pulmonary rehabilitation program</li><li>Annual influenza vaccine + pneumococcal vaccine</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>&#128680; Report Immediately:</strong> SpO2 &lt;88% | Confusion or somnolence | Increased sputum purulence/volume | Unable to speak in full sentences | Accessory muscle use at rest</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "careplan",
+   "title": "Care Plan Connection",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Nursing Diagnosis</strong>",
+        "html": "<p>Impaired gas exchange related to alveolar destruction and airway obstruction as evidenced by dyspnea, SpO2 86%, FEV1 45% predicted, and productive cough</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Goal / Outcome</strong>",
+        "html": "<p>Patient will maintain SpO2 88-92% and demonstrate effective breathing techniques. Will report improved exercise tolerance within 1 week.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Interventions</strong>",
+        "html": "<ul><li>Administer bronchodilators via MDI with spacer</li><li>Teach pursed-lip and diaphragmatic breathing</li><li>Low-flow O2 at 1-2 L/min (target SpO2 88-92%)</li><li>Position in high Fowler's or tripod position</li><li>Encourage fluid intake to thin secretions</li><li>Chest physiotherapy and suction PRN</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Rationale</strong>",
+        "html": "<p>Bronchodilators reduce airway resistance. Pursed-lip breathing creates back-pressure preventing airway collapse. Low-flow O2 maintains hypoxic drive in CO2 retainers. Positioning reduces pressure on diaphragm, improving ventilation.</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": "<strong>Evaluation</strong>",
+        "html": "<p>SpO2 90% on 2L O2. Patient demonstrates pursed-lip breathing independently. Productive cough with thinner sputum. Reports improved walking distance. Ready for pulmonary rehabilitation referral.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Care Plan Formula:</strong> Problem → Goal → Interventions → Rationale → Evaluation</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "renr",
+   "title": "RENR Exam Thinking",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>What system is being tested?</strong></p><p>Respiratory — airway patency and gas exchange</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>What is the priority?</strong></p><p>Bronchodilation + controlled O2 (88-92%) + breathing techniques</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><span class=\"tr-warn\"><strong>What is unsafe?</strong></span></p><p>High-flow O2 in chronic CO2 retainers; stopping smoking cessation support; LABA monotherapy</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><span class=\"tr-good\"><strong>What restores function?</strong></span></p><p>Bronchodilation opens airways + controlled O2 improves gas exchange without suppressing drive</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161; <strong>Key Memory Aids for RENR</strong>",
+        "html": "<ul><li><strong>SpO2 target:</strong> 88-92% for CO2 retainers — higher suppresses hypoxic drive</li><li><strong>Smoking cessation:</strong> Single most effective intervention — slows decline, improves symptoms</li><li><strong>Pursed-lip breathing:</strong> Prevents airway collapse during expiration — key technique</li><li><strong>GOLD stages:</strong> FEV1 &gt;80% mild, 50-80% moderate, 30-50% severe, &lt;30% very severe</li><li><strong>Never LABA alone:</strong> LABA must be combined with ICS — increases mortality as monotherapy</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG System Focus Formula:</strong> COPD → Respiratory → Airway obstruction + alveolar destruction → V/Q mismatch → Priority: Bronchodilation + controlled O2 + breathing techniques</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  }
+ ],
+ "question": {
+  "stem": "<p><strong>A patient with severe COPD and a history of chronic CO2 retention is admitted with an acute exacerbation. Arterial blood gas shows: pH 7.28, PaCO2 68 mmHg, PaO2 52 mmHg. The nurse applies supplemental oxygen. What is the appropriate oxygen delivery target?</strong></p>",
+  "options": [
+   {
+    "letter": "A",
+    "html": "Apply high-flow oxygen via non-rebreather mask to achieve SpO2 &gt;94%"
+   },
+   {
+    "letter": "B",
+    "html": "Apply low-flow oxygen at 1-2 L/min via nasal cannula to achieve SpO2 88-92%"
+   },
+   {
+    "letter": "C",
+    "html": "Withhold oxygen and encourage deep breathing exercises only"
+   },
+   {
+    "letter": "D",
+    "html": "Apply continuous positive airway pressure (CPAP) at 10 cmH2O immediately"
+   }
+  ],
+  "answer": "B",
+  "rationale": "<p>This patient has acute-on-chronic type II respiratory failure (elevated PaCO2 68 with compensated acidosis pH 7.28). In chronic CO2 retainers, the hypoxic drive becomes the primary stimulus for breathing. High-flow oxygen suppresses this drive, worsening CO2 retention and causing respiratory acidosis. The correct target is SpO2 88-92% using low-flow oxygen (1-2 L/min NC). Withholding oxygen entirely is unsafe given PaO2 of 52. CPAP is not first-line for COPD exacerbation — it is used for acute pulmonary edema or obstructive sleep apnea.</p>",
+  "why": [
+   {
+    "letter": "A",
+    "html": "High-flow O2 suppresses hypoxic drive, causing CO2 narcosis and respiratory arrest"
+   },
+   {
+    "letter": "C",
+    "html": "Withholding oxygen with PaO2 52 is unsafe — patient needs some O2 support"
+   },
+   {
+    "letter": "D",
+    "html": "CPAP is not first-line for COPD exacerbation; may be used if non-invasive ventilation indicated"
+   }
+  ]
+ },
+ "source": "nrg_medical_surgical_reviews/copd_review.pptd"
+}

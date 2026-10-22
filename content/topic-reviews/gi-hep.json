@@ -1,0 +1,626 @@
+{
+ "slug": "gi-hep",
+ "title": "GI and Hepatobiliary Disorders",
+ "system": "Gastrointestinal System",
+ "slides": [
+  {
+   "kind": "anp",
+   "title": "Normal Anatomy & Physiology",
+   "subtitle": "System of Focus: Gastrointestinal",
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Key Concepts</strong>",
+        "html": "<ul><li>Liver: largest internal organ — metabolic, synthetic, excretory, immune functions</li><li>Hepatocytes produce: albumin, clotting factors, bile, cholesterol</li><li>Kupffer cells: hepatic macrophages</li><li>Portal vein delivers nutrient-rich blood from GI tract</li><li>Bile: emulsifies fats, bilirubin excretion, stored in gallbladder</li><li>ALT (hepatocellular) and AST (mitochondrial) = liver injury markers</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Normal Values</strong>",
+        "html": "<ul><li>ALT: 7-56 U/L</li><li>AST: 10-40 U/L</li><li>ALP: 44-147 U/L</li><li>Bilirubin total: 0.1-1.2 mg/dL</li><li>Albumin: 3.5-5.0 g/dL</li><li>PT/INR: 11-13.5s / 0.9-1.1</li><li>Ammonia: 15-45 mcg/dL</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>What the Nurse Must Know</strong>",
+        "html": "<ul><li>Hepatitis A: fecal-oral, acute, no chronic carrier state, vaccine available</li><li>Hepatitis B: blood/sexual/perinatal, can be chronic, vaccine available</li><li>Hepatitis C: blood-borne, high chronic rate, NO vaccine (but curable with DAAs)</li><li>Hepatitis D: requires HBV co-infection</li><li>Hepatitis E: fecal-oral, high mortality in pregnancy</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "dysfunction",
+   "title": "Dysfunction: What Goes Wrong",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>NORMAL FUNCTION</strong>",
+        "html": "<ul><li>Liver metabolizes nutrients, detoxifies, synthesizes proteins</li><li>Normal bile flow and bilirubin excretion</li><li>Intact hepatocytes with normal enzyme levels</li><li>Normal clotting factor synthesis</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>DYSFUNCTION</strong>",
+        "html": "<ul><li>Hepatocellular injury: viral, alcoholic, drug-induced, autoimmune</li><li>Cholestasis: impaired bile flow → jaundice, pruritus</li><li>Cirrhosis: fibrosis replaces functional tissue → portal hypertension</li><li>Hepatic encephalopathy: ammonia accumulation → neurotoxicity</li><li>Liver failure: inability to perform essential functions</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#9888; Risk Factors (Non-Modifiable)",
+        "html": "<ul><li>Genetic hemochromatosis, Wilson disease</li><li>Alpha-1 antitrypsin deficiency</li><li>Autoimmune hepatitis (women 3-4x)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161; Risk Factors (Modifiable)",
+        "html": "<ul><li>Hepatitis B/C infection (chronic)</li><li>Alcohol abuse (most common cause of cirrhosis in Caribbean)</li><li>Non-alcoholic fatty liver disease (NAFLD/NASH)</li><li>Medications: acetaminophen overdose, amoxicillin-clavulanate</li><li>Aflatoxin exposure (contaminated grains — relevant in tropics)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128293; Complications",
+        "html": "<p>Portal hypertension → esophageal varices, ascites, splenomegaly &bull; Hepatic encephalopathy &bull; Hepatorenal syndrome &bull; Spontaneous bacterial peritonitis (SBP) &bull; Hepatocellular carcinoma &bull; Coagulopathy</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Opposite:</strong> Liver damaged → synthetic and metabolic functions impaired → portal hypertension + encephalopathy + coagulopathy</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "patho",
+   "title": "Step-by-Step Pathophysiology",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.65,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>1. Hepatocyte injury:</strong> virus, toxin, alcohol, autoimmune</p><p><strong>2. Inflammation:</strong> immune-mediated hepatocellular damage</p><p><strong>3. Fibrosis:</strong> collagen deposition replaces functional tissue</p><p><strong>4. Cirrhosis:</strong> regenerative nodules surrounded by fibrous septa</p><p><strong>5. Portal hypertension:</strong> increased resistance in portal vein</p><p><strong>6. Decompensation:</strong> ascites, varices, encephalopathy, HRS</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.35,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Key Detail</strong>",
+        "html": "<p>Cirrhosis is irreversible end-stage liver disease. Compensated cirrhosis: no complications. Decompensated: one or more of ascites, variceal hemorrhage, encephalopathy, jaundice. Child-Pugh and MELD scores predict prognosis and transplant priority.</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": "<strong>Clinical Result</strong>",
+        "html": "<p>Portal hypertension: increased pressure in portal vein → collateral circulation (varices), ascites (transudate), splenomegaly. Hepatic encephalopathy: ammonia and other neurotoxins accumulate due to impaired hepatic clearance and portosystemic shunting. Coagulopathy: decreased synthesis of clotting factors (II, VII, IX, X) and thrombocytopenia from splenic sequestration.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Sequencing:</strong> Each step leads to the next — understand the cascade to predict S/S and management</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "signs",
+   "title": "Signs and Symptoms",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Early / Mild</strong>",
+        "html": "<ul><li>Fatigue, weakness, anorexia</li><li>Mild RUQ discomfort</li><li>Nausea, occasional vomiting</li><li>Pruritus (cholestasis)</li><li>Dark urine, pale stools (biliary obstruction)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Severe</strong>",
+        "html": "<ul><li>Jaundice (scleral icterus first)</li><li>Ascites, peripheral edema</li><li>Confusion, asterixis (hepatic encephalopathy)</li><li>Easy bruising, prolonged bleeding</li><li>Gynecomastia, spider angiomas, palmar erythema</li><li>Fetor hepaticus (sweet musty breath)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Variceal hemorrhage: hematemesis, melena, hypotension</strong>",
+        "html": "<ul><li>Variceal hemorrhage: hematemesis, melena, hypotension</li><li>Severe hepatic encephalopathy: coma</li><li>Hepatorenal syndrome: oliguria, rising creatinine</li><li>SBP: fever, abdominal pain, rebound tenderness</li><li>THIS IS A MEDICAL EMERGENCY</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Diagnostic / Assessment Findings</strong>",
+        "html": "<ul><li>LFTs: ALT, AST, ALP, GGT, bilirubin</li><li>PT/INR: synthetic function (prolonged = impaired synthesis)</li><li>Albumin: synthetic function (low = chronic disease)</li><li>Ammonia: hepatic encephalopathy</li><li>CBC: thrombocytopenia (hypersplenism)</li><li>Abdominal ultrasound: liver texture, ascites, portal vein flow</li><li>HBV/HCV serology</li><li>Alpha-fetoprotein: HCC screening</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Link Patho to S/S</strong>",
+        "html": "<p>Hepatocellular injury &rarr; Elevated ALT/AST, fatigue, anorexia</p><p>Cholestasis &rarr; Jaundice, pruritus, dark urine, pale stools</p><p>Portal hypertension &rarr; Ascites, varices, splenomegaly</p><p>Hepatic encephalopathy &rarr; Confusion, asterixis, elevated ammonia</p><p>Synthetic failure &rarr; Coagulopathy, hypoalbuminemia, edema</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "assessment",
+   "title": "Nursing Assessment",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Cardiovascular</strong>",
+        "html": "<ul><li>BP (hypotension with hemorrhage)</li><li>HR, orthostatic vitals</li><li>Signs of bleeding (bruises, petechiae)</li><li>Capillary refill</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Respiratory</strong>",
+        "html": "<ul><li>Respiratory rate (tachypnea with metabolic alkalosis)</li><li>SpO2</li><li>Lung sounds (hepatic hydrothorax)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Neurological</strong>",
+        "html": "<ul><li>Mental status (hepatic encephalopathy: grade 1-4)</li><li>Asterixis (flapping tremor)</li><li>Focal deficits (exclude other causes)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.67,
+      "blocks": [
+       {
+        "type": "table",
+        "heading": "<strong>Key Laboratory & Diagnostic Tests</strong>",
+        "header": [
+         "Test",
+         "Normal Value",
+         "Significance"
+        ],
+        "rows": [
+         [
+          "ALT / AST",
+          "ALT 7-56, AST 10-40",
+          "Elevated = hepatocellular injury; AST:ALT &gt;2:1 suggests alcohol"
+         ],
+         [
+          "Bilirubin",
+          "0.1-1.2 mg/dL",
+          "Elevated = cholestasis or hepatocellular damage"
+         ],
+         [
+          "PT/INR",
+          "11-13.5s / 0.9-1.1",
+          "Prolonged = decreased synthetic function — predicts severity"
+         ],
+         [
+          "Albumin",
+          "3.5-5.0 g/dL",
+          "Low = chronic liver disease, malnutrition"
+         ],
+         [
+          "Ammonia",
+          "15-45 mcg/dL",
+          "Elevated in hepatic encephalopathy but does NOT correlate with grade"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Priority Actions</strong>",
+        "html": "<p>Assess for hepatic encephalopathy (mental status, asterixis, constructional apraxia). Monitor for variceal bleed (hematemesis, melena). Daily weights and abdominal girth for ascites. STRICT I&O. Low-sodium diet (2 g/day). No alcohol, hepatotoxic drugs (especially acetaminophen &gt;2 g/day).</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "management",
+   "title": "Nursing Management",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "table",
+        "heading": "&#128138; <strong>Pharmacology - Nursing Monitoring</strong>",
+        "header": [
+         "Class",
+         "Example",
+         "Mechanism",
+         "Nursing Monitoring"
+        ],
+        "rows": [
+         [
+          "Lactulose",
+          "15-30 mL PO/NGT",
+          "Traps ammonia in gut, promotes excretion",
+          "Goal: 2-3 soft stools/day; monitor for dehydration"
+         ],
+         [
+          "Rifaximin",
+          "550 mg PO BID",
+          "Reduces ammonia-producing gut bacteria",
+          "Adjunct to lactulose in encephalopathy"
+         ],
+         [
+          "Diuretic",
+          "Spironolactone + Furosemide",
+          "Ascites management (100:40 ratio)",
+          "Monitor electrolytes, renal function"
+         ],
+         [
+          "Beta-blocker",
+          "Propranolol, Carvedilol",
+          "Reduce portal pressure, prevent variceal bleed",
+          "Bradycardia, hypotension"
+         ],
+         [
+          "Antiviral (HBV)",
+          "Tenofovir, Entecavir",
+          "Suppress HBV replication",
+          "Renal monitoring"
+         ],
+         [
+          "DAA (HCV)",
+          "Sofosbuvir/Velpatasvir",
+          "Cure HCV (&gt;95% SVR)",
+          "12 weeks, check for drug interactions"
+         ]
+        ]
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Variceal Bleed & Hepatic Encephalopathy Alert</strong>",
+        "html": "<p>Variceal bleed: EMERGENCY — octreotide 50 mcg IV bolus then 50 mcg/hr infusion, ceftriaxone (prevent SBP), emergency endoscopy with band ligation. Hepatic encephalopathy: lactulose goal is 2-3 soft stools/day. Rifaximin reduces recurrence. AVOID sedatives and opioids (worsen encephalopathy).</p>",
+        "tone": "warn"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Lifestyle & Patient Education</strong>",
+        "html": "<ul><li>ABSOLUTE alcohol abstinence</li><li>Low-sodium diet (2 g/day) for ascites</li><li>Protein restriction NOT recommended (maintains muscle mass)</li><li>Small frequent meals</li><li>Vaccination: Hep A, Hep B, pneumococcal, influenza</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>&#128680; Report Immediately:</strong> Hematemesis or melena | Confusion or decreased LOC | Temperature &gt;38°C (SBP) | Oliguria &lt;400 mL/day | Severe abdominal distension or pain</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "careplan",
+   "title": "Care Plan Connection",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Nursing Diagnosis</strong>",
+        "html": "<p>Excess fluid volume related to portal hypertension and hypoalbuminemia as evidenced by ascites, peripheral edema, and weight gain 4 kg</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Goal / Outcome</strong>",
+        "html": "<p>Patient will demonstrate stable fluid balance with no further weight gain and reduced abdominal girth within 72 hours.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Interventions</strong>",
+        "html": "<ul><li>Administer spironolactone + furosemide as prescribed</li><li>Daily weights and abdominal girth measurement</li><li>Low-sodium diet (2 g/day)</li><li>Fluid restriction if hyponatremic</li><li>Monitor electrolytes and renal function daily</li><li>Assess for SBP (fever, abdominal pain, tenderness)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Rationale</strong>",
+        "html": "<p>Aldosterone antagonism (spironolactone) plus loop diuretic (furosemide) in a 100:40 ratio is the standard for ascites management. Daily measurements detect fluid shifts. Sodium restriction is the cornerstone of ascites management.</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": "<strong>Evaluation</strong>",
+        "html": "<p>Weight decreased 2.5 kg. Abdominal girth decreased 4 cm. No fever or abdominal pain. Electrolytes stable. Patient verbalizes sodium restriction.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Care Plan Formula:</strong> Problem → Goal → Interventions → Rationale → Evaluation</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "renr",
+   "title": "RENR Exam Thinking",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>What system is being tested?</strong></p><p>Gastrointestinal — hepatic synthetic and metabolic function</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>What is the priority?</strong></p><p>Lactulose for encephalopathy + variceal bleed prevention + ascites management</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><span class=\"tr-warn\"><strong>What is unsafe?</strong></span></p><p>Sedatives/opioids in liver disease, high-dose acetaminophen, unmonitored diuretics</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><span class=\"tr-good\"><strong>What restores function?</strong></span></p><p>Lactulose clears ammonia; DAA cures HCV; alcohol abstinence prevents progression</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161; <strong>Key Memory Aids for RENR</strong>",
+        "html": "<ul><li><strong>PT/INR most important:</strong> Prolonged PT/INR = decreased synthetic function — most important prognostic LFT</li><li><strong>Lactulose goal:</strong> 2-3 soft stools/day — traps ammonia in gut for excretion</li><li><strong>Ammonia does NOT correlate:</strong> Ammonia level does NOT correlate with encephalopathy grade — clinical assessment does</li><li><strong>Sofosbuvir/velpatasvir:</strong> Cures HCV in &gt;95% after 12 weeks — pan-genotypic</li><li><strong>Variceal bleed:</strong> Octreotide IV + ceftriaxone + emergency endoscopy — medical emergency</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG System Focus Formula:</strong> Liver Disease → GI → Hepatocellular injury + portal hypertension → Ascites + encephalopathy + coagulopathy → Priority: Lactulose + variceal prevention + ascites management</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  }
+ ],
+ "question": {
+  "stem": "<p><strong>A patient with cirrhosis presents with confusion, asterixis, and lethargy. Laboratory results show ammonia 95 mcg/dL. The physician orders lactulose. The patient's family asks why the medication is needed when the ammonia level is 'not that high.' What is the nurse's best response?</strong></p>",
+  "options": [
+   {
+    "letter": "A",
+    "html": "Explain that the ammonia level confirms severe encephalopathy requiring immediate treatment"
+   },
+   {
+    "letter": "B",
+    "html": "Teach that ammonia levels always correlate with the severity of hepatic encephalopathy symptoms"
+   },
+   {
+    "letter": "C",
+    "html": "Explain that lactulose works by trapping ammonia in the gut for elimination, regardless of the exact level"
+   },
+   {
+    "letter": "D",
+    "html": "Tell the family that the ammonia level is actually normal and the confusion is from something else"
+   }
+  ],
+  "answer": "C",
+  "rationale": "<p>The ammonia level does NOT correlate with the clinical grade of hepatic encephalopathy — some patients have severe encephalopathy with mildly elevated ammonia, while others have high ammonia with minimal symptoms. The clinical assessment (confusion, asterixis, constructional apraxia) guides treatment, not the lab value. Lactulose works by acidifying the colonic contents, which converts ammonia (NH₃) to ammonium (NH₄⁺) that is trapped in the gut and excreted in stool. Option A incorrectly states that ammonia 'confirms' severity. Option B is factually wrong. Option D incorrectly dismisses the hepatic encephalopathy diagnosis.</p>",
+  "why": [
+   {
+    "letter": "A",
+    "html": "Ammonia level does not confirm severity — clinical assessment does"
+   },
+   {
+    "letter": "B",
+    "html": "Ammonia levels do NOT correlate with encephalopathy grade"
+   },
+   {
+    "letter": "D",
+    "html": "The confusion and asterixis ARE hepatic encephalopathy — do not dismiss"
+   }
+  ]
+ },
+ "source": "nrg_medical_surgical_reviews/gi_hep_review.pptd"
+}

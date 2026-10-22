@@ -1,0 +1,626 @@
+{
+ "slug": "msk",
+ "title": "Musculoskeletal Disorders",
+ "system": "Musculoskeletal System",
+ "slides": [
+  {
+   "kind": "anp",
+   "title": "Normal Anatomy & Physiology",
+   "subtitle": "System of Focus: Musculoskeletal",
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Key Concepts</strong>",
+        "html": "<ul><li>Bone: mineralized connective tissue — provides structure, protects organs, stores Ca²⁺/PO₄</li><li>Joints: synovial (freely movable), cartilaginous (limited), fibrous (fixed)</li><li>Cartilage: avascular — relies on synovial fluid for nutrition</li><li>Muscles: skeletal (voluntary), smooth (involuntary), cardiac</li><li>Tendons connect muscle to bone; ligaments connect bone to bone</li><li>Weight-bearing activity stimulates bone formation (Wolff's law)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Normal Values</strong>",
+        "html": "<ul><li>Serum Ca²⁺: 8.5-10.5 mg/dL</li><li>Serum PO₄: 2.5-4.5 mg/dL</li><li>Vitamin D (25-OH): 30-100 ng/mL</li><li>ALP: 44-147 U/L (bone isoform in growing bone)</li><li>PTH: 10-65 pg/mL</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>What the Nurse Must Know</strong>",
+        "html": "<ul><li>Osteoporosis: T-score &lt;-2.5 on DEXA — silent until fracture</li><li>Osteoarthritis: cartilage wear, NOT inflammatory (morning stiffness &lt;30 min)</li><li>Rheumatoid arthritis: autoimmune synovitis, inflammatory (morning stiffness &gt;1 hour)</li><li>Gout: monosodium urate crystal deposition — hyperuricemia</li><li>Compartment syndrome: increased pressure in fascial compartment → ischemia</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "dysfunction",
+   "title": "Dysfunction: What Goes Wrong",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>NORMAL FUNCTION</strong>",
+        "html": "<ul><li>Intact bones with normal density</li><li>Smooth articular cartilage</li><li>Normal joint range of motion</li><li>Pain-free movement</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>DYSFUNCTION</strong>",
+        "html": "<ul><li>Osteoporosis: decreased bone density → fracture risk</li><li>Osteoarthritis: cartilage degradation → bone-on-bone contact</li><li>Rheumatoid arthritis: synovial inflammation → joint destruction</li><li>Gout: crystal deposition → acute inflammatory arthritis</li><li>Fracture: bone continuity disrupted</li><li>Compartment syndrome: pressure increase → neurovascular compromise</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#9888; Risk Factors (Non-Modifiable)",
+        "html": "<ul><li>Age &gt;50 (women postmenopausal)</li><li>Female gender (smaller bones, menopause)</li><li>Family history osteoporosis/fractures</li><li>Caucasian/Asian ethnicity</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161; Risk Factors (Modifiable)",
+        "html": "<ul><li>Sedentary lifestyle</li><li>Low calcium/vitamin D intake</li><li>Smoking, excess alcohol</li><li>Long-term corticosteroids</li><li>Calcium/PO₄ imbalance (CKD)</li><li>Obesity (OA weight-bearing joints)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128293; Complications",
+        "html": "<p>Pathological fractures &bull; Joint deformity and disability &bull; Chronic pain and reduced mobility &bull; Avascular necrosis &bull; Rhabdomyolysis (compartment syndrome) &bull; Venous thromboembolism (immobility)</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Opposite:</strong> Bone/joint integrity lost → pain, deformity, immobility → fracture or disability</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "patho",
+   "title": "Step-by-Step Pathophysiology",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.65,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>1. Osteoporosis:</strong> imbalance between bone formation and resorption</p><p><strong>2. Osteoarthritis:</strong> cartilage matrix degradation → subchondral bone changes</p><p><strong>3. RA:</strong> autoimmune trigger → synovial hyperplasia (pannus) → cartilage/bone erosion</p><p><strong>4. Gout:</strong> hyperuricemia → MSU crystal deposition → neutrophil activation</p><p><strong>5. Fracture:</strong> direct force exceeds bone strength → hematoma → callus → remodeling</p><p><strong>6. Compartment syndrome:</strong> trauma/edema → increased fascial pressure → ischemia</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.35,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Key Detail</strong>",
+        "html": "<p>Osteoporosis: postmenopausal estrogen decline increases osteoclast activity. RA: autoimmune attack on synovium creates pannus that erodes cartilage and bone. Gout: MSU crystals activate NLRP3 inflammasome → IL-1β → intense neutrophilic inflammation. Compartment syndrome: pressure &gt;30 mmHg (or within 30 mmHg of diastolic) compromises capillary perfusion → irreversible muscle/nerve damage in 4-6 hours.</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": "<strong>Clinical Result</strong>",
+        "html": "<p>Osteoporosis: fragile bones fracture with minimal trauma (hip, vertebrae, wrist). OA: joint space narrowing, osteophytes, subchondral sclerosis. RA: symmetric polyarthritis, joint deformity (boutonnière, swan neck), extra-articular manifestations. Gout: tophus formation, joint destruction. Compartment syndrome: Volkmann ischemic contracture if untreated.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Sequencing:</strong> Each step leads to the next — understand the cascade to predict S/S and management</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "signs",
+   "title": "Signs and Symptoms",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Early / Mild</strong>",
+        "html": "<ul><li>Osteoporosis: ASYMPTOMATIC until fracture</li><li>OA: joint stiffness after inactivity, improves with movement</li><li>RA: morning stiffness &gt;1 hour, symmetric small joints</li><li>Gout: sudden severe joint pain (great toe, ankle, knee)</li><li>Fracture: pain, deformity, inability to bear weight</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Severe</strong>",
+        "html": "<ul><li>Osteoporotic fracture: hip (femoral neck), vertebral compression, Colles wrist</li><li>RA: joint deformity, swan neck, boutonnière, ulnar deviation</li><li>Gout: tophi (chronic deposits), joint destruction</li><li>Compartment syndrome: 6 P's — Pain, Pallor, Pulselessness, Paresthesia, Paralysis, Poikilothermia</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Spinal cord compression (vertebral fracture)</strong>",
+        "html": "<ul><li>Spinal cord compression (vertebral fracture)</li><li>Fat embolism syndrome (long bone fracture)</li><li>Compartment syndrome: surgical emergency</li><li>Septic arthritis (joint destruction within 24-48h)</li><li>THIS IS A MEDICAL EMERGENCY</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Diagnostic / Assessment Findings</strong>",
+        "html": "<ul><li>DEXA scan: T-score for osteoporosis diagnosis</li><li>X-ray: joint space, fractures, osteophytes</li><li>Serum uric acid (gout)</li><li>RF, anti-CCP (RA)</li><li>ESR, CRP (inflammatory markers)</li><li>CK (compartment syndrome/rhabdomyolysis)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Link Patho to S/S</strong>",
+        "html": "<p>Osteoporosis &rarr; Fracture with minimal trauma, height loss, kyphosis</p><p>Osteoarthritis &rarr; Pain with weight-bearing, stiffness &lt;30 min, crepitus</p><p>RA synovitis &rarr; Morning stiffness &gt;1h, symmetric swelling, fatigue</p><p>Gout crystals &rarr; Sudden excruciating pain, redness, warmth, tophi</p><p>Compartment syndrome &rarr; Pain out of proportion, pain with passive stretch</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "assessment",
+   "title": "Nursing Assessment",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Cardiovascular</strong>",
+        "html": "<ul><li>BP (fat embolism → hypoxemia, tachycardia)</li><li>Capillary refill, peripheral pulses</li><li>DVT risk assessment</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Respiratory</strong>",
+        "html": "<ul><li>SpO2 (fat embolism, immobility)</li><li>Chest auscultation</li><li>Respiratory rate</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Neurological</strong>",
+        "html": "<ul><li>Peripheral sensation (compartment syndrome)</li><li>Motor function (nerve compression)</li><li>Pain assessment (0-10 scale)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.67,
+      "blocks": [
+       {
+        "type": "table",
+        "heading": "<strong>Key Laboratory & Diagnostic Tests</strong>",
+        "header": [
+         "Test",
+         "Normal Value",
+         "Significance"
+        ],
+        "rows": [
+         [
+          "DEXA Scan",
+          "T-score &gt;-1.0 normal",
+          "T-score &lt;-2.5 = osteoporosis"
+         ],
+         [
+          "Ca²⁺ / PO₄ / Vitamin D",
+          "Ca 8.5-10.5, Vit D &gt;30",
+          "Low values contribute to bone loss"
+         ],
+         [
+          "ESR / CRP",
+          "ESR &lt;20, CRP &lt;10",
+          "Elevated in RA, infection, gout flare"
+         ],
+         [
+          "Uric Acid",
+          "3.5-7.2 mg/dL",
+          "&gt;6.8 = risk for crystal deposition"
+         ],
+         [
+          "CK",
+          "22-198 U/L",
+          "Elevated in compartment syndrome, rhabdomyolysis"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Priority Actions</strong>",
+        "html": "<p>Compartment syndrome: measure compartment pressure if suspected — fasciotomy within 4-6 hours of onset prevents permanent damage. DVT prophylaxis for immobilized patients. Pain assessment and management. Neurovascular checks distal to injury.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "management",
+   "title": "Nursing Management",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "table",
+        "heading": "&#128138; <strong>Pharmacology - Nursing Monitoring</strong>",
+        "header": [
+         "Class",
+         "Example",
+         "Mechanism",
+         "Nursing Monitoring"
+        ],
+        "rows": [
+         [
+          "Bisphosphonate",
+          "Alendronate, Zoledronic acid",
+          "Inhibit osteoclasts, increase BMD",
+          "Take PO with full glass water, remain upright 30 min; IV can cause jaw osteonecrosis"
+         ],
+         [
+          "Calcium + Vit D",
+          "1200 mg Ca + 800-1000 IU D",
+          "Bone mineralization",
+          "Take calcium in divided doses"
+         ],
+         [
+          "NSAID",
+          "Ibuprofen, Naproxen",
+          "Pain and inflammation (OA, gout)",
+          "GI bleed, renal risk — use lowest effective dose"
+         ],
+         [
+          "Colchicine",
+          "1.2 mg then 0.6 mg in 1 hour",
+          "Acute gout flare",
+          "Nausea, diarrhea; adjust for renal function"
+         ],
+         [
+          "DMARD",
+          "Methotrexate",
+          "RA disease-modifying therapy",
+          "Hepatotoxicity, myelosuppression — monitor LFTs, CBC"
+         ],
+         [
+          "Biologic",
+          "Adalimumab, Etanercept",
+          "TNF inhibition for RA",
+          "Infection risk — screen for TB first"
+         ]
+        ]
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Bisphosphonate & Compartment Syndrome Alert</strong>",
+        "html": "<p>Oral bisphosphonates: take first thing AM with full glass of water on empty stomach. Remain upright for 30 minutes to prevent esophageal irritation. Compartment syndrome: PAIN OUT OF PROPORTION is the earliest and most reliable sign. Do NOT wait for all 6 P's — by then it's too late.</p>",
+        "tone": "warn"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Lifestyle & Patient Education</strong>",
+        "html": "<ul><li>Weight-bearing and resistance exercise (stimulates bone formation)</li><li>Fall prevention: home safety assessment, vision check</li><li>Smoking cessation, limit alcohol</li><li>Calcium-rich diet: dairy, leafy greens, fortified foods</li><li>Sun exposure for vitamin D synthesis (15 min/day)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>&#128680; Report Immediately:</strong> Pain out of proportion | New neuro deficit | Absent pulse distal to injury | Chest pain/dyspnea after long bone fracture | Joint hot, red, swollen (septic arthritis)</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "careplan",
+   "title": "Care Plan Connection",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Nursing Diagnosis</strong>",
+        "html": "<p>Impaired physical mobility related to pain and joint inflammation secondary to rheumatoid arthritis as evidenced by morning stiffness &gt;1 hour, bilateral hand swelling, and decreased grip strength</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Goal / Outcome</strong>",
+        "html": "<p>Patient will report pain &lt;3/10 and demonstrate improved joint mobility within 1 week of DMARD therapy initiation.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Interventions</strong>",
+        "html": "<ul><li>Administer methotrexate as prescribed — monitor LFTs</li><li>Heat/cold therapy for joint stiffness and pain</li><li>Gentle ROM exercises during low-pain periods</li><li>Joint protection and energy conservation education</li><li>Referral to occupational therapy for adaptive devices</li><li>DVT prophylaxis if immobilized</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Rationale</strong>",
+        "html": "<p>Methotrexate is first-line DMARD for RA — slows disease progression. Heat reduces stiffness; cold reduces acute inflammation. ROM maintains joint function. Joint protection prevents further damage. OT improves functional independence.</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": "<strong>Evaluation</strong>",
+        "html": "<p>Pain 2/10 at rest. Morning stiffness 30 minutes. Able to perform ADLs with minimal assistance. LFTs stable. OT consultation completed.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Care Plan Formula:</strong> Problem → Goal → Interventions → Rationale → Evaluation</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "renr",
+   "title": "RENR Exam Thinking",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>What system is being tested?</strong></p><p>Musculoskeletal — bone integrity and joint function</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>What is the priority?</strong></p><p>Compartment syndrome is surgical emergency; fracture immobilization; pain management</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><span class=\"tr-warn\"><strong>What is unsafe?</strong></span></p><p>Missing compartment syndrome signs, giving bisphosphonate lying down, ignoring DVT risk</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><span class=\"tr-good\"><strong>What restores function?</strong></span></p><p>Bisphosphonates increase BMD; DMARDs slow RA; colchicine treats gout; fasciotomy saves limb</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161; <strong>Key Memory Aids for RENR</strong>",
+        "html": "<ul><li><strong>Compartment syndrome:</strong> Pain OUT OF PROPORTION is earliest sign — do NOT wait for 6 P's</li><li><strong>Bisphosphonate upright:</strong> Take with full glass water, remain upright 30 min — prevents esophageal damage</li><li><strong>Osteoporosis silent:</strong> No symptoms until fracture — DEXA screening at 65 (women), 70 (men)</li><li><strong>Gout: great toe:</strong> Podagra = first MTP joint; sudden excruciating pain at night</li><li><strong>RA vs OA stiffness:</strong> RA &gt;1 hour morning stiffness; OA &lt;30 min — key differentiator</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG System Focus Formula:</strong> Musculoskeletal → MSK → Bone/joint dysfunction → Pain + immobility → Priority: Compartment syndrome rule-out + fracture management + pain control</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  }
+ ],
+ "question": {
+  "stem": "<p><strong>A 28-year-old patient sustained a tibial fracture 6 hours ago and had a cast applied. The patient now reports severe, increasing pain in the lower leg that is not relieved by morphine. The toes are pale and cool, and the patient reports numbness. What is the nurse's priority action?</strong></p>",
+  "options": [
+   {
+    "letter": "A",
+    "html": "Elevate the leg above heart level and apply ice to reduce swelling"
+   },
+   {
+    "letter": "B",
+    "html": "Loosen the cast and reassess the neurovascular status in 30 minutes"
+   },
+   {
+    "letter": "C",
+    "html": "Notify the physician immediately and prepare for possible fasciotomy"
+   },
+   {
+    "letter": "D",
+    "html": "Administer additional morphine and reassess pain in 15 minutes"
+   }
+  ],
+  "answer": "C",
+  "rationale": "<p>This is acute compartment syndrome: severe pain out of proportion to injury (not relieved by morphine), pale cool toes (Pallor, Poikilothermia), and numbness (Paresthesia) — classic presentation. Compartment syndrome is a surgical emergency requiring fasciotomy within 4-6 hours to prevent permanent muscle and nerve damage. The nurse must notify the physician immediately. Option A (elevation) is contraindicated — elevation reduces arterial perfusion pressure. Option B (loosen cast) may help temporarily but definitive treatment is fasciotomy. Option D (more morphine) masks symptoms without treating the underlying surgical emergency.</p>",
+  "why": [
+   {
+    "letter": "A",
+    "html": "Elevation reduces perfusion pressure and worsens compartment syndrome"
+   },
+   {
+    "letter": "B",
+    "html": "Loosening cast is temporary — fasciotomy is definitive treatment"
+   },
+   {
+    "letter": "D",
+    "html": "More morphine masks symptoms; pain out of proportion is a surgical emergency sign"
+   }
+  ]
+ },
+ "source": "nrg_medical_surgical_reviews/msk_review.pptd"
+}

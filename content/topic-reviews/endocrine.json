@@ -1,0 +1,626 @@
+{
+ "slug": "endocrine",
+ "title": "Endocrine and Metabolic Disorders",
+ "system": "Endocrine System",
+ "slides": [
+  {
+   "kind": "anp",
+   "title": "Normal Anatomy & Physiology",
+   "subtitle": "System of Focus: Endocrine",
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Key Concepts</strong>",
+        "html": "<ul><li>Pancreas: endocrine (islets of Langerhans) + exocrine (digestive enzymes)</li><li>Beta cells produce insulin (anabolic: lowers glucose, promotes storage)</li><li>Alpha cells produce glucagon (catabolic: raises glucose)</li><li>Thyroid: T3/T4 regulate metabolism; TSH from pituitary controls thyroid</li><li>Adrenal cortex: cortisol (stress response), aldosterone (Na+/K+ balance)</li><li>Negative feedback loops maintain hormonal homeostasis</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Normal Values</strong>",
+        "html": "<ul><li>Fasting glucose: 70-100 mg/dL (3.9-5.6 mmol/L)</li><li>HbA1c: &lt;5.7% normal, 5.7-6.4% prediabetes, &gt;6.5% diabetes</li><li>TSH: 0.4-4.0 mIU/L</li><li>Free T4: 0.8-1.8 ng/dL</li><li>Cortisol (AM): 5-25 mcg/dL</li><li>Calcium: 8.5-10.5 mg/dL</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>What the Nurse Must Know</strong>",
+        "html": "<ul><li>Type 1 DM: autoimmune beta cell destruction, insulin-dependent, usually childhood onset</li><li>Type 2 DM: insulin resistance + progressive beta cell failure, 90% of cases</li><li>DKA: Type 1, hyperglycemia + ketosis + metabolic acidosis</li><li>HHS: Type 2, extreme hyperglycemia WITHOUT ketosis, higher mortality</li><li>Hypothyroidism: Hashimoto thyroiditis (autoimmune) most common cause</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "dysfunction",
+   "title": "Dysfunction: What Goes Wrong",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>NORMAL FUNCTION</strong>",
+        "html": "<ul><li>Normal glucose homeostasis: insulin and glucagon balanced</li><li>Normal thyroid hormone production and feedback</li><li>Normal cortisol diurnal rhythm</li><li>Normal calcium/phosphate balance (PTH, vitamin D, calcitonin)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>DYSFUNCTION</strong>",
+        "html": "<ul><li>Diabetes: absolute (Type 1) or relative (Type 2) insulin deficiency</li><li>Hyperglycemia: osmotic diuresis, dehydration, electrolyte imbalance</li><li>Hypothyroidism: decreased metabolism, myxedema</li><li>Hyperthyroidism: increased metabolism, thyroid storm</li><li>Adrenal insufficiency: cortisol deficiency, Addisonian crisis</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#9888; Risk Factors (Non-Modifiable)",
+        "html": "<ul><li>Family history (DM, thyroid disease)</li><li>Autoimmune disease (Type 1 DM, Hashimoto, Graves)</li><li>Age (Type 2 DM risk increases with age)</li><li>Genetic syndromes</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161; Risk Factors (Modifiable)",
+        "html": "<ul><li>Obesity (central adiposity = major Type 2 DM risk)</li><li>Sedentary lifestyle</li><li>Poor diet (high sugar, refined carbohydrates)</li><li>Previous gestational diabetes</li><li>Chronic corticosteroid use</li><li>Iodine deficiency (hypothyroidism) or excess (hyperthyroidism)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128293; Complications",
+        "html": "<p>Microvascular: retinopathy, nephropathy, neuropathy &bull; Macrovascular: MI, stroke, peripheral arterial disease &bull; Diabetic ketoacidosis (DKA) &bull; Hyperosmolar hyperglycemic state (HHS) &bull; Myxedema coma (severe hypothyroidism) &bull; Thyroid storm (severe hyperthyroidism)</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Opposite:</strong> Hormonal imbalance leads to metabolic dysregulation, organ damage, life-threatening crises</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "patho",
+   "title": "Step-by-Step Pathophysiology",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.65,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>1. Diabetes:</strong> insulin deficiency or resistance leads to hyperglycemia</p><p>2. Hyperglycemia exceeds renal threshold (180 mg/dL) causing glycosuria</p><p><strong>3. Osmotic diuresis:</strong> polyuria, dehydration, electrolyte loss</p><p><strong>4. Type 1:</strong> absent insulin leads to lipolysis and ketogenesis (DKA)</p><p><strong>5. Chronic hyperglycemia:</strong> glycation damages vessels and nerves</p><p><strong>6. Hypothyroidism:</strong> decreased T3/T4 slows all metabolic processes</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.35,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Key Detail</strong>",
+        "html": "<p>Type 1 DM: autoimmune destruction of beta cells leads to absolute insulin deficiency. Without insulin, the body cannot use glucose for energy, so it breaks down fat (ketogenesis) and protein (gluconeogenesis). Type 2 DM: peripheral insulin resistance in muscle and liver, combined with progressive beta cell failure. Chronic hyperglycemia causes AGEs (advanced glycation end-products) that damage microvasculature (retina, glomerulus, nerves) and macrovasculature.</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": "<strong>Clinical Result</strong>",
+        "html": "<p>Acute: DKA (Type 1) - hyperglycemia + ketosis + anion gap metabolic acidosis. HHS (Type 2) - extreme hyperglycemia (&gt;600 mg/dL), profound dehydration, no ketosis, altered consciousness. Chronic: retinopathy (blindness), nephropathy (ESRD), neuropathy (foot ulcers, amputation), cardiovascular disease. Hypothyroidism: bradycardia, hypothermia, myxedema, constipation, depression.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Sequencing:</strong> Each step leads to the next — understand the cascade to predict S/S and management</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "signs",
+   "title": "Signs and Symptoms",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Early / Mild</strong>",
+        "html": "<ul><li>DM: polyuria, polydipsia, polyphagia, unexplained weight loss (Type 1)</li><li>DM Type 2: often asymptomatic, fatigue, recurrent infections, slow healing</li><li>Hypothyroidism: fatigue, cold intolerance, weight gain, constipation, dry skin</li><li>Hyperthyroidism: heat intolerance, weight loss, tremor, anxiety, palpitations</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Severe</strong>",
+        "html": "<ul><li>DKA: Kussmaul respirations, fruity breath, dehydration, altered LOC</li><li>HHS: profound dehydration, seizures, coma</li><li>Hypothyroidism: bradycardia, periorbital edema, delayed DTR relaxation</li><li>Hyperthyroidism: atrial fibrillation, tremor, exophthalmos, goiter</li><li>Addisonian crisis: hypotension, shock, hyperpigmentation</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>DKA: pH &lt;7.30, altered consciousness</strong>",
+        "html": "<ul><li>DKA: pH &lt;7.30, altered consciousness</li><li>HHS: osmolality &gt;320, seizures, coma</li><li>Thyroid storm: fever &gt;104F, tachycardia, delirium, heart failure</li><li>Myxedema coma: hypothermia, hypotension, altered LOC, hypoventilation</li><li>Addisonian crisis: vascular collapse</li><li>THIS IS A MEDICAL EMERGENCY</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Diagnostic / Assessment Findings</strong>",
+        "html": "<ul><li>Fasting glucose / HbA1c: diagnose and monitor DM</li><li>Urine ketones: DKA screening</li><li>ABG: metabolic acidosis in DKA</li><li>Serum osmolality: HHS diagnosis</li><li>TSH, free T4: thyroid function</li><li>Cortisol, ACTH: adrenal function</li><li>Microalbuminuria: early diabetic nephropathy</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Link Patho to S/S</strong>",
+        "html": "<p>Hyperglycemia &rarr; Polyuria, polydipsia, fatigue, blurred vision</p><p>Ketosis &rarr; Kussmaul breathing, fruity breath, metabolic acidosis</p><p>Microvascular damage &rarr; Retinopathy (vision loss), nephropathy (proteinuria), neuropathy (numbness)</p><p>Hypothyroidism &rarr; Bradycardia, cold intolerance, constipation, depression, weight gain</p><p>Hyperthyroidism &rarr; Tachycardia, tremor, heat intolerance, weight loss, anxiety</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "assessment",
+   "title": "Nursing Assessment",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Cardiovascular</strong>",
+        "html": "<ul><li>BP (hypotension in DKA, HHS, Addisonian crisis)</li><li>HR (tachycardia common; bradycardia in hypothyroidism)</li><li>Orthostatic vitals</li><li>Peripheral pulses, edema</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Respiratory</strong>",
+        "html": "<ul><li>Respiratory rate and pattern (Kussmaul = deep rapid)</li><li>Breath odor (fruity = ketones)</li><li>SpO2</li><li>Work of breathing</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Neurological</strong>",
+        "html": "<ul><li>Mental status (altered in DKA, HHS, thyroid extremes)</li><li>Glasgow Coma Scale if altered</li><li>Deep tendon reflexes (delayed relaxation in hypothyroidism)</li><li>Tremor (hyperthyroidism)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.67,
+      "blocks": [
+       {
+        "type": "table",
+        "heading": "<strong>Key Laboratory & Diagnostic Tests</strong>",
+        "header": [
+         "Test",
+         "Normal Value",
+         "Significance"
+        ],
+        "rows": [
+         [
+          "Glucose / HbA1c",
+          "FBS 70-100, A1c &lt;5.7%",
+          "A1c &gt;6.5% = DM; reflects 3-month average"
+         ],
+         [
+          "Ketones",
+          "Negative",
+          "Positive in DKA; negative in HHS"
+         ],
+         [
+          "ABG",
+          "pH 7.35-7.45",
+          "pH &lt;7.30 in DKA; normal in HHS"
+         ],
+         [
+          "TSH / Free T4",
+          "TSH 0.4-4.0, T4 0.8-1.8",
+          "High TSH + low T4 = hypothyroidism"
+         ],
+         [
+          "Na / K / Osmolality",
+          "Na 135-145, K 3.5-5.0",
+          "High osmolality in HHS; K+ shifts in DKA"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Priority Actions</strong>",
+        "html": "<p>DKA/HHS: fluid resuscitation is FIRST priority (corrects dehydration and reduces glucose). Insulin infusion AFTER fluid resuscitation started. Monitor K+ closely (insulin shifts K+ intracellularly). Calculate corrected sodium. Assess for infection trigger (most common precipitant).</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "management",
+   "title": "Nursing Management",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "table",
+        "heading": "&#128138; <strong>Pharmacology - Nursing Monitoring</strong>",
+        "header": [
+         "Class",
+         "Example",
+         "Mechanism",
+         "Nursing Monitoring"
+        ],
+        "rows": [
+         [
+          "Insulin (rapid)",
+          "Lispro, Aspart",
+          "Mealtime glucose control",
+          "Hypoglycemia risk - always check BS before dosing"
+         ],
+         [
+          "Insulin (long)",
+          "Glargine, Detemir",
+          "Basal glucose control",
+          "Do NOT hold basal insulin in hospital"
+         ],
+         [
+          "Insulin infusion",
+          "Regular insulin",
+          "DKA/HHS: 0.1 units/kg/hr",
+          "D5W when glucose &lt;250 to prevent hypoglycemia"
+         ],
+         [
+          "Levothyroxine",
+          "25-200 mcg daily",
+          "Hypothyroidism replacement",
+          "Take on empty stomach, same time daily"
+         ],
+         [
+          "Methimazole",
+          "5-30 mg daily",
+          "Hyperthyroidism: blocks thyroid hormone synthesis",
+          "Agranulocytosis risk - monitor for fever/sore throat"
+         ],
+         [
+          "Metformin",
+          "500-2000 mg daily",
+          "Type 2 DM first-line: improves insulin sensitivity",
+          "Hold if eGFR &lt;30, contrast dye, DKA"
+         ]
+        ]
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>DKA/HHS Management Alert</strong>",
+        "html": "<p>DKA management: 1) Fluids FIRST (NS 1L in first hour), 2) Insulin (0.1 units/kg/hr), 3) K+ replacement (critical - monitor q2h), 4) Bicarbonate ONLY if pH &lt;6.9. NEVER give insulin without verifying K+ first - insulin drives K+ intracellularly and can cause fatal hypokalemia. When glucose &lt;250 mg/dL, add D5W to prevent hypoglycemia while continuing insulin to clear ketones.</p>",
+        "tone": "warn"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Lifestyle & Patient Education</strong>",
+        "html": "<ul><li>Carbohydrate counting and meal planning</li><li>Regular blood glucose monitoring</li><li>Exercise: lowers glucose, improves insulin sensitivity</li><li>Foot care: daily inspection, proper footwear, podiatry referral</li><li>Smoking cessation (reduces macrovascular risk)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>&#128680; Report Immediately:</strong> Blood glucose &lt;70 or &gt;400 | Ketoacidosis symptoms | Altered mental status | Severe dehydration | Fever | Non-healing foot ulcer</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "careplan",
+   "title": "Care Plan Connection",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Nursing Diagnosis</strong>",
+        "html": "<p>Deficient fluid volume related to osmotic diuresis secondary to hyperglycemia (DKA) as evidenced by polyuria, dehydration, dry mucous membranes, and orthostatic hypotension</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Goal / Outcome</strong>",
+        "html": "<p>Patient will achieve euglycemia (glucose 150-200), normal pH (&gt;7.30), and negative ketones within 24 hours of treatment.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Interventions</strong>",
+        "html": "<ul><li>Aggressive IV fluid resuscitation (NS 1L first hour)</li><li>Regular insulin infusion per protocol</li><li>Monitor glucose hourly, K+ q2h</li><li>Switch to D5W when glucose &lt;250</li><li>Monitor ABG, anion gap, serum osmolality</li><li>Assess for infection trigger</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Rationale</strong>",
+        "html": "<p>Fluid resuscitation corrects dehydration and dilutes glucose. Insulin suppresses ketogenesis and lowers glucose. K+ monitoring is critical because insulin shifts K+ intracellularly. D5W prevents hypoglycemia while allowing continued insulin to clear ketones. Anion gap closure indicates DKA resolution.</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": "<strong>Evaluation</strong>",
+        "html": "<p>Glucose 180. pH 7.36. Anion gap 12. Ketones trace. K+ 3.8. Patient alert and oriented. Transitioning to subcutaneous insulin.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Care Plan Formula:</strong> Problem → Goal → Interventions → Rationale → Evaluation</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "renr",
+   "title": "RENR Exam Thinking",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>What system is being tested?</strong></p><p>Endocrine - glucose homeostasis and thyroid function</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>What is the priority?</strong></p><p>DKA: fluids FIRST, then insulin, monitor K+ closely; Hypothyroidism: levothyroxine</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><span class=\"tr-warn\"><strong>What is unsafe?</strong></span></p><p>Giving insulin without checking K+, holding basal insulin in hospital, missing thyroid storm</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><span class=\"tr-good\"><strong>What restores function?</strong></span></p><p>Insulin restores glucose utilization; fluids correct dehydration; levothyroxine replaces thyroid hormone</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161; <strong>Key Memory Aids for RENR</strong>",
+        "html": "<ul><li><strong>Fluids FIRST in DKA:</strong> NS 1L in first hour BEFORE insulin - prevents rapid osmotic shifts</li><li><strong>K+ is CRITICAL:</strong> Check K+ before insulin - insulin drives K+ intracellularly, can cause fatal hypokalemia</li><li><strong>DKA vs HHS:</strong> DKA: ketones + acidosis (Type 1); HHS: no ketones, extreme glucose &gt;600, higher mortality (Type 2)</li><li><strong>Basal insulin NEVER hold:</strong> Continue long-acting insulin even when NPO - prevents rebound hyperglycemia</li><li><strong>Thyroid storm:</strong> Fever + tachycardia + agitation in hyperthyroid patient = emergency - cooling, PTU, propranolol, iodide</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG System Focus Formula:</strong> Endocrine Disorder leads to Hormonal imbalance causing Metabolic dysregulation. Priority: DKA fluids + insulin + K monitoring OR thyroid hormone replacement</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  }
+ ],
+ "question": {
+  "stem": "<p><strong>A 22-year-old patient with Type 1 diabetes mellitus presents with Kussmaul respirations, fruity breath odor, and a blood glucose of 480 mg/dL. The laboratory results show: pH 7.22, HCO3 12, K+ 5.8, ketones positive. Which nursing intervention is the priority?</strong></p>",
+  "options": [
+   {
+    "letter": "A",
+    "html": "Start a regular insulin infusion at 0.1 units/kg/hr immediately"
+   },
+   {
+    "letter": "B",
+    "html": "Administer 1 liter of normal saline IV over the first hour"
+   },
+   {
+    "letter": "C",
+    "html": "Give IV potassium replacement to correct the elevated K+"
+   },
+   {
+    "letter": "D",
+    "html": "Administer sodium bicarbonate to correct the metabolic acidosis"
+   }
+  ],
+  "answer": "B",
+  "rationale": "<p>This is diabetic ketoacidosis (DKA): pH 7.22, HCO3 12, glucose 480, positive ketones, Kussmaul respirations. The FIRST priority in DKA management is FLUID RESUSCITATION - 1 liter of NS in the first hour. Fluids correct dehydration (from osmotic diuresis), dilute glucose, and improve renal perfusion for ketone clearance. Insulin should NOT be started before fluids are initiated - rapid glucose reduction without fluid replacement can cause cerebral edema. While K+ is 5.8 (elevated), total body potassium is actually DEPLETED - but insulin is not started until fluids are running. Bicarbonate is reserved for pH &lt;6.9.</p>",
+  "why": [
+   {
+    "letter": "A",
+    "html": "Insulin is important but fluids must come FIRST - prevents cerebral edema"
+   },
+   {
+    "letter": "C",
+    "html": "Total body K+ is depleted but insulin drives K+ down - wait until urine output established"
+   },
+   {
+    "letter": "D",
+    "html": "Bicarbonate only for pH &lt;6.9 - this patient's pH is 7.22"
+   }
+  ]
+ },
+ "source": "nrg_medical_surgical_reviews/endocrine_review.pptd"
+}

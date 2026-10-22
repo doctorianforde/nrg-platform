@@ -8,6 +8,7 @@ import type { QuizQuestion } from "@/lib/quiz/types";
 import { fmtDateTime, fmtPct } from "@/lib/mock-exam/utils";
 import { buildFatigueReport } from "@/lib/mock-exam/fatigue";
 import { FatigueAnalysis } from "@/components/mock-exam/FatigueAnalysis";
+import { reviewForQuestion, type ReviewLink } from "@/lib/topic-reviews/catalog";
 
 type ResponseRow = {
   question_id: string;
@@ -74,6 +75,7 @@ export function ResultsView({
   responses,
   rationaleReleased,
   groupStillSitting = false,
+  reviewLinks = [],
 }: {
   setTitle: string;
   session: {
@@ -87,6 +89,8 @@ export function ResultsView({
   questions: QuizQuestion[];
   responses: ResponseRow[];
   rationaleReleased: boolean;
+  /** Published topic reviews, so each released question can link to its review. */
+  reviewLinks?: ReviewLink[];
   /**
    * True while a group-mate is still answering this same paper. The per-question
    * review names the correct option, so showing it to whoever finishes first
@@ -205,6 +209,7 @@ export function ResultsView({
                     explanation={q.explanation ?? null}
                     options={q.options}
                     selectedIds={response?.selected_option_ids ?? []}
+                    review={reviewForQuestion(q, reviewLinks)}
                   />
                 ) : (
                   <div className="mt-3 space-y-2">

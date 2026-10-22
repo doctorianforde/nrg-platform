@@ -1,0 +1,626 @@
+{
+ "slug": "heart-failure",
+ "title": "Heart Failure and Fluid Overload",
+ "system": "Cardiovascular System",
+ "slides": [
+  {
+   "kind": "anp",
+   "title": "Normal Anatomy & Physiology",
+   "subtitle": "System of Focus: Cardiovascular",
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Key Concepts</strong>",
+        "html": "<ul><li>Heart pumps blood to meet body metabolic demands</li><li>Left side: pumps oxygenated blood to body (systemic)</li><li>Right side: pumps deoxygenated blood to lungs (pulmonary)</li><li>Frank-Starling law: increased stretch = increased contraction force (to a point)</li><li>Compensatory mechanisms: SNS, RAAS, ADH, BNP</li><li>Ejection fraction (EF): % of blood ejected per beat (normal 55-70%)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Normal Values</strong>",
+        "html": "<ul><li>EF normal: 55-70%</li><li>CO normal: 4-8 L/min</li><li>PCWP normal: 6-12 mmHg</li><li>BNP normal: &lt;100 pg/mL</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>What the Nurse Must Know</strong>",
+        "html": "<ul><li>HFrEF (systolic): EF &lt;40% — pump problem. HFpEF (diastolic): EF &gt;50% — filling problem</li><li>Left-sided HF backs up into LUNGS (pulmonary edema)</li><li>Right-sided HF backs up into BODY (JVD, peripheral edema, hepatomegaly)</li><li>BNP rises with ventricular stretch — useful for diagnosis and monitoring</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "dysfunction",
+   "title": "Dysfunction: What Goes Wrong",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>NORMAL FUNCTION</strong>",
+        "html": "<ul><li>Heart efficiently pumps blood to meet metabolic demands</li><li>Normal preload and afterload</li><li>Adequate tissue perfusion</li><li>No fluid accumulation in lungs or periphery</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>DYSFUNCTION</strong>",
+        "html": "<ul><li>Heart unable to pump effectively (HFrEF) or fill properly (HFpEF)</li><li>Decreased cardiac output → SNS and RAAS activation</li><li>Vasoconstriction + sodium/water retention → fluid overload</li><li>Pulmonary congestion (left-sided) or systemic congestion (right-sided)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#9888; Risk Factors (Non-Modifiable)",
+        "html": "<ul><li>Age &gt;65</li><li>Family history cardiomyopathy</li><li>Previous MI (damaged myocardium)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161; Risk Factors (Modifiable)",
+        "html": "<ul><li>Hypertension (most common cause)</li><li>Coronary artery disease / prior MI</li><li>Diabetes mellitus</li><li>Valvular heart disease</li><li>Chronic kidney disease</li><li>Obesity, sleep apnea, alcohol abuse</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128293; Complications",
+        "html": "<p>Acute pulmonary edema &bull; Cardiogenic shock &bull; Arrhythmias (AF, VT) &bull; Hepatic congestion / cardiac cirrhosis &bull; Renal failure (cardiorenal syndrome) &bull; Cachexia (cardiac cachexia)</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Opposite:</strong> Heart cannot pump effectively → fluid backs up → pulmonary/systemic congestion → organ dysfunction</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "patho",
+   "title": "Step-by-Step Pathophysiology",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.65,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>1. Initial insult:</strong> MI, HTN, valve disease damages myocardium</p><p>2. Decreased contractility (HFrEF) or compliance (HFpEF)</p><p><strong>3. Reduced CO activates SNS:</strong> tachycardia + vasoconstriction</p><p><strong>4. Reduced renal perfusion activates RAAS:</strong> Na+/H2O retention</p><p><strong>5. ADH release:</strong> further fluid retention</p><p><strong>6. Ventricular remodeling:</strong> dilation, hypertrophy, fibrosis</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.35,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Key Detail</strong>",
+        "html": "<p>HFrEF = reduced EF (&lt;40%), dilated ventricle cannot contract forcefully. HFpEF = preserved EF (&gt;50%), stiff ventricle cannot relax and fill properly. Both result in reduced forward flow and backward congestion.</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": "<strong>Clinical Result</strong>",
+        "html": "<p>Chronic compensation leads to ventricular remodeling (dilation, hypertrophy, fibrosis). Initially maintains CO but eventually decompensates. BNP rises as ventricles stretch. Forward failure = fatigue, weakness. Backward failure = pulmonary edema (left) or peripheral edema (right).</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Sequencing:</strong> Each step leads to the next — understand the cascade to predict S/S and management</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "signs",
+   "title": "Signs and Symptoms",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Early / Mild</strong>",
+        "html": "<ul><li>Fatigue, weakness on exertion</li><li>Dyspnea on exertion (DOE)</li><li>Orthopnea (dyspnea when lying flat)</li><li>Nocturia</li><li>Mild peripheral edema (ankles)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Severe</strong>",
+        "html": "<ul><li>Paroxysmal nocturnal dyspnea (PND)</li><li>Crackles throughout lung fields</li><li>Jugular venous distension</li><li>Hepatomegaly, ascites</li><li>S3 gallop (ventricular gallop)</li><li>Cyanosis, cool extremities</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Acute pulmonary edema: pink frothy sputum, severe dyspnea</strong>",
+        "html": "<ul><li>Acute pulmonary edema: pink frothy sputum, severe dyspnea</li><li>Cardiogenic shock: BP &lt;90, oliguria, altered LOC</li><li>Respiratory failure requiring intubation</li><li>THIS IS A MEDICAL EMERGENCY</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Diagnostic / Assessment Findings</strong>",
+        "html": "<ul><li>BNP/NT-proBNP: elevated (&gt;400 pg/mL diagnostic)</li><li>Chest X-ray: cardiomegaly, pulmonary edema, pleural effusions</li><li>Echocardiogram: reduced EF, wall motion abnormalities</li><li>ECG: may show LVH, prior MI changes</li><li>ABG: hypoxemia, respiratory alkalosis (compensatory hyperventilation)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Link Patho to S/S</strong>",
+        "html": "<p>Decreased CO &rarr; Fatigue, weakness, cool extremities</p><p>Pulmonary congestion &rarr; Dyspnea, crackles, orthopnea</p><p>RAAS activation &rarr; Edema, weight gain, JVD</p><p>Hepatic congestion &rarr; RUQ pain, elevated LFTs, ascites</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "assessment",
+   "title": "Nursing Assessment",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Cardiovascular</strong>",
+        "html": "<ul><li>BP, HR, rhythm (listen for S3)</li><li>JVD assessment ( HF indicator)</li><li>Apical pulse, heart sounds</li><li>Peripheral edema (pitting scale 1-4+)</li><li>Daily weights (1 kg = 1 L fluid)</li><li>Hepatomegaly, ascites</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Respiratory</strong>",
+        "html": "<ul><li>Respiratory rate, effort, SpO2</li><li>Lung sounds (crackles, wheezes)</li><li>Orthopnea — number of pillows</li><li>Cough (dry vs. productive pink frothy)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Neurological</strong>",
+        "html": "<ul><li>Mental status (cerebral perfusion)</li><li>Anxiety level</li><li>Sleep quality, PND episodes</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.67,
+      "blocks": [
+       {
+        "type": "table",
+        "heading": "<strong>Key Laboratory & Diagnostic Tests</strong>",
+        "header": [
+         "Test",
+         "Normal Value",
+         "Significance"
+        ],
+        "rows": [
+         [
+          "BNP / NT-proBNP",
+          "&lt;100 pg/mL",
+          "&gt;400 diagnostic of HF; tracks severity"
+         ],
+         [
+          "Creatinine / BUN",
+          "Cr 0.6-1.2",
+          "Cardiorenal syndrome — elevated in decompensation"
+         ],
+         [
+          "Electrolytes",
+          "K+ 3.5-5.0",
+          "Monitor K+ with diuretics — hypokalemia risk"
+         ],
+         [
+          "Liver function",
+          "AST/ALT normal",
+          "Elevated with hepatic congestion"
+         ],
+         [
+          "Chest X-ray",
+          "Clear",
+          "Cardiomegaly, pulmonary edema, pleural effusion"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Priority Actions</strong>",
+        "html": "<p>Daily weights (same time, scale, clothing). Accurate I&O. Strict fluid restriction if ordered (typically 1.5-2 L/day). Sodium restriction (2g/day). Elevate HOB 30-45 degrees. Monitor for signs of fluid overload.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "management",
+   "title": "Nursing Management",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "table",
+        "heading": "&#128138; <strong>Pharmacology - Nursing Monitoring</strong>",
+        "header": [
+         "Class",
+         "Example",
+         "Mechanism",
+         "Nursing Monitoring"
+        ],
+        "rows": [
+         [
+          "ACE Inhibitor",
+          "Enalapril, Lisinopril",
+          "Afterload reduction, prevent remodeling",
+          "Cough, hyperkalemia, angioedema"
+         ],
+         [
+          "Beta-Blocker",
+          "Carvedilol, Metoprolol",
+          "Reduce SNS stimulation, antiarrhythmic",
+          "Bradycardia, hypotension — start LOW"
+         ],
+         [
+          "Diuretic",
+          "Furosemide",
+          "Reduce preload, relieve congestion",
+          "Hypokalemia, dehydration, ototoxicity"
+         ],
+         [
+          "Aldosterone Antagonist",
+          "Spironolactone",
+          "Block aldosterone, reduce fibrosis",
+          "Hyperkalemia, gynecomastia"
+         ],
+         [
+          "Vasodilator",
+          "Hydralazine + ISDN",
+          "Afterload reduction (AA patients)",
+          "Hypotension, headache"
+         ],
+         [
+          "Inotrope",
+          "Digoxin",
+          "Increase contractility (symptomatic only)",
+          "Toxicity: nausea, arrhythmias, visual changes"
+         ]
+        ]
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Digoxin Toxicity Alert</strong>",
+        "html": "<p>Therapeutic range: 0.5-0.9 ng/mL. Toxicity risk increases with hypokalemia, renal impairment, elderly. Early signs: nausea, confusion, visual changes (yellow halos). Always check apical pulse x1 min before giving — hold if HR &lt;60.</p>",
+        "tone": "warn"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Lifestyle & Patient Education</strong>",
+        "html": "<ul><li>Daily weights — report gain &gt;1-2 kg in 24h or &gt;2-3 kg in 1 week</li><li>Sodium restriction &lt;2g/day</li><li>Fluid restriction 1.5-2 L/day if severe</li><li>Medication adherence — NEVER stop diuretics abruptly</li><li>Recognize worsening symptoms early</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>&#128680; Report Immediately:</strong> Weight gain &gt;2 kg in 24h | Increasing dyspnea | New/worsening edema | S3 gallop | BNP rising | Decreased urine output</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "careplan",
+   "title": "Care Plan Connection",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Nursing Diagnosis</strong>",
+        "html": "<p>Decreased cardiac output related to impaired myocardial contractility as evidenced by fatigue, dyspnea, orthopnea, JVD, peripheral edema, and S3 gallop</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Goal / Outcome</strong>",
+        "html": "<p>Patient will demonstrate stable fluid balance (I&O within 500 mL, no weight gain &gt;0.5 kg/day) and report decreased dyspnea within 48 hours.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Interventions</strong>",
+        "html": "<ul><li>Administer furosemide as prescribed — monitor response</li><li>Daily weights, strict I&O</li><li>Elevate HOB 30-45 degrees</li><li>Restrict sodium and fluids per orders</li><li>Monitor electrolytes (especially K+)</li><li>Assess lung sounds and edema q4h</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Rationale</strong>",
+        "html": "<p>Diuretics reduce fluid overload and pulmonary congestion. Daily weights detect fluid retention before clinical signs. HOB elevation reduces venous return to heart and improves breathing. Electrolyte monitoring prevents dangerous hypokalemia from diuretics.</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": "<strong>Evaluation</strong>",
+        "html": "<p>Weight decreased 1.5 kg. I&O negative 400 mL. Lung sounds clear bilaterally. No peripheral edema. Patient reports dyspnea 2/10 at rest. BNP trending down.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Care Plan Formula:</strong> Problem → Goal → Interventions → Rationale → Evaluation</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "renr",
+   "title": "RENR Exam Thinking",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>What system is being tested?</strong></p><p>Cardiovascular — pump function and fluid status</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>What is the priority?</strong></p><p>Fluid management — diuretics, daily weights, I&O, Na+/fluid restriction</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><span class=\"tr-warn\"><strong>What is unsafe?</strong></span></p><p>Giving digoxin without checking pulse; stopping diuretics abruptly; missing daily weights</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><span class=\"tr-good\"><strong>What restores function?</strong></span></p><p>Reducing preload (diuretics) + afterload (ACE-I) + improving contractility (beta-blockers)</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161; <strong>Key Memory Aids for RENR</strong>",
+        "html": "<ul><li><strong>Left-sided HF:</strong> BACKS UP INTO LUNGS — think pulmonary edema, dyspnea, crackles</li><li><strong>Right-sided HF:</strong> BACKS UP INTO BODY — think JVD, peripheral edema, hepatomegaly</li><li><strong>Daily weights:</strong> 1 kg = 1 L fluid — most sensitive indicator of fluid status</li><li><strong>Furosemide:</strong> Loop diuretic — monitor K+ (hypokalemia risk), I&O, hearing</li><li><strong>BNP:</strong> &gt;400 pg/mL = diagnostic of HF; tracks response to treatment</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG System Focus Formula:</strong> Heart Failure → Cardiovascular → Pump dysfunction → Fluid overload → Priority: Reduce preload + afterload + monitor daily weights</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  }
+ ],
+ "question": {
+  "stem": "<p><strong>A patient with chronic heart failure is receiving furosemide 40 mg daily. The nurse notes the patient has gained 3 kg over 2 days, has bilateral crackles, and reports increasing shortness of breath. Which nursing intervention is the priority?</strong></p>",
+  "options": [
+   {
+    "letter": "A",
+    "html": "Increase the furosemide dose independently to promote diuresis"
+   },
+   {
+    "letter": "B",
+    "html": "Notify the physician of the weight gain and worsening symptoms"
+   },
+   {
+    "letter": "C",
+    "html": "Encourage the patient to drink more fluids to prevent dehydration"
+   },
+   {
+    "letter": "D",
+    "html": "Restrict the patient's sodium intake and recheck weight in one week"
+   }
+  ],
+  "answer": "B",
+  "rationale": "<p>A 3 kg weight gain over 2 days with bilateral crackles and worsening SOB indicates acute decompensated heart failure with fluid overload. The nurse must notify the physician promptly for medication adjustment (likely increased diuretic) and further evaluation. Independent dose changes are beyond nursing scope. Encouraging more fluids worsens overload. Delaying action for one week is unsafe.</p>",
+  "why": [
+   {
+    "letter": "A",
+    "html": "Nurses cannot independently increase medication doses — requires physician order"
+   },
+   {
+    "letter": "C",
+    "html": "More fluids worsen fluid overload and pulmonary edema"
+   },
+   {
+    "letter": "D",
+    "html": "Delaying action for one week with acute decompensation is dangerous"
+   }
+  ]
+ },
+ "source": "nrg_medical_surgical_reviews/heart_failure_review.pptd"
+}

@@ -1,0 +1,626 @@
+{
+ "slug": "stroke",
+ "title": "Stroke and Transient Ischemic Attack",
+ "system": "Neurological / Cardiovascular System",
+ "slides": [
+  {
+   "kind": "anp",
+   "title": "Normal Anatomy & Physiology",
+   "subtitle": "System of Focus: Neurological / Cardiovascular",
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Key Concepts</strong>",
+        "html": "<ul><li>Brain receives 15-20% of cardiac output despite being 2% of body weight</li><li>Two internal carotids + two vertebrals form Circle of Willis</li><li>Anterior circulation (carotids): frontal/parietal/temporal lobes</li><li>Posterior circulation (vertebrobasilar): brainstem, cerebellum, occipital</li><li>Neurons are exquisitely sensitive to ischemia — irreversible damage in 4-6 minutes</li><li>Blood-brain barrier protects CNS from toxins</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Normal Values</strong>",
+        "html": "<ul><li>CBF normal: 50 mL/100g/min</li><li>Ischemia threshold: &lt;20 mL/100g/min</li><li>Infarction threshold: &lt;10 mL/100g/min</li><li>CPP = MAP - ICP (normal CPP 60-80 mmHg)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>What the Nurse Must Know</strong>",
+        "html": "<ul><li>ACA stroke = leg weakness, executive dysfunction</li><li>MCA stroke = face/arm weakness, aphasia, hemineglect</li><li>PCA stroke = visual field defects</li><li>Brainstem stroke = crossed signs (cranial nerve + body), locked-in syndrome</li><li>Time is brain: 1.9 million neurons lost per minute of ischemia</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "dysfunction",
+   "title": "Dysfunction: What Goes Wrong",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>NORMAL FUNCTION</strong>",
+        "html": "<ul><li>Uninterrupted cerebral blood flow</li><li>Normal neuronal metabolism and function</li><li>Intact blood-brain barrier</li><li>Normal speech, movement, cognition, sensation</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>DYSFUNCTION</strong>",
+        "html": "<ul><li>Ischemic stroke: thrombus/embolus occludes cerebral artery</li><li>Hemorrhagic stroke: vessel rupture (HTN, aneurysm, AVM)</li><li>Ischemic core: irreversible infarction</li><li>Ischemic penumbra: salvageable tissue — target for intervention</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#9888; Risk Factors (Non-Modifiable)",
+        "html": "<ul><li>Age &gt;55 (doubles every decade after 55)</li><li>Male gender (younger), female (older)</li><li>Family history of stroke</li><li>Prior stroke or TIA</li><li>Sickle cell disease</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161; Risk Factors (Modifiable)",
+        "html": "<ul><li>Hypertension (single most important modifiable risk)</li><li>Atrial fibrillation (5x stroke risk)</li><li>Smoking (doubles risk)</li><li>Diabetes mellitus</li><li>Hyperlipidemia</li><li>Obesity, sedentary lifestyle, OCPs</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128293; Complications",
+        "html": "<p>Cerebral edema (herniation risk at 3-5 days) &bull; Hemorrhagic transformation &bull; Aspiration pneumonia &bull; DVT/PE (immobility) &bull; Seizures &bull; Depression, cognitive impairment</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Opposite:</strong> Blood flow interrupted → neurons ischemic → neurological deficit → disability or death</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "patho",
+   "title": "Step-by-Step Pathophysiology",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.65,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p>1. Vessel occlusion (thrombus/embolus) or rupture (hemorrhage)</p><p>2. Cerebral blood flow decreases below ischemic threshold</p><p>3. Anaerobic metabolism → ATP depletion → ion pump failure</p><p>4. Calcium influx → excitotoxicity → cell death</p><p><strong>5. Ischemic penumbra:</strong> viable tissue surrounds infarct core</p><p>6. Inflammatory response → cerebral edema (peaks 3-5 days)</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.35,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Key Detail</strong>",
+        "html": "<p>Ischemic stroke (87%): thrombotic (in-situ) or embolic (from heart/arteries). Hemorrhagic stroke (13%): intracerebral (HTN) or subarachnoid (aneurysm). The ischemic penumbra is tissue that is dysfunctional but viable — it can be salvaged with rapid reperfusion.</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": "<strong>Clinical Result</strong>",
+        "html": "<p>Ischemic core = irreversible infarction within minutes to hours. Penumbra can be salvaged for 4.5 hours with IV tPA (up to 24h with imaging selection for mechanical thrombectomy). Cerebral edema peaks at 3-5 days — watch for herniation signs (Cushing's triad: HTN, bradycardia, irregular respirations).</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Sequencing:</strong> Each step leads to the next — understand the cascade to predict S/S and management</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "signs",
+   "title": "Signs and Symptoms",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Early / Mild</strong>",
+        "html": "<ul><li>Sudden onset: weakness/numbness (face, arm, leg — unilateral)</li><li>Sudden confusion, trouble speaking (aphasia)</li><li>Sudden vision changes (diplopia, hemianopia)</li><li>Sudden dizziness, loss of balance (ataxia)</li><li>Sudden severe headache (hemorrhagic)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Severe</strong>",
+        "html": "<ul><li>Complete hemiplegia</li><li>Expressive or receptive aphasia</li><li>Hemineglect (ignores one side of body/space)</li><li>Dysphagia, aspiration risk</li><li>Altered level of consciousness</li><li>Seizures</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Decreased LOC progressing to coma</strong>",
+        "html": "<ul><li>Decreased LOC progressing to coma</li><li>Cushing's triad: HTN + bradycardia + irregular respirations</li><li>Dilated fixed pupil (uncal herniation)</li><li>Decorticate/decerebrate posturing</li><li>THIS IS A MEDICAL EMERGENCY</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Diagnostic / Assessment Findings</strong>",
+        "html": "<ul><li>Non-contrast CT head: rules out hemorrhage (first test)</li><li>CTA/MRA: identifies occlusion location</li><li>MRI DWI: detects ischemia within minutes</li><li>EKG: identifies AF as embolic source</li><li>Labs: CBC, coags, glucose, troponin, lipids</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Link Patho to S/S</strong>",
+        "html": "<p>MCA occlusion &rarr; Face/arm weakness, aphasia, hemineglect</p><p>ACA occlusion &rarr; Leg weakness, personality changes</p><p>Brainstem stroke &rarr; Crossed signs, dysphagia, vertigo</p><p>Hemorrhagic stroke &rarr; Sudden severe headache, vomiting, decreased LOC</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "assessment",
+   "title": "Nursing Assessment",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Cardiovascular</strong>",
+        "html": "<ul><li>BP (may be elevated — DO NOT lower aggressively post-stroke)</li><li>HR, rhythm (check for AF)</li><li>Carotid bruits</li><li>Peripheral pulses, edema (DVT risk)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Respiratory</strong>",
+        "html": "<ul><li>Respiratory rate, pattern (Cheyne-Stokes = bilateral damage)</li><li>Airway protection (GCS &lt;8 needs intubation)</li><li>SpO2, auscultation for aspiration</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Neurological</strong>",
+        "html": "<ul><li>NIH Stroke Scale (standardized assessment)</li><li>Glasgow Coma Scale</li><li>FAST assessment: Face, Arm, Speech, Time</li><li>Pupil response, extraocular movements</li><li>Motor strength all extremities (0-5 scale)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.67,
+      "blocks": [
+       {
+        "type": "table",
+        "heading": "<strong>Key Laboratory & Diagnostic Tests</strong>",
+        "header": [
+         "Test",
+         "Normal Value",
+         "Significance"
+        ],
+        "rows": [
+         [
+          "CT Head (non-contrast)",
+          "No bleed",
+          "First test — rules out hemorrhage in minutes"
+         ],
+         [
+          "PT/INR, aPTT",
+          "PT 11-13s, INR 0.9-1.1",
+          "Before tPA — must be therapeutic"
+         ],
+         [
+          "Glucose",
+          "70-100 mg/dL",
+          "Hypo/hyperglycemia mimics stroke"
+         ],
+         [
+          "CBC",
+          "WBC 4.5-11,000",
+          "Infection workup"
+         ],
+         [
+          "EKG",
+          "Normal sinus",
+          "Detects AF — embolic source"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Priority Actions</strong>",
+        "html": "<p>FAST assessment + last known well time. CT head IMMEDIATELY. If ischemic + within window: tPA or thrombectomy. NIHSS score. Airway protection if GCS &lt;8. Nil per mouth until swallow assessment. Elevate HOB 30 degrees. Prevent complications: DVT prophylaxis, pressure injury prevention.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "management",
+   "title": "Nursing Management",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "table",
+        "heading": "&#128138; <strong>Pharmacology - Nursing Monitoring</strong>",
+        "header": [
+         "Class",
+         "Example",
+         "Mechanism",
+         "Nursing Monitoring"
+        ],
+        "rows": [
+         [
+          "Thrombolytic",
+          "Alteplase (tPA)",
+          "Dissolve cerebral thrombus",
+          "4.5-hour window; CI: recent surgery, active bleeding, INR &gt;1.7"
+         ],
+         [
+          "Antiplatelet",
+          "Aspirin",
+          "Prevent recurrence",
+          "Give within 24-48h if no tPA; CI if hemorrhage"
+         ],
+         [
+          "Anticoagulant",
+          "Warfarin, DOACs",
+          "Prevent cardioembolic stroke (AF)",
+          "NOT for 2 weeks after large infarct — hemorrhagic transformation risk"
+         ],
+         [
+          "Antihypertensive",
+          "Labetalol, Nicardipine",
+          "Manage BP if &gt;220/120 or for hemorrhage",
+          "DO NOT lower BP aggressively in acute ischemic stroke"
+         ],
+         [
+          "Statin",
+          "Atorvastatin",
+          "Stabilize plaque, secondary prevention",
+          "High-intensity regardless of LDL"
+         ],
+         [
+          "Neuroprotective",
+          "None proven",
+          "Supportive care only",
+          "Mannitol or hypertonic saline for cerebral edema"
+         ]
+        ]
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>tPA & BP Management Alert</strong>",
+        "html": "<p>tPA: 0.9 mg/kg IV (max 90 mg), 10% bolus, 90% over 60 min. Strict BP &lt;185/110 before, &lt;180/105 during. Watch for hemorrhagic transformation. NO anticoagulants or antiplatelets for 24h post-tPA. Do NOT lower BP in acute ischemic stroke unless &gt;220/120 or hemorrhagic.</p>",
+        "tone": "warn"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Lifestyle & Patient Education</strong>",
+        "html": "<ul><li>Smoking cessation</li><li>BP control (&lt;130/80 target)</li><li>Diabetes management (HbA1c &lt;7%)</li><li>Statin therapy (high-intensity)</li><li>Anticoagulation for AF (CHA2DS2-VASc)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>&#128680; Report Immediately:</strong> Decreased LOC | New/worsening neuro deficits | Severe headache | Seizures | Fever | Signs of aspiration</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "careplan",
+   "title": "Care Plan Connection",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Nursing Diagnosis</strong>",
+        "html": "<p>Impaired physical mobility related to neuromuscular impairment secondary to left-sided ischemic stroke as evidenced by right-sided hemiparesis, facial droop, and slurred speech (NIHSS 12)</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Goal / Outcome</strong>",
+        "html": "<p>Patient will maintain optimal mobility and prevent complications. Will demonstrate intact skin integrity and no aspiration events during hospitalization.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Interventions</strong>",
+        "html": "<ul><li>Position on weak side to encourage use of strong side</li><li>HOB 30 degrees, NPO until swallow screen passed</li><li>Passive and active ROM exercises</li><li>DVT prophylaxis (LMWH or SCDs)</li><li>Frequent repositioning (q2h)</li><li>Communication board for aphasia</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Rationale</strong>",
+        "html": "<p>Positioning on the weak side uses the strong side for protection and function. Swallow screening prevents aspiration pneumonia — leading cause of death post-stroke. ROM prevents contractures. DVT prophylaxis prevents fatal PE.</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": "<strong>Evaluation</strong>",
+        "html": "<p>No skin breakdown. Swallow screen passed — diet upgraded to mechanical soft. DVT prophylaxis in place. PT/OT/ST consulted. Patient communicating with board. Family educated on stroke recovery.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Care Plan Formula:</strong> Problem → Goal → Interventions → Rationale → Evaluation</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "renr",
+   "title": "RENR Exam Thinking",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>What system is being tested?</strong></p><p>Neurological / Cardiovascular — cerebral perfusion and neuro protection</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>What is the priority?</strong></p><p>Rapid assessment (FAST), CT head, determine tPA/thrombectomy eligibility</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><span class=\"tr-warn\"><strong>What is unsafe?</strong></span></p><p>Delaying CT scan, lowering BP aggressively in ischemic stroke, giving food before swallow screen</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><span class=\"tr-good\"><strong>What restores function?</strong></span></p><p>Reperfusion (tPA/thrombectomy) saves penumbra; rehabilitation restores function</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161; <strong>Key Memory Aids for RENR</strong>",
+        "html": "<ul><li><strong>FAST:</strong> Face droop, Arm weakness, Speech difficulty, Time to call — universal stroke recognition</li><li><strong>tPA window:</strong> 4.5 hours from LAST KNOWN WELL — not symptom discovery</li><li><strong>HOB 30 degrees:</strong> Reduces ICP and aspiration risk</li><li><strong>NPO until swallow screen:</strong> Aspiration pneumonia is leading cause of death post-stroke</li><li><strong>DO NOT lower BP:</strong> In acute ischemic stroke, elevated BP maintains perfusion — lowering worsens outcomes</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG System Focus Formula:</strong> Stroke → Neurological → Cerebral ischemia → Neurological deficit → Priority: FAST assessment + CT head + Reperfusion if eligible</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  }
+ ],
+ "question": {
+  "stem": "<p><strong>A 72-year-old patient with a history of atrial fibrillation arrives at the emergency department 2 hours after sudden onset of left-sided weakness and difficulty speaking. The CT head shows no hemorrhage. The patient's BP is 178/96, and INR is 1.1. Which is the nurse's priority action?</strong></p>",
+  "options": [
+   {
+    "letter": "A",
+    "html": "Administer labetalol to lower the blood pressure to &lt;140/90"
+   },
+   {
+    "letter": "B",
+    "html": "Prepare the patient for intravenous alteplase administration"
+   },
+   {
+    "letter": "C",
+    "html": "Begin oral warfarin therapy for stroke prevention"
+   },
+   {
+    "letter": "D",
+    "html": "Insert an oropharyngeal airway to protect the airway"
+   }
+  ],
+  "answer": "B",
+  "rationale": "<p>This is an acute ischemic stroke (sudden onset unilateral weakness, aphasia, no hemorrhage on CT) within the 4.5-hour tPA window. The INR of 1.1 is acceptable for tPA (must be &lt;1.7). Priority is immediate tPA preparation — time is brain. Option A is wrong: lowering BP aggressively in acute ischemic stroke reduces cerebral perfusion and worsens outcomes. Option C: warfarin is for secondary prevention, not acute treatment, and is contraindicated within 2 weeks of large infarct. Option D: the patient is alert with difficulty speaking — an OPA is contraindicated in conscious patients.</p>",
+  "why": [
+   {
+    "letter": "A",
+    "html": "Lowering BP in acute ischemic stroke reduces cerebral perfusion — only treat if &gt;220/120"
+   },
+   {
+    "letter": "C",
+    "html": "Warfarin is for secondary prevention, not acute stroke treatment"
+   },
+   {
+    "letter": "D",
+    "html": "OPA is contraindicated in conscious patients; swallow screening is the priority"
+   }
+  ]
+ },
+ "source": "nrg_medical_surgical_reviews/stroke_review.pptd"
+}

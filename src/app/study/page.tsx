@@ -16,6 +16,12 @@ const MODES = [
     body: "Tutor-mode practice with instant feedback, explanations and option rationales.",
   },
   {
+    href: "/study/reviews",
+    image: "/images/feature-topic-reviews.jpg",
+    title: "Topic reviews",
+    body: "High-yield reviews from A&P to the care plan, each linked to practice questions.",
+  },
+  {
     href: "/study/flashcards",
     image: "/images/topic-anatomy.jpg",
     title: "Flashcards",
@@ -113,7 +119,7 @@ export default async function StudyLobby() {
         />
       </div>
 
-      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         {MODES.map((m) => (
           <Link key={m.href} href={m.href} className="group">
             <Card interactive className="h-full overflow-hidden p-0">
@@ -123,7 +129,7 @@ export default async function StudyLobby() {
                   alt=""
                   fill
                   className="object-cover transition-transform duration-300 motion-safe:group-hover:scale-105"
-                  sizes="(max-width: 640px) 100vw, 25vw"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1280px) 33vw, 20vw"
                 />
                 <span
                   aria-hidden

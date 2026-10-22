@@ -7,7 +7,7 @@
 // 20261009003423 (case study platform: case_stages, case_attempts, case_attempt_responses, questions.context, RPCs),
 // 20261012124123 (case_stages.medications), 20261012150000 (question_attempts, record_practice_answers),
 // 20261012160000–160600 (ranking v2: config, shadow, rules, mock attempts, promotion quiz), 20261013120000 (trophies),
-// 20261020120000 (generation_requests), 20261022120000 (free-tier limits: practice_allowance, claim_practice_reveal).
+// 20261020120000 (generation_requests), 20261022120000 (free-tier limits: practice_allowance, claim_practice_reveal), 20261022140000 (topic_reviews).
 // Regenerate after every migration (questions review_* columns added by hand for 20260919010000): npx supabase gen types typescript --project-id cdvubijjepwmhhkgppbl > src/lib/supabase/types.ts
 export type Json =
   | string
@@ -151,6 +151,12 @@ export type Database = {
         Insert: { back: string; created_at?: string; front: string; id?: string; is_active?: boolean; topic_id?: number | null }
         Update: { back?: string; created_at?: string; front?: string; id?: string; is_active?: boolean; topic_id?: number | null }
         Relationships: [{ foreignKeyName: "flashcards_topic_id_fkey"; columns: ["topic_id"]; isOneToOne: false; referencedRelation: "topics"; referencedColumns: ["id"] }]
+      }
+      topic_reviews: {
+        Row: { id: string; slug: string; title: string; system: string; slides: Json; question: Json | null; keywords: string[]; exclude: string[]; related: string[]; status: string; published_at: string | null; published_by: string | null; sort_order: number; source: string | null; created_at: string; updated_at: string }
+        Insert: { id?: string; slug: string; title: string; system: string; slides: Json; question?: Json | null; keywords?: string[]; exclude?: string[]; related?: string[]; status?: string; published_at?: string | null; published_by?: string | null; sort_order?: number; source?: string | null; created_at?: string; updated_at?: string }
+        Update: { id?: string; slug?: string; title?: string; system?: string; slides?: Json; question?: Json | null; keywords?: string[]; exclude?: string[]; related?: string[]; status?: string; published_at?: string | null; published_by?: string | null; sort_order?: number; source?: string | null; created_at?: string; updated_at?: string }
+        Relationships: []
       }
       generation_requests: {
         Row: { created_at: string; error: string | null; finished_at: string | null; id: string; kind: string; mode: string; request: Json; requested_by: string; result: Json | null; started_at: string | null; status: string; updated_at: string }
@@ -311,6 +317,7 @@ export type Database = {
       promotion_status: { Args: { p_user?: string }; Returns: Json }
       practice_allowance: { Args: Record<PropertyKey, never>; Returns: Json }
       claim_practice_reveal: { Args: { p_question: string }; Returns: Json }
+      topic_review_candidates: { Args: { p_slug: string }; Returns: { id: string; body: string; topic_name: string | null }[] }
       start_promotion_quiz: { Args: Record<PropertyKey, never>; Returns: string }
       promotion_current: { Args: { p_attempt: string }; Returns: Json }
       promotion_answer: { Args: { p_attempt: string; p_position: number; p_option_ids: string[] }; Returns: Json }

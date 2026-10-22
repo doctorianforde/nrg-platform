@@ -1,0 +1,626 @@
+{
+ "slug": "hiv",
+ "title": "HIV/AIDS and Confidentiality",
+ "system": "Immune / Infectious Disease System",
+ "slides": [
+  {
+   "kind": "anp",
+   "title": "Normal Anatomy & Physiology",
+   "subtitle": "System of Focus: Immune / Infectious Disease",
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Key Concepts</strong>",
+        "html": "<ul><li>CD4+ T-helper lymphocytes: coordinate immune response</li><li>Normal CD4 count: 500-1,600 cells/mm³</li><li>HIV targets CD4 cells via gp120 binding to CCR5/CXCR4</li><li>Viral replication destroys CD4 cells → immunodeficiency</li><li>Viral load: number of HIV RNA copies/mL (goal: undetectable)</li><li>Opportunistic infections occur when CD4 &lt;200 (AIDS defining)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Normal Values</strong>",
+        "html": "<ul><li>CD4 normal: 500-1,600 cells/mm³</li><li>CD4 &lt;200 = AIDS (OIs likely)</li><li>Viral load undetectable: &lt;20-50 copies/mL</li><li>Window period: 2-4 weeks (4th gen Ag/Ab test)</li><li>Time to AIDS without treatment: ~10 years</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>What the Nurse Must Know</strong>",
+        "html": "<ul><li>U=U: Undetectable = Untransmittable — patient with undetectable VL cannot sexually transmit HIV</li><li>4th generation test detects p24 antigen + antibodies — window period 2-4 weeks</li><li>PEP: Post-exposure prophylaxis within 72 hours, taken for 28 days</li><li>PrEP: Pre-exposure prophylaxis for high-risk individuals — daily tenofovir/emtricitabine</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "dysfunction",
+   "title": "Dysfunction: What Goes Wrong",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>NORMAL FUNCTION</strong>",
+        "html": "<ul><li>Intact CD4 count &gt;500</li><li>Functional cell-mediated and humoral immunity</li><li>No opportunistic infections</li><li>Normal immune surveillance for malignancies</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>DYSFUNCTION</strong>",
+        "html": "<ul><li>HIV binds to CD4 cells, enters, replicates</li><li>CD4 cell destruction → progressive immunodeficiency</li><li>CD4 &lt;200: AIDS — severe OI risk</li><li>Chronic inflammation → accelerated aging, cardiovascular disease</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#9888; Risk Factors (Non-Modifiable)",
+        "html": "<ul><li>Vertical transmission (mother to child)</li><li>Blood transfusion (rare in screened blood)</li><li>Occupational exposure (needlestick 0.3% risk)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161; Risk Factors (Modifiable)",
+        "html": "<ul><li>Unprotected sexual intercourse (anal &gt; vaginal &gt; oral)</li><li>Sharing needles/injection equipment</li><li>Multiple sexual partners</li><li>Sexually transmitted infections (increases transmission risk)</li><li>Men who have sex with men (highest prevalence group in Caribbean)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128293; Complications",
+        "html": "<p>Opportunistic infections: PCP, TB, cryptococcal meningitis, toxoplasmosis &bull; Malignancies: Kaposi sarcoma, lymphoma, cervical cancer &bull; HIV-associated neurocognitive disorder (HAND) &bull; Wasting syndrome &bull; Cardiovascular, renal, hepatic disease (chronic inflammation) &bull; Immune reconstitution inflammatory syndrome (IRIS)</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Opposite:</strong> CD4 cells destroyed → immune system collapses → opportunistic infections and malignancies</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "patho",
+   "title": "Step-by-Step Pathophysiology",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.65,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p>1. HIV gp120 binds CD4 + CCR5/CXCR4 receptor</p><p>2. Viral RNA enters cell → reverse transcriptase → DNA</p><p>3. Viral DNA integrates into host genome (latency possible)</p><p>4. New virions bud from cell → cell death</p><p>5. CD4 count falls progressively</p><p>6. Immunodeficiency allows opportunistic infections</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.35,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Key Detail</strong>",
+        "html": "<p>HIV is a retrovirus with reverse transcriptase enzyme. It integrates into host DNA, making eradication nearly impossible. The latent reservoir (resting CD4 cells) is why ART must be lifelong. Drug classes target different stages: NRTIs/NNRTIs (reverse transcriptase), PIs (protease), INSTIs (integrase).</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": "<strong>Clinical Result</strong>",
+        "html": "<p>Untreated HIV progresses through stages: acute seroconversion (flu-like illness), clinical latency (asymptomatic, CD4 declining), symptomatic (CD4 200-350, recurrent infections), AIDS (CD4 &lt;200 or AIDS-defining illness). With ART, life expectancy approaches normal.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Sequencing:</strong> Each step leads to the next — understand the cascade to predict S/S and management</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "signs",
+   "title": "Signs and Symptoms",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Early / Mild</strong>",
+        "html": "<ul><li>Acute seroconversion: fever, pharyngitis, rash, lymphadenopathy (2-4 weeks post-exposure)</li><li>Clinical latency: often asymptomatic for years</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Severe</strong>",
+        "html": "<ul><li>Recurrent infections (oral candidiasis, shingles)</li><li>Chronic diarrhea, weight loss</li><li>Night sweats, persistent fever</li><li>Lymphadenopathy</li><li>Oral hairy leukoplakia</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>PCP pneumonia: severe dyspnea, hypoxemia, diffuse infiltrates</strong>",
+        "html": "<ul><li>PCP pneumonia: severe dyspnea, hypoxemia, diffuse infiltrates</li><li>Cryptococcal meningitis: headache, fever, altered LOC</li><li>Toxoplasma encephalitis: seizures, focal deficits</li><li>TB (most common OI globally)</li><li>THIS IS A MEDICAL EMERGENCY</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Diagnostic / Assessment Findings</strong>",
+        "html": "<ul><li>4th gen HIV Ag/Ab test: screening</li><li>HIV viral load: quantifies RNA copies</li><li>CD4 count: stage and guide OI prophylaxis</li><li>Resistance testing: guides ART selection</li><li>CBC: anemia, thrombocytopenia common</li><li>CMP: renal/hepatic function for ART dosing</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Link Patho to S/S</strong>",
+        "html": "<p>CD4 decline &rarr; Recurrent infections, fatigue</p><p>Immunosuppression &rarr; Opportunistic infections vary by CD4 level</p><p>Chronic inflammation &rarr; Cardiovascular disease, neurocognitive decline</p><p>Malabsorption &rarr; Chronic diarrhea, weight loss, wasting</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "assessment",
+   "title": "Nursing Assessment",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Cardiovascular</strong>",
+        "html": "<ul><li>BP, HR</li><li>Signs of dehydration (diarrhea)</li><li>Peripheral edema (nephrotic syndrome, malnutrition)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Respiratory</strong>",
+        "html": "<ul><li>Respiratory rate, SpO2 (PCP, TB)</li><li>Cough, sputum</li><li>Lung sounds</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Neurological</strong>",
+        "html": "<ul><li>Mental status (cryptococcal meningitis, HAND)</li><li>Focal neurological deficits (toxoplasmosis, PML)</li><li>Headache severity</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.67,
+      "blocks": [
+       {
+        "type": "table",
+        "heading": "<strong>Key Laboratory & Diagnostic Tests</strong>",
+        "header": [
+         "Test",
+         "Normal Value",
+         "Significance"
+        ],
+        "rows": [
+         [
+          "4th Gen HIV Test",
+          "Non-reactive",
+          "Detects p24 Ag + Ab; window 2-4 weeks"
+         ],
+         [
+          "HIV Viral Load",
+          "Undetectable",
+          "Monitors treatment response; goal &lt;50 copies/mL"
+         ],
+         [
+          "CD4 Count",
+          "500-1,600",
+          "Stages disease; &lt;200 = AIDS; guides OI prophylaxis"
+         ],
+         [
+          "CBC",
+          "Normal",
+          "Anemia, leukopenia, thrombocytopenia common"
+         ],
+         [
+          "CMP",
+          "Normal",
+          "Renal/hepatic baseline for ART"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Priority Actions</strong>",
+        "html": "<p>STRICT CONFIDENTIALITY — HIV status is protected health information. Never disclose without patient consent. Assess for opportunistic infections based on CD4 count. Screen for TB (most common OI). Evaluate medication adherence (lifelong ART).</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "management",
+   "title": "Nursing Management",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "table",
+        "heading": "&#128138; <strong>Pharmacology - Nursing Monitoring</strong>",
+        "header": [
+         "Class",
+         "Example",
+         "Mechanism",
+         "Nursing Monitoring"
+        ],
+        "rows": [
+         [
+          "NRTI",
+          "Tenofovir + Emtricitabine",
+          "Block reverse transcriptase",
+          "Renal toxicity, bone density loss"
+         ],
+         [
+          "NNRTI",
+          "Efavirenz",
+          "Non-nucleoside RT inhibitor",
+          "CNS side effects, rash, hepatotoxicity"
+         ],
+         [
+          "PI",
+          "Atazanavir, Darunavir",
+          "Inhibit viral protease",
+          "GI upset, hyperlipidemia, hyperglycemia"
+         ],
+         [
+          "INSTI",
+          "Dolutegravir",
+          "Integrase strand transfer inhibitor",
+          "Well tolerated — preferred first-line"
+         ],
+         [
+          "PEP",
+          "Tenofovir/Emtricitabine + Dolutegravir",
+          "Post-exposure prophylaxis",
+          "Must start within 72 hours, take for 28 days"
+         ],
+         [
+          "OI Prophylaxis",
+          "TMP-SMX",
+          "PCP prophylaxis when CD4 &lt;200",
+          "Rash, myelosuppression"
+         ]
+        ]
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Confidentiality & ART Adherence Alert</strong>",
+        "html": "<p>HIV status is CONFIDENTIAL — protected by law. Disclosure without consent is illegal (except mandatory reporting to public health, partner notification programs). ART must be taken EVERY DAY for LIFE. Missing doses leads to resistance. U=U: Undetectable viral load = cannot transmit sexually.</p>",
+        "tone": "warn"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Lifestyle & Patient Education</strong>",
+        "html": "<ul><li>DAILY lifelong ART adherence — use pillboxes, alarms, routines</li><li>U=U counseling — undetectable = untransmittable</li><li>Safe sex practices (condoms, PrEP for partners)</li><li>Regular STI screening</li><li>Nutritional support — balanced diet, food safety (CD4 &lt;200: avoid raw foods)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>&#128680; Report Immediately:</strong> CD4 &lt;200 | New opportunistic infection | Severe headache with fever | Confusion | Severe dyspnea | Adverse drug reaction (rash, jaundice)</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "careplan",
+   "title": "Care Plan Connection",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Nursing Diagnosis</strong>",
+        "html": "<p>Risk for infection related to immunodeficiency (CD4 180) as evidenced by history of oral candidiasis, recurrent respiratory infections, and CD4 count below 200</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Goal / Outcome</strong>",
+        "html": "<p>Patient will remain free of opportunistic infections and achieve undetectable viral load within 6 months of ART initiation.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Interventions</strong>",
+        "html": "<ul><li>Initiate ART per protocol</li><li>Start PCP prophylaxis (TMP-SMX) — CD4 &lt;200</li><li>Screen for TB and treat if positive</li><li>Monitor CD4 and viral load regularly</li><li>Educate on strict medication adherence</li><li>Provide psychosocial support and counseling</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Rationale</strong>",
+        "html": "<p>ART restores immune function and prevents OIs. PCP prophylaxis prevents the most common AIDS-defining pneumonia. TB screening is essential — TB is the leading cause of death in HIV globally. Adherence prevents resistance and treatment failure.</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": "<strong>Evaluation</strong>",
+        "html": "<p>Viral load undetectable at 3 months. CD4 increased to 280. No new OIs. Patient reports 100% adherence. Understanding of U=U and safe sex practices.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Care Plan Formula:</strong> Problem → Goal → Interventions → Rationale → Evaluation</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "renr",
+   "title": "RENR Exam Thinking",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>What system is being tested?</strong></p><p>Immune — CD4 cell destruction and opportunistic infections</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>What is the priority?</strong></p><p>ART adherence + OI prophylaxis (CD4 &lt;200) + strict confidentiality</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><span class=\"tr-warn\"><strong>What is unsafe?</strong></span></p><p>Disclosing HIV status without consent, missing ART doses, not screening for TB</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><span class=\"tr-good\"><strong>What restores function?</strong></span></p><p>Daily ART suppresses viral replication, restores CD4, prevents OIs</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161; <strong>Key Memory Aids for RENR</strong>",
+        "html": "<ul><li><strong>U=U:</strong> Undetectable = Untransmittable — patient with VL &lt;50 cannot sexually transmit HIV</li><li><strong>CD4 &lt;200:</strong> AIDS threshold — start PCP prophylaxis (TMP-SMX)</li><li><strong>PEP 72 hours:</strong> Must start within 72 hours of exposure, continue 28 days</li><li><strong>Confidentiality:</strong> HIV status is protected by law — never disclose without consent</li><li><strong>TB screening:</strong> ALL HIV patients must be screened for TB — leading cause of HIV death globally</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG System Focus Formula:</strong> HIV → Immune → CD4 destruction → Immunodeficiency → Priority: ART adherence + OI prophylaxis + Confidentiality</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  }
+ ],
+ "question": {
+  "stem": "<p><strong>A nurse is caring for a patient newly diagnosed with HIV (CD4 150, viral load 85,000 copies/mL). The patient's spouse arrives and asks the nurse what is wrong with their partner. The patient has not disclosed their HIV status to anyone. What is the nurse's best response?</strong></p>",
+  "options": [
+   {
+    "letter": "A",
+    "html": "Tell the spouse that the patient has HIV because marital partners have a right to know"
+   },
+   {
+    "letter": "B",
+    "html": "Inform the spouse that the patient has a respiratory infection that requires treatment"
+   },
+   {
+    "letter": "C",
+    "html": "Tell the spouse that the patient's medical information is confidential and they need to speak with the patient directly"
+   },
+   {
+    "letter": "D",
+    "html": "Contact the physician to obtain permission to disclose the HIV status to the spouse"
+   }
+  ],
+  "answer": "C",
+  "rationale": "<p>Patient confidentiality is an absolute ethical and legal obligation. The patient has decisional capacity and the right to disclose (or not disclose) their own health information. The nurse must direct the spouse to speak with the patient. Disclosing without consent (Option A) violates patient autonomy, trust, and potentially the law. Option B is deceptive and dishonest. Option D is inappropriate — a physician cannot override a competent patient's right to confidentiality.</p>",
+  "why": [
+   {
+    "letter": "A",
+    "html": "Breach of confidentiality — patient has right to self-disclose"
+   },
+   {
+    "letter": "B",
+    "html": "Deceptive and dishonest — violates veracity"
+   },
+   {
+    "letter": "D",
+    "html": "Physician cannot override competent patient's confidentiality"
+   }
+  ]
+ },
+ "source": "nrg_medical_surgical_reviews/hiv_review.pptd"
+}

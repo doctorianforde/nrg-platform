@@ -1,0 +1,626 @@
+{
+ "slug": "renal",
+ "title": "Renal Disorders",
+ "system": "Renal / Urinary System",
+ "slides": [
+  {
+   "kind": "anp",
+   "title": "Normal Anatomy & Physiology",
+   "subtitle": "System of Focus: Renal / Urinary",
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Key Concepts</strong>",
+        "html": "<ul><li>Kidneys filter 180 L blood/day → produce 1-2 L urine</li><li>Nephrons: functional unit (glomerulus + tubules)</li><li>Glomerulus: filters blood (barrier: size + charge selectivity)</li><li>Tubules: reabsorb glucose, amino acids, electrolytes, water</li><li>Kidneys regulate: BP (RAAS), RBC production (EPO), Ca²⁺/PO₄</li><li>Acid-base balance via HCO₃⁻ regeneration</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Normal Values</strong>",
+        "html": "<ul><li>BUN: 7-20 mg/dL (urea)</li><li>Creatinine: 0.6-1.2 mg/dL</li><li>GFR: &gt;90 mL/min normal</li><li>Urine output: 0.5-1 mL/kg/hr</li><li>Urine specific gravity: 1.003-1.030</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>What the Nurse Must Know</strong>",
+        "html": "<ul><li>Creatinine is the most reliable indicator of renal function — produced at constant rate, freely filtered</li><li>BUN rises with protein intake, dehydration, GI bleed — less specific than creatinine</li><li>eGFR &lt;60 for 3+ months = CKD; eGFR &lt;15 = end-stage renal disease</li><li>Acute kidney injury: RIFLE criteria (Risk, Injury, Failure, Loss, ESRD) or KDIGO</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "dysfunction",
+   "title": "Dysfunction: What Goes Wrong",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>NORMAL FUNCTION</strong>",
+        "html": "<ul><li>Glomerular filtration barrier intact</li><li>Selective protein retention</li><li>Normal electrolyte balance</li><li>Adequate urine output with normal composition</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>DYSFUNCTION</strong>",
+        "html": "<ul><li>Glomerular inflammation → increased permeability → proteinuria/hematuria</li><li>Tubular damage → impaired reabsorption and concentration</li><li>Nephron loss → decreased GFR → uremia</li><li>Sodium/water retention → edema, HTN</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#9888; Risk Factors (Non-Modifiable)",
+        "html": "<ul><li>Family history of kidney disease</li><li>Polycystic kidney disease (autosomal dominant)</li><li>Sickle cell trait/disease</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161; Risk Factors (Modifiable)",
+        "html": "<ul><li>Diabetes mellitus (#1 cause of CKD worldwide)</li><li>Hypertension (#2 cause)</li><li>Chronic NSAID use</li><li>Recurrent UTIs / obstructive uropathy</li><li>Dehydration</li><li>Nephrotoxic medications (aminoglycosides, contrast dye)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128293; Complications",
+        "html": "<p>Hyperkalemia → cardiac arrest &bull; Fluid overload → pulmonary edema &bull; Uremic pericarditis &bull; Metabolic acidosis &bull; Anemia (decreased EPO) &bull; Renal osteodystrophy</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Opposite:</strong> Kidney function impaired → filtration decreased → toxins accumulate + fluid/electrolyte imbalance</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "patho",
+   "title": "Step-by-Step Pathophysiology",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.65,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>1. Glomerular injury:</strong> immune-mediated, infection, toxins</p><p><strong>2. Increased permeability:</strong> protein and/or blood leak into urine</p><p><strong>3. Tubular damage:</strong> impaired reabsorption, concentrating ability lost</p><p><strong>4. Inflammation + fibrosis:</strong> progressive nephron loss</p><p><strong>5. Decreased GFR:</strong> uremic toxins accumulate</p><p><strong>6. Compensation fails:</strong> CKD complications develop</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.35,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Key Detail</strong>",
+        "html": "<p>Glomerulonephritis: immune-mediated inflammation of glomeruli → hematuria, proteinuria, HTN, edema. Nephrotic syndrome: heavy proteinuria (&gt;3.5 g/day) → hypoalbuminemia → edema, hyperlipidemia. UTI: bacterial infection ascending from urethra to bladder (cystitis) to kidneys (pyelonephritis).</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": "<strong>Clinical Result</strong>",
+        "html": "<p>Decreased GFR → sodium/water retention → edema + HTN. Hyperkalemia from decreased excretion. Metabolic acidosis from decreased HCO₃⁻ regeneration. Anemia from decreased EPO. Renal osteodystrophy from phosphate retention and decreased vitamin D activation. Uremia affects every organ system.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Sequencing:</strong> Each step leads to the next — understand the cascade to predict S/S and management</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "signs",
+   "title": "Signs and Symptoms",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Early / Mild</strong>",
+        "html": "<ul><li>Fatigue, weakness</li><li>Mild peripheral edema (periorbital in mornings)</li><li>Nocturia (loss of concentrating ability)</li><li>Mild HTN</li><li>Foamy urine (proteinuria)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Severe</strong>",
+        "html": "<ul><li>Severe generalized edema (nephrotic), ascites</li><li>Oliguria (&lt;400 mL/day) or anuria</li><li>Nausea, vomiting, uremic fetor</li><li>Pruritus, uremic frost</li><li>Hypertensive encephalopathy</li><li>Pericardial friction rub</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Hyperkalemia: peaked T waves, widened QRS, sine wave → cardiac arrest</strong>",
+        "html": "<ul><li>Hyperkalemia: peaked T waves, widened QRS, sine wave → cardiac arrest</li><li>Pulmonary edema from fluid overload</li><li>Uremic pericarditis with tamponade</li><li>Severe metabolic acidosis (pH &lt;7.20)</li><li>THIS IS A MEDICAL EMERGENCY</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Diagnostic / Assessment Findings</strong>",
+        "html": "<ul><li>Urinalysis: protein, blood, casts, specific gravity</li><li>Serum creatinine/BUN: elevated</li><li>eGFR: reduced</li><li>24-hour urine protein</li><li>Renal ultrasound: size, obstruction, cysts</li><li>CBC: anemia (decreased EPO)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Link Patho to S/S</strong>",
+        "html": "<p>Decreased GFR &rarr; Fatigue, nausea, pruritus (uremia)</p><p>Proteinuria &rarr; Foamy urine, hypoalbuminemia, edema</p><p>Sodium retention &rarr; Edema, HTN, pulmonary edema</p><p>Decreased EPO &rarr; Anemia, fatigue, pallor</p><p>Hyperkalemia &rarr; Muscle weakness, cardiac dysrhythmias</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "assessment",
+   "title": "Nursing Assessment",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Cardiovascular</strong>",
+        "html": "<ul><li>BP (often elevated)</li><li>JVD, peripheral edema (fluid overload)</li><li>Heart sounds (pericardial rub)</li><li>Weight (daily — fluid status)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Respiratory</strong>",
+        "html": "<ul><li>RR, SpO2 (pulmonary edema)</li><li>Lung sounds (crackles)</li><li>Work of breathing</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Neurological</strong>",
+        "html": "<ul><li>Mental status (uremic encephalopathy)</li><li>Muscle strength (hyperkalemia)</li><li>Deep tendon reflexes</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.67,
+      "blocks": [
+       {
+        "type": "table",
+        "heading": "<strong>Key Laboratory & Diagnostic Tests</strong>",
+        "header": [
+         "Test",
+         "Normal Value",
+         "Significance"
+        ],
+        "rows": [
+         [
+          "Creatinine / BUN",
+          "Cr 0.6-1.2, BUN 7-20",
+          "Elevated = reduced GFR"
+         ],
+         [
+          "eGFR",
+          "&gt;90 mL/min",
+          "&lt;60 = CKD; &lt;15 = ESRD"
+         ],
+         [
+          "Electrolytes",
+          "K+ 3.5-5.0",
+          "Hyperkalemia is life-threatening"
+         ],
+         [
+          "Urinalysis",
+          "No protein/blood",
+          "Protein, blood, casts indicate pathology"
+         ],
+         [
+          "CBC",
+          "Hgb 12-16",
+          "Anemia from decreased EPO"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Priority Actions</strong>",
+        "html": "<p>Daily weights and strict I&O. Monitor for hyperkalemia (ECG changes). Assess fluid status (edema, JVD, lung sounds). Protect vascular access (fistula/graft — no BP, IV, blood draws on that arm).</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "management",
+   "title": "Nursing Management",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "table",
+        "heading": "&#128138; <strong>Pharmacology - Nursing Monitoring</strong>",
+        "header": [
+         "Class",
+         "Example",
+         "Mechanism",
+         "Nursing Monitoring"
+        ],
+        "rows": [
+         [
+          "Diuretic",
+          "Furosemide",
+          "Reduce fluid overload",
+          "Monitor K+, I&O, hearing"
+         ],
+         [
+          "ACE Inhibitor",
+          "Lisinopril",
+          "Reduce proteinuria, slow CKD progression",
+          "Hyperkalemia, worsening GFR initially"
+         ],
+         [
+          "Phosphate binder",
+          "Calcium carbonate, Sevelamer",
+          "Bind dietary phosphate",
+          "Constipation, hypercalcemia"
+         ],
+         [
+          "Erythropoietin",
+          "Epoetin alfa",
+          "Stimulate RBC production",
+          "HTN, thrombosis risk — target Hgb 10-11.5"
+         ],
+         [
+          "Sodium bicarbonate",
+          "Oral NaHCO₃",
+          "Correct metabolic acidosis",
+          "Fluid overload, hypertension"
+         ],
+         [
+          "Antibiotic (UTI)",
+          "Nitrofurantoin, TMP-SMX",
+          "Treat bacterial infection",
+          "Culture-guided; complete full course"
+         ]
+        ]
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Hyperkalemia & Vascular Access Alert</strong>",
+        "html": "<p>K+ &gt;6.0 mEq/L with ECG changes = emergency: IV calcium gluconate (cardiac membrane stabilization), insulin + glucose (shifts K+ intracellular), sodium polystyrene sulfonate (eliminates K+). Vascular access: NEVER take BP, perform venipuncture, or start IV on fistula/graft arm.</p>",
+        "tone": "warn"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Lifestyle & Patient Education</strong>",
+        "html": "<ul><li>Fluid restriction if ordered (typically &lt;1.5-2 L/day)</li><li>Low sodium diet (&lt;2 g/day)</li><li>Low potassium diet if hyperkalemic</li><li>Low phosphate diet + phosphate binders with meals</li><li>Protein restriction in CKD (0.6-0.8 g/kg/day)</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>&#128680; Report Immediately:</strong> K+ &gt;5.5 mEq/L | Oliguria &lt;400 mL/day | Weight gain &gt;1 kg/day | Severe dyspnea | Pericardial rub | Altered mental status</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "careplan",
+   "title": "Care Plan Connection",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Nursing Diagnosis</strong>",
+        "html": "<p>Excess fluid volume related to compromised regulatory mechanisms (decreased GFR) as evidenced by peripheral edema, weight gain 3 kg, BP 168/96, and crackles on auscultation</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Goal / Outcome</strong>",
+        "html": "<p>Patient will achieve stable fluid balance (I&O within 500 mL, no weight gain, clear lung sounds) within 48 hours.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Interventions</strong>",
+        "html": "<ul><li>Administer furosemide as prescribed — monitor response</li><li>Strict I&O and daily weights</li><li>Fluid restriction per order</li><li>Low-sodium diet education</li><li>Monitor electrolytes (especially K+)</li><li>Elevate lower extremities</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Rationale</strong>",
+        "html": "<p>Diuretics promote fluid excretion. I&O and weights are the most sensitive indicators of fluid balance. Sodium restriction prevents fluid retention. Electrolyte monitoring prevents life-threatening hypokalemia from diuresis.</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": "<strong>Evaluation</strong>",
+        "html": "<p>I&O negative 600 mL. Weight decreased 2 kg. Lung sounds clear. No peripheral edema. BP 142/84. K+ 3.8 (stable). Patient verbalizes fluid restriction.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Care Plan Formula:</strong> Problem → Goal → Interventions → Rationale → Evaluation</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "renr",
+   "title": "RENR Exam Thinking",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>What system is being tested?</strong></p><p>Renal — filtration, fluid/electrolyte balance</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>What is the priority?</strong></p><p>Fluid management + hyperkalemia prevention + protect vascular access</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><span class=\"tr-warn\"><strong>What is unsafe?</strong></span></p><p>Giving NSAIDs to CKD patients, taking BP on fistula arm, missing hyperkalemia signs</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><span class=\"tr-good\"><strong>What restores function?</strong></span></p><p>Slowing progression (ACE-I), managing complications (EPO, phosphate binders)</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161; <strong>Key Memory Aids for RENR</strong>",
+        "html": "<ul><li><strong>Creatinine:</strong> Most reliable renal function indicator — rises with nephron loss</li><li><strong>Hyperkalemia ECG:</strong> Peaked T waves → widened QRS → sine wave → arrest — ACT FAST</li><li><strong>NEVER on fistula arm:</strong> No BP, no IV, no blood draws — causes thrombosis and loss of access</li><li><strong>Proteinuria:</strong> First sign of diabetic nephropathy — ACE-I reduces proteinuria and slows progression</li><li><strong>Fluid status:</strong> Daily weights are the single most sensitive indicator — 1 kg = 1 L fluid</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG System Focus Formula:</strong> Renal Disease → Renal → Decreased GFR → Fluid/electrolyte imbalance + uremia → Priority: Fluid management + hyperkalemia prevention + slow progression</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  }
+ ],
+ "question": {
+  "stem": "<p><strong>A patient with chronic kidney disease stage 4 (eGFR 22 mL/min) is receiving hemodialysis via a left arm arteriovenous fistula. The nurse needs to obtain a blood pressure reading. Which action is correct?</strong></p>",
+  "options": [
+   {
+    "letter": "A",
+    "html": "Take the blood pressure on the left arm using a Doppler device"
+   },
+   {
+    "letter": "B",
+    "html": "Take the blood pressure on the right arm with an appropriate cuff size"
+   },
+   {
+    "letter": "C",
+    "html": "Take the blood pressure on the left arm but use a manual cuff only"
+   },
+   {
+    "letter": "D",
+    "html": "Place an arterial line in the right radial artery for continuous BP monitoring"
+   }
+  ],
+  "answer": "B",
+  "rationale": "<p>The absolute rule for vascular access (fistula/graft) is: NEVER take blood pressure, perform venipuncture, or start an IV on the access arm. This can cause thrombosis, stenosis, or rupture of the fistula, resulting in loss of the patient's lifeline for dialysis. BP must be taken on the contralateral (right) arm. Using a Doppler on the access arm is also contraindicated. An arterial line is unnecessary for routine BP monitoring and carries risks of infection and thrombosis.</p>",
+  "why": [
+   {
+    "letter": "A",
+    "html": "Taking BP on the fistula arm can cause thrombosis and loss of vascular access"
+   },
+   {
+    "letter": "C",
+    "html": "Manual vs automatic makes no difference — ANY BP on the access arm is contraindicated"
+   },
+   {
+    "letter": "D",
+    "html": "Arterial line is invasive and unnecessary for routine BP monitoring"
+   }
+  ]
+ },
+ "source": "nrg_medical_surgical_reviews/renal_review.pptd"
+}

@@ -1,0 +1,626 @@
+{
+ "slug": "acs-mi",
+ "title": "ACS and Myocardial Infarction",
+ "system": "Cardiovascular System",
+ "slides": [
+  {
+   "kind": "anp",
+   "title": "Normal Anatomy & Physiology",
+   "subtitle": "System of Focus: Cardiovascular",
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Key Concepts</strong>",
+        "html": "<ul><li>Coronary arteries supply oxygenated blood to the myocardium</li><li>Left coronary artery → LAD (anterior) + circumflex (lateral)</li><li>Right coronary artery → inferior wall + SA/AV nodes</li><li>Myocardium has NO O₂ reserve — continuous supply required</li><li>Coronary perfusion occurs during DIASTOLE</li><li>Cardiac output = HR x Stroke Volume</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Normal Values</strong>",
+        "html": "<ul><li>Troponin I: &lt;0.04 ng/mL (undetectable normal)</li><li>CK-MB: &lt;6% of total CK</li><li>Normal ECG: regular sinus, ST isoelectric</li><li>Coronary flow: 4-5% of cardiac output at rest</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>What the Nurse Must Know</strong>",
+        "html": "<ul><li>Heart perfuses during diastole — tachycardia reduces perfusion</li><li>LAD ('Widow Maker') occlusion = highest mortality</li><li>RCA occlusion = inferior MI — watch for bradycardia/blocks</li><li>Collateral circulation develops in chronic ischemia</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "dysfunction",
+   "title": "Dysfunction: What Goes Wrong",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>NORMAL FUNCTION</strong>",
+        "html": "<ul><li>Coronary arteries patent → adequate O₂ to myocardium</li><li>Aerobic metabolism: 32 ATP per glucose</li><li>Uniform cardiac contraction each heartbeat</li><li>Troponin intracellular — NOT in bloodstream</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>DYSFUNCTION</strong>",
+        "html": "<ul><li>Plaque rupture → thrombus → coronary occlusion</li><li>Ischemia → anaerobic metabolism (2 ATP only)</li><li>Cell membrane breaks → troponin leaks into blood</li><li>Myocardial cell death → non-contractile scar tissue</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#9888; Risk Factors (Non-Modifiable)",
+        "html": "<ul><li>Age &gt;45 (M) / &gt;55 (F)</li><li>Male gender</li><li>Family history premature CAD</li><li>African Caribbean ethnicity</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161; Risk Factors (Modifiable)",
+        "html": "<ul><li>Smoking (most important)</li><li>Hypertension</li><li>Hyperlipidemia (LDL &gt;100)</li><li>Diabetes (2-4x risk)</li><li>Obesity / sedentary</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128293; Complications",
+        "html": "<p>Cardiogenic shock &bull; Ventricular dysrhythmias &bull; Heart failure &bull; Papillary muscle rupture &bull; VSD &bull; Free wall rupture</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Opposite:</strong> Plaque rupture blocks blood flow → ischemia → infarction → pump failure</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "patho",
+   "title": "Step-by-Step Pathophysiology",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.65,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>1. Endothelial injury:</strong> HTN, smoking, LDL damage vessel lining</p><p><strong>2. LDL infiltration:</strong> Oxidized LDL enters subendothelial space</p><p><strong>3. Inflammation:</strong> Macrophages engulf LDL → foam cells</p><p><strong>4. Plaque:</strong> Fibrous cap over lipid core develops</p><p><strong>5. Plaque rupture:</strong> Cap tears → collagen exposed</p><p><strong>6. Thrombus:</strong> Platelet aggregation occludes artery</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.35,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Key Detail</strong>",
+        "html": "<p>STEMI = complete occlusion → ST elevation. NSTEMI = partial occlusion → ST depression/T wave inversion. Unstable angina = symptoms at rest without biomarker elevation.</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": "<strong>Clinical Result</strong>",
+        "html": "<p>Cell death begins at 20-30 min of ischemia. Irreversible by 4-6 hours. Reperfusion within 12 hours saves myocardium. Goal: door-to-balloon &lt;90 min, door-to-needle &lt;30 min.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Sequencing:</strong> Each step leads to the next — understand the cascade to predict S/S and management</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "signs",
+   "title": "Signs and Symptoms",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Early / Mild</strong>",
+        "html": "<ul><li>Chest pressure, squeezing, heaviness</li><li>Pain radiates to left arm/jaw/back</li><li>Diaphoresis (cold clammy sweat)</li><li>Nausea / vomiting</li><li>Anxiety / sense of doom</li><li>Often: atypical in women, elderly, diabetics</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Severe</strong>",
+        "html": "<ul><li>Crushing chest pain unrelieved by rest/NTG</li><li>Severe dyspnea</li><li>Syncope or near-syncope</li><li>Hypotension, tachycardia</li><li>New S3 or S4 gallop</li><li>Jugular venous distension</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Cardiogenic shock: BP &lt;90, cool clammy skin, altered LOC</strong>",
+        "html": "<ul><li>Cardiogenic shock: BP &lt;90, cool clammy skin, altered LOC</li><li>Ventricular fibrillation → cardiac arrest</li><li>Pulseless electrical activity (PEA)</li><li>Acute pulmonary edema</li><li>THIS IS A MEDICAL EMERGENCY</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Diagnostic / Assessment Findings</strong>",
+        "html": "<ul><li>Troponin I/T: elevated within 3-6 hours</li><li>CK-MB: rises at 4-8 hours, peaks 12-24h</li><li>ECG: ST elevation (STEMI) or depression (NSTEMI)</li><li>Echocardiogram: wall motion abnormalities</li><li>Chest X-ray: pulmonary edema, cardiomegaly</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Link Patho to S/S</strong>",
+        "html": "<p>Coronary occlusion &rarr; Chest pain, diaphoresis</p><p>Myocardial ischemia &rarr; Nausea, anxiety (vagal stimulation)</p><p>Pump failure &rarr; Dyspnea, JVD, hypotension</p><p>Dysrhythmias &rarr; Syncope, palpitations, sudden death</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "assessment",
+   "title": "Nursing Assessment",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Cardiovascular</strong>",
+        "html": "<ul><li>BP both arms (compare)</li><li>Apical pulse, heart sounds (S3/S4)</li><li>12-lead ECG within 10 min of arrival</li><li>Check all peripheral pulses</li><li>Capillary refill, skin temp/color</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Respiratory</strong>",
+        "html": "<ul><li>Respiratory rate and effort</li><li>Lung sounds (crackles = fluid)</li><li>SpO2</li><li>Work of breathing</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.34,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Neurological</strong>",
+        "html": "<ul><li>Level of consciousness</li><li>Anxiety level</li><li>Pain: PQRST assessment</li><li>Signs of cerebral hypoperfusion</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.67,
+      "blocks": [
+       {
+        "type": "table",
+        "heading": "<strong>Key Laboratory & Diagnostic Tests</strong>",
+        "header": [
+         "Test",
+         "Normal Value",
+         "Significance"
+        ],
+        "rows": [
+         [
+          "Troponin I/T",
+          "&lt;0.04 ng/mL",
+          "Rises 3-6h, peaks 12-24h — diagnostic"
+         ],
+         [
+          "CK-MB",
+          "&lt;6% total CK",
+          "Rises 4-8h, specific for cardiac damage"
+         ],
+         [
+          "BNP/NT-proBNP",
+          "&lt;100 pg/mL",
+          "Elevated = ventricular stretch, heart failure"
+         ],
+         [
+          "Lipid panel",
+          "LDL &lt;100",
+          "Risk stratification"
+         ],
+         [
+          "ECG",
+          "Normal sinus",
+          "ST elevation/depression, Q waves, T inversion"
+         ]
+        ]
+       }
+      ]
+     },
+     {
+      "width": 0.33,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Priority Actions</strong>",
+        "html": "<p>12-lead ECG within 10 minutes. ASA 325 mg chew (if no allergy). NTG SL for pain. Morphine if pain unrelieved. IV access x2. Continuous monitoring. MONA: Morphine, Oxygen, Nitrates, Aspirin.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "management",
+   "title": "Nursing Management",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "table",
+        "heading": "&#128138; <strong>Pharmacology - Nursing Monitoring</strong>",
+        "header": [
+         "Class",
+         "Example",
+         "Mechanism",
+         "Nursing Monitoring"
+        ],
+        "rows": [
+         [
+          "Antiplatelet",
+          "Aspirin + Clopidogrel",
+          "Inhibit platelet aggregation",
+          "Bleeding risk, GI upset"
+         ],
+         [
+          "Anticoagulant",
+          "Heparin / Enoxaparin",
+          "Prevent thrombus extension",
+          "Bleeding, monitor aPTT"
+         ],
+         [
+          "Beta-Blocker",
+          "Metoprolol",
+          "Reduce HR, BP, myocardial O₂ demand",
+          "Hold if HR &lt;60, SBP &lt;90, acute HF"
+         ],
+         [
+          "Statin",
+          "Atorvastatin",
+          "Stabilize plaque, reduce LDL",
+          "Monitor LFTs, myalgia"
+         ],
+         [
+          "ACE Inhibitor",
+          "Lisinopril",
+          "Reduce afterload, prevent remodeling",
+          "Cough, hyperkalemia, angioedema"
+         ],
+         [
+          "Thrombolytic",
+          "Alteplase (tPA)",
+          "Dissolve coronary thrombus",
+          "Bleeding risk — CI if recent surgery/stroke"
+         ]
+        ]
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Beta-Blocker & Thrombolytic Alert</strong>",
+        "html": "<p>Hold metoprolol if HR &lt;60, SBP &lt;90, or signs of acute HF. tPA: CI if active bleeding, recent stroke (&lt;3mo), surgery (&lt;14 days). Check BP before each NTG dose.</p>",
+        "tone": "warn"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Lifestyle & Patient Education</strong>",
+        "html": "<ul><li>Smoking cessation (most effective intervention)</li><li>Cardiac rehabilitation program</li><li>Low-fat, low-sodium diet (Mediterranean)</li><li>Gradual return to activity</li><li>Medication adherence education</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>&#128680; Report Immediately:</strong> Chest pain unrelieved by NTG | New dyspnea | Syncope | Palpitations | BP &lt;90/60 | Bleeding (on anticoagulants)</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "careplan",
+   "title": "Care Plan Connection",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Nursing Diagnosis</strong>",
+        "html": "<p>Decreased cardiac output related to myocardial ischemia/infarction as evidenced by chest pain, ST elevation, elevated troponin, and hypotension</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Goal / Outcome</strong>",
+        "html": "<p>Patient will be pain-free with stable hemodynamics within 24 hours of treatment. Troponin will trend downward.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Interventions</strong>",
+        "html": "<ul><li>Administer MONA protocol per orders</li><li>Continuous cardiac monitoring</li><li>Monitor vital signs q15min x4, then q1h</li><li>Assess pain q30min using 0-10 scale</li><li>Maintain bed rest with HOB 30-45°</li><li>Check puncture site (if PCI) q1h</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "<strong>Rationale</strong>",
+        "html": "<p>MONA reduces myocardial O₂ demand and improves perfusion. Continuous monitoring detects life-threatening dysrhythmias early. Pain assessment evaluates reperfusion success. Bed rest reduces cardiac workload.</p>",
+        "tone": "plain"
+       },
+       {
+        "type": "panel",
+        "heading": "<strong>Evaluation</strong>",
+        "html": "<p>Pain 0/10. BP 118/78. HR 72 regular. No dysrhythmias. Troponin trending down. Patient verbalizes understanding of discharge instructions.</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG Care Plan Formula:</strong> Problem → Goal → Interventions → Rationale → Evaluation</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "kind": "renr",
+   "title": "RENR Exam Thinking",
+   "subtitle": null,
+   "rows": [
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>What system is being tested?</strong></p><p>Cardiovascular — coronary perfusion and pump function</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><strong>What is the priority?</strong></p><p>Reperfusion ASAP — ECG in 10 min, MONA, revascularization</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 0.49,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><span class=\"tr-warn\"><strong>What is unsafe?</strong></span></p><p>Giving beta-blockers in acute HF, delaying ECG, missing atypical presentations in women</p>",
+        "tone": "plain"
+       }
+      ]
+     },
+     {
+      "width": 0.51,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": null,
+        "html": "<p><span class=\"tr-good\"><strong>What restores function?</strong></span></p><p>Reperfusion (PCI/thrombolysis) restores coronary blood flow</p>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "panel",
+        "heading": "&#128161; <strong>Key Memory Aids for RENR</strong>",
+        "html": "<ul><li><strong>MONA:</strong> Morphine, Oxygen, Nitrates, Aspirin — but not everyone gets oxygen</li><li><strong>Troponin timing:</strong> Rises 3-6h, peaks 12-24h — single negative troponin does NOT rule out MI</li><li><strong>Door-to-balloon:</strong> &lt;90 minutes for PCI; door-to-needle &lt;30 min for thrombolytics</li><li><strong>Women/Diabetics/Elderly:</strong> Atypical presentations common — fatigue, SOB, indigestion, weakness</li><li><strong>Beta-blockers post-MI:</strong> Reduce mortality by 25-40% — start within 24h if hemodynamically stable</li></ul>",
+        "tone": "plain"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "width": 1,
+      "blocks": [
+       {
+        "type": "callout",
+        "html": "<p><strong>NRG System Focus Formula:</strong> ACS → Cardiovascular → Coronary occlusion → Myocardial ischemia → Priority: Reperfusion + MONA + Monitoring</p>"
+       }
+      ]
+     }
+    ]
+   ]
+  }
+ ],
+ "question": {
+  "stem": "<p><strong>A 62-year-old patient presents with crushing substernal chest pain radiating to the left arm, diaphoresis, and nausea. Vital signs: BP 88/56, HR 112, RR 24. The 12-lead ECG shows ST elevation in leads V1-V4. Which nursing action is the highest priority?</strong></p>",
+  "options": [
+   {
+    "letter": "A",
+    "html": "Administer sublingual nitroglycerin every 5 minutes for pain relief"
+   },
+   {
+    "letter": "B",
+    "html": "Prepare the patient for immediate percutaneous coronary intervention"
+   },
+   {
+    "letter": "C",
+    "html": "Obtain a complete set of vital signs including temperature"
+   },
+   {
+    "letter": "D",
+    "html": "Start a heparin infusion after confirming the troponin level"
+   }
+  ],
+  "answer": "B",
+  "rationale": "<p>ST elevation in V1-V4 indicates an acute anterior wall STEMI (LAD territory). The patient is hemodynamically unstable (BP 88/56, tachycardic). The highest priority is immediate reperfusion via PCI. Every minute of delay increases mortality. Nitroglycerin is contraindicated with SBP &lt;90. Troponin confirmation is NOT required before treatment — ECG changes are diagnostic.</p>",
+  "why": [
+   {
+    "letter": "A",
+    "html": "NTG is contraindicated with SBP &lt;90 mmHg — could worsen hypotension"
+   },
+   {
+    "letter": "C",
+    "html": "Complete vitals are important but do not delay reperfusion"
+   },
+   {
+    "letter": "D",
+    "html": "Troponin confirmation is NOT required — ECG is diagnostic; heparin alone does not reperfuse"
+   }
+  ]
+ },
+ "source": "nrg_medical_surgical_reviews/acs_mi_review.pptd"
+}
