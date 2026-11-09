@@ -341,6 +341,9 @@ export type Database = {
       open_topic_review: { Args: { p_slug: string }; Returns: Json }
       complete_topic_review: { Args: { p_slug: string }; Returns: Json }
       my_study_analytics: { Args: Record<PropertyKey, never>; Returns: Json }
+      session_is_current: { Args: Record<PropertyKey, never>; Returns: boolean }
+      end_other_sessions: { Args: Record<PropertyKey, never>; Returns: number }
+      session_was_bumped: { Args: { p_session: string }; Returns: boolean }
       qgen_daily_status: { Args: Record<PropertyKey, never>; Returns: Json }
       qgen_leaderboard: { Args: Record<PropertyKey, never>; Returns: { user_id: string; display_name: string; points: number; approved: number; is_me: boolean }[] }
       start_promotion_quiz: { Args: Record<PropertyKey, never>; Returns: string }

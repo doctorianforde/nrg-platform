@@ -21,7 +21,7 @@ Read this section first; everything below it is the dated log of how we got here
 | Supabase project | `kwhaqhhwqykckarjbdod` | `cdvubijjepwmhhkgppbl` |
 | Site | https://nrg-platform-staging.vercel.app | the `nrg-platform` Vercel project |
 | Git branch that deploys it | `staging` | `main` |
-| Migrations applied | all 53 in `supabase/migrations/` (2026-11-09: `20261109120000` student analytics) (2026-10-22: `20261022120000` free-tier limits, `20261022140000` topic reviews, `20261022160000` review reading, `20261022180000` question grading) | 48 (**since 2026-10-20**); the four 2026-10-22 ones not yet |
+| Migrations applied | all 54 in `supabase/migrations/` (2026-11-09: `20261109120000` student analytics, `20261109140000` one device per student) (2026-10-22: `20261022120000` free-tier limits, `20261022140000` topic reviews, `20261022160000` review reading, `20261022180000` question grading) | 48 (**since 2026-10-20**); the four 2026-10-22 ones not yet |
 | App | the 2026-10-22 grading commit (free tier, topic reviews, reading XP, AI grading) | `ebbafd8` (since 2026-10-20) |
 | `NEXT_PUBLIC_RANKING_V2` | `1` | unset |
 | `ranking_config.rules_live` | `1` (**live since 2026-10-13**) | `0` (shadow: prod students keep today's XP) |
@@ -70,7 +70,7 @@ Steps 1–4 **done 2026-10-20** (go-live entry at the end of this file). Left: 5
 4. Then `20261012170000_hide_answer_keys` (it breaks the *old* prod code, so it must follow step 3), checked with
    `CONFIRM_PROD=1 node scripts/test-answer-keys.mjs --target prod` (`--pre` before it); then `20261017120000_revoke_unneeded_grants`
    and `node scripts/test-write-paths.mjs`-style smoke checks.
-4c. (2026-11-09) `20261109120000_student_analytics` (read-only function, additive) before the merge that ships My progress.
+4c. (2026-11-09) `20261109120000_student_analytics` (read-only function, additive) and `20261109140000_single_student_session` (one table, three functions, additive) before the merge that ships them.
 4b. (2026-10-22) `20261022120000_free_tier_limits` before the next merge to `main` (the app tolerates its absence, but
    apply it first per the usual order). It lands with `limits_live = 0`: nothing changes for prod users until Ian switches it.
 5. AI-bank port SQL (`PROD_PORT_RUNBOOK.md`) when Ian approves the content, then `data/review/prod-port/dedup-v1-prod.sql`
@@ -111,7 +111,7 @@ promotion quiz is open), `case-test-teacher@…` / `case-test-student@…` (free
 `node scripts/test-ranking-phase1.mjs` (19), `node scripts/test-ranking-phase2.mjs` (47), `node scripts/test-answer-keys.mjs`
 (14; `--target prod` with `CONFIRM_PROD=1`, `--pre` before the hide migration), `node scripts/test-trophies-phase1.mjs` (28),
 `node scripts/e2e-rls-test.mjs` (T34, 15; fixed 2026-10-17, it had been failing 9/15 silently), `node scripts/test-write-paths.mjs`
-(38: every app write path a user token uses), `node scripts/test-free-tier.mjs` (26; turns `limits_live` on for the run and restores it), `node scripts/test-student-analytics.mjs` (19; own-data only, unreleased mock answers withheld), `node scripts/test-topic-reviews.mjs` (17; restores every review's status), `node scripts/test-topic-review-reading.mjs` (30; reading XP + free-tier window, restores statuses and `limits_live`), `node scripts/test-question-grading.mjs` (21; needs an empty grading queue, restores `qgen_config`). Content gate: `npx tsx scripts/import-topic-reviews.ts` (fails if any source word is lost). The two ranking suites hold
+(38: every app write path a user token uses), `node scripts/test-free-tier.mjs` (26; turns `limits_live` on for the run and restores it), `node scripts/test-single-session.mjs` (16; one device per student), `node scripts/test-student-analytics.mjs` (19; own-data only, unreleased mock answers withheld), `node scripts/test-topic-reviews.mjs` (17; restores every review's status), `node scripts/test-topic-review-reading.mjs` (30; reading XP + free-tier window, restores statuses and `limits_live`), `node scripts/test-question-grading.mjs` (21; needs an empty grading queue, restores `qgen_config`). Content gate: `npx tsx scripts/import-topic-reviews.ts` (fails if any source word is lost). The two ranking suites hold
 `rules_live` at 0 while their shadow checks run and put back the starting value afterwards. Content gates: `npx tsx scripts/review-bank.ts --check`,
 `npx tsx scripts/import-case.ts --check`, `npx tsx scripts/plan-cases.ts --report`.
 
@@ -3120,4 +3120,22 @@ taken, no content or branding; many saved pages were the proxy's "usage limit ex
   device on its next page load); an email code on an unfamiliar device (needs custom SMTP); an admin list of accounts
   that look shared (proposed: 5 bumps a day or 4 devices a week), reviewed by a person, no automatic bans. Not
   recommended: a fixed device lock or fingerprinting. D30 and the feature status PDF updated and re-rendered.
+
+## Session 2026-11-09 (Claude): one device per student — built on staging; TT$/US$ price display planned
+- **Pricing display** (Ian): prices show in TT$ with a US$ equivalent from an admin-editable rate in the config table,
+  rounded, labelled "about US$X"; no live currency feed. Only blocker: Jade's prices (D30). New D30 question: is the US$
+  figure a guide only, or may students outside T&T pay in US$ (needs a US$ account)? Build plan doc and D30 updated.
+- **One device per student, newest sign-in wins** (Ian: build now). Migration `20261109140000_single_student_session`
+  (staging): table `student_session_bumps` (staff read), `session_is_current()` (false when a student's session is not
+  their newest in `auth.sessions`, logs the bump), `end_other_sessions()` (login page: logs and deletes the student's
+  other sessions, so their refresh tokens die), `session_was_bumped(id)` (yes/no, for the message). Staff never affected.
+- Middleware: reads the cookie's session id before `getUser()` (auth-js turns a deleted session into the same "session
+  missing" error a signed-out visitor gets), then redirects a bumped device to `/login?error=other_device`, clearing
+  the auth cookies; fails open if the functions are missing (prod before the migration). Login page shows "You were
+  signed out because your account was signed in on another device…" and calls `end_other_sessions()` for students.
+- Verified: `node scripts/test-single-session.mjs` 16/16; browser (local build, staging) 10/10: device A bumped with the
+  message when B signs in, really signed out, B keeps working, a direct API sign-in also bumps B, signing back in works,
+  a teacher stays on two devices, no page errors. `tsc`/lint/build clean.
+- Side effect: shared staging test accounts now sign each other out across devices.
+- Still planned: email code on a new device (custom SMTP), admin "looks shared" list (uses the bump log).
 

@@ -10,6 +10,8 @@ const ERROR_COPY: Record<string, string> = {
   missing_code: "That sign-in link is incomplete. Request a new one.",
   profile_missing: "Your account has no profile yet. Contact support.",
   suspended: "This account has been suspended. Contact your administrator.",
+  other_device:
+    "You were signed out because your account was signed in on another device. Each student account can be used on one device at a time.",
 };
 
 // T22: email + password sign-in, then route by profiles.role (or ?next=).
@@ -49,19 +51,26 @@ export function LoginForm() {
       return;
     }
 
-    if (next) {
-      router.replace(next);
-      router.refresh();
-      return;
-    }
-
     const { data: profile } = await supabase
       .from("profiles")
       .select("role")
       .eq("id", data.user.id)
       .single();
-
     const role = profile && isRole(profile.role) ? profile.role : "student";
+
+    // One device per student: end every other session now, logged as bumped so the old device is told why (their
+    // refresh tokens stop working). The middleware's session_is_current() check catches sign-ins that skip this page.
+    // Staff may use several devices. Without the database function (before its migration), fall back to signOut.
+    if (role === "student") {
+      const { error: endError } = await supabase.rpc("end_other_sessions");
+      if (endError) await supabase.auth.signOut({ scope: "others" }).catch(() => undefined);
+    }
+
+    if (next) {
+      router.replace(next);
+      router.refresh();
+      return;
+    }
     router.replace(ROLE_HOME[role]);
     router.refresh();
   }
