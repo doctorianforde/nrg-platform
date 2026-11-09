@@ -85,7 +85,8 @@ Full comparison table in `PROGRESS.md` → "Original feature list vs. what is bu
 | ~~Free-tier limits~~ | Built on staging 2026-10-22 (row in the table above); topic-review limit waits for topic reviews |
 | ~~Topic reviews + cross-linking~~ | Built on staging 2026-10-22 (rows above), with reading XP and the free-tier view; still open: Q-gen after a review, links from mock results/analytics |
 | Mock exam regulator to v2 rules (100 q / 150 min, blueprint ±2/±3 %, no back-nav, breaks) | Ian/Jade: should every mock be forced to this shape? |
-| ~~Analytics dashboard: student view~~ | **Built on staging 2026-11-09** (D8 option 2, decided by Ian). Instructor view (at-risk learners, class trends) still unbuilt: needs an at-risk definition (Claude proposed defaults on 2026-11-09; Ian to confirm) |
+| ~~Analytics dashboard: student view~~ | **Built on staging 2026-11-09** (D8 option 2, decided by Ian). |
+| ~~Instructor analytics: at-risk learners, class trends~~ | **Built on staging 2026-11-09** (`/teacher/analytics`, definition approved by Ian). Jade to confirm the mock pass mark (70% proposed), 30 days as a recent mock, and 20 answers before accuracy counts; prod needs migration `20261109220000` |
 | ~~AI grader for student questions~~ | Built 2026-10-22 with both pathways (row above); Jade chooses |
 | 2FA, 15-min idle logout, school/university field, login lockout | Ian: 2FA via email OTP only (no SMS provider)? school field needs a privacy/consent line |
 | Live study lobby, leaderboards, Google Meet debriefs | Realtime build; leaderboards conflict with "rank-only" |

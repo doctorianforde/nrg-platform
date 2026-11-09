@@ -389,6 +389,7 @@ export type Database = {
       open_topic_review: { Args: { p_slug: string }; Returns: Json }
       complete_topic_review: { Args: { p_slug: string }; Returns: Json }
       my_study_analytics: { Args: Record<PropertyKey, never>; Returns: Json }
+      class_analytics: { Args: Record<PropertyKey, never>; Returns: Json }
       session_is_current: { Args: Record<PropertyKey, never>; Returns: boolean }
       end_other_sessions: { Args: Record<PropertyKey, never>; Returns: number }
       session_was_bumped: { Args: { p_session: string }; Returns: boolean }

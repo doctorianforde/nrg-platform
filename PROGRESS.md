@@ -21,7 +21,7 @@ Read this section first; everything below it is the dated log of how we got here
 | Supabase project | `kwhaqhhwqykckarjbdod` | `cdvubijjepwmhhkgppbl` |
 | Site | https://nrg-platform-staging.vercel.app | the `nrg-platform` Vercel project |
 | Git branch that deploys it | `staging` | `main` |
-| Migrations applied | all 56 in `supabase/migrations/` (2026-11-09: `20261109120000` student analytics, `20261109140000` one device per student, `20261109160000` shared-account signals, `20261109180000` paid plans by bank transfer, `20261109200000` recordings library) (2026-10-22: `20261022120000` free-tier limits, `20261022140000` topic reviews, `20261022160000` review reading, `20261022180000` question grading) | 48 (**since 2026-10-20**); the four 2026-10-22 ones not yet |
+| Migrations applied | all 57 in `supabase/migrations/` (2026-11-09: `20261109220000` instructor analytics, `20261109120000` student analytics, `20261109140000` one device per student, `20261109160000` shared-account signals, `20261109180000` paid plans by bank transfer, `20261109200000` recordings library) (2026-10-22: `20261022120000` free-tier limits, `20261022140000` topic reviews, `20261022160000` review reading, `20261022180000` question grading) | 48 (**since 2026-10-20**); the four 2026-10-22 ones not yet |
 | App | the 2026-10-22 grading commit (free tier, topic reviews, reading XP, AI grading) | `ebbafd8` (since 2026-10-20) |
 | `NEXT_PUBLIC_RANKING_V2` | `1` | unset |
 | `ranking_config.rules_live` | `1` (**live since 2026-10-13**) | `0` (shadow: prod students keep today's XP) |
@@ -143,11 +143,11 @@ table is the travelling record.
 | Question bank by domain/taxonomy/topic (brief 2, T1, T2, T4) | **Done**; content gate is Jade's review (454 live on prod; AI bank port waiting) |
 | Case studies, 8-phase (brief 3) | **Built** (slide-show player, generator); 6 cases in_review, **0 on prod** until Jade validates |
 | Mock exams (brief 4, T6) | **Done** (solo, group, timer, rationale release, fatigue). **Not done:** v2 regulator rules — always 100 q / 150 min, domain ±2 %, taxonomy ±3 %, stem-length ratio, no back-navigation, 2 × 5 min breaks |
-| Analytics dashboard (brief 5, T5) | **Not built.** Per-answer data exists (`question_attempts`); Jade asked for rank-only for students, so needs Ian/Jade to say what students vs. teachers see |
+| Analytics dashboard (brief 5, T5) | **Built on staging 2026-11-09**: student "My progress" (D8 option 2, private) and teacher "Class analytics" (at-risk list + class trends, definition approved by Ian) |
 | Study lobby / group study (brief 6, T13) | **Partly**: group mock exams (up to 5). **Not built:** live synchronised lobby, leaderboards, Google Meet debriefs |
 | Student question generation + AI evaluation (brief 7, T3) | **Built on staging 2026-10-22**: platform-assigned topic/domain/taxonomy/stem length, AI grader (both pathways), feedback per bar, 24 h rule + leaderboard (off). Jade chooses the pathway and policies (decisions PDF D1–D7) |
 | Rank & achievements (brief 8) | **Done** as Benner 24-level ladder (not Bronze→Diamond), ranking v2 + promotion quiz + trophies; live on staging, shadow on prod |
-| Instructor dashboard (brief 9) | **Partly**: dashboard, review queue, mock builder, fatigue cohort card, messaging, generate. **Not built:** at-risk learners, class trend analytics |
+| Instructor dashboard (brief 9) | **Done on staging 2026-11-09**: dashboard, review queue, mock builder, fatigue cohort card, messaging, generate, and Class analytics (at-risk learners, class trends) |
 | Caribbean content (brief 10) | Ongoing (mg/dL rule, regional practice note open with Jade) |
 | Real AI integration (brief blocker 2) | **Partly**: generation pipeline + teacher request queue (agent-session mode). **Not built:** adaptive difficulty, personalised study plan, topic Elo |
 | Payments / subscriptions (brief blocker 3, T8) | **Free-tier limits built on staging 2026-10-22** (10 q/day, no mocks; topic-review limit waits for topic reviews). **Checkout not built** — blocked on Phase 0 (processor, payout, prices); admins upgrade students by hand meanwhile |
@@ -3222,4 +3222,35 @@ taken, no content or branding; many saved pages were the proxy's "usage limit ex
   playback via signed link, chapters, J/K/L, transcript search + jump, captions, resume after reload, locked for free,
   free sample plays, phone width, teacher form upload + draft hidden from students, no page errors. tsc/lint/build clean.
 - Not built: phase 2 (video host), phase 3 extras (My progress and topic-review cross-links).
+
+## Session 2026-11-09 (Claude): instructor analytics (at-risk list + class trends) — staging
+
+Ian approved the proposed at-risk definition ("agreed complete this").
+
+- **Migration `20261109220000_instructor_analytics.sql`** (staging only): `class_analytics()` SECURITY DEFINER,
+  teaching staff only (anon 401, student 403). Returns every non-suspended student with `reasons`
+  (`inactive` / `low` / `mock` / `drop`), 12 weeks of class activity (students practising, answers, accuracy, mocks,
+  mean mock score) and class accuracy by domain (last 30 days vs the 30 before). Thresholds are `ranking_config` rows:
+  `risk_inactive_days` 7, `risk_recent_answers` 50, `risk_low_pct` 50, `risk_drop_points` 15, `risk_drop_days` 14
+  (confirmed by Ian); **unconfirmed, for Jade**: `mock_pass_pct` 70 (mocks had no pass mark before),
+  `risk_mock_recent_days` 30, `risk_min_answers` 20 (accuracy and drop rules wait for 20 answers). Read-only plus
+  config rows; rollback in the file header.
+- Rules exactly: inactive = no answers of any source for 7 days (or none ever and the account is older than 7 days);
+  low = under 50% over the last 50 answers (needs 20); mock = latest finished mock within 30 days scored under 70%;
+  drop = last 14 days 15+ points below the 14 before (20+ answers in each). Mock answers count for teachers even before
+  rationale release (only the student view withholds them).
+- **App:** `/teacher/analytics` (`src/app/teacher/analytics/page.tsx`, `src/lib/analytics/class.ts`,
+  `src/components/analytics/WeeklyColumns.tsx`): stat tiles, at-risk cards with each reason in the student's own
+  numbers, reason filter (`?reason=`), "Message" → `/teacher/messages?to=<id>` opens the new-message form with the
+  student chosen; three 12-week charts (hover/focus readouts, table views, pass-mark/50% reference lines); domain
+  accuracy bars with change vs the month before; collapsible all-students table. Teacher dashboard: red "N students
+  at risk" banner and a Class analytics quick link (not added to the top nav, which is full).
+- **Tests:** `scripts/test-instructor-analytics.mjs` 22/22 on staging (each rule fires and the near-misses don't);
+  browser check 12/12 (dashboard banner, reasons, filter, message prefill, 390 px phone, student kept out, no page
+  errors). Fixed during the check: the last chart column's hover label pushed the phone page 18 px wide; week labels
+  were truncated.
+- **Docs:** PLAN.md, feature status HTML/PDF (moved to "built, on staging"; 11 staging / 4 partly).
+- **Prod:** not applied. Prod now lacks ten migrations (the four 2026-10-22 and six 2026-11-09).
+- **Next:** Jade confirms the three proposed settings (change a `ranking_config` row; no code); later, adaptive
+  difficulty / study plan can build on this.
 

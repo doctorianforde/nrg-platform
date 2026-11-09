@@ -21,9 +21,9 @@ function SubmitButton() {
 const input =
   "w-full rounded-lg border border-input bg-card px-3 py-2 text-sm text-card-foreground shadow-sm transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30";
 
-export function NewStaffThreadForm({ students }: { students: RosterStudent[] }) {
+export function NewStaffThreadForm({ students, initialStudentId }: { students: RosterStudent[]; initialStudentId?: string }) {
   const [state, action] = useFormState<MessageState, FormData>(createThreadForStudent, null);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(!!initialStudentId);
 
   if (students.length === 0) {
     return (
@@ -49,7 +49,7 @@ export function NewStaffThreadForm({ students }: { students: RosterStudent[] }) 
     <form action={action} className="space-y-3">
       <label className="block text-sm">
         <span className="mb-1 block font-medium text-card-foreground">Student</span>
-        <select name="student_id" required defaultValue="" className={input}>
+        <select name="student_id" required defaultValue={initialStudentId ?? ""} className={input}>
           <option value="" disabled>
             Choose a student…
           </option>

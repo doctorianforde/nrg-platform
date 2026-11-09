@@ -46,7 +46,7 @@ const ChatIcon = () => (
   </Icon>
 );
 
-export default async function TeacherMessagesPage() {
+export default async function TeacherMessagesPage({ searchParams }: { searchParams: { to?: string } }) {
   const { user, profile } = await requireRole("teacher", "/teacher/messages");
   const supabase = createClient();
   const [threads, students] = await Promise.all([
@@ -77,7 +77,7 @@ export default async function TeacherMessagesPage() {
           <p className="mb-3 text-sm text-muted-foreground">
             Start a conversation without waiting for them to ask — it lands on their profile.
           </p>
-          <NewStaffThreadForm students={students} />
+          <NewStaffThreadForm students={students} initialStudentId={students.some((s) => s.id === searchParams.to) ? searchParams.to : undefined} />
         </Card>
 
         <Card>

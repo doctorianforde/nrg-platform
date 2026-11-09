@@ -6,6 +6,7 @@ import { Card, CardTitle } from "@/components/ui/Card";
 import { StatCard } from "@/components/ui/StatCard";
 import { STATUS_LABEL, STUDENT_SOURCE, type ReviewStatus } from "@/lib/review/filters";
 import { hasUnread } from "@/lib/messages/types";
+import { loadClassAnalytics } from "@/lib/analytics/class";
 
 export const dynamic = "force-dynamic";
 
@@ -104,6 +105,7 @@ const QUICK_LINK_ICONS: Record<string, () => React.ReactElement> = {
   "/teacher/messages": MailIcon,
   "/teacher/mock-exams": ClipboardCheckIcon,
   "/teacher/recordings": SparkIcon,
+  "/teacher/analytics": AlertIcon,
   "/study/leaderboard": CheckCircleIcon,
   "/study": ArrowLeftIcon,
 };
@@ -143,7 +145,15 @@ export default async function Page() {
     { status: "rejected", count: rejected },
   ];
 
+  const classStats = await loadClassAnalytics();
+  const atRisk = classStats?.students.filter((s) => s.reasons.length > 0).length ?? 0;
+
   const quickLinks = [
+    {
+      href: "/teacher/analytics",
+      title: "Class analytics",
+      body: "Students at risk and why, plus class activity, accuracy and mock scores week by week.",
+    },
     {
       href: "/teacher/review",
       title: "Review queue",
@@ -214,6 +224,30 @@ export default async function Page() {
           </span>
         </span>
       </Link>
+
+      {atRisk > 0 ? (
+        <Link
+          href="/teacher/analytics"
+          className="card-lift mb-4 block rounded-xl border border-red-200 bg-red-50 p-5 shadow-sm"
+        >
+          <span className="flex items-start gap-3">
+            <span
+              aria-hidden
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-700 ring-1 ring-red-200/60"
+            >
+              <AlertIcon />
+            </span>
+            <span className="min-w-0">
+              <span className="font-medium text-red-800">
+                {atRisk.toLocaleString()} student{atRisk === 1 ? "" : "s"} at risk →
+              </span>
+              <span className="mt-1 block text-sm text-red-700">
+                Inactive, low or falling accuracy, or a mock below the pass mark. See who and why.
+              </span>
+            </span>
+          </span>
+        </Link>
+      ) : null}
 
       {unreadMessages > 0 ? (
         <Link
