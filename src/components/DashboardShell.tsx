@@ -7,10 +7,12 @@ import { BadgeCelebrationsServer } from "@/components/badges/BadgeCelebrationsSe
 import { flags } from "@/lib/flags";
 import { ContentProtection } from "@/components/ContentProtection";
 import { ThemeQuickSwitch } from "@/components/theme/ThemeQuickSwitch";
+import { StudySearch } from "@/components/search/StudySearch";
 import { NavLinks } from "@/components/NavLinks";
 
 const NAV: Array<{ href: string; label: string; min: Profile["role"]; rankingV2?: boolean }> = [
   { href: "/study", label: "Study", min: "student" },
+  { href: "/study/analytics", label: "My progress", min: "student" },
   { href: "/study/trophies", label: "Trophies", min: "student", rankingV2: true },
   { href: "/study/submit", label: "Write a question", min: "student" },
   { href: "/study/profile", label: "Profile", min: "student" },
@@ -66,6 +68,7 @@ export function DashboardShell({
           </Link>
           <NavLinks items={navItems} />
           <div className="ml-auto flex items-center gap-2 text-xs sm:gap-3">
+            {profile.role === "student" ? <StudySearch /> : null}
             {profile.role === "student" ? <ThemeQuickSwitch /> : null}
             <span className="rounded-full bg-gradient-to-br from-brand-400 to-brand-700 p-[2px]">
               <Avatar
@@ -75,7 +78,7 @@ export function DashboardShell({
                 size={30}
               />
             </span>
-            <span className="rounded-full bg-brand-100 px-2.5 py-1 font-semibold uppercase tracking-wide text-brand-800">
+            <span className="hidden rounded-full bg-brand-100 px-2.5 py-1 font-semibold uppercase tracking-wide text-brand-800 sm:inline">
               {profile.role.replace("_", " ")}
             </span>
             <span className="hidden opacity-80 sm:inline">{email}</span>

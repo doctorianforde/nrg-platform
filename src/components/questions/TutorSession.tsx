@@ -64,6 +64,21 @@ export function TutorSession({
   const [checking, setChecking] = useState(false);
   const [checkError, setCheckError] = useState<string | null>(null);
 
+  // Keyboard shortcuts (like a video player's J/K/L): 1–9 or A–I pick an option, Enter checks and then moves on. The
+  // handler for the current question is swapped in on every render; the listener itself is registered once.
+  const keyHandler = useRef<((e: KeyboardEvent) => void) | null>(null);
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.altKey || e.repeat) return;
+      const t = e.target as HTMLElement | null;
+      if (t && (t.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(t.tagName))) return;
+      if (document.querySelector('[role="dialog"][aria-modal="true"]')) return;
+      keyHandler.current?.(e);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   // Report once per run. The tally is state, so this waits for it to settle rather
   // than firing inside the click handler with a stale count.
   useEffect(() => {
@@ -75,6 +90,7 @@ export function TutorSession({
     void Promise.resolve(onComplete(total, tally.correct, answers.current)).then(() => window.dispatchEvent(new Event("nrg:badges-check")));
   }, [finished, tally, onComplete]);
 
+  keyHandler.current = null;
   if (questions.length === 0) {
     return (
       <div className="rounded-xl border border-dashed border-border bg-card/60 p-10 text-center text-sm text-muted-foreground">
@@ -189,6 +205,20 @@ export function TutorSession({
     return "dimmed";
   };
 
+  keyHandler.current = (e) => {
+    const letter = /^[a-i]$/i.test(e.key) ? e.key.toLowerCase().charCodeAt(0) - 97 : -1;
+    const digit = /^[1-9]$/.test(e.key) ? Number(e.key) - 1 : -1;
+    const pick = digit >= 0 ? digit : letter;
+    if (pick >= 0 && pick < q.options.length && !revealed) {
+      e.preventDefault();
+      toggle(q.options[pick].id);
+    } else if (e.key === "Enter" && !(e.target instanceof HTMLButtonElement) && !(e.target instanceof HTMLAnchorElement)) {
+      e.preventDefault();
+      if (revealed) next();
+      else void reveal();
+    }
+  };
+
   return (
     <div className="mx-auto max-w-3xl">
       <div className="mb-4 flex items-center justify-between text-sm text-muted-foreground">
@@ -254,6 +284,10 @@ export function TutorSession({
         <div className="mt-6 flex items-center justify-between">
           <span className="text-xs text-muted-foreground">
             {isSata ? "Select all that apply, then check." : "Pick one answer, then check."}
+            <span className="ml-2 hidden sm:inline" title="Keyboard shortcuts">
+              · Keys: <kbd className={kbd}>1</kbd>–<kbd className={kbd}>{Math.min(9, q.options.length)}</kbd> choose,{" "}
+              <kbd className={kbd}>Enter</kbd> {revealed ? "next" : "check"}
+            </span>
           </span>
           {revealed ? (
             <button
@@ -283,3 +317,5 @@ export function TutorSession({
     </div>
   );
 }
+
+const kbd = "rounded border border-border bg-muted px-1 py-px font-mono text-[10px] text-card-foreground";

@@ -21,7 +21,7 @@ Read this section first; everything below it is the dated log of how we got here
 | Supabase project | `kwhaqhhwqykckarjbdod` | `cdvubijjepwmhhkgppbl` |
 | Site | https://nrg-platform-staging.vercel.app | the `nrg-platform` Vercel project |
 | Git branch that deploys it | `staging` | `main` |
-| Migrations applied | all 52 in `supabase/migrations/` (2026-10-22: `20261022120000` free-tier limits, `20261022140000` topic reviews, `20261022160000` review reading, `20261022180000` question grading) | 48 (**since 2026-10-20**); the four 2026-10-22 ones not yet |
+| Migrations applied | all 53 in `supabase/migrations/` (2026-11-09: `20261109120000` student analytics) (2026-10-22: `20261022120000` free-tier limits, `20261022140000` topic reviews, `20261022160000` review reading, `20261022180000` question grading) | 48 (**since 2026-10-20**); the four 2026-10-22 ones not yet |
 | App | the 2026-10-22 grading commit (free tier, topic reviews, reading XP, AI grading) | `ebbafd8` (since 2026-10-20) |
 | `NEXT_PUBLIC_RANKING_V2` | `1` | unset |
 | `ranking_config.rules_live` | `1` (**live since 2026-10-13**) | `0` (shadow: prod students keep today's XP) |
@@ -70,6 +70,7 @@ Steps 1–4 **done 2026-10-20** (go-live entry at the end of this file). Left: 5
 4. Then `20261012170000_hide_answer_keys` (it breaks the *old* prod code, so it must follow step 3), checked with
    `CONFIRM_PROD=1 node scripts/test-answer-keys.mjs --target prod` (`--pre` before it); then `20261017120000_revoke_unneeded_grants`
    and `node scripts/test-write-paths.mjs`-style smoke checks.
+4c. (2026-11-09) `20261109120000_student_analytics` (read-only function, additive) before the merge that ships My progress.
 4b. (2026-10-22) `20261022120000_free_tier_limits` before the next merge to `main` (the app tolerates its absence, but
    apply it first per the usual order). It lands with `limits_live = 0`: nothing changes for prod users until Ian switches it.
 5. AI-bank port SQL (`PROD_PORT_RUNBOOK.md`) when Ian approves the content, then `data/review/prod-port/dedup-v1-prod.sql`
@@ -110,7 +111,7 @@ promotion quiz is open), `case-test-teacher@…` / `case-test-student@…` (free
 `node scripts/test-ranking-phase1.mjs` (19), `node scripts/test-ranking-phase2.mjs` (47), `node scripts/test-answer-keys.mjs`
 (14; `--target prod` with `CONFIRM_PROD=1`, `--pre` before the hide migration), `node scripts/test-trophies-phase1.mjs` (28),
 `node scripts/e2e-rls-test.mjs` (T34, 15; fixed 2026-10-17, it had been failing 9/15 silently), `node scripts/test-write-paths.mjs`
-(38: every app write path a user token uses), `node scripts/test-free-tier.mjs` (26; turns `limits_live` on for the run and restores it), `node scripts/test-topic-reviews.mjs` (17; restores every review's status), `node scripts/test-topic-review-reading.mjs` (30; reading XP + free-tier window, restores statuses and `limits_live`), `node scripts/test-question-grading.mjs` (21; needs an empty grading queue, restores `qgen_config`). Content gate: `npx tsx scripts/import-topic-reviews.ts` (fails if any source word is lost). The two ranking suites hold
+(38: every app write path a user token uses), `node scripts/test-free-tier.mjs` (26; turns `limits_live` on for the run and restores it), `node scripts/test-student-analytics.mjs` (19; own-data only, unreleased mock answers withheld), `node scripts/test-topic-reviews.mjs` (17; restores every review's status), `node scripts/test-topic-review-reading.mjs` (30; reading XP + free-tier window, restores statuses and `limits_live`), `node scripts/test-question-grading.mjs` (21; needs an empty grading queue, restores `qgen_config`). Content gate: `npx tsx scripts/import-topic-reviews.ts` (fails if any source word is lost). The two ranking suites hold
 `rules_live` at 0 while their shadow checks run and put back the starting value afterwards. Content gates: `npx tsx scripts/review-bank.ts --check`,
 `npx tsx scripts/import-case.ts --check`, `npx tsx scripts/plan-cases.ts --report`.
 
@@ -3043,4 +3044,42 @@ can choose; and a "Decisions for Jade" PDF with every decision he still owns, in
   line; `.env.local` untouched).
 - One 198 ms long task was seen on a first switch to Midnight (the 300 ms colour cross-fade restyles every element); left
   as is, worth a look only if Ian still feels it on a slower device.
+
+## Session 2026-11-09 (Claude): My progress (student analytics, D8 option 2) + JoMI-inspired student features — staging DB, not pushed
+Ian chose **D8 option 2** ("rank plus private analytics … never compared with classmates") and asked for it to be built, plus
+the applicable features of a reference site (a JoMI snapshot saved from the UWI library proxy; only layout/feature ideas
+taken, no content or branding; many saved pages were the proxy's "usage limit exceeded, account suspended" notice).
+- **Migration `20261109120000_student_analytics`** (applied to **staging** via the CLI pooler; not on prod): one read-only
+  SECURITY DEFINER function `my_study_analytics()` returning only the caller's own data: totals, by source, per domain
+  (with the ranking-v2 state from rcfg thresholds over the last 30 answers), per taxonomy level, per question
+  `[id, answered, correct]`, daily activity (Trinidad days, 120 days). **Mock answers count only once the set's rationales
+  are released** (before that a per-topic breakdown could reveal which mock answers were right); unreleased ones are
+  reported as `withheld_mock_answers`. Practice and promotion answers always count.
+- **Topics = topic reviews.** `topics` are too fine-grained to aggregate (staging: 111 live questions across 111 topics),
+  so the app groups the per-question counts by the published review each question links to (same `linkScore` rule as
+  practice's "Review this topic"). Weak = ≥3 answers and under 75 %; strong = 75 %+.
+- **`/study/analytics` "My progress"** (nav link for students): rank card; tiles (answers, accuracy, days studied in 30
+  days, domains practised); "Focus next" (weakest review + weakest domain, with Read / Practise buttons); accuracy bars by
+  domain (state badge with icon + label, hairlines at 30 % / 75 %) and by taxonomy (KC/AP/ASE), each with Practise links
+  and a table view; strongest and weakest topics (review + `practice/session?review=` links); exam stamina (latest
+  mock's fatigue report + recent mocks table); 12-week activity heatmap (single-hue scale, table view). No cohort figures.
+- **Practice now always records per-answer rows** (`record_practice_answers`), also with the ranking flag off (prod), so
+  My progress has data there. In shadow mode (prod `rules_live = 0`) it pays exactly the old XP; with the flag off a failed
+  save still falls back to the old tally. **Ian to confirm** before this reaches prod.
+- **From the reference site**: topic-review library with a filter panel (search, show all/unread/read or staff
+  published/drafts, sort incl. "Focus areas first", body system with counts, cards/list toggle; weak-area reviews flagged
+  "Focus area"); student search on Ctrl+K / ⌘K or "/" (study pages, published reviews, practise-by-domain; index loads on
+  first open); practice keyboard shortcuts (1–9 or A–I choose, Enter checks then moves on; hint shown on wider screens).
+  Not taken: video, CME/certificates, authors/institutions, publishing, cookie banner.
+- Header: the role pill is hidden below `sm` so the student header fits a 390 px phone with the new search button.
+- **Verified**: `tsc`, lint, build clean. `node scripts/test-student-analytics.mjs` 19/19 (anon refused; own data only; teacher
+  sees own empty; domain states Weak/Mastered by the rules; taxonomy and per-question sums; unreleased mock withheld then
+  counted after release; cleanup). Browser e2e on a local production build against staging (throwaway student, 3 reviews
+  published for the run and restored to draft): 29/29 — My progress content and links, Focus next, withheld note, stamina
+  late-drop, heatmap, no class comparison, Midnight theme, phone width (no horizontal scroll), library filters/search/list
+  view, Ctrl+K and "/" search, practice keys recording 3 answers, no hydration errors. Prod was not read (auto-mode guard;
+  Ian chose to keep it blocked).
+- **Still open**: instructor analytics (at-risk definition — Claude proposed: no practice in 7+ days, <50 % over last 50
+  answers, recent mock below pass, or a 15-point fortnight drop; Ian to confirm); update D8 in the decisions PDF as decided;
+  all 15 reviews are still drafts, so students see no topic areas until they are published.
 

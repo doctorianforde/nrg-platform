@@ -3,12 +3,12 @@ import { DashboardShell } from "@/components/DashboardShell";
 import { fetchQuizQuestions } from "@/lib/quiz/fetch";
 import { TutorSession } from "@/components/questions/TutorSession";
 import { recordPracticeAnswers, recordPracticeSession } from "@/lib/xp/actions";
-import { flags } from "@/lib/flags";
 import { getAllowance } from "@/lib/tier/allowance";
 import { dailyQuestionDue } from "@/lib/grading/daily";
 import { DailyQuestionGate } from "@/components/grading/DailyQuestionGate";
 import { UpgradeNotice } from "@/components/tier/UpgradeNotice";
 import { getReview, publishedReviewLinks, reviewQuestionIds } from "@/lib/topic-reviews/queries";
+import { flags } from "@/lib/flags";
 
 export const dynamic = "force-dynamic";
 
@@ -96,9 +96,11 @@ export default async function PracticeSessionPage({
         finishLink={{ href: "/study/submit?from=practice", label: "Write a question on the topic you found hardest →" }}
         onComplete={async (total, correct, answers) => {
           "use server";
-          // Ranking v2 sends the choices for the server to grade; with the flag off, the original tally path runs.
-          if (flags.rankingV2) await recordPracticeAnswers(answers, int(sp.domain));
-          else await recordPracticeSession(total, correct, int(sp.domain));
+          // Always send the choices for the server to grade: My progress (/study/analytics) needs one row per answer.
+          // With the ranking rules in shadow (prod, rules_live = 0) record_practice_answers pays exactly the old XP, so
+          // the flag-off XP is unchanged. With the flag off, a failed save still records the tally as before.
+          const recorded = answers.length > 0 && (await recordPracticeAnswers(answers, int(sp.domain)));
+          if (!recorded && !flags.rankingV2) await recordPracticeSession(total, correct, int(sp.domain));
         }}
       />
     </DashboardShell>
