@@ -121,7 +121,7 @@ promotion quiz is open), `case-test-teacher@…` / `case-test-student@…` (free
 3. More AI cases once the 6 are reviewed (`npx tsx scripts/plan-cases.ts --count N`, then the generator and reviewer briefs).
 4. (2026-10-22) Send Jade `docs/phase-1/Decisions_for_Jade.pdf`; Ian + Jade read and publish the 15 topic reviews; Ian runs
    the grading queue while mode is `agent`; checklist F1–F6, T1–T9 on staging.
-5. (2026-10-22; **both fixed locally 2026-11-07**, Ian re-tests after the push) Fix the two open checklist failures: **N1** theme switching lags between choices, **R3** Roman numerals
+5. (2026-10-22; **both fixed on staging 2026-11-07**, Ian re-tests) Fix the two open checklist failures: **N1** theme switching lags between choices, **R3** Roman numerals
    off-centre on the trophy art. Set up a fresh promotion quiz on `ian-paid-student` so Ian can test **R4** (failed-quiz
    retake lock) and **R5** (celebrations don't replay).
 
@@ -3020,7 +3020,7 @@ can choose; and a "Decisions for Jade" PDF with every decision he still owns, in
 - **Housekeeping**: `npm i` pruned the ad-hoc `pg` package the session's staging helper used (it lives in the scratchpad now);
   `js-yaml` (importer) is still present as a transitive dependency.
 
-## Session 2026-11-07 (Claude): checklist N1 (theme lag) and R3 (trophy numerals) fixed — local, not yet pushed
+## Session 2026-11-07 (Claude): checklist N1 (theme lag) and R3 (trophy numerals) fixed — pushed to staging (`fa68159`)
 - **R3, numerals off-centre**: `BadgeArt` drew the numeral at (46.6 %, 36.6 %) of the badge. Measured the inner disc of all
   five rank medals (512 and 128 px art; ray-cast to the disc edge): every tier is centred at **(50 %, 40.7 %)**, radius ~25.7 %.
   Moved the numeral there. Rendered in headless Chromium at 168/56/36 px and measured the white ink: was 5–8 px left and

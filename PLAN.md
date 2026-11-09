@@ -8,7 +8,7 @@ for *what actually happened*, this file is for *what's left and who does it*.
 ## Status legend
 `done` · `pending` · `needs-verify` (marked done before, not re-confirmed) · `blocked`
 
-**Updated 2026-11-07** (checklist N1 + R3 fixed locally; before that 2026-10-22: review session, then free-tier limits built on staging — see the new row and "Unbuilt features from the original brief"). **Prod is up to date** (go-live steps 1–4 done 2026-10-20): staging and prod both hold all 48
+**Updated 2026-11-07** (checklist N1 + R3 fixed, pushed to staging; before that 2026-10-22: review session, then free-tier limits built on staging — see the new row and "Unbuilt features from the original brief"). **Prod is up to date** (go-live steps 1–4 done 2026-10-20): staging and prod both hold all 48
 migrations and run the same code (`ebbafd8`). Deploys: branch `staging` → staging site, branch `main` → prod. Ranking v2 and
 trophies are **live on staging** (`rules_live = 1`, flag on) and in shadow on prod (`rules_live = 0`, flag unset).
 The one-page summary of where everything stands is `PROGRESS.md` → "Current state (as of 2026-10-20)".
