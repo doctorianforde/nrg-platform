@@ -103,6 +103,7 @@ const QUICK_LINK_ICONS: Record<string, () => React.ReactElement> = {
   "/teacher/review": CheckCircleIcon,
   "/teacher/messages": MailIcon,
   "/teacher/mock-exams": ClipboardCheckIcon,
+  "/teacher/recordings": SparkIcon,
   "/study/leaderboard": CheckCircleIcon,
   "/study": ArrowLeftIcon,
 };
@@ -167,6 +168,11 @@ export default async function Page() {
       href: "/teacher/mock-exams",
       title: "Mock exams",
       body: "Build exam sets and release rationales when your cohort is ready.",
+    },
+    {
+      href: "/teacher/recordings",
+      title: "Recordings",
+      body: "Add past recordings and lectures with chapters and notes, tag them to topics, and publish them.",
     },
     {
       href: "/study",

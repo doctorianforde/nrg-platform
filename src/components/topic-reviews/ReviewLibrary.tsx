@@ -190,7 +190,7 @@ function StatusBadge({ item, staff }: { item: LibraryItem; staff: boolean }) {
 
 function Group({ title, count, children }: { title: string; count?: number; children: React.ReactNode }) {
   return (
-    <fieldset className="border-t border-border/70 pt-3">
+    <fieldset className="min-w-0 border-t border-border/70 pt-3">
       <legend className="flex items-center gap-1.5 pb-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
         {title}
         {count ? <span className="rounded-full bg-brand-100 px-1.5 text-[10px] text-brand-800">{count}</span> : null}
@@ -202,9 +202,9 @@ function Group({ title, count, children }: { title: string; count?: number; chil
 
 function Choice({ type, name, checked, onChange, label, count }: { type: "radio" | "checkbox"; name: string; checked: boolean; onChange: () => void; label: string; count?: number }) {
   return (
-    <label className={cn("flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-muted", checked ? "bg-muted text-foreground" : "text-card-foreground")}>
-      <input type={type} name={name} checked={checked} onChange={onChange} className="h-3.5 w-3.5 accent-[hsl(var(--primary))]" />
-      <span className="min-w-0 flex-1 truncate">{label}</span>
+    <label className={cn("flex cursor-pointer items-start gap-2 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-muted", checked ? "bg-muted text-foreground" : "text-card-foreground")}>
+      <input type={type} name={name} checked={checked} onChange={onChange} className="mt-1 h-3.5 w-3.5 shrink-0 accent-[hsl(var(--primary))]" />
+      <span className="min-w-0 flex-1 break-words">{label}</span>
       {count !== undefined ? <span className="text-xs tabular-nums text-muted-foreground">{count}</span> : null}
     </label>
   );

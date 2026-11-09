@@ -1,0 +1,74 @@
+{
+  "slug": "abg-interpretation",
+  "title": "Interpreting arterial blood gases",
+  "kind": "lecture",
+  "presenter": "NRG sample (for Jade's review)",
+  "description": "A six-step method for reading an arterial blood gas: normal values, acid or base, respiratory or metabolic, compensation and oxygenation, with two worked examples and the nursing priorities for each. Sample recording for review before use.",
+  "domain_code": "CDM",
+  "cognitive_level": "analysis",
+  "reviews": ["copd", "renal"],
+  "notes": "Normal adult values: pH 7.35 to 7.45; PaCO2 35 to 45 mmHg; HCO3 22 to 26 mEq/L; PaO2 80 to 100 mmHg; SaO2 95 to 100%.\n\nThe six steps: 1. Look at the pH: acidosis below 7.35, alkalosis above 7.45. 2. Look at the PaCO2 (the respiratory, acid part). 3. Look at the HCO3 (the metabolic, base part). 4. The value that matches the pH's direction is the cause. 5. Check compensation: uncompensated, partially compensated or fully compensated. 6. Check oxygenation: PaO2 and SaO2.\n\nROME: Respiratory Opposite (pH and PaCO2 move in opposite directions), Metabolic Equal (pH and HCO3 move in the same direction).\n\nExample 1: pH 7.30, PaCO2 58, HCO3 25 is uncompensated respiratory acidosis (hypoventilation, for example a COPD exacerbation or opioid overdose). Priorities: airway and breathing, sit the patient upright, oxygen as prescribed, watch respiratory rate and level of consciousness.\n\nExample 2: pH 7.32, PaCO2 30, HCO3 16 is partially compensated metabolic acidosis (for example diabetic ketoacidosis with glucose above 250 mg/dL, kidney failure or severe diarrhoea). Priorities: treat the cause, fluids and insulin as prescribed, monitor potassium and glucose, watch for Kussmaul breathing.",
+  "slides": [
+    {
+      "title": "Interpreting arterial blood gases",
+      "body": "<p class='lead'>A six-step method you can use on any gas, every time.</p><p class='muted'>Sample lecture · for Jade's review before use</p>",
+      "cover": true,
+      "chapter": "Introduction",
+      "narration": "Welcome. In this short lecture you will learn a six-step method for interpreting an arterial blood gas. By the end, you will be able to say whether a gas shows an acidosis or an alkalosis, whether the cause is respiratory or metabolic, whether the body is compensating, and how well the patient is oxygenated."
+    },
+    {
+      "title": "Normal values",
+      "body": "<table><tr><th>Value</th><th>Normal range</th><th>Tells you about</th></tr><tr><td>pH</td><td>7.35 to 7.45</td><td>Acid or base overall</td></tr><tr><td>PaCO<sub>2</sub></td><td>35 to 45 mmHg</td><td>Respiratory (acid)</td></tr><tr><td>HCO<sub>3</sub></td><td>22 to 26 mEq/L</td><td>Metabolic (base)</td></tr><tr><td>PaO<sub>2</sub></td><td>80 to 100 mmHg</td><td>Oxygenation</td></tr><tr><td>SaO<sub>2</sub></td><td>95 to 100%</td><td>Oxygenation</td></tr></table>",
+      "chapter": "Normal values",
+      "narration": "Start by knowing the normal adult values. The pH is 7.35 to 7.45. The partial pressure of carbon dioxide, the PaCO2, is 35 to 45 millimetres of mercury. Bicarbonate is 22 to 26 milliequivalents per litre. The PaO2 is 80 to 100 millimetres of mercury, and oxygen saturation is 95 to 100 percent. Remember that carbon dioxide behaves like an acid and is controlled by the lungs, while bicarbonate is a base controlled by the kidneys."
+    },
+    {
+      "title": "Step 1: Look at the pH",
+      "body": "<div class='scale'><span class='acid'>Acidosis<br><b>below 7.35</b></span><span class='norm'>Normal<br><b>7.35 to 7.45</b></span><span class='base'>Alkalosis<br><b>above 7.45</b></span></div><p>If the pH is normal, note which side of 7.40 it sits on. You will need it in step 5.</p>",
+      "chapter": "Step 1: the pH",
+      "narration": "Step one. Look at the pH. Below 7.35 is an acidosis. Above 7.45 is an alkalosis. If the pH is within the normal range, note whether it sits on the acid side of 7.40 or the alkaline side. That detail matters when you decide whether a disorder is fully compensated."
+    },
+    {
+      "title": "Steps 2 and 3: The lungs and the kidneys",
+      "body": "<div class='two'><div><h3>PaCO<sub>2</sub> (respiratory)</h3><p>Above 45: respiratory acidosis</p><p>Below 35: respiratory alkalosis</p></div><div><h3>HCO<sub>3</sub> (metabolic)</h3><p>Below 22: metabolic acidosis</p><p>Above 26: metabolic alkalosis</p></div></div><p class='rule'><b>ROME</b>: Respiratory Opposite, Metabolic Equal</p>",
+      "chapter": "Steps 2 and 3: PaCO2 and HCO3",
+      "narration": "Steps two and three. Look at the PaCO2, then the bicarbonate. A PaCO2 above 45 points to respiratory acidosis, and below 35 to respiratory alkalosis. A bicarbonate below 22 points to metabolic acidosis, and above 26 to metabolic alkalosis. A helpful memory aid is ROME. Respiratory Opposite: the pH and the PaCO2 move in opposite directions. Metabolic Equal: the pH and the bicarbonate move in the same direction."
+    },
+    {
+      "title": "Step 4: Find the cause",
+      "body": "<p class='lead'>The value that matches the direction of the pH is the cause.</p><p>pH low and PaCO<sub>2</sub> high: the lungs are causing an acidosis.</p><p>pH low and HCO<sub>3</sub> low: the metabolism is causing an acidosis.</p>",
+      "chapter": "Step 4: the cause",
+      "narration": "Step four. Decide which system is causing the problem. The cause is the value that matches the direction of the pH. If the pH is low and the PaCO2 is high, the lungs are causing an acidosis. If the pH is low and the bicarbonate is low, the problem is metabolic."
+    },
+    {
+      "title": "Step 5: Is the body compensating?",
+      "body": "<table><tr><th>Compensation</th><th>pH</th><th>The other value</th></tr><tr><td>Uncompensated</td><td>Abnormal</td><td>Normal</td></tr><tr><td>Partially compensated</td><td>Abnormal</td><td>Abnormal, moving the opposite way</td></tr><tr><td>Fully compensated</td><td>Normal</td><td>Abnormal, moving the opposite way</td></tr></table>",
+      "chapter": "Step 5: compensation",
+      "narration": "Step five. Check for compensation by looking at the value that is not the cause. If it is normal, the disorder is uncompensated. If it is abnormal and moving in the opposite direction while the pH is still abnormal, the disorder is partially compensated. If the pH has returned to normal, the disorder is fully compensated. The lungs compensate within minutes to hours. The kidneys take days."
+    },
+    {
+      "title": "Step 6: Oxygenation",
+      "body": "<p>PaO<sub>2</sub> below 80 mmHg is hypoxaemia.</p><p>Check the SaO<sub>2</sub> and the patient together: colour, respiratory rate, work of breathing, level of consciousness.</p><p class='muted'>Treat the patient, not the number.</p>",
+      "chapter": "Step 6: oxygenation",
+      "narration": "Step six. Look at oxygenation. A PaO2 below 80 millimetres of mercury is hypoxaemia. Always look at the saturation and at the patient together: their colour, respiratory rate, work of breathing and level of consciousness. Treat the patient, not just the number."
+    },
+    {
+      "title": "Worked example 1",
+      "body": "<p class='gas'>pH 7.30 · PaCO<sub>2</sub> 58 · HCO<sub>3</sub> 25</p><p><b>Respiratory acidosis, uncompensated.</b></p><p>Think: hypoventilation, COPD exacerbation, opioid overdose.</p><p>Priorities: airway and breathing, sit upright, oxygen as prescribed, watch respiratory rate and level of consciousness.</p>",
+      "chapter": "Worked example 1",
+      "narration": "Let's try one. pH 7.30, PaCO2 58, bicarbonate 25. The pH is low, so this is an acidosis. The PaCO2 is high and matches, so the cause is respiratory. The bicarbonate is normal, so it is uncompensated. This is uncompensated respiratory acidosis, seen with hypoventilation, for example a COPD exacerbation or an opioid overdose. Your priorities are the airway and breathing: sit the patient upright, give oxygen as prescribed, and watch the respiratory rate and level of consciousness closely."
+    },
+    {
+      "title": "Worked example 2",
+      "body": "<p class='gas'>pH 7.32 · PaCO<sub>2</sub> 30 · HCO<sub>3</sub> 16</p><p><b>Metabolic acidosis, partially compensated.</b></p><p>Think: diabetic ketoacidosis (glucose above 250 mg/dL), kidney failure, severe diarrhoea.</p><p>Priorities: treat the cause, fluids and insulin as prescribed, monitor potassium and glucose, watch for Kussmaul breathing.</p>",
+      "chapter": "Worked example 2",
+      "narration": "Now a second. pH 7.32, PaCO2 30, bicarbonate 16. The pH is low, so this is an acidosis. The bicarbonate is low and matches, so the cause is metabolic. The PaCO2 is also abnormal, moving the opposite way: the lungs are blowing off carbon dioxide to compensate, but the pH is still low. This is partially compensated metabolic acidosis, as in diabetic ketoacidosis with a blood glucose above 250 milligrams per decilitre, kidney failure, or severe diarrhoea. Treat the cause, give fluids and insulin as prescribed, and monitor potassium and glucose closely."
+    },
+    {
+      "title": "Summary",
+      "body": "<ol><li>pH: acid or base?</li><li>PaCO<sub>2</sub>: respiratory?</li><li>HCO<sub>3</sub>: metabolic?</li><li>Which one matches the pH?</li><li>Compensation: none, partial or full?</li><li>Oxygenation</li></ol><p class='muted'>RENR questions often give you the values and ask for the priority nursing action.</p>",
+      "chapter": "Summary",
+      "narration": "To summarise: check the pH, then the PaCO2, then the bicarbonate. Find the value that matches the pH, decide on compensation, and finish with oxygenation. In the RENR exam, questions often give you the values and ask for the priority nursing action, so always link the result back to what you would do for the patient. Practise with the questions linked below this recording."
+    }
+  ]
+}

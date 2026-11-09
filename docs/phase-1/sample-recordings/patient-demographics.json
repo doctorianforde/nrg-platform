@@ -1,0 +1,62 @@
+{
+  "slug": "patient-demographics",
+  "title": "Patient demographics in nursing assessment",
+  "kind": "short",
+  "presenter": "NRG sample (for Jade's review)",
+  "description": "What demographic data are, why they matter for safe and culturally respectful care, how to collect them well, and how to keep them confidential, with Caribbean examples and an exam-style question. Sample recording for review before use.",
+  "domain_code": "NP",
+  "cognitive_level": "knowledge",
+  "reviews": [],
+  "notes": "Demographic data describe who the patient is: full name, date of birth and age, sex and gender, address and contact details, next of kin, marital status, occupation, religion, ethnicity, preferred language and level of education, and how care is paid for.\n\nWhy they matter: correct identification (use two identifiers, such as full name and date of birth, before every medication, procedure or specimen); risk (age, occupation and living situation change what you look for); culturally safe care (diet, modesty, blood products, prayer and fasting); communication (preferred language and literacy); discharge planning (who is at home and who can help); and consent (age and capacity).\n\nCollecting them well: a private place, explain why you are asking, let the patient describe their own ethnicity and religion, use a trained interpreter rather than family for clinical information, check the identification band, record exactly and update changes.\n\nCaribbean context: Trinidad and Tobago is home to people of African, East Indian, mixed and other heritage, and of Christian, Hindu, Muslim and other faiths. Never assume diet or practices from a name or appearance: ask.\n\nConfidentiality: share demographic information only with the people caring for the patient, never discuss it in public areas, and keep records secure.",
+  "slides": [
+    {
+      "title": "Patient demographics in nursing assessment",
+      "body": "<p class='lead'>Who the patient is shapes every part of their care.</p><p class='muted'>Sample short · for Jade's review before use</p>",
+      "cover": true,
+      "chapter": "Introduction",
+      "narration": "In this short explainer we look at patient demographics: what they are, why they matter for safe care, how to collect them well, and how to protect them."
+    },
+    {
+      "title": "What demographic data include",
+      "body": "<div class='chips'><span>Full name</span><span>Date of birth and age</span><span>Sex and gender</span><span>Address and contact</span><span>Next of kin</span><span>Marital status</span><span>Occupation</span><span>Religion</span><span>Ethnicity</span><span>Preferred language</span><span>Education</span><span>How care is paid for</span></div>",
+      "chapter": "What they include",
+      "narration": "Demographic data describe who the patient is. They include the full name, date of birth and age, sex and gender, address and contact details, next of kin, marital status, occupation, religion, ethnicity, preferred language and level of education, and how care is paid for. They are usually collected on admission and form part of the nursing assessment."
+    },
+    {
+      "title": "Why they matter",
+      "body": "<ul><li><b>Identification</b>: two identifiers before every medication, procedure or specimen</li><li><b>Risk</b>: age, occupation and living situation change what you look for</li><li><b>Culturally safe care</b>: diet, modesty, blood products, prayer and fasting</li><li><b>Communication</b>: preferred language and literacy</li><li><b>Discharge planning</b>: who is at home and who can help</li><li><b>Consent</b>: age and capacity</li></ul>",
+      "chapter": "Why they matter",
+      "narration": "Why do they matter? First, safe identification: check two identifiers, such as the full name and date of birth, before every medication, procedure or specimen. Second, risk: an older adult living alone, or a farmer exposed to pesticides, needs a different assessment. Third, culturally safe care, such as dietary needs, modesty, beliefs about blood products, and prayer or fasting. Fourth, communication in the patient's preferred language. And finally, discharge planning and consent."
+    },
+    {
+      "title": "Collecting them well",
+      "body": "<ul><li>Ask in a private place and explain why you are asking</li><li>Let the patient describe their own ethnicity and religion</li><li>Use a trained interpreter, not family, for clinical information</li><li>Check the identification band against the record</li><li>Record exactly, and update anything that changes</li></ul>",
+      "chapter": "Collecting them well",
+      "narration": "Collect demographic information in a private place and explain why you are asking. Let the patient describe their own ethnicity and religion in their own words. Where there is a language barrier, use a trained interpreter rather than a family member for clinical information. Check the identification band against the record, document exactly what the patient tells you, and update anything that changes."
+    },
+    {
+      "title": "Across the lifespan",
+      "body": "<div class='two'><div><h3>Children</h3><p>Doses by weight, consent from a parent or guardian, development matters.</p></div><div><h3>Older adults</h3><p>Falls, several medicines at once, hearing and vision, who is at home.</p></div></div>",
+      "chapter": "Across the lifespan",
+      "narration": "Age changes your focus. For children, medicine doses are calculated by weight, consent usually comes from a parent or guardian, and their stage of development guides how you communicate. For older adults, think about falls, taking several medicines at once, hearing and vision, and who is at home to help after discharge."
+    },
+    {
+      "title": "The Caribbean context",
+      "body": "<p>Trinidad and Tobago is home to people of African, East Indian, mixed and other heritage, and of Christian, Hindu, Muslim and other faiths.</p><p class='lead'>Never assume diet or practices from a name or appearance. Ask.</p>",
+      "chapter": "Caribbean context",
+      "narration": "In the Caribbean, and in Trinidad and Tobago in particular, patients come from many backgrounds: African, East Indian, mixed and other heritage, and Christian, Hindu, Muslim and other faiths. A patient may be vegetarian, may need halal food, or may want to pray at certain times. Never assume any of this from a name or appearance. Ask, and record the answer."
+    },
+    {
+      "title": "Keep it confidential",
+      "body": "<ul><li>Share only with the people caring for the patient</li><li>Never discuss patients in lifts, corridors or on social media</li><li>Keep records and screens secure</li></ul>",
+      "chapter": "Confidentiality",
+      "narration": "Demographic information is personal and protected. Share it only with the people caring for the patient. Never discuss patients in lifts, corridors or on social media, and keep records and screens secure."
+    },
+    {
+      "title": "Exam focus",
+      "body": "<p class='gas'>Before giving a medication, what is the nurse's first action?</p><p><b>Confirm the patient's identity using two identifiers</b>, such as full name and date of birth, against the medication record.</p>",
+      "chapter": "Exam focus",
+      "narration": "Here is the kind of question the RENR exam asks. Before giving a medication, what is the nurse's first action? The answer is to confirm the patient's identity using two identifiers, such as the full name and date of birth, against the medication record. Demographics are where safe care begins."
+    }
+  ]
+}

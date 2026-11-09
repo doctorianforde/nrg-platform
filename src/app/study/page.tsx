@@ -34,6 +34,12 @@ const MODES = [
     body: "Clinical scenarios with linked questions — apply knowledge the RENR way.",
   },
   {
+    href: "/study/recordings",
+    image: "/images/feature-recordings.jpg",
+    title: "Recordings",
+    body: "Past recordings and lectures with chapters, notes and transcripts.",
+  },
+  {
     href: "/study/mock-exams",
     image: "/images/feature-mockexam.jpg",
     title: "Mock exams",
@@ -119,7 +125,7 @@ export default async function StudyLobby() {
         />
       </div>
 
-      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {MODES.map((m) => (
           <Link key={m.href} href={m.href} className="group">
             <Card interactive className="h-full overflow-hidden p-0">

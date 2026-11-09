@@ -176,6 +176,30 @@ export type Database = {
         Update: { user_id?: string, plan_code?: string, status?: string, starts_at?: string, expires_at?: string, approved_by?: string | null, approved_at?: string | null, last_request_id?: string | null, revoked_reason?: string | null, reminded?: Json }
         Relationships: []
       }
+      recordings: {
+        Row: { id: string; slug: string; title: string; kind: string; presenter: string | null; recorded_on: string | null; description: string | null; notes: string | null; transcript: Json; thumbnail_path: string | null; duration_seconds: number; host: string; host_ref: string; status: string; free_sample: boolean; consent_confirmed: boolean; domain_id: number | null; cognitive_level: string | null; created_by: string | null; created_at: string; updated_at: string; published_at: string | null }
+        Insert: { id?: string; slug: string; title: string; kind: string; presenter?: string | null; recorded_on?: string | null; description?: string | null; notes?: string | null; transcript?: Json; thumbnail_path?: string | null; duration_seconds: number; host?: string; host_ref: string; status?: string; free_sample?: boolean; consent_confirmed?: boolean; domain_id?: number | null; cognitive_level?: string | null; created_by?: string | null; updated_at?: string; published_at?: string | null }
+        Update: { id?: string; slug?: string; title?: string; kind?: string; presenter?: string | null; recorded_on?: string | null; description?: string | null; notes?: string | null; transcript?: Json; thumbnail_path?: string | null; duration_seconds?: number; host?: string; host_ref?: string; status?: string; free_sample?: boolean; consent_confirmed?: boolean; domain_id?: number | null; cognitive_level?: string | null; created_by?: string | null; created_at?: string; updated_at?: string; published_at?: string | null }
+        Relationships: []
+      }
+      recording_chapters: {
+        Row: { recording_id: string; position: number; start_seconds: number; title: string }
+        Insert: { recording_id: string; position: number; start_seconds: number; title: string }
+        Update: { recording_id?: string; position?: number; start_seconds?: number; title?: string }
+        Relationships: []
+      }
+      recording_links: {
+        Row: { recording_id: string; review_slug: string }
+        Insert: { recording_id: string; review_slug: string }
+        Update: { recording_id?: string; review_slug?: string }
+        Relationships: []
+      }
+      recording_progress: {
+        Row: { user_id: string; recording_id: string; position_seconds: number; furthest_seconds: number; watched_at: string | null; updated_at: string }
+        Insert: { user_id: string; recording_id: string; position_seconds?: number; furthest_seconds?: number; watched_at?: string | null }
+        Update: { user_id?: string; recording_id?: string; position_seconds?: number; furthest_seconds?: number; watched_at?: string | null; updated_at?: string }
+        Relationships: []
+      }
       topic_reviews: {
         Row: { id: string; slug: string; title: string; system: string; slides: Json; question: Json | null; keywords: string[]; exclude: string[]; related: string[]; status: string; published_at: string | null; published_by: string | null; sort_order: number; source: string | null; created_at: string; updated_at: string }
         Insert: { id?: string; slug: string; title: string; system: string; slides: Json; question?: Json | null; keywords?: string[]; exclude?: string[]; related?: string[]; status?: string; published_at?: string | null; published_by?: string | null; sort_order?: number; source?: string | null; created_at?: string; updated_at?: string }
@@ -377,6 +401,9 @@ export type Database = {
       revoke_membership: { Args: { p_user: string; p_reason: string }; Returns: undefined }
       record_membership_refund: { Args: { p_request: string; p_on: string; p_reference: string }; Returns: undefined }
       membership_admin_overview: { Args: Record<PropertyKey, never>; Returns: Json }
+      recording_playback_allowed: { Args: { p_recording: string }; Returns: boolean }
+      save_recording_progress: { Args: { p_recording: string; p_position: number }; Returns: Json }
+      set_recording_details: { Args: { p_recording: string; p_chapters: Json; p_reviews: string[] }; Returns: undefined }
       qgen_daily_status: { Args: Record<PropertyKey, never>; Returns: Json }
       qgen_leaderboard: { Args: Record<PropertyKey, never>; Returns: { user_id: string; display_name: string; points: number; approved: number; is_me: boolean }[] }
       start_promotion_quiz: { Args: Record<PropertyKey, never>; Returns: string }

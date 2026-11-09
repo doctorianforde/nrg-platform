@@ -21,7 +21,7 @@ Read this section first; everything below it is the dated log of how we got here
 | Supabase project | `kwhaqhhwqykckarjbdod` | `cdvubijjepwmhhkgppbl` |
 | Site | https://nrg-platform-staging.vercel.app | the `nrg-platform` Vercel project |
 | Git branch that deploys it | `staging` | `main` |
-| Migrations applied | all 56 in `supabase/migrations/` (2026-11-09: `20261109120000` student analytics, `20261109140000` one device per student, `20261109160000` shared-account signals, `20261109180000` paid plans by bank transfer) (2026-10-22: `20261022120000` free-tier limits, `20261022140000` topic reviews, `20261022160000` review reading, `20261022180000` question grading) | 48 (**since 2026-10-20**); the four 2026-10-22 ones not yet |
+| Migrations applied | all 56 in `supabase/migrations/` (2026-11-09: `20261109120000` student analytics, `20261109140000` one device per student, `20261109160000` shared-account signals, `20261109180000` paid plans by bank transfer, `20261109200000` recordings library) (2026-10-22: `20261022120000` free-tier limits, `20261022140000` topic reviews, `20261022160000` review reading, `20261022180000` question grading) | 48 (**since 2026-10-20**); the four 2026-10-22 ones not yet |
 | App | the 2026-10-22 grading commit (free tier, topic reviews, reading XP, AI grading) | `ebbafd8` (since 2026-10-20) |
 | `NEXT_PUBLIC_RANKING_V2` | `1` | unset |
 | `ranking_config.rules_live` | `1` (**live since 2026-10-13**) | `0` (shadow: prod students keep today's XP) |
@@ -111,7 +111,7 @@ promotion quiz is open), `case-test-teacher@…` / `case-test-student@…` (free
 `node scripts/test-ranking-phase1.mjs` (19), `node scripts/test-ranking-phase2.mjs` (47), `node scripts/test-answer-keys.mjs`
 (14; `--target prod` with `CONFIRM_PROD=1`, `--pre` before the hide migration), `node scripts/test-trophies-phase1.mjs` (28),
 `node scripts/e2e-rls-test.mjs` (T34, 15; fixed 2026-10-17, it had been failing 9/15 silently), `node scripts/test-write-paths.mjs`
-(38: every app write path a user token uses), `node scripts/test-free-tier.mjs` (26; turns `limits_live` on for the run and restores it), `node scripts/test-single-session.mjs` (16; one device per student), `node scripts/test-sharing-signals.mjs` (19; restores thresholds), `node scripts/test-memberships.mjs` (39; paid plans), `node scripts/test-student-analytics.mjs` (19; own-data only, unreleased mock answers withheld), `node scripts/test-topic-reviews.mjs` (17; restores every review's status), `node scripts/test-topic-review-reading.mjs` (30; reading XP + free-tier window, restores statuses and `limits_live`), `node scripts/test-question-grading.mjs` (21; needs an empty grading queue, restores `qgen_config`). Content gate: `npx tsx scripts/import-topic-reviews.ts` (fails if any source word is lost). The two ranking suites hold
+(38: every app write path a user token uses), `node scripts/test-free-tier.mjs` (26; turns `limits_live` on for the run and restores it), `node scripts/test-single-session.mjs` (16; one device per student), `node scripts/test-sharing-signals.mjs` (19; restores thresholds), `node scripts/test-memberships.mjs` (39; paid plans), `node scripts/test-recordings.mjs` (20; needs the two published samples), `node scripts/test-student-analytics.mjs` (19; own-data only, unreleased mock answers withheld), `node scripts/test-topic-reviews.mjs` (17; restores every review's status), `node scripts/test-topic-review-reading.mjs` (30; reading XP + free-tier window, restores statuses and `limits_live`), `node scripts/test-question-grading.mjs` (21; needs an empty grading queue, restores `qgen_config`). Content gate: `npx tsx scripts/import-topic-reviews.ts` (fails if any source word is lost). The two ranking suites hold
 `rules_live` at 0 while their shadow checks run and put back the starting value afterwards. Content gates: `npx tsx scripts/review-bank.ts --check`,
 `npx tsx scripts/import-case.ts --check`, `npx tsx scripts/plan-cases.ts --report`.
 
@@ -3196,4 +3196,30 @@ taken, no content or branding; many saved pages were the proxy's "usage limit ex
   upload form, host comparison (recommend Cloudflare Stream or Bunny Stream; prices to be checked), 4 tables, 5 phases,
   decisions. Feature status PDF updated. Also: checklist artifact updated with the 9 Nov features (M, D, B sections);
   `case-test-student` password reset on staging (in TEST_ACCOUNTS.local.md).
+
+## Session 2026-11-09 (Claude): recordings library phase 1 + two sample videos — staging
+- Ian: build the members' video area now, with two sample videos (ABG interpretation, patient demographics).
+- Samples: scripts `docs/phase-1/sample-recordings/{abg-interpretation,patient-demographics}.json` (slides, narration,
+  notes; ABG uses standard adult ranges, the six-step method, ROME, two worked examples; glucose in mg/dL). Made with
+  `scripts/make-sample-recording.mjs` (Playwright renders slides, macOS `say` narrates (Samantha), ffmpeg joins H.264/AAC
+  720p; chapters and a timed transcript come from the narration): ABG 4:18, 10 chapters; demographics 2:44, 8 chapters.
+  Both say "Sample: for Jade's review" — **clinical content not yet reviewed by Jade**. Uploaded and published on staging
+  by `scripts/upload-sample-recordings.mjs` (demographics = free sample; ABG = paid plans; ABG linked to copd + renal).
+- Migration `20261109200000_recordings_library` (staging): `recordings`, `recording_chapters`, `recording_links`,
+  `recording_progress`; private bucket `recordings` (MP4, 50 MB) + public `recording-thumbnails`;
+  `recording_playback_allowed()` (staff; else published and free sample or paid via `effective_tier()`),
+  `save_recording_progress()` (clamped, furthest only grows, watched at 90%), `set_recording_details()` (staff);
+  a recorded session can't be published without consent confirmed (check constraint).
+- App: `/study/recordings` (filter panel, continue watching, "For my weak areas" sort, free-sample and locked states),
+  `/study/recordings/[slug]` (player: chapters, J/K/L + speed, resume, captions from the transcript, own full screen so the
+  moving name/email watermark stays, `nodownload`, signed link lasting 2× the length (min 10 min); Notes / Outline /
+  Transcript tabs with search and click-to-jump; links to published reviews and practice, related recordings),
+  `/teacher/recordings` (list with watch counts; form: browser upload, length read from the video, thumbnail taken from
+  it, chapters/transcript as "m:ss text" lines, tags, free sample, consent, draft/published). Study home card, Ctrl+K
+  search, teacher dashboard link. Fixed along the way: filter panels (recordings and topic reviews) overflowed with long
+  labels (fieldset min-width); links to draft reviews hidden from students.
+- Verified: `test-recordings.mjs` 20/20; browser 25/25 in real Chrome (Playwright's Chromium has no H.264/AAC):
+  playback via signed link, chapters, J/K/L, transcript search + jump, captions, resume after reload, locked for free,
+  free sample plays, phone width, teacher form upload + draft hidden from students, no page errors. tsc/lint/build clean.
+- Not built: phase 2 (video host), phase 3 extras (My progress and topic-review cross-links).
 

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/cn";
 import { loadSearchIndex, type SearchEntry } from "@/lib/search/actions";
 
-const KIND_LABEL: Record<SearchEntry["kind"], string> = { page: "Pages", review: "Topic reviews", domain: "Practise a domain" };
+const KIND_LABEL: Record<SearchEntry["kind"], string> = { page: "Pages", review: "Topic reviews", domain: "Practise a domain", recording: "Recordings" };
 const MAX = 12;
 
 function score(e: SearchEntry, words: string[]): number {
