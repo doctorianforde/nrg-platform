@@ -3168,3 +3168,24 @@ taken, no content or branding; many saved pages were the proxy's "usage limit ex
 - Not built (phase 4): confirmation and reminder emails, receipt cleanup job — need custom SMTP. Go-live needs the bank
   details (enter on `/admin/payments` → Bank details), then the three migrations on prod before the merge.
 
+## Session 2026-11-09 (Claude): email via Gmail (staging) + "How students pay" PDF for Jade
+- Ian set up custom SMTP on **staging** Supabase Auth with `nrgplatform.dev@gmail.com` (app password, port 587). Live
+  test: a throwaway sign-up to `nrgplatform.dev+test…@gmail.com` was accepted by Gmail (auth log: no error, ~1.2 s); the
+  account was deleted afterwards. Advised: app password without spaces; no comma in the sender name.
+- App email (phase 4 of the paid-plans plan): `src/lib/mail/send.ts` (nodemailer over SMTP when `SMTP_*` set, else
+  Resend, else skipped; never throws; one message per recipient via BCC); `notifyAdmins()` now uses it (teacher-approval
+  notices work over Gmail too). `ADMIN_NOTIFY_TO` overrides `admin_contacts` (which holds Ian's and Jade's real
+  addresses) so staging never emails Jade. Payment emails (`src/lib/membership/emails.ts`): new payment → admins;
+  approved / not approved (with reason) / plan ended → student. Daily job `GET /api/cron/daily` (vercel.json, 11:00 UTC
+  = 07:00 Trinidad; requires `CRON_SECRET`, else 401): reminders 7 days and 1 day before expiry (once per expiry, via
+  `memberships.reminded`) and receipt cleanup (decided 90–97 days ago; orphan uploads > 24 h). New dependency
+  `nodemailer@6.10.1` (+ types).
+- Verified locally against staging: mailer skip/fail paths don't throw; cron 401 without / with a wrong secret, 200 with
+  it; payments e2e 26/26 with the email hooks. NOT yet verified: a real app email (needs the Vercel env below + redeploy).
+- **Ian to add on Vercel `nrg-platform-staging` (Production target)**: SMTP_HOST, SMTP_PORT, SMTP_USER, MAIL_FROM,
+  ADMIN_NOTIFY_TO, NEXT_PUBLIC_SITE_URL, CRON_SECRET (sensitive); SMTP_PASS already added. The auto-mode guard blocked
+  Claude from writing Vercel env vars. Then redeploy.
+- New PDF for Jade: `docs/phase-1/NRG_Payment_Options_for_Jade.pdf` (5 pages: plans and prices, paying by bank transfer,
+  how NRG checks a payment, receipt checks, refunds/renewals/sharing/privacy, card payment coming soon, what we need
+  from him). Source + renderer in `docs/phase-1/payment-options-for-jade/`.
+

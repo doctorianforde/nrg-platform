@@ -6,6 +6,7 @@ import { getSession } from "@/lib/auth/session";
 import { hasAtLeast } from "@/lib/auth/roles";
 import { createClient } from "@/lib/supabase/server";
 import { checkReceipt } from "./receipt-check";
+import { emailDecisionToStudent, emailNewPaymentToAdmins, emailPlanEnded } from "./emails";
 
 export type ActionResult = { ok?: string; error?: string } | null;
 
@@ -38,7 +39,9 @@ export async function submitMembershipRequest(input: {
     p_receipt_path: input.receiptPath,
   });
   if (error || !data) return { error: said(error?.message, "Could not send your payment details. Try again.") };
-  await checkReceipt((data as { id: string }).id);
+  const requestId = (data as { id: string }).id;
+  await checkReceipt(requestId);
+  await emailNewPaymentToAdmins(requestId); // never throws; the admin page lists it either way
   revalidatePath("/study/plan");
   return { ok: "Sent. We'll check your payment against the bank statement." };
 }
@@ -63,6 +66,7 @@ export async function approveMembership(_prev: ActionResult, fd: FormData): Prom
   if (error) return { error: said(error.message, "Could not approve. Try again.") };
   revalidatePath("/admin/payments");
   const exp = (data as { expires_at?: string } | null)?.expires_at;
+  await emailDecisionToStudent(String(fd.get("requestId")), exp);
   return doneTo("pending", exp ? `Approved. Access until ${new Date(exp).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "America/Port_of_Spain" })}.` : "Approved.");
 }
 
@@ -71,6 +75,7 @@ export async function rejectMembership(_prev: ActionResult, fd: FormData): Promi
   const { error } = await createClient().rpc("reject_membership", { p_request: String(fd.get("requestId")), p_reason: String(fd.get("reason") ?? "") });
   if (error) return { error: said(error.message, "Could not reject. Try again.") };
   revalidatePath("/admin/payments");
+  await emailDecisionToStudent(String(fd.get("requestId")));
   return doneTo("pending", "Rejected. The student sees your reason on their plan page.");
 }
 
@@ -79,6 +84,7 @@ export async function revokeMembership(_prev: ActionResult, fd: FormData): Promi
   const { error } = await createClient().rpc("revoke_membership", { p_user: String(fd.get("userId")), p_reason: String(fd.get("reason") ?? "") });
   if (error) return { error: said(error.message, "Could not revoke. Try again.") };
   revalidatePath("/admin/payments");
+  await emailPlanEnded(String(fd.get("userId")), String(fd.get("reason") ?? "").trim());
   return doneTo("active", "Plan revoked.");
 }
 
