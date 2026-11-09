@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="updated" content="9 November 2026">
+<title>NRG Platform: Feature Status</title>
+<!--
+  Living document. Source of docs/phase-1/NRG_Feature_Status.pdf.
+  Update it whenever a feature ships, moves environment, or a blocker clears (CLAUDE.md rule), bump the "updated" meta
+  above and the change log at the end, then re-render:
+    PLAYWRIGHT=<path to playwright or playwright-core> node docs/phase-1/feature-status/render-pdf.mjs
+  (or `npm i --no-save playwright@1.49.1` and omit PLAYWRIGHT).
+  Facts come from PROGRESS.md ("Current state" + dated entries) and PLAN.md; if they disagree, PROGRESS.md wins.
+-->
+<style>
+  @page { size: Letter; margin: 0.7in 0.75in 0.8in; }
+  :root { --plum: #4a1d6a; --purple: #6b2d8b; --lilac: #efe7f7; --line: #e2dce9; --ink: #1f1a29; --soft: #5d536b;
+          --live: #1f7a4a; --live-bg: #e3f3ea; --stage: #1d5fa8; --stage-bg: #e3eefb; --part: #8a6100; --part-bg: #fbf0d6;
+          --none: #6b6475; --none-bg: #eeecf1; }
+  * { box-sizing: border-box; }
+  body { font-family: Inter, "Helvetica Neue", Arial, sans-serif; font-size: 10pt; line-height: 1.45; color: var(--ink); margin: 0; }
+  h1, h2, h3 { font-family: Poppins, Inter, "Helvetica Neue", Arial, sans-serif; margin: 0; }
+  p { margin: 0 0 8px; }
+  .cover { height: 9.1in; display: flex; flex-direction: column; justify-content: space-between; page-break-after: always; }
+  .band { background: linear-gradient(135deg, #4a1d6a, #6b2d8b 60%, #8b6ba8); color: #fff; border-radius: 14px; padding: 40px 38px; }
+  .eyebrow { letter-spacing: .14em; text-transform: uppercase; font-size: 9pt; opacity: .85; }
+  .band h1 { font-size: 34pt; line-height: 1.05; margin: 14px 0 10px; }
+  .band .sub { font-size: 12pt; opacity: .92; max-width: 5.4in; }
+  .band .meta { margin-top: 26px; font-size: 9.5pt; opacity: .9; }
+  .box { border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; }
+  .box h2 { font-size: 12pt; color: var(--plum); margin-bottom: 6px; }
+  .legend { display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; align-items: center; font-size: 9.2pt; margin-top: 8px; }
+  .s { display: inline-block; font-size: 7.8pt; font-weight: 700; letter-spacing: .03em; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
+  .live { background: var(--live-bg); color: var(--live); }
+  .stage { background: var(--stage-bg); color: var(--stage); }
+  .part { background: var(--part-bg); color: var(--part); }
+  .none { background: var(--none-bg); color: var(--none); }
+  .glance { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 12px 0 4px; }
+  .glance div { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+  .glance b { display: block; font-family: Poppins, Inter, sans-serif; font-size: 20pt; line-height: 1.1; color: var(--plum); }
+  .glance span { font-size: 8.6pt; color: var(--soft); }
+  section.part-h { page-break-before: always; }
+  .part-h > h2 { font-size: 17pt; color: var(--plum); padding-bottom: 6px; border-bottom: 2px solid var(--purple); margin-bottom: 10px; }
+  .intro { color: var(--soft); margin-bottom: 12px; }
+  .feat { border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; margin-bottom: 9px; page-break-inside: avoid; }
+  .feat .top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .feat h3 { font-size: 11pt; color: var(--ink); }
+  .feat p { margin: 4px 0 0; font-size: 9.4pt; }
+  .feat .note { color: var(--soft); font-size: 8.8pt; }
+  .feat ul { margin: 4px 0 0; padding-left: 16px; font-size: 9.3pt; }
+  .feat li { margin: 1px 0; }
+  h3.group { font-size: 11.5pt; color: var(--purple); margin: 16px 0 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 8.9pt; }
+  th { text-align: left; background: var(--purple); color: #fff; padding: 5px 7px; font-weight: 600; }
+  td { padding: 5px 7px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr { page-break-inside: avoid; }
+  td.who { white-space: nowrap; font-weight: 600; color: var(--plum); }
+  tr.sec td { background: var(--lilac); font-weight: 600; color: var(--plum); }
+  .log td:first-child { white-space: nowrap; color: var(--soft); }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="band">
+    <div class="eyebrow">NRG Platform · Phase 1</div>
+    <h1>Feature status</h1>
+    <div class="sub">What the platform already does, what is still outstanding, and what is holding each outstanding piece up.</div>
+    <div class="meta">Updated 9 November 2026 · Prepared for Ian Forde and Jade Nicome · Kept up to date as work lands</div>
+  </div>
+
+  <div class="box">
+    <h2>How to read this</h2>
+    <p>Every feature carries one of four labels. "Staging" is the test site (nrg-platform-staging.vercel.app); "prod" is the live site students use.</p>
+    <div class="legend">
+      <span class="s live">LIVE</span><span>On the live site for students now.</span>
+      <span class="s stage">STAGING</span><span>Built and tested on the test site; waiting for a review, a decision or a go-live step before it reaches students.</span>
+      <span class="s part">PARTLY BUILT</span><span>Some of it works; the rest is listed in Part B.</span>
+      <span class="s none">NOT BUILT</span><span>Not started. Part B says what it is waiting for.</span>
+    </div>
+    <div class="glance">
+      <div><b>12</b><span>feature areas live</span></div>
+      <div><b>7</b><span>built, on staging</span></div>
+      <div><b>5</b><span>partly built</span></div>
+      <div><b>7</b><span>not built yet</span></div>
+    </div>
+    <p style="margin-top:10px;color:var(--soft);font-size:9pt">The single biggest gate is content review: most of what is "on staging" is waiting for Jade to approve questions, cases or reviews, or for Ian to switch something on for the live site. Part B lists every blocker with who can clear it.</p>
+  </div>
+</div>
+
+<section class="part-h" style="page-break-before:auto">
+  <h2>Part A. What is already built</h2>
+  <p class="intro">Grouped by who uses it. Each entry says what it does in plain terms and where it is.</p>
+
+  <h3 class="group">For students: studying</h3>
+
+  <div class="feat"><div class="top"><h3>Practice questions (tutor mode)</h3><span class="s live">LIVE</span></div>
+    <p>Students pick a domain, topic, taxonomy level or difficulty and answer questions one at a time. After "Check answer" they see the correct option, an explanation and a rationale for every option, colour-coded as correct, close, priority or incorrect. Answer keys never reach the browser before the student answers.</p>
+    <p class="note">Keyboard shortcuts (1–9 or A–D to choose, Enter to check and move on) are on staging since 9 Nov.</p></div>
+
+  <div class="feat"><div class="top"><h3>Flashcards</h3><span class="s live">LIVE</span></div>
+    <p>Rapid recall by topic: flip, shuffle and drill.</p></div>
+
+  <div class="feat"><div class="top"><h3>Mock exams</h3><span class="s live">LIVE</span></div>
+    <p>Exam-format papers set by a teacher, taken alone or in a group of up to five, with an optional timer. No feedback while answering; explanations stay hidden until the teacher releases them. Each result includes a fatigue analysis: accuracy and pace by quarter of the exam, and a recommendation when accuracy drops late.</p></div>
+
+  <div class="feat"><div class="top"><h3>Topic reviews (15)</h3><span class="s stage">STAGING</span></div>
+    <p>Jade's 15 slide decks turned into readable reviews (normal function, what goes wrong, assessment, management, care plan, how the exam tests it), each with a practice question and a "practise this topic" button. Questions link back to the matching review after they are answered. Reading a review to the end earns 30 XP. The library has a filter panel (search, body system, read or not, sort, card or list view).</p>
+    <p class="note">All 15 are still drafts: students see none until they are published (Part B).</p></div>
+
+  <div class="feat"><div class="top"><h3>Case studies</h3><span class="s part">PARTLY BUILT</span></div>
+    <p>An unfolding-case player: the patient's story moves through stages with vitals, labs, medications, a calculator and reference ranges; answers lock per stage and feedback comes at the end. Teachers review, validate and publish cases; a generator drafts new ones to Jade's standard.</p>
+    <p class="note">The player is live; 6 pilot cases wait for Jade's validation, so students have no cases yet.</p></div>
+
+  <div class="feat"><div class="top"><h3>My progress (private analytics)</h3><span class="s stage">STAGING</span></div>
+    <p>New on 9 Nov (decision D8, option 2). Each student sees only their own figures, never compared with classmates:</p>
+    <ul>
+      <li>Rank, questions answered, accuracy, days studied, domains practised.</li>
+      <li>Strengths and weaknesses by RENR domain (New / Weak / Developing / Mastered, using the ranking rules) and by taxonomy level, each with a "practise" link.</li>
+      <li>Weakest and strongest topics, linked to the matching topic review and to practice on that topic, plus a "focus next" card.</li>
+      <li>Exam stamina from their mock exams, and a 12-week study calendar.</li>
+    </ul>
+    <p class="note">Mock answers count only once the teacher releases that exam's explanations, so the page can't give away which answers were right.</p></div>
+
+  <div class="feat"><div class="top"><h3>Search and shortcuts</h3><span class="s stage">STAGING</span></div>
+    <p>Ctrl+K (⌘K on a Mac) or "/" opens a search box that jumps to any study page, topic review or domain practice.</p></div>
+
+  <div class="feat"><div class="top"><h3>Nursing Knowledge facts (133)</h3><span class="s part">PARTLY BUILT</span></div>
+    <p>A rotating "did you know" block of short clinical facts. Built; waiting for Jade's clinical sign-off before students rely on it.</p></div>
+
+  <h3 class="group">For students: motivation and rank</h3>
+
+  <div class="feat"><div class="top"><h3>XP, ranks and study streak</h3><span class="s live">LIVE</span></div>
+    <p>Students earn XP for practice, mock exams and approved questions, and climb Jade's 25-level Benner ladder (Novice to Expert). A daily study streak counts Trinidad days.</p></div>
+
+  <div class="feat"><div class="top"><h3>Ranking v2 and promotion quizzes</h3><span class="s stage">STAGING</span></div>
+    <p>Weighted XP (more for weak topics, less for mastered ones), a streak bonus, a mastery milestone, a daily cap, and promotion by a 25-question timed quiz instead of automatic level-ups.</p>
+    <p class="note">Running in "shadow" on the live site: it calculates quietly next to today's rules so the two can be compared before launch.</p></div>
+
+  <div class="feat"><div class="top"><h3>Trophies and celebrations</h3><span class="s stage">STAGING</span></div>
+    <p>56 badges (a rank badge per promotion, tier trophies, and accomplishments such as first mock, streaks and mastered domains), a rank-up ceremony, a trophy case, and a classmates' wall students can opt out of. Launches with ranking v2.</p></div>
+
+  <div class="feat"><div class="top"><h3>Write a question + AI grading</h3><span class="s stage">STAGING</span></div>
+    <p>Students write their own question on a topic the platform assigns; an AI grader scores it against Jade's template with feedback per criterion, and teachers see the grade. Writing questions has been live since September; the AI grading, the optional 24-hour rule and the writers' leaderboard are on staging, switched off until Jade chooses (D1–D7).</p></div>
+
+  <h3 class="group">For students: look and feel</h3>
+
+  <div class="feat"><div class="top"><h3>Redesign and four themes</h3><span class="s live">LIVE</span></div>
+    <p>The whole app restyled; students choose Royal, Teal, Midnight (dark) or Sunset, each with its own fonts. Switching is instant (a lag fix is on staging since 7 Nov).</p></div>
+
+  <div class="feat"><div class="top"><h3>Profile, messages and calendar</h3><span class="s live">LIVE</span></div>
+    <p>Profile picture and name, private messages with teachers (a student can cite a mock attempt), and an event calendar.</p></div>
+
+  <h3 class="group">For teachers and admins</h3>
+
+  <div class="feat"><div class="top"><h3>Question review queue</h3><span class="s live">LIVE</span></div>
+    <p>Teachers approve, edit or send back questions; every AI question needs a named reviewer before it can go live.</p></div>
+
+  <div class="feat"><div class="top"><h3>Generation requests</h3><span class="s live">LIVE</span></div>
+    <p>Jade asks for new questions or cases either by picking domain, topic, taxonomy and difficulty, or by describing what he wants in his own words; the request is queued for the AI author and the results land in his review queue.</p></div>
+
+  <div class="feat"><div class="top"><h3>Mock exam builder and release</h3><span class="s live">LIVE</span></div>
+    <p>Build question sets, set a timer, assign to students or groups, and release explanations when ready. A cohort fatigue card shows whether the class tires late in exams.</p></div>
+
+  <div class="feat"><div class="top"><h3>Accounts and access</h3><span class="s live">LIVE</span></div>
+    <p>Email sign-up and verification, four roles (student, teacher, admin, super admin), teacher approval, suspending accounts. Admins can set a student's plan by hand.</p></div>
+
+  <div class="feat"><div class="top"><h3>Content protection</h3><span class="s live">LIVE</span></div>
+    <p>A faint watermark with the student's identity on question pages, no copy or print, and blurring when the window loses focus or screenshot keys are pressed. Staff can reveal a watermark from a leaked screenshot. (No website can fully block screenshots; the watermark makes leaks traceable.)</p></div>
+
+  <div class="feat"><div class="top"><h3>Free plan limits</h3><span class="s stage">STAGING</span></div>
+    <p>Free students get 10 practice questions a day, no mock exams, and one topic review a day for 5 minutes. Enforced by the database. Built with the switch off; nothing changes for students until it is turned on.</p></div>
+
+  <div class="feat"><div class="top"><h3>Security underneath</h3><span class="s live">LIVE</span></div>
+    <p>Row-level security on every table, answer keys hidden from student accounts, and table permissions tightened to only what each role uses; automated tests check all of it.</p></div>
+</section>
+
+<section class="part-h">
+  <h2>Part B. What is outstanding and what is blocking it</h2>
+  <p class="intro">"Who" is the person who can clear the blocker. Most items need a decision or a content check, not more building.</p>
+
+  <table>
+    <thead><tr><th style="width:24%">Feature</th><th style="width:12%">Status</th><th>What is blocking it</th><th style="width:10%">Who</th></tr></thead>
+    <tbody>
+      <tr class="sec"><td colspan="4">Built, waiting to reach students</td></tr>
+      <tr><td>Topic reviews (15)</td><td><span class="s stage">STAGING</span></td><td>Each review needs a read-through and the "Publish" button. Endocrine still shows glucose in mmol/L, which the platform rule forbids; two small deck quirks to fix.</td><td class="who">Ian + Jade</td></tr>
+      <tr><td>AI question bank (1,377 in the queue)</td><td><span class="s stage">STAGING</span></td><td>Clinical review and approval of the rewritten AI questions, including 71 where the correct answer changed. The copy to the live site is ready once approved.</td><td class="who">Jade</td></tr>
+      <tr><td>Case studies (6 pilots)</td><td><span class="s part">PARTLY</span></td><td>Validation of each case (its quality report lists what to confirm), and whether to keep the reference-range panel.</td><td class="who">Jade</td></tr>
+      <tr><td>Ranking v2 + trophies on the live site</td><td><span class="s stage">STAGING</span></td><td>1–2 weeks of shadow comparison, then an announcement (everyone restarts at level 0) before switching on. Jade to confirm four ranking settings.</td><td class="who">Ian, Jade</td></tr>
+      <tr><td>Free plan limits on the live site</td><td><span class="s stage">STAGING</span></td><td>Confirm the numbers (10 a day, no mocks) and whether promotion quizzes and flashcards stay free; choose when to switch on. Without a checkout, free students can only be upgraded by an admin.</td><td class="who">Ian + Jade</td></tr>
+      <tr><td>AI grading of student questions</td><td><span class="s stage">STAGING</span></td><td>Jade chooses instant (paid API) or queued (subscription) grading and the rules in D1–D7 of the decisions PDF.</td><td class="who">Jade</td></tr>
+      <tr><td>My progress, search, review filters, keyboard shortcuts, theme fix</td><td><span class="s stage">STAGING</span></td><td>Ian's review on staging; then the 9 Nov database change goes to the live site before the next release. Ian to confirm that practice may record each answer on the live site (XP unchanged).</td><td class="who">Ian</td></tr>
+      <tr><td>Nursing Knowledge facts</td><td><span class="s part">PARTLY</span></td><td>Clinical sign-off on the 133 facts.</td><td class="who">Jade</td></tr>
+      <tr><td>Live-site database changes</td><td><span class="s stage">STAGING</span></td><td>Five database changes (22 Oct and 9 Nov) must be applied to the live database before the next release. Ian runs them.</td><td class="who">Ian</td></tr>
+
+      <tr class="sec"><td colspan="4">Partly built</td></tr>
+      <tr><td>Instructor analytics</td><td><span class="s part">PARTLY</span></td><td>Teachers have a dashboard and a cohort fatigue card, but no at-risk list or class trends. Needs a definition of "at risk". Proposed: no practice for 7 days, under 50 % over the last 50 answers, a recent mock below the pass mark, or a 15-point drop in a fortnight.</td><td class="who">Ian</td></tr>
+      <tr><td>Mock exams to the v2 rules</td><td><span class="s part">PARTLY</span></td><td>Always 100 questions in 150 minutes, blueprint balance by domain and taxonomy, no going back, two 5-minute breaks. Should every mock be forced into this shape?</td><td class="who">Ian + Jade</td></tr>
+      <tr><td>Login security</td><td><span class="s part">PARTLY</span></td><td>2FA (by email code only, since there is no SMS provider?), 15-minute idle logout, lockout after failed logins, a school/university field (needs a privacy line), and custom email sending before real sign-ups.</td><td class="who">Ian</td></tr>
+      
+
+      <tr class="sec"><td colspan="4">Not built yet</td></tr>
+      <tr><td>More topic reviews (Template 9 lists 50)</td><td><span class="s none">NOT BUILT</span></td><td>Content: 15 of 50 decks exist. Also whether writing a question after each review is required (D6).</td><td class="who">Jade</td></tr>
+      <tr><td>Payments and checkout</td><td><span class="s none">NOT BUILT</span></td><td>Phase 0 decisions: which payment processor (WiPay, PayPal?), how money reaches Jade's Schwab account, merchant and tax status, and prices.</td><td class="who">Ian + Jade</td></tr>
+      <tr><td>Live study lobby, leaderboards, Google Meet debriefs</td><td><span class="s none">NOT BUILT</span></td><td>A real-time build; leaderboards conflict with keeping student comparison private. Needs a go-ahead and a decision on leaderboards.</td><td class="who">Ian + Jade</td></tr>
+      <tr><td>Adaptive difficulty, personal study plan</td><td><span class="s none">NOT BUILT</span></td><td>Needs a few weeks of per-answer data (now being recorded) and the instructor analytics first.</td><td class="who">Later</td></tr>
+      <tr><td>Evidence-base research agent</td><td><span class="s none">NOT BUILT</span></td><td>Low priority in the brief; needs a go-ahead.</td><td class="who">Ian</td></tr>
+      <tr><td>Topic animations</td><td><span class="s none">NOT BUILT</span></td><td>Not specified: which topics, and what style.</td><td class="who">Jade</td></tr>
+      <tr><td>Links from mock results to reviews</td><td><span class="s none">NOT BUILT</span></td><td>"Improve this domain" links on mock results and click tracking; small, can be built now on request.</td><td class="who">Ian</td></tr>
+      <tr><td>Abbreviations, I/II/III and dose-calculation items</td><td><span class="s none">POLICY</span></td><td>Content rules not yet set: the abbreviation exempt list, whether the combination format stays, and how numeric dose items are handled.</td><td class="who">Ian + Jade</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box" style="margin-top:16px">
+    <h2>Quickest unblockers</h2>
+    <p><b>Jade:</b> answer the decisions PDF (31 items), validate the 6 cases, and work through the AI question queue. <b>Ian + Jade:</b> publish the 15 topic reviews. <b>Ian:</b> apply the pending live-site database changes, confirm the at-risk definition, and decide on 2FA and mock exam rules.</p>
+  </div>
+</section>
+
+<section style="margin-top:22px">
+  <h2 style="font-size:12pt;color:var(--plum);margin-bottom:6px">Change log</h2>
+  <table class="log">
+    <tbody>
+      <tr><td>9 Nov 2026</td><td>First edition. Adds My progress (D8 option 2), search, review library filters and practice shortcuts (staging).</td></tr>
+    </tbody>
+  </table>
+</section>
+
+</body>
+</html>

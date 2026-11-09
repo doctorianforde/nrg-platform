@@ -12,6 +12,12 @@ Rules:
   explicit go-ahead.
 - When you finish a task, update PROGRESS.md (what happened) and PLAN.md
   (status table) before ending the session — don't leave them stale.
+- Also keep the feature status PDF current (Ian, 2026-11-09): when a feature
+  ships, moves from staging to prod, or a blocker clears, edit
+  `docs/phase-1/feature-status/feature-status.html` (Part A built, Part B
+  outstanding + blocker + who, the "at a glance" counts, the `updated` meta and
+  the change log), then re-render `docs/phase-1/NRG_Feature_Status.pdf` with
+  `docs/phase-1/feature-status/render-pdf.mjs` (instructions at its top).
 - See PLAN.md's "you vs. AI" table for what's actually appropriate to pick up
   autonomously vs. what needs Ian's judgment call first.
 

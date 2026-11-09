@@ -3083,3 +3083,12 @@ taken, no content or branding; many saved pages were the proxy's "usage limit ex
   answers, recent mock below pass, or a 15-point fortnight drop; Ian to confirm); update D8 in the decisions PDF as decided;
   all 15 reviews are still drafts, so students see no topic areas until they are published.
 
+## Session 2026-11-09 (Claude): feature status PDF — living document
+- My progress etc. committed and pushed to `staging` as `5feab63` (Ian's go-ahead).
+- New `docs/phase-1/NRG_Feature_Status.pdf` (6 pages, for Ian and Jade, plain language): Part A, every built feature area
+  with its status (12 live, 7 on staging, 5 partly built); Part B, everything outstanding (7 not built + the built-but-held
+  items) with the blocker and who can clear it; quickest unblockers; change log. Source
+  `docs/phase-1/feature-status/feature-status.html`, renderer `render-pdf.mjs` (Playwright via `PLAYWRIGHT=` or a no-save
+  install). CLAUDE.md now has a rule to update and re-render it whenever a feature ships, changes environment, or a
+  blocker clears.
+
