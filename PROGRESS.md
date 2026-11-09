@@ -95,7 +95,7 @@ Steps 1–4 **done 2026-10-20** (go-live entry at the end of this file). Left: 5
 | Drop the `_backup_*` / `_reset_*` snapshot tables, or keep them (now unreadable via the API) | Ian |
 | Promotion quiz: same pool for every level, blueprint-weighted, not topic-specific or harder by level. Change it? | Ian / Jade |
 | Miskeyed-looking AI block spec1586–1605 (9 still pending) and contradictory keys between AI items (boggy fundus, croup, catheter infection, T&T 6-week vaccines, suicide-risk replies) | Jade |
-| Subscription service Phase 0 (payout route, processor, prices) | Ian / Jade |
+| Subscription service: route decided 2026-11-09 (bank transfer + manual approval, card "coming soon"); still open: plan length, prices, what Premium adds, bank details, who approves (D30) | Jade / Ian |
 | ~~Who publishes topic reviews; XP for reading; free-tier partial view~~ — **decided 2026-10-22**: Ian + Jade publish; yes to 30 XP for reading; yes to the free-tier 1-review / 5-minute view (both queued for Claude in PLAN.md) | Ian |
 | Free-tier limits: confirm v2 numbers (10/day, no mocks); whether the promotion quiz and flashcards stay open to free students (they do now); when to switch limits on for prod (no checkout exists, so free students can only be upgraded by an admin) | Ian / Jade |
 | **Everything waiting on Jade** is collected, with options and recommendations, in `docs/phase-1/Decisions_for_Jade.pdf` (31 items, 2026-10-22); keep it in step with this table | Ian sends |
@@ -3094,4 +3094,22 @@ taken, no content or branding; many saved pages were the proxy's "usage limit ex
 - Decisions for Jade PDF updated (same day): D8 marked decided (option 2, by Ian, built as My progress) on the summary
   page and the item, cover/footer dated "updated 9 November 2026". Renderer now also takes `PLAYWRIGHT=`. Still not sent
   to Jade.
+
+## Session 2026-11-09 (Claude): paid plans by bank transfer — decided and planned
+- Reviewed Ian's `membership-payment-playbook.md` (Firebase manual-approval membership). Sound core (server-only grants,
+  one-transaction approval, audit, signed receipt links, honest receipt checks); found a real bug in its date helpers
+  (Firestore Timestamp compared with a JS Date, so early renewals would lose time) plus gaps (orphan uploads, MIME
+  trusted from the browser, no pending-request limit, unnormalised references, no amount/refund rules).
+- **Ian decided** (2026-11-09): sell plans by bank transfer into a local Trinidad account first; card payment shows as
+  "coming soon". Build plan written as a Claude Doc, "NRG Membership by Bank Transfer: Build Plan"
+  (https://claude.ai/artifact/2Kz43S5KWVQnmm1WJCgHdv): rules R1–R14 (R12–R14 proposed), flow diagram, tables
+  `membership_requests` / `memberships` / `membership_audit`, private `payment-receipts` bucket, staff functions, a single
+  `effective_tier()` helper replacing the three direct `subscription_tier` checks (approval never writes the profile tier,
+  so access ends at expiry by itself), pages (`/plans` with the coming-soon card, request, status, `/admin/payments`),
+  receipt checks, emails, daily jobs, five phases. Plan length is configurable: 12 months drafted, but the earlier plan
+  priced a ~3-month programme, so Jade confirms it.
+- Decisions for Jade PDF: D30 rewritten (route decided; asks plan length, prices in TT$, what Premium adds, bank details,
+  who approves and turnaround, tax status). Feature status PDF: payments split into "Paid plans by bank transfer"
+  (planned) and "Card payment online" (coming soon); not-built count 8; change log entry. Both re-rendered.
+- Nothing built yet. Phases 1–3 (database, student pages, admin page + receipt check) need nothing from Ian or Jade.
 
