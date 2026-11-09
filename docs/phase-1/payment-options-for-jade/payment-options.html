@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="updated" content="9 November 2026">
+<title>NRG Platform: How Students Pay</title>
+<!--
+  For Jade (plain language). Source of docs/phase-1/NRG_Payment_Options_for_Jade.pdf. Re-render:
+    PLAYWRIGHT=<path to playwright or playwright-core> node docs/phase-1/payment-options-for-jade/render-pdf.mjs
+  Facts: PROGRESS.md 2026-11-09 entries and the build plan doc "NRG Membership by Bank Transfer: Build Plan".
+-->
+<style>
+  @page { size: Letter; margin: 0.7in 0.75in 0.8in; }
+  :root { --plum: #4a1d6a; --purple: #6b2d8b; --lilac: #efe7f7; --line: #e2dce9; --ink: #1f1a29; --soft: #5d536b; --green: #1f7a4a; --amber: #8a6100; }
+  * { box-sizing: border-box; }
+  body { font-family: Inter, "Helvetica Neue", Arial, sans-serif; font-size: 10.2pt; line-height: 1.5; color: var(--ink); margin: 0; }
+  h1, h2, h3 { font-family: Poppins, Inter, "Helvetica Neue", Arial, sans-serif; margin: 0; }
+  p { margin: 0 0 8px; }
+  .cover { height: 9.1in; display: flex; flex-direction: column; justify-content: space-between; page-break-after: always; }
+  .band { background: linear-gradient(135deg, #4a1d6a, #6b2d8b 60%, #8b6ba8); color: #fff; border-radius: 14px; padding: 40px 38px; }
+  .eyebrow { letter-spacing: .14em; text-transform: uppercase; font-size: 9pt; opacity: .85; }
+  .band h1 { font-size: 34pt; line-height: 1.05; margin: 14px 0 10px; }
+  .band .sub { font-size: 12pt; opacity: .92; max-width: 5.4in; }
+  .band .meta { margin-top: 26px; font-size: 9.5pt; opacity: .9; }
+  .box { border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; margin-bottom: 12px; page-break-inside: avoid; }
+  .box h2 { font-size: 12pt; color: var(--plum); margin-bottom: 6px; }
+  section { page-break-before: always; }
+  section.first { page-break-before: auto; }
+  section > h2 { font-size: 17pt; color: var(--plum); padding-bottom: 6px; border-bottom: 2px solid var(--purple); margin-bottom: 12px; }
+  .intro { color: var(--soft); margin-bottom: 12px; }
+  .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 10px 0 14px; }
+  .plan { border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+  .plan.best { border: 2px solid var(--purple); }
+  .plan h3 { font-size: 12pt; }
+  .plan .price { font-family: Poppins, Inter, sans-serif; font-size: 22pt; font-weight: 700; color: var(--plum); margin: 4px 0; }
+  .plan .per { font-size: 9pt; color: var(--soft); }
+  .plan ul { margin: 8px 0 0; padding-left: 16px; font-size: 9.2pt; }
+  .tag { display: inline-block; font-size: 7.8pt; font-weight: 700; letter-spacing: .03em; padding: 2px 8px; border-radius: 99px; }
+  .tag.now { background: #e3f3ea; color: var(--green); }
+  .tag.soon { background: #fbf0d6; color: var(--amber); }
+  .tag.built { background: #e3eefb; color: #1d5fa8; }
+  ol.steps { margin: 6px 0 0; padding-left: 20px; }
+  ol.steps li { margin: 4px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 9.4pt; }
+  th { text-align: left; background: var(--purple); color: #fff; padding: 6px 8px; font-weight: 600; }
+  td { padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr { page-break-inside: avoid; }
+  .sq { display: inline-block; width: 11px; height: 11px; border: 1.3px solid var(--purple); border-radius: 2px; vertical-align: -1px; margin-right: 6px; }
+  .ask li { list-style: none; margin: 6px 0; }
+  .ask { padding-left: 0; }
+  .note { color: var(--soft); font-size: 9pt; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="band">
+    <div class="eyebrow">NRG Platform · For Jade</div>
+    <h1>How students pay</h1>
+    <div class="sub">The plans, the prices, how a student pays today, how each payment is checked, and what is coming next.</div>
+    <div class="meta">9 November 2026 · Prepared by Dr. Ian A. Forde II</div>
+  </div>
+
+  <div class="box">
+    <h2>In one minute</h2>
+    <p><b>Three plans:</b> Free, 1 month for <b>TT$200</b>, and 3 months for <b>TT$500</b>. Both paid plans unlock everything.</p>
+    <p><b>How students pay today:</b> by bank transfer into NRG's local account. They upload the receipt on the website, and an NRG admin approves it after finding the payment on the bank statement. The plan then starts at once.</p>
+    <p><b>Coming later:</b> paying online by card. The website already shows it as "coming soon".</p>
+    <p><b>Where it stands:</b> everything is built and tested on the test site. It goes live once NRG's bank details are added and the live site is updated. The last page lists what we need from you.</p>
+  </div>
+</div>
+
+<section class="first">
+  <h2>1. The plans</h2>
+  <p class="intro">Students can start free and upgrade whenever they're ready. The same three cards appear on the home page and on the plans page.</p>
+  <div class="plans">
+    <div class="plan">
+      <h3>Free</h3>
+      <div class="price">TT$0</div>
+      <div class="per">always</div>
+      <ul>
+        <li>10 practice questions a day</li>
+        <li>One topic review a day, 5 minutes each</li>
+        <li>Flashcards</li>
+        <li>No mock exams</li>
+      </ul>
+    </div>
+    <div class="plan">
+      <h3>1 month</h3>
+      <div class="price">TT$200</div>
+      <div class="per">for 1 month</div>
+      <ul>
+        <li>Unlimited practice questions</li>
+        <li>Every topic review, as often as they like</li>
+        <li>Mock exams</li>
+        <li>Case studies</li>
+      </ul>
+    </div>
+    <div class="plan best">
+      <h3>3 months</h3>
+      <div class="price">TT$500</div>
+      <div class="per">for 3 months · saves TT$100</div>
+      <ul>
+        <li>Everything in 1 month</li>
+        <li>About TT$167 a month</li>
+        <li>Covers a full study programme</li>
+      </ul>
+    </div>
+  </div>
+  <div class="box">
+    <h2>How time is counted</h2>
+    <p>A plan runs for 1 or 3 calendar months from the day it is approved. Access stops by itself when the time is up, and the student goes back to the free plan.</p>
+    <p>A student who renews before their plan ends loses nothing: the new time is added after their current end date. Students will also get reminder emails 7 days and 1 day before their plan ends (being added now).</p>
+    <p class="note">The free plan's limits are switched off on the live site today; they come on when you and Ian decide.</p>
+  </div>
+</section>
+
+<section>
+  <h2>2. Paying by bank transfer <span class="tag now">AVAILABLE FIRST</span></h2>
+  <p class="intro">This is how students will pay when plans go live. It needs no card company, so it can start as soon as NRG's bank details are on the site.</p>
+
+  <div class="box">
+    <h2>What the student does</h2>
+    <ol class="steps">
+      <li>Chooses a plan on the website.</li>
+      <li>Pays the exact price into NRG's account, by bank transfer, online banking or a cash deposit at the bank. They use their NRG email address as the payment reference.</li>
+      <li>Fills in a short form: the plan, the date they paid, how they paid, the reference, and a photo or PDF of the receipt.</li>
+      <li>Sees "We're checking your payment" on their plan page until it is approved.</li>
+    </ol>
+  </div>
+
+  <div class="box">
+    <h2>What NRG does</h2>
+    <ol class="steps">
+      <li>An admin opens the <b>Payments</b> page, which lists every payment waiting to be checked.</li>
+      <li>They open the receipt and look for the payment on <b>NRG's bank statement</b>. This is the real check: a receipt alone is never enough.</li>
+      <li>They tick three boxes (payment found on the statement, amount correct, plan correct) and press <b>Approve</b>. The page shows the date the plan will end before they approve.</li>
+      <li>If something is wrong, they press <b>Reject</b> and write a reason. The student sees the reason on their plan page and can fix it and send again.</li>
+    </ol>
+    <p class="note">We promise students an answer within 2 working days (please confirm this suits you; see the last page).</p>
+  </div>
+
+  <div class="box">
+    <h2>Protection against fake or reused receipts</h2>
+    <p>Each receipt is checked automatically the moment it is uploaded. The admin is warned if:</p>
+    <ul>
+      <li>the file is not really a photo or PDF;</li>
+      <li>the file carries an AI tool's label (images made with ChatGPT, Gemini and similar tools often say so in the file);</li>
+      <li>the same receipt or the same payment reference was already used by someone else.</li>
+    </ul>
+    <p>A warning adds one more tick before approval: "I found this payment on the bank statement itself." No warning doesn't prove a receipt is real, so the bank statement check always comes first.</p>
+  </div>
+</section>
+
+<section>
+  <h2>3. Other things worth knowing</h2>
+  <table>
+    <thead><tr><th style="width:28%">Topic</th><th>How it works</th></tr></thead>
+    <tbody>
+      <tr><td>Wrong amount paid</td><td>The payment can't be approved for a different amount. The admin rejects it with the reason, and the student pays the difference and sends the receipt again.</td></tr>
+      <tr><td>Refunds</td><td>A rejected payment is refunded by bank transfer outside the website; the admin records the refund date and reference on the payment. <span class="note">Proposed: within 10 working days. Please confirm.</span></td></tr>
+      <tr><td>One payment at a time</td><td>A student can't send a second payment while one is still being checked.</td></tr>
+      <tr><td>Ending a plan early</td><td>An admin can end a plan, with a reason (for example, an account being shared). The student sees that it was ended by NRG.</td></tr>
+      <tr><td>Account sharing</td><td>Each student account works on one device at a time: signing in on a new device signs the old one out. Admins see a list of accounts that look shared, to review; nothing is banned automatically. This protects your paid content.</td></tr>
+      <tr><td>Privacy</td><td>Receipts are visible only to NRG admins, open through links that expire after 10 minutes, and are deleted 90 days after they are checked.</td></tr>
+      <tr><td>Staff and gifts</td><td>Teachers and admins never pay. An admin can still give a student a plan by hand (for a scholarship or a test account).</td></tr>
+      <tr><td>Record keeping</td><td>Every approval, rejection, refund and early ending is logged with who did it and when.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>4. Paying online by card <span class="tag soon">COMING SOON</span></h2>
+  <p class="intro">The plans page already shows "Pay online by card: coming soon". It is not built yet, and it does not hold anything up: bank transfer works without it.</p>
+  <div class="box">
+    <h2>What it will take</h2>
+    <ul>
+      <li><b>A card payment company</b> that works in Trinidad and Tobago and supports repeat payments. WiPay and PayPal are the options we know of; neither is confirmed yet.</li>
+      <li><b>Where the money goes:</b> how that company pays out to NRG's account.</li>
+      <li><b>Prices in US dollars</b> for students outside Trinidad and Tobago: US$29 for 1 month and US$69 for 3 months are stored on the platform, ready for this, and not shown until card payment exists.</li>
+      <li><b>Business and tax status</b> for a merchant account.</li>
+    </ul>
+    <p>When it is ready, the "coming soon" card becomes a "Pay by card" button and approval happens automatically; bank transfer can stay as a second option.</p>
+  </div>
+
+  <div class="box">
+    <h2>What we need from you</h2>
+    <ul class="ask">
+      <li><span class="sq"></span><b>NRG's bank details</b> for students to pay into: bank, branch, account name, account number. (Payments stay closed on the website until these are entered.)</li>
+      <li><span class="sq"></span><b>Who approves payments:</b> you, Ian, or both.</li>
+      <li><span class="sq"></span><b>How fast we promise to check a receipt:</b> 2 working days, or ____.</li>
+      <li><span class="sq"></span><b>Refunds:</b> within 10 working days is fine, or ____.</li>
+      <li><span class="sq"></span><b>A student or school discount?</b> ____</li>
+      <li><span class="sq"></span><b>Business and tax position</b> for selling plans (also needed later for card payment).</li>
+    </ul>
+    <p class="note">These are the same as item D30 in "Decisions for Jade". Answer whichever is easier.</p>
+  </div>
+</section>
+
+</body>
+</html>
