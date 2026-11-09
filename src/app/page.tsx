@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { PlanCards } from "@/components/plans/PlanCards";
+import { loadPlans } from "@/lib/membership/queries";
+import { loadFreeLimits } from "@/lib/membership/free-limits";
 import Image from "next/image";
 import { getSession } from "@/lib/auth/session";
 import { ROLE_HOME } from "@/lib/auth/roles";
@@ -91,38 +94,6 @@ const TESTIMONIALS = [
   },
 ];
 
-// Pricing layout per the approved reference design. Prices are the prototype's
-// values — confirm with Jade/Ian before enabling payments.
-const PLANS = [
-  {
-    name: "Free",
-    price: "$0",
-    period: "/month",
-    features: ["25 practice questions/day", "1 topic review", "1 mock exam"],
-    cta: "Get Started",
-    highlight: false,
-  },
-  {
-    name: "Monthly",
-    price: "$29",
-    period: "/month",
-    features: [
-      "Unlimited practice questions",
-      "All topic reviews & flashcards",
-      "Full mock exams with rationale release",
-    ],
-    cta: "Start Monthly",
-    highlight: true,
-  },
-  {
-    name: "Full Program",
-    price: "$69",
-    period: "one-time",
-    features: ["Everything in Monthly", "~3 months — best value", "Save $18"],
-    cta: "Get Full Access",
-    highlight: false,
-  },
-];
 
 /** Section eyebrow: small uppercase brand label with a short rule line on each side. */
 function Eyebrow({ children, onDark = false }: { children: string; onDark?: boolean }) {
@@ -151,7 +122,7 @@ export default async function Home() {
   const dashboard = session?.profile ? ROLE_HOME[session.profile.role] : null;
   const supabase = createClient();
 
-  const [{ data: domains }, { count: topicCount }, { count: questionCount }] =
+  const [{ data: domains }, { count: topicCount }, { count: questionCount }, plans, freeLimits] =
     await Promise.all([
       supabase.from("domains").select("id, name, code, exam_weight_pct").order("display_order"),
       supabase.from("topics").select("id", { count: "exact", head: true }).eq("is_active", true),
@@ -159,6 +130,8 @@ export default async function Home() {
         .from("questions")
         .select("id", { count: "exact", head: true })
         .eq("is_active", true),
+      loadPlans(),
+      loadFreeLimits(),
     ]);
 
   const primaryCta = dashboard ?? "/signup";
@@ -499,7 +472,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* ── Pricing (layout per reference; prices need business confirmation) ── */}
+      {/* ── Pricing: Free, 1 month (TT$200), 3 months (TT$500), from membership_plans + tier_config ── */}
       <section className="border-y border-border/60 bg-muted py-20 md:py-28">
         <div className="mx-auto max-w-6xl px-4">
           <Eyebrow>Pricing</Eyebrow>
@@ -507,60 +480,18 @@ export default async function Home() {
             Choose Your Plan
           </h2>
           <p className="mt-4 text-center text-lg text-muted-foreground">
-            Start free, upgrade when you are ready. No credit card required for the free
-            tier.
+            Start free, upgrade for 1 or 3 months when you are ready.
           </p>
-          <div className="mt-14 grid gap-6 md:grid-cols-3">
-            {PLANS.map((p) => (
-              <div
-                key={p.name}
-                className={cn(
-                  "relative rounded-2xl border bg-card p-7",
-                  p.highlight
-                    ? "border-transparent shadow-xl ring-2 ring-brand-600 md:-my-3 md:py-10"
-                    : "border-border/80 shadow-sm"
-                )}
-              >
-                {p.highlight ? (
-                  <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-brand-600 to-brand-800 px-4 py-1 text-xs font-semibold uppercase tracking-wide text-white shadow-md">
-                    Most Popular
-                  </span>
-                ) : null}
-                <h3 className="font-heading text-lg font-semibold text-card-foreground">
-                  {p.name}
-                </h3>
-                <div className="mt-3 font-heading text-5xl font-extrabold tabular-nums text-brand-700">
-                  {p.price}
-                  <span className="ml-1 text-sm font-normal text-muted-foreground">
-                    {p.period}
-                  </span>
-                </div>
-                <ul className="mt-6 space-y-3 text-sm text-muted-foreground">
-                  {p.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2.5">
-                      <span
-                        aria-hidden
-                        className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-brand-100 text-[10px] font-bold text-brand-700"
-                      >
-                        ✓
-                      </span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  href={dashboard ?? "/signup"}
-                  className={cn(
-                    "mt-8 block rounded-lg px-6 py-3 text-center text-sm font-semibold transition-all",
-                    p.highlight
-                      ? "bg-primary text-primary-foreground shadow-md hover:bg-primary-hover hover:shadow-lg"
-                      : "border-2 border-brand-700 text-brand-700 hover:bg-brand-50"
-                  )}
-                >
-                  {p.cta}
-                </Link>
-              </div>
-            ))}
+          <div className="mt-14">
+            <PlanCards
+              plans={plans}
+              free={freeLimits}
+              ctaFor={(p) => (p ? { href: "/plans", label: `Get ${p.name}` } : { href: dashboard ?? "/signup", label: dashboard ? "Go to dashboard" : "Start free" })}
+            />
+            <p className="mt-6 text-center text-sm text-muted-foreground">
+              Prices in Trinidad and Tobago dollars, paid by bank transfer. Card payment is coming soon.{" "}
+              <Link href="/plans" className="font-medium text-brand-700 underline">How to pay</Link>
+            </p>
           </div>
         </div>
       </section>

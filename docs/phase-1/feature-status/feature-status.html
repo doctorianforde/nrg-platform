@@ -80,9 +80,9 @@
     </div>
     <div class="glance">
       <div><b>12</b><span>feature areas live</span></div>
-      <div><b>7</b><span>built, on staging</span></div>
-      <div><b>6</b><span>partly built</span></div>
-      <div><b>8</b><span>not built yet</span></div>
+      <div><b>9</b><span>built, on staging</span></div>
+      <div><b>5</b><span>partly built</span></div>
+      <div><b>7</b><span>not built yet</span></div>
     </div>
     <p style="margin-top:10px;color:var(--soft);font-size:9pt">The single biggest gate is content review: most of what is "on staging" is waiting for Jade to approve questions, cases or reviews, or for Ian to switch something on for the live site. Part B lists every blocker with who can clear it.</p>
   </div>
@@ -171,6 +171,13 @@
   <div class="feat"><div class="top"><h3>Free plan limits</h3><span class="s stage">STAGING</span></div>
     <p>Free students get 10 practice questions a day, no mock exams, and one topic review a day for 5 minutes. Enforced by the database. Built with the switch off; nothing changes for students until it is turned on.</p></div>
 
+  <div class="feat"><div class="top"><h3>Paid plans by bank transfer</h3><span class="s stage">STAGING</span></div>
+    <p>Free, 1 month (TT$200) and 3 months (TT$500). Students pay into NRG's account, upload the receipt and see its status; an admin matches it to the bank statement and approves or rejects with a reason. Receipts are checked automatically for AI-made images and reuse. Paid access ends by itself at expiry, and renewing early adds time on. Card payment shows as "coming soon".</p>
+    <p class="note">Waits for NRG's bank details before students can pay.</p></div>
+
+  <div class="feat"><div class="top"><h3>One device per student, and shared-account alerts</h3><span class="s stage">STAGING</span></div>
+    <p>A student account can be signed in on one device at a time: a new sign-in signs the old device out and tells it why. Admins see a list of accounts that keep signing each other out or use many browsers, review them, and adjust the thresholds. Staff are not affected.</p></div>
+
   <div class="feat"><div class="top"><h3>Security underneath</h3><span class="s live">LIVE</span></div>
     <p>Row-level security on every table, answer keys hidden from student accounts, and table permissions tightened to only what each role uses; automated tests check all of it.</p></div>
 </section>
@@ -201,8 +208,8 @@
 
       <tr class="sec"><td colspan="4">Not built yet</td></tr>
       <tr><td>More topic reviews (Template 9 lists 50)</td><td><span class="s none">NOT BUILT</span></td><td>Content: 15 of 50 decks exist. Also whether writing a question after each review is required (D6).</td><td class="who">Jade</td></tr>
-      <tr><td>Paid plans by bank transfer</td><td><span class="s none">PLANNED</span></td><td>Route decided by Ian on 9 Nov: students pay into a local Trinidad account, upload the receipt, and an admin approves it after finding the payment on the bank statement. Plans: Free, 1 month and 3 months. Prices show in TT$ with a US$ equivalent. Build plan written (Claude Doc "NRG Membership by Bank Transfer: Build Plan"); the database, student pages and admin page can be built now. Go-live needs Jade's prices and the bank details (D30), plus custom email sending.</td><td class="who">Jade, Ian</td></tr>
-      <tr><td>Account sharing guardrails</td><td><span class="s part">PARTLY BUILT</span></td><td>One signed-in device per student is built on staging (9 Nov): a new sign-in signs the old device out and tells it why; staff are not affected. Still to build: an email code on a new device (needs custom email sending) and the admin list of accounts that look shared (with the payments admin page; Ian to confirm the thresholds).</td><td class="who">Ian</td></tr>
+      <tr><td>Paid plans by bank transfer</td><td><span class="s stage">STAGING</span></td><td>Built on staging (9 Nov): plans page (Free, 1 month TT$200, 3 months TT$500), payment form with receipt upload, automatic receipt check, admin approval page, plan status page; access ends by itself at expiry. To go live: NRG's bank details (D30), the database changes on the live site, and custom email sending for the confirmation and reminder emails.</td><td class="who">Ian, Jade</td></tr>
+      <tr><td>Account sharing guardrails</td><td><span class="s part">PARTLY BUILT</span></td><td>Built on staging (9 Nov): one signed-in device per student, and the admin list of accounts that look shared (5 sign-outs in a day or 4 browsers in a week, adjustable). Still to build: an email code on a new device, which needs custom email sending.</td><td class="who">Ian</td></tr>
       <tr><td>Card payment online</td><td><span class="s none">COMING SOON</span></td><td>Shown on the plans page as "coming soon". Waits for a processor choice (WiPay, PayPal or other) and how its payouts reach the business account; no longer blocks selling plans.</td><td class="who">Ian + Jade</td></tr>
       <tr><td>Live study lobby, leaderboards, Google Meet debriefs</td><td><span class="s none">NOT BUILT</span></td><td>A real-time build; leaderboards conflict with keeping student comparison private. Needs a go-ahead and a decision on leaderboards.</td><td class="who">Ian + Jade</td></tr>
       <tr><td>Adaptive difficulty, personal study plan</td><td><span class="s none">NOT BUILT</span></td><td>Needs a few weeks of per-answer data (now being recorded) and the instructor analytics first.</td><td class="who">Later</td></tr>
@@ -215,7 +222,7 @@
 
   <div class="box" style="margin-top:16px">
     <h2>Quickest unblockers</h2>
-    <p><b>Jade:</b> answer the decisions PDF (31 items, starting with D30: prices and bank details for paid plans), validate the 6 cases, and work through the AI question queue. <b>Ian + Jade:</b> publish the 15 topic reviews. <b>Ian:</b> apply the pending live-site database changes, confirm the at-risk definition, and decide on 2FA and mock exam rules.</p>
+    <p><b>Jade:</b> answer the decisions PDF (31 items, starting with D30: the bank details for paid plans), validate the 6 cases, and work through the AI question queue. <b>Ian + Jade:</b> publish the 15 topic reviews. <b>Ian:</b> apply the pending live-site database changes, confirm the at-risk definition, and decide on 2FA and mock exam rules.</p>
   </div>
 </section>
 
@@ -223,7 +230,8 @@
   <h2 style="font-size:12pt;color:var(--plum);margin-bottom:6px">Change log</h2>
   <table class="log">
     <tbody>
-      <tr><td>9 Nov 2026</td><td>One device per student built on staging; prices to show in TT$ with a US$ equivalent.</td></tr>
+      <tr><td>9 Nov 2026</td><td>Paid plans by bank transfer built on staging (TT$200 / TT$500); shared-account alerts built.</td></tr>
+      <tr><td>9 Nov 2026</td><td>One device per student built on staging; prices in TT$.</td></tr>
       <tr><td>9 Nov 2026</td><td>Plans set to Free, 1 month and 3 months; account sharing guardrails planned.</td></tr>
       <tr><td>9 Nov 2026</td><td>Paid plans: bank-transfer route decided and planned; card payment marked coming soon.</td></tr>
       <tr><td>9 Nov 2026</td><td>First edition. Adds My progress (D8 option 2), search, review library filters and practice shortcuts (staging).</td></tr>

@@ -21,7 +21,7 @@ Read this section first; everything below it is the dated log of how we got here
 | Supabase project | `kwhaqhhwqykckarjbdod` | `cdvubijjepwmhhkgppbl` |
 | Site | https://nrg-platform-staging.vercel.app | the `nrg-platform` Vercel project |
 | Git branch that deploys it | `staging` | `main` |
-| Migrations applied | all 54 in `supabase/migrations/` (2026-11-09: `20261109120000` student analytics, `20261109140000` one device per student) (2026-10-22: `20261022120000` free-tier limits, `20261022140000` topic reviews, `20261022160000` review reading, `20261022180000` question grading) | 48 (**since 2026-10-20**); the four 2026-10-22 ones not yet |
+| Migrations applied | all 56 in `supabase/migrations/` (2026-11-09: `20261109120000` student analytics, `20261109140000` one device per student, `20261109160000` shared-account signals, `20261109180000` paid plans by bank transfer) (2026-10-22: `20261022120000` free-tier limits, `20261022140000` topic reviews, `20261022160000` review reading, `20261022180000` question grading) | 48 (**since 2026-10-20**); the four 2026-10-22 ones not yet |
 | App | the 2026-10-22 grading commit (free tier, topic reviews, reading XP, AI grading) | `ebbafd8` (since 2026-10-20) |
 | `NEXT_PUBLIC_RANKING_V2` | `1` | unset |
 | `ranking_config.rules_live` | `1` (**live since 2026-10-13**) | `0` (shadow: prod students keep today's XP) |
@@ -70,7 +70,7 @@ Steps 1–4 **done 2026-10-20** (go-live entry at the end of this file). Left: 5
 4. Then `20261012170000_hide_answer_keys` (it breaks the *old* prod code, so it must follow step 3), checked with
    `CONFIRM_PROD=1 node scripts/test-answer-keys.mjs --target prod` (`--pre` before it); then `20261017120000_revoke_unneeded_grants`
    and `node scripts/test-write-paths.mjs`-style smoke checks.
-4c. (2026-11-09) `20261109120000_student_analytics` (read-only function, additive) and `20261109140000_single_student_session` (one table, three functions, additive) before the merge that ships them.
+4c. (2026-11-09) `20261109120000_student_analytics` (read-only function, additive) `20261109140000_single_student_session`, `20261109160000_shared_account_signals` and `20261109180000_memberships_bank_transfer` (adds tables, a private bucket and functions; replaces `is_tier_limited()` and `start_case_attempt()` with the tier read through `effective_tier()`) before the merge that ships them.
 4b. (2026-10-22) `20261022120000_free_tier_limits` before the next merge to `main` (the app tolerates its absence, but
    apply it first per the usual order). It lands with `limits_live = 0`: nothing changes for prod users until Ian switches it.
 5. AI-bank port SQL (`PROD_PORT_RUNBOOK.md`) when Ian approves the content, then `data/review/prod-port/dedup-v1-prod.sql`
@@ -111,7 +111,7 @@ promotion quiz is open), `case-test-teacher@…` / `case-test-student@…` (free
 `node scripts/test-ranking-phase1.mjs` (19), `node scripts/test-ranking-phase2.mjs` (47), `node scripts/test-answer-keys.mjs`
 (14; `--target prod` with `CONFIRM_PROD=1`, `--pre` before the hide migration), `node scripts/test-trophies-phase1.mjs` (28),
 `node scripts/e2e-rls-test.mjs` (T34, 15; fixed 2026-10-17, it had been failing 9/15 silently), `node scripts/test-write-paths.mjs`
-(38: every app write path a user token uses), `node scripts/test-free-tier.mjs` (26; turns `limits_live` on for the run and restores it), `node scripts/test-single-session.mjs` (16; one device per student), `node scripts/test-student-analytics.mjs` (19; own-data only, unreleased mock answers withheld), `node scripts/test-topic-reviews.mjs` (17; restores every review's status), `node scripts/test-topic-review-reading.mjs` (30; reading XP + free-tier window, restores statuses and `limits_live`), `node scripts/test-question-grading.mjs` (21; needs an empty grading queue, restores `qgen_config`). Content gate: `npx tsx scripts/import-topic-reviews.ts` (fails if any source word is lost). The two ranking suites hold
+(38: every app write path a user token uses), `node scripts/test-free-tier.mjs` (26; turns `limits_live` on for the run and restores it), `node scripts/test-single-session.mjs` (16; one device per student), `node scripts/test-sharing-signals.mjs` (19; restores thresholds), `node scripts/test-memberships.mjs` (39; paid plans), `node scripts/test-student-analytics.mjs` (19; own-data only, unreleased mock answers withheld), `node scripts/test-topic-reviews.mjs` (17; restores every review's status), `node scripts/test-topic-review-reading.mjs` (30; reading XP + free-tier window, restores statuses and `limits_live`), `node scripts/test-question-grading.mjs` (21; needs an empty grading queue, restores `qgen_config`). Content gate: `npx tsx scripts/import-topic-reviews.ts` (fails if any source word is lost). The two ranking suites hold
 `rules_live` at 0 while their shadow checks run and put back the starting value afterwards. Content gates: `npx tsx scripts/review-bank.ts --check`,
 `npx tsx scripts/import-case.ts --check`, `npx tsx scripts/plan-cases.ts --report`.
 
@@ -3138,4 +3138,33 @@ taken, no content or branding; many saved pages were the proxy's "usage limit ex
   a teacher stays on two devices, no page errors. `tsc`/lint/build clean.
 - Side effect: shared staging test accounts now sign each other out across devices.
 - Still planned: email code on a new device (custom SMTP), admin "looks shared" list (uses the bump log).
+
+## Session 2026-11-09 (Claude): shared-account alerts + paid plans by bank transfer — built on staging
+- Ian approved the "looks shared" thresholds (5 sign-outs in a day, 4 browsers in a week; adjustable) and set prices:
+  **TT$200 for 1 month, TT$500 for 3 months**; the prototype's US$29 / US$69 are kept for card payment and not shown.
+- **Shared-account alerts** (`20261109160000`, staging): `account_guard_config` (thresholds), `student_sign_ins` (browser,
+  IP, time; copied from `auth.sessions` when a session is first seen, since bumped sessions are deleted),
+  `sharing_reviews`; `shared_account_signals()`, `mark_sharing_reviewed()`, `set_account_guard_config()` (admin only);
+  `session_is_current()` / `end_other_sessions()` re-created to record sign-ins. Page `/admin/sharing`. 19/19 tests.
+- **Paid plans** (`20261109180000`, staging): `membership_plans` (TT$ prices + stored US$), `membership_settings` (bank
+  details; payments stay closed while empty), `membership_requests` (insert only via `submit_membership_request()`; one
+  pending each; reference normalised), `memberships`, `membership_audit`; private bucket `payment-receipts` (JPEG/PNG/PDF,
+  5 MB, owner insert once, admin read only); `effective_tier()` + computed column `profiles.effective_plan`;
+  `is_tier_limited()` and `start_case_attempt()` now use it; approval never writes `profiles.subscription_tier`.
+  Admin functions `approve_membership()` (row lock, R5 checklist, flagged receipts need the extra tick, renewals stack),
+  `reject_membership()`, `revoke_membership()`, `record_membership_refund()`, `membership_admin_overview()`.
+- App: session and client profile read `effective_plan` (falling back to the plain row on a database without it);
+  `/plans` (public; card payment "coming soon"), `/study/plan`, `/study/plan/pay` (browser uploads the receipt, then
+  the server creates the request and runs the R11 receipt check: real file type, AI markers in metadata only, reused
+  file or reference), `/admin/payments` (pending with receipt link + check panel + checklist + expiry preview, ending
+  soon, active with revoke, decided with refund, bank details). Landing page pricing now comes from the same plans and
+  free-plan limits (its Free card had promised 25 questions a day and a mock exam). Upgrade notices link to `/plans`.
+  Admin nav pages grouped under one "Admin" menu (the bar no longer overflows a 1280 px screen); "My progress" is
+  students-only. Fixed: date-only values (payment dates) showed a day early in Trinidad time.
+- Verified: `test-memberships.mjs` 39/39, `test-sharing-signals.mjs` 19/19, `test-single-session.mjs` 16/16; existing
+  suites re-run green (free tier 26, topic-review reading 30, write paths 38, analytics 19, answer keys 14, T34 15);
+  browser on a local build against staging: payments 26/26 (pay → approve → active plan; AI-labelled receipt flagged and
+  rejected; signed receipt links; nav width; phone width), one device 10/10, My progress 29/29. tsc/lint/build clean.
+- Not built (phase 4): confirmation and reminder emails, receipt cleanup job — need custom SMTP. Go-live needs the bank
+  details (enter on `/admin/payments` → Bank details), then the three migrations on prod before the merge.
 

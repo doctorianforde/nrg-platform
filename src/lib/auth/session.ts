@@ -19,11 +19,17 @@ export async function getSession() {
   } = await supabase.auth.getUser();
   if (!user) return null;
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("id, role, subscription_tier, full_name, avatar_url, suspended_at")
-    .eq("id", user.id)
-    .single();
+  // `effective_plan` (20261109180000) is the plan that counts: an active paid membership, else the profile's own plan.
+  // It replaces subscription_tier here so every check in the app follows it. A database without that migration has
+  // no such column, so fall back to the plain row rather than lose the profile.
+  const cols = "id, role, subscription_tier, full_name, avatar_url, suspended_at";
+  const withPlan = await supabase.from("profiles").select(`${cols}, effective_plan`).eq("id", user.id).single();
+  type Row = Profile & { effective_plan?: Profile["subscription_tier"] | null };
+  const row = (withPlan.error
+    ? (await supabase.from("profiles").select(cols).eq("id", user.id).single()).data
+    : withPlan.data) as unknown as Row | null;
+  const profile = row ? { ...row, subscription_tier: row.effective_plan ?? row.subscription_tier } : null;
+  if (profile) delete profile.effective_plan;
 
   if (!profile || !isRole(profile.role)) return { user, profile: null };
   return { user, profile: profile as Profile };

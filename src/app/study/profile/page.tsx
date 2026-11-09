@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { requireRole } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 import { DashboardShell } from "@/components/DashboardShell";
@@ -201,7 +202,10 @@ export default async function StudentProfilePage({
                 </div>
                 <div className="flex justify-between gap-3">
                   <dt className="text-muted-foreground">Plan</dt>
-                  <dd className="capitalize text-card-foreground">{profile.subscription_tier}</dd>
+                  <dd className="text-card-foreground">
+                    {profile.subscription_tier === "free" ? "Free" : "Paid"}{" "}
+                    {profile.role === "student" ? <Link href="/study/plan" className="ml-1 text-xs font-medium text-brand-700 underline">Manage</Link> : null}
+                  </dd>
                 </div>
                 <div className="flex justify-between gap-3">
                   <dt className="text-muted-foreground">Joined</dt>

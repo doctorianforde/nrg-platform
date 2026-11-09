@@ -37,12 +37,16 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
       setProfile(null);
       return;
     }
-    const { data } = await supabase
-      .from("profiles")
-      .select("role, subscription_tier, full_name")
-      .eq("id", u.id)
-      .single();
-    setProfile(data && isRole(data.role) ? (data as ClientProfile) : null);
+    // The plan that counts (see getSession): effective_plan when the database has it, else the stored plan.
+    const withPlan = await supabase.from("profiles").select("role, subscription_tier, full_name, effective_plan").eq("id", u.id).single();
+    const row = withPlan.error
+      ? (await supabase.from("profiles").select("role, subscription_tier, full_name").eq("id", u.id).single()).data
+      : (() => {
+          const { effective_plan, ...rest } = withPlan.data as unknown as Record<string, unknown> & { effective_plan: string | null };
+          return { ...rest, subscription_tier: effective_plan ?? rest.subscription_tier };
+        })();
+    const data = row as { role: string } | null;
+    setProfile(data && isRole(data.role) ? (data as unknown as ClientProfile) : null);
   }
 
   useEffect(() => {

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { cn } from "@/lib/cn";
 
 /** Shown to free-tier students where a limit applies. There is no checkout yet, so it says how to get upgraded. */
@@ -34,9 +35,15 @@ export function UpgradeNotice({
           <h2 className="font-heading text-base font-semibold text-card-foreground">{title}</h2>
           <p className="mt-1 max-w-xl text-sm text-muted-foreground">{body}</p>
           <p className="mt-2 text-xs text-muted-foreground">
-            You&apos;re on the free plan. Standard and Premium include unlimited practice, mock exams and case studies —
-            ask your teacher or NRG to upgrade your account.
+            You&apos;re on the free plan. The 1-month and 3-month plans include unlimited practice, mock exams and case
+            studies.
           </p>
+          <Link
+            href="/plans"
+            className="mt-3 inline-flex items-center rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary-hover"
+          >
+            See plans
+          </Link>
         </div>
       </div>
     </section>

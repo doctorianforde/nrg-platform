@@ -10,18 +10,20 @@ import { ThemeQuickSwitch } from "@/components/theme/ThemeQuickSwitch";
 import { StudySearch } from "@/components/search/StudySearch";
 import { NavLinks } from "@/components/NavLinks";
 
-const NAV: Array<{ href: string; label: string; min: Profile["role"]; rankingV2?: boolean }> = [
+const NAV: Array<{ href: string; label: string; min: Profile["role"]; rankingV2?: boolean; studentOnly?: boolean; group?: string }> = [
   { href: "/study", label: "Study", min: "student" },
-  { href: "/study/analytics", label: "My progress", min: "student" },
+  { href: "/study/analytics", label: "My progress", min: "student", studentOnly: true },
   { href: "/study/trophies", label: "Trophies", min: "student", rankingV2: true },
   { href: "/study/submit", label: "Write a question", min: "student" },
   { href: "/study/profile", label: "Profile", min: "student" },
   { href: "/teacher", label: "Teacher", min: "teacher" },
   { href: "/teacher/messages", label: "Messages", min: "teacher" },
   { href: "/teacher/case-studies", label: "Case studies", min: "teacher" },
-  { href: "/admin", label: "Admin", min: "admin" },
-  { href: "/admin/watermark", label: "Reveal watermark", min: "admin" },
-  { href: "/admin/sharing", label: "Shared accounts", min: "admin" },
+  // Admin pages share one menu so the bar fits a laptop screen.
+  { href: "/admin", label: "Accounts", min: "admin", group: "Admin" },
+  { href: "/admin/payments", label: "Payments", min: "admin", group: "Admin" },
+  { href: "/admin/sharing", label: "Shared accounts", min: "admin", group: "Admin" },
+  { href: "/admin/watermark", label: "Reveal watermark", min: "admin", group: "Admin" },
   { href: "/super-admin", label: "Super admin", min: "super_admin" },
 ];
 
@@ -51,8 +53,11 @@ export function DashboardShell({
 }) {
   const protectedView = protect && flags.contentProtection && profile.role === "student";
   const navItems = NAV.filter(
-    (n) => hasAtLeast(profile.role, n.min) && (!n.rankingV2 || (flags.rankingV2 && profile.role === "student"))
-  ).map(({ href, label }) => ({ href, label }));
+    (n) =>
+      hasAtLeast(profile.role, n.min) &&
+      (!n.rankingV2 || (flags.rankingV2 && profile.role === "student")) &&
+      (!n.studentOnly || profile.role === "student")
+  ).map(({ href, label, group }) => ({ href, label, group }));
   return (
     // The watermark paints on this element's background (ContentProtection targets [data-page-background]),
     // so it must keep a plain colour: no decorative background-image here, ever.

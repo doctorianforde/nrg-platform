@@ -152,6 +152,30 @@ export type Database = {
         Update: { back?: string; created_at?: string; front?: string; id?: string; is_active?: boolean; topic_id?: number | null }
         Relationships: [{ foreignKeyName: "flashcards_topic_id_fkey"; columns: ["topic_id"]; isOneToOne: false; referencedRelation: "topics"; referencedColumns: ["id"] }]
       }
+      membership_plans: {
+        Row: { code: string; name: string; months: number; price_ttd: number; online_price_usd: number | null; sort_order: number; active: boolean }
+        Insert: { code: string; name: string; months: number; price_ttd: number; online_price_usd?: number | null; sort_order?: number; active?: boolean }
+        Update: { code?: string, name?: string, months?: number, price_ttd?: number, online_price_usd?: number | null, sort_order?: number, active?: boolean }
+        Relationships: []
+      }
+      membership_settings: {
+        Row: { key: string; value: string; note: string }
+        Insert: { key: string; value?: string; note: string }
+        Update: { key?: string, value?: string, note?: string }
+        Relationships: []
+      }
+      membership_requests: {
+        Row: { id: string; user_id: string; plan_code: string; amount_ttd: number; paid_on: string; method: string; reference: string; reference_norm: string; receipt_path: string; status: string; submitted_at: string; reviewed_by: string | null; reviewed_at: string | null; checklist: Json | null; reject_reason: string | null; receipt_check: Json | null; receipt_sha256: string | null; refund_on: string | null; refund_reference: string | null }
+        Insert: { id?: string; user_id: string; plan_code: string; amount_ttd: number; paid_on: string; method: string; reference: string; receipt_path: string; status?: string; receipt_check?: Json | null; receipt_sha256?: string | null }
+        Update: { id?: string, user_id?: string, plan_code?: string, amount_ttd?: number, paid_on?: string, method?: string, reference?: string, reference_norm?: string, receipt_path?: string, status?: string, submitted_at?: string, reviewed_by?: string | null, reviewed_at?: string | null, checklist?: Json | null, reject_reason?: string | null, receipt_check?: Json | null, receipt_sha256?: string | null, refund_on?: string | null, refund_reference?: string | null }
+        Relationships: []
+      }
+      memberships: {
+        Row: { user_id: string; plan_code: string; status: string; starts_at: string; expires_at: string; approved_by: string | null; approved_at: string | null; last_request_id: string | null; revoked_reason: string | null; reminded: Json }
+        Insert: { user_id: string; plan_code: string; status: string; starts_at: string; expires_at: string }
+        Update: { user_id?: string, plan_code?: string, status?: string, starts_at?: string, expires_at?: string, approved_by?: string | null, approved_at?: string | null, last_request_id?: string | null, revoked_reason?: string | null, reminded?: Json }
+        Relationships: []
+      }
       topic_reviews: {
         Row: { id: string; slug: string; title: string; system: string; slides: Json; question: Json | null; keywords: string[]; exclude: string[]; related: string[]; status: string; published_at: string | null; published_by: string | null; sort_order: number; source: string | null; created_at: string; updated_at: string }
         Insert: { id?: string; slug: string; title: string; system: string; slides: Json; question?: Json | null; keywords?: string[]; exclude?: string[]; related?: string[]; status?: string; published_at?: string | null; published_by?: string | null; sort_order?: number; source?: string | null; created_at?: string; updated_at?: string }
@@ -347,6 +371,12 @@ export type Database = {
       shared_account_signals: { Args: Record<PropertyKey, never>; Returns: Json }
       mark_sharing_reviewed: { Args: { p_user: string; p_note?: string }; Returns: undefined }
       set_account_guard_config: { Args: { p_key: string; p_value: number }; Returns: undefined }
+      submit_membership_request: { Args: { p_plan: string; p_paid_on: string; p_method: string; p_reference: string; p_receipt_path: string }; Returns: Json }
+      approve_membership: { Args: { p_request: string; p_checklist: Json }; Returns: Json }
+      reject_membership: { Args: { p_request: string; p_reason: string }; Returns: undefined }
+      revoke_membership: { Args: { p_user: string; p_reason: string }; Returns: undefined }
+      record_membership_refund: { Args: { p_request: string; p_on: string; p_reference: string }; Returns: undefined }
+      membership_admin_overview: { Args: Record<PropertyKey, never>; Returns: Json }
       qgen_daily_status: { Args: Record<PropertyKey, never>; Returns: Json }
       qgen_leaderboard: { Args: Record<PropertyKey, never>; Returns: { user_id: string; display_name: string; points: number; approved: number; is_me: boolean }[] }
       start_promotion_quiz: { Args: Record<PropertyKey, never>; Returns: string }
