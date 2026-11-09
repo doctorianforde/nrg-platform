@@ -16,7 +16,9 @@ export function BadgeArt({ code, art, size, locked = false, className = "" }: { 
         className={`h-full w-full select-none ${locked ? "opacity-40 grayscale" : ""}`} />
       {numeral ? (
         <span aria-hidden="true" className={`absolute font-bold leading-none text-white ${locked ? "opacity-40" : ""}`}
-          style={{ left: "46.6%", top: "36.6%", transform: "translate(-50%, -50%)", fontFamily: "Georgia, 'Times New Roman', serif", fontSize: font,
+          // Centre of the medal's inner disc, measured from the art (same on all five tiers, 512 and 128 px): (50%, 40.7%).
+          // The earlier (46.6%, 36.6%) put numerals 5–8 px left of and above centre on the 168 px ceremony badge.
+          style={{ left: "50%", top: "40.7%", transform: "translate(-50%, -50%)", fontFamily: "Georgia, 'Times New Roman', serif", fontSize: font,
             WebkitTextStroke: `${Math.max(0.5, size / 160)}px #26303a`, textShadow: "0 2px 0 rgba(0,0,0,.25)" }}>
           {numeral}
         </span>

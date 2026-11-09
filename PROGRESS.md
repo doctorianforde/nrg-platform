@@ -121,7 +121,7 @@ promotion quiz is open), `case-test-teacher@…` / `case-test-student@…` (free
 3. More AI cases once the 6 are reviewed (`npx tsx scripts/plan-cases.ts --count N`, then the generator and reviewer briefs).
 4. (2026-10-22) Send Jade `docs/phase-1/Decisions_for_Jade.pdf`; Ian + Jade read and publish the 15 topic reviews; Ian runs
    the grading queue while mode is `agent`; checklist F1–F6, T1–T9 on staging.
-5. (2026-10-22) Fix the two open checklist failures: **N1** theme switching lags between choices, **R3** Roman numerals
+5. (2026-10-22; **both fixed locally 2026-11-07**, Ian re-tests after the push) Fix the two open checklist failures: **N1** theme switching lags between choices, **R3** Roman numerals
    off-centre on the trophy art. Set up a fresh promotion quiz on `ian-paid-student` so Ian can test **R4** (failed-quiz
    retake lock) and **R5** (celebrations don't replay).
 
@@ -3019,3 +3019,28 @@ can choose; and a "Decisions for Jade" PDF with every decision he still owns, in
   switches off (`limits_live` 0, reviews as drafts, `grading_mode` agent queues only, daily rule and leaderboard off).
 - **Housekeeping**: `npm i` pruned the ad-hoc `pg` package the session's staging helper used (it lives in the scratchpad now);
   `js-yaml` (importer) is still present as a transitive dependency.
+
+## Session 2026-11-07 (Claude): checklist N1 (theme lag) and R3 (trophy numerals) fixed — local, not yet pushed
+- **R3, numerals off-centre**: `BadgeArt` drew the numeral at (46.6 %, 36.6 %) of the badge. Measured the inner disc of all
+  five rank medals (512 and 128 px art; ray-cast to the disc edge): every tier is centred at **(50 %, 40.7 %)**, radius ~25.7 %.
+  Moved the numeral there. Rendered in headless Chromium at 168/56/36 px and measured the white ink: was 5–8 px left and
+  above centre at 168 px, now within 1 px on every tier and size.
+- **N1, theme switching lags**: measured on a local production build (staging DB, throwaway student, Playwright) before
+  changing anything. Not fonts and not rendering: the theme painted ~30 ms after the click, no long tasks. The cause was
+  the `saveTheme` **server action**: because it set a cookie, Next 14 re-rendered the whole route (1.1–2.7 s), and that
+  re-render set `<html data-theme>` back to the theme from the *old* cookie, so the page **snapped back to the previous
+  choice** while the picker showed the new one. Server actions also run one at a time, so three quick picks took 4.2 s and
+  ended on the wrong theme.
+- **Fix** (`src/components/theme/useThemeChoice.ts`; `src/lib/theme/actions.ts` deleted): apply at once as before; write
+  the `nrg-theme` cookie in the browser (same `<uid>.<theme>` format the middleware reads); save to `profiles.theme` from
+  the browser client with the student's token (the same "update own" RLS path the action used; `select()` so an RLS
+  refusal counts as a failure), 300 ms after the last pick, saves serialized; a failed save puts back the last saved theme
+  and its cookie and shows the error.
+- **Verified after the fix** (same harness): single switch saved in ~0.3–0.6 s with no revert; rapid picks 150 ms and 400 ms
+  apart end on the last pick (screen, picker, DB agree); reload server-renders the saved theme (no flash); header quick
+  switch then navigate keeps it; blocked save reverts screen + cookie and shows the error. `tsc` and lint clean, build
+  clean. Throwaway users deleted. Note: the local `.next` build was made against staging (env passed on the command
+  line; `.env.local` untouched).
+- One 198 ms long task was seen on a first switch to Midnight (the 300 ms colour cross-fade restyles every element); left
+  as is, worth a look only if Ian still feels it on a slower device.
+
