@@ -81,7 +81,7 @@ try {
   const reasons = (u) => by(u)?.reasons ?? null;
 
   check("thresholds come back from the config", a.thresholds.inactive_days == 7 && a.thresholds.low_pct == 50 && a.thresholds.drop_points == 15 && a.thresholds.recent_answers == 50, JSON.stringify(a.thresholds));
-  check("the unconfirmed settings are listed", a.thresholds.unconfirmed.includes("mock_pass_pct"), JSON.stringify(a.thresholds.unconfirmed));
+  check("mock pass mark is 66% and every setting is confirmed", a.thresholds.mock_pass_pct == 66 && a.thresholds.unconfirmed.length === 0, JSON.stringify(a.thresholds));
   check("teachers aren't listed as students", !by(teacher));
   check("10 days without an answer = inactive", JSON.stringify(reasons(inactive)) === '["inactive"]', JSON.stringify(reasons(inactive)));
   check("joined 10 days ago, never answered = inactive", JSON.stringify(reasons(never)) === '["inactive"]', JSON.stringify(reasons(never)));

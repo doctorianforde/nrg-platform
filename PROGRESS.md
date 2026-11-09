@@ -104,7 +104,7 @@ Steps 1–4 **done 2026-10-20** (go-live entry at the end of this file). Left: 5
 
 ### Staging test accounts (passwords are not kept in the repo; Ian's copy is the git-ignored `TEST_ACCOUNTS.local.md`)
 `ian-admin@nrg-staging.test` (admin) and `ian-super-admin@nrg-staging.test` (super_admin), both added 2026-10-20 for
-admin-page testing; `ian-teacher@nrg-staging.test` (teacher, premium), `ian-paid-student@nrg-staging.test` (student, premium; has 260 XP so the
+admin-page testing; `admin2@nrg-staging.test` and `admin3@nrg-staging.test` (admin, premium; generic, added 2026-11-09); `ian-teacher@nrg-staging.test` (teacher, premium), `ian-paid-student@nrg-staging.test` (student, premium; has 260 XP so the
 promotion quiz is open), `case-test-teacher@…` / `case-test-student@…` (free), `jade@nrg-staging.test` (Jade, teacher).
 
 ### Test suites (staging; each creates and deletes throwaway users)
@@ -3253,4 +3253,7 @@ Ian approved the proposed at-risk definition ("agreed complete this").
 - **Prod:** not applied. Prod now lacks ten migrations (the four 2026-10-22 and six 2026-11-09).
 - **Next:** Jade confirms the three proposed settings (change a `ranking_config` row; no code); later, adaptive
   difficulty / study plan can build on this.
+- **Follow-up (same day):** Ian set the three open values: `mock_pass_pct` **66**, `risk_mock_recent_days` 30,
+  `risk_min_answers` 20, all now `confirmed = true` (staging rows updated; the migration file seeds the same values for
+  prod). Test re-run 22/22. Nothing left for Jade on this feature.
 

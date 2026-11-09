@@ -7,8 +7,8 @@
 --               account is older than that
 --   low       : under risk_low_pct (50%) correct over their last risk_recent_answers (50) answers, once they have at
 --               least risk_min_answers (20)
---   mock      : their latest finished mock in the last risk_mock_recent_days (30) scored under mock_pass_pct (70%;
---               the platform had no mock pass mark before this, so 70 is a proposal for Jade to confirm)
+--   mock      : their latest finished mock in the last risk_mock_recent_days (30) scored under mock_pass_pct (66%,
+--               set by Ian 2026-11-09; mocks had no pass mark before this)
 --   drop      : accuracy over the last risk_drop_days (14) is risk_drop_points (15) or more points below the 14 days
 --               before, with at least risk_min_answers in each fortnight
 --
@@ -20,9 +20,9 @@ INSERT INTO public.ranking_config (key, value, confirmed, note) VALUES
   ('risk_inactive_days',    7,  true,  'Ian, 2026-11-09: at risk after 7 days with no answers'),
   ('risk_recent_answers',   50, true,  'Ian, 2026-11-09: accuracy is judged over the last 50 answers'),
   ('risk_low_pct',          50, true,  'Ian, 2026-11-09: at risk under 50% over those answers'),
-  ('risk_min_answers',      20, false, 'Proposed: accuracy and drop rules need at least 20 answers, so a few early misses do not flag a student'),
-  ('mock_pass_pct',         70, false, 'Proposed: mock exam pass mark (no mock pass mark existed before). Jade to confirm'),
-  ('risk_mock_recent_days', 30, false, 'Proposed: a mock counts as recent for 30 days'),
+  ('risk_min_answers',      20, true,  'Ian, 2026-11-09: accuracy and drop rules need at least 20 answers, so a few early misses do not flag a student'),
+  ('mock_pass_pct',         66, true,  'Ian, 2026-11-09: mock exam pass mark 66% (no mock pass mark existed before)'),
+  ('risk_mock_recent_days', 30, true,  'Ian, 2026-11-09: a mock counts as recent for 30 days'),
   ('risk_drop_points',      15, true,  'Ian, 2026-11-09: at risk on a 15-point accuracy drop'),
   ('risk_drop_days',        14, true,  'Ian, 2026-11-09: the drop compares the last fortnight with the one before')
 ON CONFLICT (key) DO NOTHING;

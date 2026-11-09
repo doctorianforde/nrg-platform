@@ -164,7 +164,7 @@
 
   <div class="feat"><div class="top"><h3>Class analytics (at-risk list and class trends)</h3><span class="s stage">STAGING</span></div>
     <p>A teacher page listing students at risk and why: no answers for 7 days, under 50% over their last 50 answers, a recent mock below the pass mark, or a 15-point accuracy drop in a fortnight. Each reason shows the student's own numbers, with a one-click message to that student. Below it: 12 weeks of students practising, class accuracy and average mock score, and class accuracy by domain against the month before. The teacher dashboard shows how many students are at risk. Students never see this page.</p>
-    <p class="note">Thresholds are settings, adjustable without code. Three are proposals for Jade: the mock pass mark (70%), how long a mock counts as recent (30 days), and the 20 answers needed before accuracy counts.</p></div>
+    <p class="note">Thresholds are settings, adjustable without code. Set by Ian on 9 Nov: mock pass mark 66%, a mock counts as recent for 30 days, and accuracy rules wait for 20 answers.</p></div>
 
   <div class="feat"><div class="top"><h3>Accounts and access</h3><span class="s live">LIVE</span></div>
     <p>Email sign-up and verification, four roles (student, teacher, admin, super admin), teacher approval, suspending accounts. Admins can set a student's plan by hand.</p></div>
@@ -204,7 +204,7 @@
       <tr><td>Free plan limits on the live site</td><td><span class="s stage">STAGING</span></td><td>Confirm the numbers (10 a day, no mocks) and whether promotion quizzes and flashcards stay free; choose when to switch on. Without a checkout, free students can only be upgraded by an admin.</td><td class="who">Ian + Jade</td></tr>
       <tr><td>AI grading of student questions</td><td><span class="s stage">STAGING</span></td><td>Jade chooses instant (paid API) or queued (subscription) grading and the rules in D1–D7 of the decisions PDF.</td><td class="who">Jade</td></tr>
       <tr><td>My progress, search, review filters, keyboard shortcuts, theme fix</td><td><span class="s stage">STAGING</span></td><td>Ian's review on staging; then the 9 Nov database change goes to the live site before the next release. Ian to confirm that practice may record each answer on the live site (XP unchanged).</td><td class="who">Ian</td></tr>
-      <tr><td>Class analytics (at-risk list, class trends)</td><td><span class="s stage">STAGING</span></td><td>Built on staging (9 Nov) to the at-risk definition Ian approved. Jade to confirm the mock pass mark (70% proposed; mocks had none), 30 days as "recent" for a mock, and 20 answers before accuracy counts. Then the database change goes to the live site.</td><td class="who">Jade, Ian</td></tr>
+      <tr><td>Class analytics (at-risk list, class trends)</td><td><span class="s stage">STAGING</span></td><td>Built on staging (9 Nov); every setting confirmed by Ian (mock pass mark 66%). Waits only for the database change on the live site.</td><td class="who">Ian</td></tr>
       <tr><td>Nursing Knowledge facts</td><td><span class="s part">PARTLY</span></td><td>Clinical sign-off on the 133 facts.</td><td class="who">Jade</td></tr>
       <tr><td>Live-site database changes</td><td><span class="s stage">STAGING</span></td><td>Ten database changes (22 Oct and 9 Nov) must be applied to the live database before the next release. Ian runs them.</td><td class="who">Ian</td></tr>
 
@@ -230,7 +230,7 @@
 
   <div class="box" style="margin-top:16px">
     <h2>Quickest unblockers</h2>
-    <p><b>Jade:</b> answer the decisions PDF (31 items, starting with D30: the bank details for paid plans), confirm the mock pass mark for class analytics, validate the 6 cases, and work through the AI question queue. <b>Ian + Jade:</b> publish the 15 topic reviews. <b>Ian:</b> apply the pending live-site database changes and decide on 2FA and mock exam rules.</p>
+    <p><b>Jade:</b> answer the decisions PDF (31 items, starting with D30: the bank details for paid plans), validate the 6 cases, and work through the AI question queue. <b>Ian + Jade:</b> publish the 15 topic reviews. <b>Ian:</b> apply the pending live-site database changes and decide on 2FA and mock exam rules.</p>
   </div>
 </section>
 
@@ -238,7 +238,7 @@
   <h2 style="font-size:12pt;color:var(--plum);margin-bottom:6px">Change log</h2>
   <table class="log">
     <tbody>
-      <tr><td>9 Nov 2026</td><td>Class analytics built on staging: at-risk list with reasons, 12-week class trends, accuracy by domain.</td></tr>
+      <tr><td>9 Nov 2026</td><td>Class analytics built on staging: at-risk list with reasons, 12-week class trends, accuracy by domain. Mock pass mark set at 66%.</td></tr>
       <tr><td>9 Nov 2026</td><td>Recordings library built on staging with two sample videos.</td></tr>
       <tr><td>9 Nov 2026</td><td>Recordings library planned (build plan written).</td></tr>
       <tr><td>9 Nov 2026</td><td>Payment emails, plan reminders and receipt cleanup built; staging sends through Gmail for now.</td></tr>
