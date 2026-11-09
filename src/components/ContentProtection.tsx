@@ -31,10 +31,10 @@ const escapeXml = (s: string) =>
  * neighbouring tiles. Four parallel lines per tile; each copy is also drawn shifted by ±W / ±H so the parts that cross
  * the tile edge are completed by the neighbours. Opacity is baked into the ink (a background image has no opacity).
  */
-function watermarkUri(label: string, color: string, opacity: number) {
+function watermarkUri(label: string, color: string, opacity: number, fontSize = 15, angleDeg = 28) {
   const text = escapeXml(label);
-  const D = Math.ceil(label.length * 8.8) + 140; // period along a line: the text plus a gap
-  const ANGLE = (28 * Math.PI) / 180;
+  const D = Math.ceil(label.length * fontSize * 0.587) + Math.round(fontSize * 9.3); // period along a line: the text plus a gap
+  const ANGLE = (angleDeg * Math.PI) / 180;
   const W = Math.round(D * Math.cos(ANGLE)), H = Math.round(D * Math.sin(ANGLE));
   const deg = (-Math.atan2(H, W) * 180) / Math.PI;
   const len = Math.hypot(W, H);
@@ -55,7 +55,7 @@ function watermarkUri(label: string, color: string, opacity: number) {
   }
   const svg =
     `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">` +
-    `<g fill="${color}" fill-opacity="${opacity}" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="600">` +
+    `<g fill="${color}" fill-opacity="${opacity}" font-family="Arial, Helvetica, sans-serif" font-size="${fontSize}" font-weight="600">` +
     texts.join("") +
     `</g></svg>`;
   return `url("data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}")`;
@@ -83,16 +83,27 @@ export function ContentProtection({
 
   const label = `${identity} · ${date}`;
   // One tile per theme, in that theme's ink: dark ink on the light themes, white on the dark one, each at its own
-  // opacity (themes.ts). It is painted on the page background only (Ian, 2026-10-20: "send it to the background"):
-  // cards, questions and options stay clean, so a capture shows it in the margins around them, not on the content.
+  // opacity (themes.ts). On desktop it is painted on the page background only (Ian, 2026-10-20: "send it to the
+  // background"): cards stay clean and a capture shows it in the margins. On phones it also sits under the cards (below).
   const watermarkCss = useMemo(() => {
     // The page background is DashboardShell's full-screen wrapper (it covers <body>).
     const targets = `html.${WM_CLASS} [data-page-background]`;
+    // Phones (Ian, 2026-11-09): the question card fills the screen, so a background-only mark survives only as cut-off
+    // scraps in the thin margins and a cropped screenshot of the question escapes it. Under 768 px the mark is also
+    // painted on the card surfaces inside the protected content (still beneath the text), in a smaller, steeper tile so
+    // the whole label fits across a narrow card. Desktop keeps the background-only mark.
     return (
       THEME_LIST.map(
-        (t) => `html.${WM_CLASS}[data-theme="${t.id}"] { --cp-wm: ${watermarkUri(label, t.watermark.ink, t.watermark.opacity)}; }`
+        (t) =>
+          `html.${WM_CLASS}[data-theme="${t.id}"] { --cp-wm: ${watermarkUri(label, t.watermark.ink, t.watermark.opacity)}; ` +
+          `--cp-wm-sm: ${watermarkUri(label, t.watermark.ink, t.watermark.opacity * 1.2, 10, 38)}; }`
       ).join("\n") +
-      `\n${targets} { background-image: var(--cp-wm); background-repeat: repeat; background-attachment: fixed; }`
+      `\n${targets} { background-image: var(--cp-wm); background-repeat: repeat; background-attachment: fixed; }` +
+      `\n@media (max-width: 767px) { ${targets} { background-image: var(--cp-wm-sm); background-attachment: scroll; }` +
+      ` html.${WM_CLASS} [data-content-protected] .bg-card { background-image: var(--cp-wm-sm); background-repeat: repeat; }` +
+      // Cards inside a card (answer options) let the outer card's mark show through, so it runs unbroken across the
+      // stem and the options instead of restarting as scraps in each short option.
+      ` html.${WM_CLASS} [data-content-protected] .bg-card .bg-card { background-color: transparent; background-image: none; } }`
     );
   }, [label]);
 

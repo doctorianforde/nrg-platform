@@ -3257,3 +3257,12 @@ Ian approved the proposed at-risk definition ("agreed complete this").
   `risk_min_answers` 20, all now `confirmed = true` (staging rows updated; the migration file seeds the same values for
   prod). Test re-run 22/22. Nothing left for Jade on this feature.
 
+## Session 2026-11-09 (Claude): phone watermark under the question — staging
+
+Ian (from his phone, practice session): the reveal works on mobile, but the watermark showed only as cut-off scraps in
+the thin margins, so a screenshot cropped to the question escaped it. `src/components/ContentProtection.tsx`: under
+768 px the mark is also painted on card surfaces inside the protected content (still beneath the text), in a smaller,
+steeper tile (10 px, 38°, 1.2× the theme opacity) so the whole "name · email · id · date" fits across a narrow card;
+nested cards (answer options) are transparent there so one unbroken pattern runs from the stem through the options.
+Desktop unchanged (background only, Ian 2026-10-20). Checked by screenshot at 390 px and 1360 px; no page errors.
+
