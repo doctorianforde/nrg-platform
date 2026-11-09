@@ -25,6 +25,12 @@
   .pill { display: inline-block; font-size: 8pt; font-weight: 600; padding: 1px 8px; border-radius: 99px; background: var(--lilac); color: var(--purple); vertical-align: 1px; }
   .pill.task { background: #e3f3ea; color: var(--green); }
   .pill.joint { background: #fbf0d6; color: #8a6100; }
+  .pill.done { background: #1f7a4a; color: #fff; }
+  .sq.on { background: var(--purple); position: relative; }
+  .sq.on::after { content: ""; position: absolute; left: 3px; top: 0px; width: 3px; height: 7px; border: solid #fff; border-width: 0 1.6px 1.6px 0; transform: rotate(45deg); }
+  .d.decided { border-left-color: #1f7a4a; }
+  .decision { margin-top: 7px; background: #e3f3ea; border-radius: 8px; padding: 6px 10px; font-size: 9.4pt; }
+  .decision b { color: #1f7a4a; }
   .summary { page-break-after: always; }
   .summary h2 { font-size: 16pt; color: var(--plum); margin-bottom: 4px; }
   .summary p { color: var(--soft); margin: 0 0 12px; }
@@ -61,7 +67,7 @@
     <div class="eyebrow">NRG Platform · Phase 1</div>
     <h1>Decisions for Jade</h1>
     <div class="sub">Everything on the platform that is waiting on your call — content approvals, teaching policy and product choices — with the options, what we recommend, and room for your answer.</div>
-    <div class="meta">22 October 2026 · Prepared by Dr. Ian A. Forde II · 31 items</div>
+    <div class="meta">22 October 2026 · Updated 9 November 2026 · Prepared by Dr. Ian A. Forde II · 31 items, 1 decided</div>
   </div>
   <div class="how">
     <h2>How to use this</h2>
@@ -88,7 +94,7 @@
     <tr><td class="box"><span class="sq"></span></td><td class="n">D5</td><td>The "one question every 24 hours" rule</td><td>Choice</td></tr>
     <tr><td class="box"><span class="sq"></span></td><td class="n">D6</td><td>Required questions after practice and after a topic review</td><td>Choice</td></tr>
     <tr><td class="box"><span class="sq"></span></td><td class="n">D7</td><td>The question-writers' leaderboard</td><td>Choice</td></tr>
-    <tr><td class="box"><span class="sq"></span></td><td class="n">D8</td><td>What students see of their own analytics</td><td>Choice</td></tr>
+    <tr><td class="box"><span class="sq on"></span></td><td class="n">D8</td><td>What students see of their own analytics <span class="pill done">Decided 9 Nov: option 2</span></td><td>Choice</td></tr>
     <tr class="sec"><td colspan="4">B. Topic reviews</td></tr>
     <tr><td class="box"><span class="sq"></span></td><td class="n">D9</td><td>Read and publish the 15 topic reviews</td><td>Review · with Ian</td></tr>
     <tr><td class="box"><span class="sq"></span></td><td class="n">D10</td><td>Minimum reading time before a review pays 30 XP</td><td>Choice</td></tr>
@@ -204,15 +210,15 @@
     <div class="notes">Notes:</div>
   </div>
 
-  <div class="d">
-    <h3><span class="num">D8</span>What should students see of their own analytics?</h3>
+  <div class="d decided">
+    <h3><span class="num">D8</span>What should students see of their own analytics? <span class="pill done">Decided</span></h3>
     <p class="why">Your Template 5 describes a full analytics dashboard. Earlier you asked that students see only their rank. The platform now records every answer, so a dashboard can be built either way. Teachers see the cohort's analytics in every option.</p>
     <ul class="opts">
       <li><span class="sq"></span><span><b>Rank only</b> (today).</span></li>
-      <li><span class="sq"></span><span><b>Rank plus their own private analytics:</b> strengths and weaknesses by domain and taxonomy, their weakest topics with links to the matching topic review and practice, and exam stamina — never compared with classmates.</span></li>
+      <li><span class="sq on"></span><span><b>Rank plus their own private analytics:</b> strengths and weaknesses by domain and taxonomy, their weakest topics with links to the matching topic review and practice, and exam stamina — never compared with classmates.</span></li>
       <li><span class="sq"></span><span><b>Full Template 5,</b> including comparison with the class average.</span></li>
     </ul>
-    <div class="rec"><b>Our recommendation:</b> option 2. It turns a mistake into a next step without the pressure of comparison.</div>
+    <div class="decision"><b>Decided by Ian on 9 November 2026: option 2.</b> It is built on the test site as "My progress": rank, accuracy by domain and taxonomy, weakest and strongest topics linked to their review and practice, exam stamina and a study calendar. Each student sees only their own figures, and mock-exam answers count only after you release that exam's explanations. If you'd rather have a different option, say so and we'll change it.</div>
     <div class="notes">Notes:</div>
   </div>
 </section>

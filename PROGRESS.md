@@ -3091,4 +3091,7 @@ taken, no content or branding; many saved pages were the proxy's "usage limit ex
   `docs/phase-1/feature-status/feature-status.html`, renderer `render-pdf.mjs` (Playwright via `PLAYWRIGHT=` or a no-save
   install). CLAUDE.md now has a rule to update and re-render it whenever a feature ships, changes environment, or a
   blocker clears.
+- Decisions for Jade PDF updated (same day): D8 marked decided (option 2, by Ian, built as My progress) on the summary
+  page and the item, cover/footer dated "updated 9 November 2026". Renderer now also takes `PLAYWRIGHT=`. Still not sent
+  to Jade.
 
