@@ -3112,4 +3112,12 @@ taken, no content or branding; many saved pages were the proxy's "usage limit ex
   who approves and turnaround, tax status). Feature status PDF: payments split into "Paid plans by bank transfer"
   (planned) and "Card payment online" (coming soon); not-built count 8; change log entry. Both re-rendered.
 - Nothing built yet. Phases 1–3 (database, student pages, admin page + receipt check) need nothing from Ian or Jade.
+- Same day, Ian: plans are **Free, 1 month and 3 months** (not Standard/Premium). Build plan updated: lengths and prices in a
+  config table; an active pass maps to the existing "premium" access level so no current check is renamed; reminders
+  moved to 7 days and 1 day before expiry (30 days would fire the day a 1-month plan starts); early purchases stack (R4).
+- Ian asked for guardrails against account sharing. Recommended and added to the build plan: one signed-in device per
+  student, newest sign-in wins (a database function ends the student's other sessions; the middleware bounces an old
+  device on its next page load); an email code on an unfamiliar device (needs custom SMTP); an admin list of accounts
+  that look shared (proposed: 5 bumps a day or 4 devices a week), reviewed by a person, no automatic bans. Not
+  recommended: a fixed device lock or fingerprinting. D30 and the feature status PDF updated and re-rendered.
 

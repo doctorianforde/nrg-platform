@@ -82,7 +82,7 @@
       <div><b>12</b><span>feature areas live</span></div>
       <div><b>7</b><span>built, on staging</span></div>
       <div><b>5</b><span>partly built</span></div>
-      <div><b>8</b><span>not built yet</span></div>
+      <div><b>9</b><span>not built yet</span></div>
     </div>
     <p style="margin-top:10px;color:var(--soft);font-size:9pt">The single biggest gate is content review: most of what is "on staging" is waiting for Jade to approve questions, cases or reviews, or for Ian to switch something on for the live site. Part B lists every blocker with who can clear it.</p>
   </div>
@@ -201,7 +201,8 @@
 
       <tr class="sec"><td colspan="4">Not built yet</td></tr>
       <tr><td>More topic reviews (Template 9 lists 50)</td><td><span class="s none">NOT BUILT</span></td><td>Content: 15 of 50 decks exist. Also whether writing a question after each review is required (D6).</td><td class="who">Jade</td></tr>
-      <tr><td>Paid plans by bank transfer</td><td><span class="s none">PLANNED</span></td><td>Route decided by Ian on 9 Nov: students pay into a local Trinidad account, upload the receipt, and an admin approves it after finding the payment on the bank statement. Build plan written (Claude Doc "NRG Membership by Bank Transfer: Build Plan"); the database, student pages and admin page can be built now. Go-live needs Jade's plan length, prices, what Premium adds and the bank details (D30), plus custom email sending.</td><td class="who">Jade, Ian</td></tr>
+      <tr><td>Paid plans by bank transfer</td><td><span class="s none">PLANNED</span></td><td>Route decided by Ian on 9 Nov: students pay into a local Trinidad account, upload the receipt, and an admin approves it after finding the payment on the bank statement. Plans: Free, 1 month and 3 months. Build plan written (Claude Doc "NRG Membership by Bank Transfer: Build Plan"); the database, student pages and admin page can be built now. Go-live needs Jade's prices and the bank details (D30), plus custom email sending.</td><td class="who">Jade, Ian</td></tr>
+      <tr><td>Account sharing guardrails</td><td><span class="s none">PLANNED</span></td><td>Recommended and planned (9 Nov): one signed-in device per student at a time (a new sign-in signs the old one out), an email code on a new device, and an admin list of accounts that look shared. The one-device rule can be built now; the email code needs custom email sending.</td><td class="who">Claude, Ian</td></tr>
       <tr><td>Card payment online</td><td><span class="s none">COMING SOON</span></td><td>Shown on the plans page as "coming soon". Waits for a processor choice (WiPay, PayPal or other) and how its payouts reach the business account; no longer blocks selling plans.</td><td class="who">Ian + Jade</td></tr>
       <tr><td>Live study lobby, leaderboards, Google Meet debriefs</td><td><span class="s none">NOT BUILT</span></td><td>A real-time build; leaderboards conflict with keeping student comparison private. Needs a go-ahead and a decision on leaderboards.</td><td class="who">Ian + Jade</td></tr>
       <tr><td>Adaptive difficulty, personal study plan</td><td><span class="s none">NOT BUILT</span></td><td>Needs a few weeks of per-answer data (now being recorded) and the instructor analytics first.</td><td class="who">Later</td></tr>
@@ -214,7 +215,7 @@
 
   <div class="box" style="margin-top:16px">
     <h2>Quickest unblockers</h2>
-    <p><b>Jade:</b> answer the decisions PDF (31 items, starting with D30: plan length, prices and bank details for paid plans), validate the 6 cases, and work through the AI question queue. <b>Ian + Jade:</b> publish the 15 topic reviews. <b>Ian:</b> apply the pending live-site database changes, confirm the at-risk definition, and decide on 2FA and mock exam rules.</p>
+    <p><b>Jade:</b> answer the decisions PDF (31 items, starting with D30: prices and bank details for paid plans), validate the 6 cases, and work through the AI question queue. <b>Ian + Jade:</b> publish the 15 topic reviews. <b>Ian:</b> apply the pending live-site database changes, confirm the at-risk definition, and decide on 2FA and mock exam rules.</p>
   </div>
 </section>
 
@@ -222,6 +223,7 @@
   <h2 style="font-size:12pt;color:var(--plum);margin-bottom:6px">Change log</h2>
   <table class="log">
     <tbody>
+      <tr><td>9 Nov 2026</td><td>Plans set to Free, 1 month and 3 months; account sharing guardrails planned.</td></tr>
       <tr><td>9 Nov 2026</td><td>Paid plans: bank-transfer route decided and planned; card payment marked coming soon.</td></tr>
       <tr><td>9 Nov 2026</td><td>First edition. Adds My progress (D8 option 2), search, review library filters and practice shortcuts (staging).</td></tr>
     </tbody>
