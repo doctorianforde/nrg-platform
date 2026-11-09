@@ -3188,4 +3188,12 @@ taken, no content or branding; many saved pages were the proxy's "usage limit ex
 - New PDF for Jade: `docs/phase-1/NRG_Payment_Options_for_Jade.pdf` (5 pages: plans and prices, paying by bank transfer,
   how NRG checks a payment, receipt checks, refunds/renewals/sharing/privacy, card payment coming soon, what we need
   from him). Source + renderer in `docs/phase-1/payment-options-for-jade/`.
+- Same day: Ian pointed out the members' area should include a video library like the JoMI reference (past recordings and
+  lectures, not yet provided). The earlier student-area pass had taken its filters, search and shortcuts but left out its
+  video library. Planned in the Claude Doc "NRG Recordings Library: Build Plan"
+  (https://claude.ai/artifact/ELAVXW25sHS5h46rTytauF): library with filters, watch page (chapters, J/K/L, Notes /
+  Outline / Transcript tabs, resume), paid plans + free samples, expiring playback links + moving watermark, teacher
+  upload form, host comparison (recommend Cloudflare Stream or Bunny Stream; prices to be checked), 4 tables, 5 phases,
+  decisions. Feature status PDF updated. Also: checklist artifact updated with the 9 Nov features (M, D, B sections);
+  `case-test-student` password reset on staging (in TEST_ACCOUNTS.local.md).
 
