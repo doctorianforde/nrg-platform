@@ -344,6 +344,9 @@ export type Database = {
       session_is_current: { Args: Record<PropertyKey, never>; Returns: boolean }
       end_other_sessions: { Args: Record<PropertyKey, never>; Returns: number }
       session_was_bumped: { Args: { p_session: string }; Returns: boolean }
+      shared_account_signals: { Args: Record<PropertyKey, never>; Returns: Json }
+      mark_sharing_reviewed: { Args: { p_user: string; p_note?: string }; Returns: undefined }
+      set_account_guard_config: { Args: { p_key: string; p_value: number }; Returns: undefined }
       qgen_daily_status: { Args: Record<PropertyKey, never>; Returns: Json }
       qgen_leaderboard: { Args: Record<PropertyKey, never>; Returns: { user_id: string; display_name: string; points: number; approved: number; is_me: boolean }[] }
       start_promotion_quiz: { Args: Record<PropertyKey, never>; Returns: string }

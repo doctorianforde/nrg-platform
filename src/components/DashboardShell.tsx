@@ -21,6 +21,7 @@ const NAV: Array<{ href: string; label: string; min: Profile["role"]; rankingV2?
   { href: "/teacher/case-studies", label: "Case studies", min: "teacher" },
   { href: "/admin", label: "Admin", min: "admin" },
   { href: "/admin/watermark", label: "Reveal watermark", min: "admin" },
+  { href: "/admin/sharing", label: "Shared accounts", min: "admin" },
   { href: "/super-admin", label: "Super admin", min: "super_admin" },
 ];
 
